@@ -1,7 +1,7 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp, FirebaseOptions } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
-const firebaseConfig = {
+const firebaseOptions: FirebaseOptions = {
   apiKey: "AIzaSyDVGSixjE_nqfFlUFh59xWiS90qC1M1CSE",
   authDomain: "refrigerator-manage.firebaseapp.com",
   projectId: "refrigerator-manage",
@@ -11,6 +11,6 @@ const firebaseConfig = {
   measurementId: "G-MGWYPE9EG3"
 };
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseOptions);
 
 export const auth = getAuth(app);
