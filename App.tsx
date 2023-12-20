@@ -19,6 +19,9 @@ export default function App() {
     const unsubscribe = onAuthStateChanged(auth, (user: any) => {
       setLoading(false);
       if (user) {
+        user.getIdToken().then((idToken: string) => {
+          console.log('idToken: ', idToken);
+        });
         console.log(user);
         setUser(user);
       } else {

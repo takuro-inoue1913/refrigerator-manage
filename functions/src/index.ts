@@ -4,15 +4,6 @@ import axios from 'axios';
 
 admin.initializeApp(functions.config().firebase);
 
-const createUser = `
-mutation createUser($id: String = '', $email: String = '') {
-  insert_users_one(object: {id: $id, email: $email}, on_conflict: {constraint: users_pkey, update_columns: []}) {
-    id
-    email
-  }
-}
-`;
-
 exports.processSignUp = functions.auth.user().onCreate((user) => {
   const customClaims = {
     'https://hasura.io/jwt/claims': {
@@ -24,22 +15,31 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
 
   return admin.auth().setCustomUserClaims(user.uid, customClaims)
     .then(() => {
-      const queryStr = {
-        'query': createUser,
-        'variables': {id: user.uid, email: user.email},
-      };
-
-      console.log('post graphql queryStr: ', queryStr);
-
       axios({
         method: 'post',
         url: 'https://refrigerator-manage.hasura.app/v1/graphql',
-        data: queryStr,
+        data: {
+          query: `
+            mutation {
+              insert_users_one(
+                object: { 
+                  id: "${user.uid}", 
+                  email: "${user.email}"
+                }, 
+                on_conflict: {
+                  constraint: users_pkey, 
+                  update_columns: []
+                }
+              ) {
+                id
+                email
+              }
+            }
+          `,
+        },
         headers: {
           'x-hasura-admin-secret': 'yBH2ZlHhkPyjI3qPevJKKQcpqYjMJ1Sl8uApj4ns1Cks69Us6ccDewiSEpAGMORm',
         },
-      }).then((res) => {
-        console.log('post graphql res: ', res);
       });
 
       admin
