@@ -13,7 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigation = useNavigation();
+  const navigation = useNavigation<{ navigate: (arg: string) => void}>();
 
   const handleLogin = async () => {
     try {
@@ -76,7 +76,7 @@ const LoginScreen = () => {
       </TouchableOpacity>
       <TouchableOpacity
           style={{ marginTop: 10 }}
-          onPress={() => navigation.navigate('Register' as never)}
+          onPress={() => navigation.navigate('Register')}
         >
           <Text>ユーザ登録はこちら</Text>
       </TouchableOpacity>
