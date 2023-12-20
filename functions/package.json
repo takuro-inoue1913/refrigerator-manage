@@ -1,7 +1,10 @@
 {
   "name": "functions",
   "scripts": {
-    "lint": "eslint --ext .js,.ts .",
+    "lint": "eslint --ext .js,.ts . && prettier --check .",
+    "eslint:fix": "eslint --ext .js,.ts . --fix",
+    "prettier:fix": "prettier --write .",
+    "lint:fix": "yarn eslint:fix && yarn prettier:fix",
     "build": "tsc",
     "build:watch": "tsc --watch",
     "serve": "npm run build && firebase emulators:start --only functions",
@@ -24,8 +27,10 @@
     "@typescript-eslint/parser": "^5.12.0",
     "eslint": "^8.9.0",
     "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.25.4",
     "firebase-functions-test": "^3.1.0",
+    "prettier": "^3.1.1",
     "typescript": "^4.9.0"
   },
   "private": true

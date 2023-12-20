@@ -13,7 +13,9 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
     },
   };
 
-  return admin.auth().setCustomUserClaims(user.uid, customClaims)
+  return admin
+    .auth()
+    .setCustomUserClaims(user.uid, customClaims)
     .then(() => {
       axios({
         method: 'post',
@@ -38,17 +40,14 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
           `,
         },
         headers: {
-          'x-hasura-admin-secret': 'yBH2ZlHhkPyjI3qPevJKKQcpqYjMJ1Sl8uApj4ns1Cks69Us6ccDewiSEpAGMORm',
+          'x-hasura-admin-secret':
+            'yBH2ZlHhkPyjI3qPevJKKQcpqYjMJ1Sl8uApj4ns1Cks69Us6ccDewiSEpAGMORm',
         },
       });
 
-      admin
-        .firestore()
-        .collection('user_meta')
-        .doc(user.uid)
-        .create({
-          refreshTime: admin.firestore.FieldValue.serverTimestamp(),
-        });
+      admin.firestore().collection('user_meta').doc(user.uid).create({
+        refreshTime: admin.firestore.FieldValue.serverTimestamp(),
+      });
     })
     .catch((error) => {
       console.log(error);
