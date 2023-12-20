@@ -29,6 +29,8 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
         'variables': {id: user.uid, email: user.email},
       };
 
+      console.log('post graphql queryStr: ', queryStr);
+
       axios({
         method: 'post',
         url: 'https://refrigerator-manage.hasura.app/v1/graphql',
@@ -36,6 +38,8 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
         headers: {
           'x-hasura-admin-secret': 'yBH2ZlHhkPyjI3qPevJKKQcpqYjMJ1Sl8uApj4ns1Cks69Us6ccDewiSEpAGMORm',
         },
+      }).then((res) => {
+        console.log('post graphql res: ', res);
       });
 
       admin
