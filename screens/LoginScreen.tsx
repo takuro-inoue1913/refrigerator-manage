@@ -13,13 +13,13 @@ import { useNavigation } from '@react-navigation/native';
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigation = useNavigation<{ navigate: (arg: string) => void}>();
+  const navigation = useNavigation<{ navigate: (arg: string) => void }>();
 
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-    } catch (error: any) {
-      console.log(error.message);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -75,10 +75,10 @@ const LoginScreen = () => {
         <Text style={{ color: 'white' }}>ログイン</Text>
       </TouchableOpacity>
       <TouchableOpacity
-          style={{ marginTop: 10 }}
-          onPress={() => navigation.navigate('Register')}
-        >
-          <Text>ユーザ登録はこちら</Text>
+        style={{ marginTop: 10 }}
+        onPress={() => navigation.navigate('Register')}
+      >
+        <Text>ユーザ登録はこちら</Text>
       </TouchableOpacity>
     </KeyboardAvoidingView>
   );

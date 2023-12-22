@@ -17,8 +17,8 @@ const RegisterScreen = () => {
     try {
       const user = await createUserWithEmailAndPassword(auth, email, password);
       console.log(user);
-    } catch (error: any) {
-      console.log(error.message);
+    } catch (error) {
+      console.log(error);
     }
   };
 
