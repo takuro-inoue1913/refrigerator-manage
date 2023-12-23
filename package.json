@@ -1,7 +1,7 @@
 {
   "name": "refrigerator-manage",
   "version": "1.0.0",
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "src/main.ts",
   "scripts": {
     "lint": "eslint --ext .tsx --ext .ts . && prettier --check .",
     "eslint:fix": "eslint --ext .js,.ts . --fix",

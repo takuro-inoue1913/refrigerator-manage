@@ -2,11 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { HomeScreen } from '@/screens/HomeScreen';
-import { RegisterScreen } from '@/screens/RegisterScreen';
-import { LoginScreen } from '@/screens/LoginScreen';
+import { HomeScreen } from '@src/screens/HomeScreen';
+import { RegisterScreen } from '@src/screens/RegisterScreen';
+import { LoginScreen } from '@src/screens/LoginScreen';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { auth } from '@/utils/firebaseAuth';
+import { auth } from '@src/utils/firebaseAuth';
 import { View, Text } from 'react-native';
 
 const Stack = createNativeStackNavigator();

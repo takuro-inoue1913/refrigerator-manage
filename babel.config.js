@@ -12,6 +12,15 @@ module.exports = function (api) {
           safe: true,
         },
       ],
+      [
+        'module-resolver',
+        {
+          root: ['./'],
+          alias: {
+            '@src': './src',
+          },
+        },
+      ],
     ],
   };
 };

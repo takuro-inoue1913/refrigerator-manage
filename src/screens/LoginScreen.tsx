@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
-import { auth } from '@/utils/firebaseAuth';
+import { auth } from '@src/utils/firebaseAuth';
 import { useNavigation } from '@react-navigation/native';
 
 export const LoginScreen = () => {
