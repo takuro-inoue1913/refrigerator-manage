@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { signOut } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth } from '@/utils/firebaseAuth';
 
-const HomeScreen = () => {
+export const HomeScreen = () => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
@@ -28,8 +28,20 @@ const HomeScreen = () => {
       >
         <Text style={{ color: 'white' }}>ログアウト</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          console.log('test');
+        }}
+        style={{
+          marginTop: 10,
+          padding: 10,
+          backgroundColor: '#88cb7f',
+          borderRadius: 10,
+          width: 100,
+        }}
+      >
+        <Text style={{ color: 'white' }}>バーコード読み取り</Text>
+      </TouchableOpacity>
     </View>
   );
 };
-
-export default HomeScreen;

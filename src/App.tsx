@@ -2,12 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './screens/HomeScreen';
-import RegisterScreen from './screens/RegisterScreen';
+import { HomeScreen } from '@/screens/HomeScreen';
+import { RegisterScreen } from '@/screens/RegisterScreen';
+import { LoginScreen } from '@/screens/LoginScreen';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { auth } from './firebase';
+import { auth } from '@/utils/firebaseAuth';
 import { View, Text } from 'react-native';
-import LoginScreen from './screens/LoginScreen';
 
 const Stack = createNativeStackNavigator();
 

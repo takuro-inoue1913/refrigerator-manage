@@ -7,9 +7,9 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth } from '@/utils/firebaseAuth';
 
-const RegisterScreen = () => {
+export const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -76,5 +76,3 @@ const RegisterScreen = () => {
     </KeyboardAvoidingView>
   );
 };
-
-export default RegisterScreen;

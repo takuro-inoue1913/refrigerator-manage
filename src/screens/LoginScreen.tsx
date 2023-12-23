@@ -7,10 +7,10 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
-import { auth } from '../firebase';
+import { auth } from '@/utils/firebaseAuth';
 import { useNavigation } from '@react-navigation/native';
 
-const LoginScreen = () => {
+export const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation<{ navigate: (arg: string) => void }>();
@@ -83,5 +83,3 @@ const LoginScreen = () => {
     </KeyboardAvoidingView>
   );
 };
-
-export default LoginScreen;
