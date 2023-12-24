@@ -1,23 +1,23 @@
 // import { StyleSheet } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { RecoilRoot, useRecoilState } from 'recoil';
+
 import { HomeScreen } from '@src/screens/HomeScreen';
 import { RegisterScreen } from '@src/screens/RegisterScreen';
 import { LoginScreen } from '@src/screens/LoginScreen';
-import { onAuthStateChanged, User } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@src/utils/firebaseAuth';
-import { View, Text } from 'react-native';
+import { userState } from '@src/states/user';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [user, setUser] = useState<User>();
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useRecoilState(userState);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setLoading(false);
       if (user) {
         user.getIdToken().then((idToken: string) => {
           console.log('idToken: ', idToken);
@@ -25,26 +25,14 @@ export default function App() {
         console.log(user);
         setUser(user);
       } else {
-        setUser(undefined);
+        setUser(null);
       }
     });
     return () => unsubscribe();
   }, []);
 
-  if (loading) {
-    return (
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          flex: 1,
-        }}
-      >
-        <Text>Loading...</Text>
-      </View>
-    );
-  } else {
-    return (
+  return (
+    <RecoilRoot>
       <NavigationContainer>
         <Stack.Navigator>
           {user ? (
@@ -57,8 +45,8 @@ export default function App() {
           )}
         </Stack.Navigator>
       </NavigationContainer>
-    );
-  }
+    </RecoilRoot>
+  );
 }
 
 // const styles = StyleSheet.create({
