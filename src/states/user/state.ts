@@ -1,15 +1,7 @@
-import { atom, selector } from 'recoil';
-import { User } from 'firebase/auth';
+import { atom } from 'recoil';
+import { UserInfo } from 'firebase/auth';
 
-export const userState = atom<User | null>({
-  key: 'userState',
+export const userState = atom<UserInfo | null>({
+  key: 'authUser',
   default: null,
-});
-
-export const userSelector = selector({
-  key: 'userSelector',
-  get: ({ get }) => {
-    const user = get(userState);
-    return user;
-  },
 });

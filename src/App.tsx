@@ -1,5 +1,5 @@
 // import { StyleSheet } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RecoilRoot, useRecoilState } from 'recoil';
@@ -13,7 +13,7 @@ import { userState } from '@src/states/user';
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+export const App: FC = () => {
   const [user, setUser] = useRecoilState(userState);
 
   useEffect(() => {
@@ -22,8 +22,15 @@ export default function App() {
         user.getIdToken().then((idToken: string) => {
           console.log('idToken: ', idToken);
         });
-        console.log(user);
-        setUser(user);
+        // MEMO: user は Object.freeze() されているため、setUser で更新するときは新しいオブジェクトを渡す必要がある。
+        setUser({
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          phoneNumber: user.phoneNumber,
+          providerId: user.providerId,
+        });
       } else {
         setUser(null);
       }
@@ -47,7 +54,7 @@ export default function App() {
       </NavigationContainer>
     </RecoilRoot>
   );
-}
+};
 
 // const styles = StyleSheet.create({
 //   container: {

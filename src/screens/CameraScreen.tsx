@@ -1,7 +1,5 @@
 import React from 'react';
 
-function CameraScreen() {
+export const CameraScreen = () => {
   return <div>CameraScreen</div>;
-}
-
-export default CameraScreen;
+};
