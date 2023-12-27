@@ -9,11 +9,12 @@ import {
 } from 'react-native';
 import { auth } from '@src/utils/firebaseAuth';
 import { useNavigation } from '@react-navigation/native';
+import { Navigation } from '@src/types';
 
 export const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigation = useNavigation<{ navigate: (arg: string) => void }>();
+  const navigation = useNavigation<Navigation>();
 
   const handleLogin = async () => {
     try {

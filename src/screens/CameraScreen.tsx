@@ -1,5 +1,6 @@
 import React from 'react';
+import { Text } from 'react-native';
 
 export const CameraScreen = () => {
-  return <div>CameraScreen</div>;
+  return <Text>CameraScreen</Text>;
 };

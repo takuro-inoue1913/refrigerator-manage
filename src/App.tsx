@@ -10,8 +10,9 @@ import { LoginScreen } from '@src/screens/LoginScreen';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@src/utils/firebaseAuth';
 import { userState } from '@src/states/user';
+import { CameraScreen } from './screens/CameraScreen';
 
-const Stack = createNativeStackNavigator();
+const { Screen, Navigator } = createNativeStackNavigator();
 
 export const App: FC = () => {
   const [user, setUser] = useRecoilState(userState);
@@ -41,16 +42,19 @@ export const App: FC = () => {
   return (
     <RecoilRoot>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Navigator>
           {user ? (
-            <Stack.Screen name="Home" component={HomeScreen} />
+            <>
+              <Screen name="Home" component={HomeScreen} />
+              <Screen name="Camera" component={CameraScreen} />
+            </>
           ) : (
             <>
-              <Stack.Screen name="Login" component={LoginScreen} />
-              <Stack.Screen name="Register" component={RegisterScreen} />
+              <Screen name="Login" component={LoginScreen} />
+              <Screen name="Register" component={RegisterScreen} />
             </>
           )}
-        </Stack.Navigator>
+        </Navigator>
       </NavigationContainer>
     </RecoilRoot>
   );
