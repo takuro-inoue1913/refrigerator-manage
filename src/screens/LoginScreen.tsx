@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 
 import { auth } from '@src/utils/firebaseAuth';
@@ -12,11 +13,14 @@ import { useNavigation } from '@react-navigation/native';
 import { Navigation } from '@src/types';
 import { LinearGradientButton } from '@src/components/GradationButton';
 import { GradientionTextInput } from '@src/components/GradientionTextInput';
+import { useIsShowKeyboard } from '@src/hooks/useIsShowKeyboard';
+import { TopLogoImage } from '@src/components/TopLogoImage';
 
 export const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation<Navigation>();
+  const isShowKeyboard = useIsShowKeyboard();
 
   const handleLogin = async () => {
     try {
@@ -28,14 +32,16 @@ export const LoginScreen = () => {
 
   return (
     <KeyboardAvoidingView
-      behavior="padding"
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{
-        justifyContent: 'center',
-        alignItems: 'center',
         flex: 1,
+        alignItems: 'center',
+        justifyContent: isShowKeyboard ? 'flex-start' : 'center',
+        paddingTop: isShowKeyboard ? 100 : 0,
+        backgroundColor: 'white',
       }}
     >
-      <Text style={{ fontSize: 20, marginBottom: 20 }}>ログイン画面</Text>
+      <TopLogoImage isShowKeyboard={isShowKeyboard} />
       <View>
         <GradientionTextInput
           style={{ width: 250 }}
