@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import {
   View,
-  TextInput,
   Text,
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
+
 import { auth } from '@src/utils/firebaseAuth';
 import { useNavigation } from '@react-navigation/native';
 import { Navigation } from '@src/types';
+import { LinearGradientButton } from '@src/components/GradationButton';
+import { GradientionTextInput } from '@src/components/GradientionTextInput';
 
 export const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -34,14 +36,9 @@ export const LoginScreen = () => {
       }}
     >
       <Text style={{ fontSize: 20, marginBottom: 20 }}>ログイン画面</Text>
-      <View style={{ marginBottom: 20 }}>
-        <TextInput
-          style={{
-            width: 250,
-            borderWidth: 1,
-            padding: 5,
-            borderColor: 'gray',
-          }}
+      <View>
+        <GradientionTextInput
+          style={{ width: 250 }}
           onChangeText={setEmail}
           value={email}
           placeholder="メールアドレスを入力してください"
@@ -50,13 +47,8 @@ export const LoginScreen = () => {
         />
       </View>
       <View style={{ marginBottom: 20 }}>
-        <TextInput
-          style={{
-            width: 250,
-            borderWidth: 1,
-            padding: 5,
-            borderColor: 'gray',
-          }}
+        <GradientionTextInput
+          style={{ width: 250 }}
           onChangeText={setPassword}
           value={password}
           placeholder="パスワードを入力してください"
@@ -64,19 +56,11 @@ export const LoginScreen = () => {
           autoCapitalize="none"
         />
       </View>
-      <TouchableOpacity
-        style={{
-          padding: 10,
-          backgroundColor: '#88cb7f',
-          borderRadius: 10,
-        }}
-        onPress={handleLogin}
-        // disabled={!email || !password}
-      >
+      <LinearGradientButton width={250} onPress={handleLogin}>
         <Text style={{ color: 'white' }}>ログイン</Text>
-      </TouchableOpacity>
+      </LinearGradientButton>
       <TouchableOpacity
-        style={{ marginTop: 10 }}
+        style={{ marginTop: 20 }}
         onPress={() => navigation.navigate('Register')}
       >
         <Text>ユーザ登録はこちら</Text>

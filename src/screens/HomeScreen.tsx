@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import { signOut } from 'firebase/auth';
-import { auth } from '@src/utils/firebaseAuth';
 import { useNavigation } from '@react-navigation/native';
+
+import { auth } from '@src/utils/firebaseAuth';
 import { Navigation } from '@src/types';
+import { LinearGradientButton } from '@src/components/GradationButton';
 
 export const HomeScreen = () => {
   const navigation = useNavigation<Navigation>();
@@ -19,31 +21,16 @@ export const HomeScreen = () => {
   };
   return (
     <View>
-      <Text>ホーム画面</Text>
-      <TouchableOpacity
-        onPress={handleLogout}
-        style={{
-          marginTop: 10,
-          padding: 10,
-          backgroundColor: '#88cb7f',
-          borderRadius: 10,
-          width: 100,
-        }}
-      >
-        <Text style={{ color: 'white' }}>ログアウト</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Camera')}
-        style={{
-          marginTop: 10,
-          padding: 10,
-          backgroundColor: '#88cb7f',
-          borderRadius: 10,
-          width: 100,
-        }}
-      >
-        <Text style={{ color: 'white' }}>バーコード読み取り</Text>
-      </TouchableOpacity>
+      <View>
+        <LinearGradientButton onPress={handleLogout}>
+          <Text style={{ color: 'white' }}>ログアウト</Text>
+        </LinearGradientButton>
+      </View>
+      <View>
+        <LinearGradientButton onPress={() => navigation.navigate('Camera')}>
+          <Text style={{ color: 'white' }}>バーコード読み取り</Text>
+        </LinearGradientButton>
+      </View>
     </View>
   );
 };

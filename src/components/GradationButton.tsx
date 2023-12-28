@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { CommonGradation } from '@src/components/CommonGradation';
 
 type Props = {
   width?: number;
@@ -21,34 +21,27 @@ export const LinearGradientButton: FC<Props> = ({
   children,
 }) => {
   return (
-    <TouchableOpacity style={styles.buttonWrapper} onPress={onPress}>
-      <LinearGradient
+    <TouchableOpacity onPress={onPress}>
+      <CommonGradation
         style={{
           ...styles.button,
           ...{
             width: width ?? 'auto',
-            height: height ?? 'auto',
-            borderRadius: borderRadius ?? 10,
+            height: height ?? 50,
+            borderRadius: borderRadius ?? 50,
           },
         }}
-        colors={['#3498db', '#2ecc71']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
       >
         {children}
-      </LinearGradient>
+      </CommonGradation>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  buttonWrapper: {
-    flex: 1,
-    alignSelf: 'flex-end',
-    alignItems: 'center',
-  },
   button: {
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 10,
   },
 });

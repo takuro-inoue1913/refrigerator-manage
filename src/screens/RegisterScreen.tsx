@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import {
-  View,
-  TextInput,
-  Text,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { View, Text, KeyboardAvoidingView } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+
 import { auth } from '@src/utils/firebaseAuth';
+import { GradientionTextInput } from '@src/components/GradientionTextInput';
+import { LinearGradientButton } from '@src/components/GradationButton';
 
 export const RegisterScreen = () => {
   const [email, setEmail] = useState('');
@@ -32,14 +29,9 @@ export const RegisterScreen = () => {
       }}
     >
       <Text style={{ fontSize: 20, marginBottom: 20 }}>ユーザ登録画面</Text>
-      <View style={{ marginBottom: 20 }}>
-        <TextInput
-          style={{
-            width: 250,
-            borderWidth: 1,
-            padding: 5,
-            borderColor: 'gray',
-          }}
+      <View>
+        <GradientionTextInput
+          style={{ width: 250 }}
           onChangeText={setEmail}
           value={email}
           placeholder="メールアドレスを入力してください"
@@ -48,13 +40,8 @@ export const RegisterScreen = () => {
         />
       </View>
       <View style={{ marginBottom: 20 }}>
-        <TextInput
-          style={{
-            width: 250,
-            borderWidth: 1,
-            padding: 5,
-            borderColor: 'gray',
-          }}
+        <GradientionTextInput
+          style={{ width: 250 }}
           onChangeText={setPassword}
           value={password}
           placeholder="パスワードを入力してください"
@@ -62,17 +49,9 @@ export const RegisterScreen = () => {
           autoCapitalize="none"
         />
       </View>
-      <TouchableOpacity
-        style={{
-          padding: 10,
-          backgroundColor: '#88cb7f',
-          borderRadius: 10,
-        }}
-        onPress={handleRegister}
-        // disabled={!email || !password}
-      >
+      <LinearGradientButton width={250} onPress={handleRegister}>
         <Text style={{ color: 'white' }}>登録する</Text>
-      </TouchableOpacity>
+      </LinearGradientButton>
     </KeyboardAvoidingView>
   );
 };

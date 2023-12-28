@@ -1,19 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Linking, StyleSheet } from 'react-native';
-import { Camera, CameraType } from 'expo-camera';
-import { Button, Text, TouchableOpacity, View } from 'react-native';
+import { Camera } from 'expo-camera';
+import { Button, Text, View } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+import { LinearGradientButton } from '@src/components/GradationButton';
+
 // import { LoadingScreen } from '@src/screens/LoadingScreen';
 
 export const CameraScreen = () => {
-  const [cameraType, setCameraType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
-
-  /** カメラのタイプを切り替える。（フロントカメラ・バックカメラ） */
-  const toggleCameraType = () => {
-    setCameraType((prev) =>
-      prev === CameraType.back ? CameraType.front : CameraType.back,
-    );
-  };
 
   useEffect(() => {
     if (permission?.granted) {
@@ -37,13 +33,17 @@ export const CameraScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Camera style={styles.camera} type={cameraType}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-            <Text style={styles.text}>Flip Camera</Text>
-          </TouchableOpacity>
-        </View>
-      </Camera>
+      <Camera style={styles.camera} />
+      <View style={styles.footerContainer}>
+        <LinearGradientButton
+          onPress={() => console.log('pressed')}
+          width={80}
+          height={80}
+          borderRadius={50}
+        >
+          <Icon name="camera" size={40} color={'white'} />
+        </LinearGradientButton>
+      </View>
     </View>
   );
 };
@@ -58,18 +58,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   camera: {
-    flex: 1,
+    flex: 9,
   },
-  buttonContainer: {
+  footerContainer: {
     flex: 1,
-    backgroundColor: 'transparent',
     flexDirection: 'row',
-    margin: 20,
-  },
-  button: {
-    flex: 1,
-    alignSelf: 'flex-end',
-    alignItems: 'center',
+    paddingBottom: 50,
+    paddingTop: 20,
   },
   text: {
     fontSize: 18,
