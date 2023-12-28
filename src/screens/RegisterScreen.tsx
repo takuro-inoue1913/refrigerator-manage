@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { View, Text, KeyboardAvoidingView } from 'react-native';
+import { View, Text, KeyboardAvoidingView, Platform } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 import { auth } from '@src/utils/firebaseAuth';
 import { GradientionTextInput } from '@src/components/GradientionTextInput';
 import { LinearGradientButton } from '@src/components/GradationButton';
+import { useIsShowKeyboard } from '@src/hooks/useIsShowKeyboard';
+import { TopLogoImage } from '@src/components/TopLogoImage';
 
 export const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const isShowKeyboard = useIsShowKeyboard();
 
   const handleRegister = async () => {
     try {
@@ -21,14 +24,16 @@ export const RegisterScreen = () => {
 
   return (
     <KeyboardAvoidingView
-      behavior="padding"
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{
-        justifyContent: 'center',
-        alignItems: 'center',
         flex: 1,
+        alignItems: 'center',
+        justifyContent: isShowKeyboard ? 'flex-start' : 'center',
+        paddingTop: isShowKeyboard ? 100 : 0,
+        backgroundColor: 'white',
       }}
     >
-      <Text style={{ fontSize: 20, marginBottom: 20 }}>ユーザ登録画面</Text>
+      <TopLogoImage isShowKeyboard={isShowKeyboard} />
       <View>
         <GradientionTextInput
           style={{ width: 250 }}
