@@ -3,6 +3,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RecoilRoot, useRecoilState, useSetRecoilState } from 'recoil';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { HomeScreen } from '@src/screens/HomeScreen';
 import { RegisterScreen } from '@src/screens/RegisterScreen';
@@ -12,13 +13,15 @@ import { auth } from '@src/utils/firebaseAuth';
 import { userState, idTokenState } from '@src/states/user';
 import { CameraScreen } from './screens/CameraScreen';
 import { LoadingScreen } from './screens/LoadingScreen';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const { Screen, Navigator } = createNativeStackNavigator();
+const { Screen } = createNativeStackNavigator();
 
 export const App: FC = () => {
   const [user, setUser] = useRecoilState(userState);
   const setIdToken = useSetRecoilState(idTokenState);
   const [initializing, setInitializing] = useState(true);
+  const Tab = createBottomTabNavigator();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -46,19 +49,37 @@ export const App: FC = () => {
   return (
     <RecoilRoot>
       <NavigationContainer>
-        <Navigator>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ color, size }) => {
+              let iconName = '';
+              if (route.name === 'My Page') {
+                iconName = 'home';
+              } else if (route.name === 'Camera') {
+                iconName = 'camera';
+              } else if (route.name === 'ログイン') {
+                iconName = 'login';
+              } else if (route.name === '新規登録') {
+                iconName = 'account-plus';
+              }
+              return <Icon name={iconName} size={size} color={color} />;
+            },
+            tabBarActiveTintColor: '#2ecc71',
+            tabBarInactiveTintColor: '#3498db',
+          })}
+        >
           {user ? (
             <>
-              <Screen name="Home" component={HomeScreen} />
-              <Screen name="Camera" component={CameraScreen} />
+              <Tab.Screen name="My Page" component={HomeScreen} />
+              <Tab.Screen name="Camera" component={CameraScreen} />
             </>
           ) : (
             <>
-              <Screen name="Login" component={LoginScreen} />
-              <Screen name="Register" component={RegisterScreen} />
+              <Screen name="ログイン" component={LoginScreen} />
+              <Screen name="新規登録" component={RegisterScreen} />
             </>
           )}
-        </Navigator>
+        </Tab.Navigator>
       </NavigationContainer>
     </RecoilRoot>
   );

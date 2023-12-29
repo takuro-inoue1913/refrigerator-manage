@@ -1,16 +1,8 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
+import { View, Text, KeyboardAvoidingView, Platform } from 'react-native';
 
 import { auth } from '@src/utils/firebaseAuth';
-import { useNavigation } from '@react-navigation/native';
-import { Navigation } from '@src/types';
 import { LinearGradientButton } from '@src/components/GradationButton';
 import { GradientionTextInput } from '@src/components/GradientionTextInput';
 import { useIsShowKeyboard } from '@src/hooks/useIsShowKeyboard';
@@ -19,7 +11,6 @@ import { TopLogoImage } from '@src/components/TopLogoImage';
 export const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigation = useNavigation<Navigation>();
   const isShowKeyboard = useIsShowKeyboard();
 
   const handleLogin = async () => {
@@ -65,12 +56,6 @@ export const LoginScreen = () => {
       <LinearGradientButton width={250} onPress={handleLogin}>
         <Text style={{ color: 'white' }}>ログイン</Text>
       </LinearGradientButton>
-      <TouchableOpacity
-        style={{ marginTop: 20 }}
-        onPress={() => navigation.navigate('Register')}
-      >
-        <Text>ユーザ登録はこちら</Text>
-      </TouchableOpacity>
     </KeyboardAvoidingView>
   );
 };
