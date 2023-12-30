@@ -17,7 +17,7 @@ exports.processSignUp = functions.auth.user().onCreate(async (user) => {
     await admin.auth().setCustomUserClaims(user.uid, customClaims);
     axios({
       method: 'post',
-      url: 'https://refrigerator-manage.hasura.app/v1/graphql',
+      url: 'https://frimane.hasura.app/v1/graphql',
       data: {
         query: `
             mutation {
