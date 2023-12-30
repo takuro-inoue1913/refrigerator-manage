@@ -6,6 +6,7 @@ import Toast from 'react-native-toast-message';
 
 import { GradientionTextInput } from '@src/components/GradientionTextInput';
 import { LinearGradientButton } from '@src/components/GradationButton';
+import { handleFirebaseError } from '@src/utils/handleFirebaseError';
 
 export const PasswordResetScreen = () => {
   const [email, setEmail] = useState('');
@@ -15,15 +16,15 @@ export const PasswordResetScreen = () => {
       .then(() => {
         Toast.show({
           type: 'success',
-          text1: 'メールを送信しました',
-          text2: 'メールを確認してパスワードをリセットしてください',
+          text1: 'メールを送信しました。',
+          text2: 'メールを確認してパスワードをリセットしてください。',
         });
       })
       .catch((error) => {
         Toast.show({
           type: 'error',
-          text1: 'メール送信に失敗しました',
-          text2: error.message,
+          text1: 'メール送信に失敗しました。',
+          text2: handleFirebaseError(error.code),
         });
       });
   };

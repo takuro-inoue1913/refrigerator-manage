@@ -50,15 +50,10 @@ export const App: FC = () => {
   const LoginStack = () => {
     return (
       <Stack.Navigator>
+        <Stack.Screen name="ログイン" component={LoginScreen} />
         <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="PasswordReset"
+          name="パスワードリセット"
           component={PasswordResetScreen}
-          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     );
@@ -69,13 +64,14 @@ export const App: FC = () => {
       <NavigationContainer>
         <Tab.Navigator
           screenOptions={({ route }) => ({
+            tabBarShowLabel: false,
             tabBarIcon: ({ color, size }) => {
               let iconName = '';
-              if (route.name === 'My Page') {
+              if (route.name === 'マイページ') {
                 iconName = 'home';
-              } else if (route.name === 'Camera') {
+              } else if (route.name === '読み取り') {
                 iconName = 'camera';
-              } else if (route.name === 'ログイン') {
+              } else if (route.name === 'Login') {
                 iconName = 'login';
               } else if (route.name === '新規登録') {
                 iconName = 'account-plus';
@@ -88,12 +84,16 @@ export const App: FC = () => {
         >
           {user ? (
             <>
-              <Tab.Screen name="My Page" component={HomeScreen} />
-              <Tab.Screen name="Camera" component={CameraScreen} />
+              <Tab.Screen name="マイページ" component={HomeScreen} />
+              <Tab.Screen name="読み取り" component={CameraScreen} />
             </>
           ) : (
             <>
-              <Tab.Screen name="ログイン" component={LoginStack} />
+              <Tab.Screen
+                name="Login"
+                options={{ headerShown: false }}
+                component={LoginStack}
+              />
               <Tab.Screen name="新規登録" component={RegisterScreen} />
             </>
           )}

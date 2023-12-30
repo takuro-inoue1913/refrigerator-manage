@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { View, Text, KeyboardAvoidingView, Platform } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
 
 import { auth } from '@src/utils/firebaseAuth';
 import { LinearGradientButton } from '@src/components/GradationButton';
 import { GradientionTextInput } from '@src/components/GradientionTextInput';
 import { useIsShowKeyboard } from '@src/hooks/useIsShowKeyboard';
 import { TopLogoImage } from '@src/components/TopLogoImage';
-import { useNavigation } from '@react-navigation/native';
 import { Navigation } from '@src/types';
+import { handleFirebaseError } from '@src/utils/handleFirebaseError';
 
 export const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -17,11 +19,13 @@ export const LoginScreen = () => {
   const navigation = useNavigation<Navigation>();
 
   const handleLogin = async () => {
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-      console.log(error);
-    }
+    await signInWithEmailAndPassword(auth, email, password).catch((error) => {
+      Toast.show({
+        type: 'error',
+        text1: 'ログインに失敗しました。',
+        text2: handleFirebaseError(error.code),
+      });
+    });
   };
 
   return (
@@ -62,7 +66,7 @@ export const LoginScreen = () => {
       <View style={{ marginTop: 20 }}>
         <Text
           style={{ color: '#2ecc71' }}
-          onPress={() => navigation.navigate('PasswordReset')}
+          onPress={() => navigation.navigate('パスワードリセット')}
         >
           パスワードを忘れた方はこちら
         </Text>

@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, KeyboardAvoidingView, Platform } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import Toast from 'react-native-toast-message';
 
 import { auth } from '@src/utils/firebaseAuth';
 import { GradientionTextInput } from '@src/components/GradientionTextInput';
 import { LinearGradientButton } from '@src/components/GradationButton';
 import { useIsShowKeyboard } from '@src/hooks/useIsShowKeyboard';
 import { TopLogoImage } from '@src/components/TopLogoImage';
+import { handleFirebaseError } from '@src/utils/handleFirebaseError';
 
 export const RegisterScreen = () => {
   const [email, setEmail] = useState('');
@@ -14,12 +16,15 @@ export const RegisterScreen = () => {
   const isShowKeyboard = useIsShowKeyboard();
 
   const handleRegister = async () => {
-    try {
-      const user = await createUserWithEmailAndPassword(auth, email, password);
-      console.log(user);
-    } catch (error) {
-      console.log(error);
-    }
+    await createUserWithEmailAndPassword(auth, email, password).catch(
+      (error) => {
+        Toast.show({
+          type: 'error',
+          text1: '登録に失敗しました。',
+          text2: handleFirebaseError(error.code),
+        });
+      },
+    );
   };
 
   return (
