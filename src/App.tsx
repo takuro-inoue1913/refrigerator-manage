@@ -1,9 +1,10 @@
 // import { StyleSheet } from 'react-native';
 import React, { FC, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RecoilRoot, useRecoilState, useSetRecoilState } from 'recoil';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { HomeScreen } from '@src/screens/HomeScreen';
 import { RegisterScreen } from '@src/screens/RegisterScreen';
@@ -11,17 +12,16 @@ import { LoginScreen } from '@src/screens/LoginScreen';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@src/utils/firebaseAuth';
 import { userState, idTokenState } from '@src/states/user';
-import { CameraScreen } from './screens/CameraScreen';
-import { LoadingScreen } from './screens/LoadingScreen';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-const { Screen } = createNativeStackNavigator();
+import { CameraScreen } from '@src/screens/CameraScreen';
+import { LoadingScreen } from '@src/screens/LoadingScreen';
+import { PasswordResetScreen } from './screens/PasswordResetScreen';
 
 export const App: FC = () => {
   const [user, setUser] = useRecoilState(userState);
   const setIdToken = useSetRecoilState(idTokenState);
   const [initializing, setInitializing] = useState(true);
   const Tab = createBottomTabNavigator();
+  const Stack = createNativeStackNavigator();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -45,6 +45,23 @@ export const App: FC = () => {
   }, []);
 
   if (initializing) return <LoadingScreen />;
+
+  const LoginStack = () => {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="PasswordReset"
+          component={PasswordResetScreen}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    );
+  };
 
   return (
     <RecoilRoot>
@@ -75,8 +92,8 @@ export const App: FC = () => {
             </>
           ) : (
             <>
-              <Screen name="ログイン" component={LoginScreen} />
-              <Screen name="新規登録" component={RegisterScreen} />
+              <Tab.Screen name="ログイン" component={LoginStack} />
+              <Tab.Screen name="新規登録" component={RegisterScreen} />
             </>
           )}
         </Tab.Navigator>

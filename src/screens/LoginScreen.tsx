@@ -7,11 +7,14 @@ import { LinearGradientButton } from '@src/components/GradationButton';
 import { GradientionTextInput } from '@src/components/GradientionTextInput';
 import { useIsShowKeyboard } from '@src/hooks/useIsShowKeyboard';
 import { TopLogoImage } from '@src/components/TopLogoImage';
+import { useNavigation } from '@react-navigation/native';
+import { Navigation } from '@src/types';
 
 export const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const isShowKeyboard = useIsShowKeyboard();
+  const navigation = useNavigation<Navigation>();
 
   const handleLogin = async () => {
     try {
@@ -56,6 +59,14 @@ export const LoginScreen = () => {
       <LinearGradientButton width={250} onPress={handleLogin}>
         <Text style={{ color: 'white' }}>ログイン</Text>
       </LinearGradientButton>
+      <View style={{ marginTop: 20 }}>
+        <Text
+          style={{ color: '#2ecc71' }}
+          onPress={() => navigation.navigate('PasswordReset')}
+        >
+          パスワードを忘れた方はこちら
+        </Text>
+      </View>
     </KeyboardAvoidingView>
   );
 };
