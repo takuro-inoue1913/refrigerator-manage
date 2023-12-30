@@ -15,6 +15,7 @@ import { userState, idTokenState } from '@src/states/user';
 import { CameraScreen } from '@src/screens/CameraScreen';
 import { LoadingScreen } from '@src/screens/LoadingScreen';
 import { PasswordResetScreen } from './screens/PasswordResetScreen';
+import Toast from 'react-native-toast-message';
 
 export const App: FC = () => {
   const [user, setUser] = useRecoilState(userState);
@@ -97,6 +98,7 @@ export const App: FC = () => {
             </>
           )}
         </Tab.Navigator>
+        <Toast topOffset={100} />
       </NavigationContainer>
     </RecoilRoot>
   );
