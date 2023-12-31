@@ -11,7 +11,6 @@ export const useGetVegetableMaster = () => {
       const { vegetable_master } = await client.request(
         GetVegetableMasterDocument,
       );
-      console.log('useGetVegetableMaster: ', vegetable_master);
       return vegetable_master;
     },
     staleTime: 5 * 60 * 1000, // データを5分間新鮮とみなす
