@@ -6,8 +6,10 @@ import Toast from 'react-native-toast-message';
 import { auth } from '@src/utils/firebaseAuth';
 import { LinearGradientButton } from '@src/components/GradationButton';
 import { handleFirebaseError } from '@src/utils/handleFirebaseError';
+import { useGetUser } from '@src/interface/hooks/useGetUser';
 
 export const HomeScreen = () => {
+  const { data } = useGetUser();
   const handleLogout = () => {
     signOut(auth).catch((error) => {
       Toast.show({
@@ -23,6 +25,8 @@ export const HomeScreen = () => {
         <LinearGradientButton onPress={handleLogout}>
           <Text style={{ color: 'white' }}>ログアウト</Text>
         </LinearGradientButton>
+        <Text>{data?.email}</Text>
+        <Text>{data?.id}</Text>
       </View>
     </View>
   );
