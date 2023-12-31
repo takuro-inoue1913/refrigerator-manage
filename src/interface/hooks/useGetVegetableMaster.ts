@@ -5,7 +5,7 @@ import { buildGraphQLMasterClient } from '@src/interface/buildGraphQLMasterClien
 
 export const useGetVegetableMaster = () => {
   return useQuery({
-    queryKey: ['graphl', 'get', 'user'],
+    queryKey: ['graphl', 'get', 'vegetable_master'],
     queryFn: async () => {
       const client = buildGraphQLMasterClient();
       const { vegetable_master } = await client.request(

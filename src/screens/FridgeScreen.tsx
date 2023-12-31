@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 
 import { useGetVegetableMaster } from '@src/interface/hooks/useGetVegetableMaster';
 export const FridgeScreen = () => {
-  const { data } = useGetVegetableMaster();
+  const { data, isFetched } = useGetVegetableMaster();
 
   if (!data) {
     return <Text>loading...</Text>;
@@ -12,13 +12,15 @@ export const FridgeScreen = () => {
 
   return (
     <View>
-      {data.map((vegetable) => (
-        <Image
-          key={vegetable.vegetable_id}
-          source={{ uri: vegetable.image_uri }}
-          style={{ width: 66, height: 58 }}
-        />
-      ))}
+      {isFetched &&
+        data.map((vegetable) => (
+          <Image
+            key={vegetable.vegetable_id}
+            source={{ uri: vegetable.image_uri }}
+            style={{ width: 66, height: 58 }}
+          />
+        ))}
+      <Text>FridgeScreen</Text>
     </View>
   );
 };
