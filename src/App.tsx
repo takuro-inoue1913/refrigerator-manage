@@ -16,6 +16,7 @@ import { CameraScreen } from '@src/screens/CameraScreen';
 import { LoadingScreen } from '@src/screens/LoadingScreen';
 import { PasswordResetScreen } from './screens/PasswordResetScreen';
 import Toast from 'react-native-toast-message';
+import { FridgeScreen } from './screens/FridgeScreen';
 
 export const App: FC = () => {
   const [user, setUser] = useRecoilState(userState);
@@ -71,6 +72,9 @@ export const App: FC = () => {
                 iconName = 'home';
               } else if (route.name === '読み取り') {
                 iconName = 'camera';
+              }
+              if (route.name === '冷蔵庫管理') {
+                iconName = 'fridge';
               } else if (route.name === 'Login') {
                 iconName = 'login';
               } else if (route.name === '新規登録') {
@@ -85,6 +89,7 @@ export const App: FC = () => {
           {user ? (
             <>
               <Tab.Screen name="マイページ" component={HomeScreen} />
+              <Tab.Screen name="冷蔵庫管理" component={FridgeScreen} />
               <Tab.Screen name="読み取り" component={CameraScreen} />
             </>
           ) : (
