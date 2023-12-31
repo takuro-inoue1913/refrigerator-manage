@@ -12,6 +12,7 @@ exports.processSignUp = functions.auth.user().onCreate(async (user) => {
       'x-hasura-user-id': user.uid,
     },
   };
+  const hasuraAdminSecret = functions.config().hasura.admin_secret;
 
   try {
     await admin.auth().setCustomUserClaims(user.uid, customClaims);
@@ -38,8 +39,7 @@ exports.processSignUp = functions.auth.user().onCreate(async (user) => {
           `,
       },
       headers: {
-        'x-hasura-admin-secret':
-          'yBH2ZlHhkPyjI3qPevJKKQcpqYjMJ1Sl8uApj4ns1Cks69Us6ccDewiSEpAGMORm',
+        'x-hasura-admin-secret': hasuraAdminSecret,
       },
     });
 

@@ -10,7 +10,7 @@
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
-    "deploy": "export NODE_TLS_REJECT_UNAUTHORIZED=0 && firebase deploy --only functions",
+    "deploy": "export NODE_TLS_REJECT_UNAUTHORIZED=0 && firebase deploy --only functions && unset NODE_TLS_REJECT_UNAUTHORIZED",
     "logs": "firebase functions:log"
   },
   "engines": {
