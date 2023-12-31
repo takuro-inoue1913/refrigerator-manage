@@ -5,8 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 
 import { auth } from '@src/utils/firebaseAuth';
-import { LinearGradientButton } from '@src/components/GradationButton';
-import { GradientionTextInput } from '@src/components/GradientionTextInput';
+import { LinearGradientButton } from '@src/components/common/GradationButton';
+import { GradientionTextInput } from '@src/components/common/GradientionTextInput';
 import { useIsShowKeyboard } from '@src/hooks/useIsShowKeyboard';
 import { TopLogoImage } from '@src/components/TopLogoImage';
 import { Navigation } from '@src/types';

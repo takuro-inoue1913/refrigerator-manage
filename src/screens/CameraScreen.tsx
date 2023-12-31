@@ -5,7 +5,7 @@ import { Button, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { GOOGLE_CLOUD_VISION_API_KEY } from '@env';
-import { LinearGradientButton } from '@src/components/GradationButton';
+import { LinearGradientButton } from '@src/components/common/GradationButton';
 
 // import { LoadingScreen } from '@src/screens/LoadingScreen';
 

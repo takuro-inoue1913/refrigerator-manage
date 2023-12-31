@@ -4,8 +4,8 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import Toast from 'react-native-toast-message';
 
 import { auth } from '@src/utils/firebaseAuth';
-import { GradientionTextInput } from '@src/components/GradientionTextInput';
-import { LinearGradientButton } from '@src/components/GradationButton';
+import { GradientionTextInput } from '@src/components/common/GradientionTextInput';
+import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { useIsShowKeyboard } from '@src/hooks/useIsShowKeyboard';
 import { TopLogoImage } from '@src/components/TopLogoImage';
 import { handleFirebaseError } from '@src/utils/handleFirebaseError';

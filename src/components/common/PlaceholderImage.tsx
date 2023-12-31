@@ -1,7 +1,7 @@
 import React, { useState, ComponentProps, FC } from 'react';
 import { Image, StyleSheet } from 'react-native';
 
-import { SkeletonImageView } from '@src/components/SkeletonImage';
+import { SkeletonImageView } from '@src/components/common/SkeletonImage';
 
 type Props = ComponentProps<typeof Image>;
 

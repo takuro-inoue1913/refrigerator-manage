@@ -3,8 +3,8 @@ import { Dimensions, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native';
 
 import { useGetVegetableMaster } from '@src/interface/hooks/useGetVegetableMaster';
-import { PlaceholderImage } from '@src/components/PlaceholderImage';
-import { SkeletonImageView } from '@src/components/SkeletonImage';
+import { PlaceholderImage } from '@src/components/common/PlaceholderImage';
+import { SkeletonImageView } from '@src/components/common/SkeletonImage';
 
 // 画面の幅を取得
 const { width } = Dimensions.get('window');

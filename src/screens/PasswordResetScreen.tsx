@@ -4,8 +4,8 @@ import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '@src/utils/firebaseAuth';
 import Toast from 'react-native-toast-message';
 
-import { GradientionTextInput } from '@src/components/GradientionTextInput';
-import { LinearGradientButton } from '@src/components/GradationButton';
+import { GradientionTextInput } from '@src/components/common/GradientionTextInput';
+import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { handleFirebaseError } from '@src/utils/handleFirebaseError';
 
 export const PasswordResetScreen = () => {

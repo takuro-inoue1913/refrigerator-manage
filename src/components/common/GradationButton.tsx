@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import { CommonGradation } from '@src/components/CommonGradation';
+import { CommonGradation } from '@src/components/common/CommonGradation';
 
 type Props = {
   width?: number;

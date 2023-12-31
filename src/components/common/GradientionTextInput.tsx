@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { StyleSheet, TextInput, View, TextInputProps } from 'react-native';
 
-import { CommonGradation } from '@src/components/CommonGradation';
+import { CommonGradation } from '@src/components/common/CommonGradation';
 
 type Props = TextInputProps;
 
