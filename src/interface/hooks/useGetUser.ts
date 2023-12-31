@@ -13,7 +13,11 @@ export const useGetUser = () => {
     queryFn: async () => {
       const client = buildGraphQLClient(idToken);
       const { users } = await client.request(GetUserDocument);
+      console.log('useGetUser: ', users);
       return users[0];
     },
+    staleTime: 0,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
   });
 };

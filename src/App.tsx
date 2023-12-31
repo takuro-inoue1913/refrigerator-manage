@@ -18,8 +18,8 @@ import { PasswordResetScreen } from '@src/screens/PasswordResetScreen';
 import { FridgeScreen } from '@src/screens/FridgeScreen';
 
 export const App: FC = () => {
-  const [user, setUser] = useRecoilState(userState);
-  const setIdToken = useSetRecoilState(idTokenState);
+  const setUser = useSetRecoilState(userState);
+  const [idToken, setIdToken] = useRecoilState(idTokenState);
   const [initializing, setInitializing] = useState(true);
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator();
@@ -39,6 +39,7 @@ export const App: FC = () => {
         });
       } else {
         setUser(null);
+        setIdToken(null);
       }
       setInitializing(false);
     });
@@ -84,7 +85,7 @@ export const App: FC = () => {
           tabBarInactiveTintColor: '#3498db',
         })}
       >
-        {user ? (
+        {idToken ? (
           <>
             <Tab.Screen name="マイページ" component={HomeScreen} />
             <Tab.Screen name="冷蔵庫管理" component={FridgeScreen} />
