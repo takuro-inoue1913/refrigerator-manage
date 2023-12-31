@@ -2,16 +2,23 @@ import React from 'react';
 import { Image } from 'react-native';
 import { Text, View } from 'react-native';
 
+import { useGetVegetableMaster } from '@src/interface/hooks/useGetVegetableMaster';
 export const FridgeScreen = () => {
+  const { data } = useGetVegetableMaster();
+
+  if (!data) {
+    return <Text>loading...</Text>;
+  }
+
   return (
     <View>
-      <Text>FridgeScreen</Text>
-      <Image
-        source={{
-          uri: 'https://firebasestorage.googleapis.com/v0/b/refrigerator-manage.appspot.com/o/master-images%2Ftamanegi.jpeg?alt=media&token=f2414689-2649-4594-8fc0-b0144e166b1b',
-        }}
-        style={{ width: 66, height: 58 }}
-      />
+      {data.map((vegetable) => (
+        <Image
+          key={vegetable.vegetable_id}
+          source={{ uri: vegetable.image_uri }}
+          style={{ width: 66, height: 58 }}
+        />
+      ))}
     </View>
   );
 };

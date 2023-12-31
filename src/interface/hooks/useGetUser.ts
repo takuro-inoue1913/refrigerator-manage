@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 
 import { idTokenState } from '@src/states/user';
 import { GetUserDocument } from '@src/interface/__generated__/graphql';
-import { buildGraphQLClient } from '@src/interface/buildGraphQLClient';
+import { buildGraphQLUserClient } from '@src/interface/buildGraphQLUserClient';
 
 export const useGetUser = () => {
   const idToken = useRecoilValue(idTokenState);
@@ -11,7 +11,7 @@ export const useGetUser = () => {
   return useQuery({
     queryKey: ['graphl', 'get', 'user'],
     queryFn: async () => {
-      const client = buildGraphQLClient(idToken);
+      const client = buildGraphQLUserClient(idToken);
       const { users } = await client.request(GetUserDocument);
       console.log('useGetUser: ', users);
       return users[0];
