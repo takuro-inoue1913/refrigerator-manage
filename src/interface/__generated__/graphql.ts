@@ -1695,7 +1695,7 @@ export type Unit_Master_Variance_Fields = {
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
-/** columns and relationships of "users" */
+/** frimane ユーザー */
 export type Users = {
   __typename?: 'users';
   created_at: Scalars['timestamptz']['output'];
@@ -1712,7 +1712,7 @@ export type Users = {
 };
 
 
-/** columns and relationships of "users" */
+/** frimane ユーザー */
 export type UsersUsers_Meat_StocksArgs = {
   distinct_on?: InputMaybe<Array<Meet_Stocks_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -1722,7 +1722,7 @@ export type UsersUsers_Meat_StocksArgs = {
 };
 
 
-/** columns and relationships of "users" */
+/** frimane ユーザー */
 export type UsersUsers_Meat_Stocks_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Meet_Stocks_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -1732,7 +1732,7 @@ export type UsersUsers_Meat_Stocks_AggregateArgs = {
 };
 
 
-/** columns and relationships of "users" */
+/** frimane ユーザー */
 export type UsersUsers_Vegetable_StocksArgs = {
   distinct_on?: InputMaybe<Array<Vegetable_Stocks_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -1742,7 +1742,7 @@ export type UsersUsers_Vegetable_StocksArgs = {
 };
 
 
-/** columns and relationships of "users" */
+/** frimane ユーザー */
 export type UsersUsers_Vegetable_Stocks_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Vegetable_Stocks_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
