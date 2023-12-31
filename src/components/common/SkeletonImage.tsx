@@ -6,7 +6,7 @@ import { useSkeletonAnimation } from '@src/hooks/useSkeletonAnimation';
 /**
  * 画像のプレースホルダーを表示するコンポーネント
  */
-export const SkeletonImageView = () => {
+export const SkeletonImage = () => {
   const { backgroundColor } = useSkeletonAnimation();
   return <Animated.View style={[styles.skeleton, { backgroundColor }]} />;
 };

@@ -1,7 +1,7 @@
 import React, { useState, ComponentProps, FC } from 'react';
 import { Image, StyleSheet } from 'react-native';
 
-import { SkeletonImageView } from '@src/components/common/SkeletonImage';
+import { SkeletonImage } from '@src/components/common/SkeletonImage';
 
 type Props = ComponentProps<typeof Image>;
 
@@ -13,7 +13,7 @@ export const PlaceholderImage: FC<Props> = (props) => {
 
   return (
     <>
-      {!isLoaded && <SkeletonImageView />}
+      {!isLoaded && <SkeletonImage />}
       <Image
         {...props}
         onLoadEnd={() => setIsLoaded(true)}
