@@ -31,4 +31,5 @@ module.exports = {
       version: 'detect',
     },
   },
+  ignorePatterns: ['src/interface/__generated__/**/*'],
 };

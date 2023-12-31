@@ -1,0 +1,10 @@
+overwrite: true
+schema:
+  'https://frimane.hasura.app/v1/graphql':
+    headers:
+      x-hasura-admin-secret: 'yBH2ZlHhkPyjI3qPevJKKQcpqYjMJ1Sl8uApj4ns1Cks69Us6ccDewiSEpAGMORm'
+documents: 'src/interface/graphql/**/*.graphql'
+generates:
+  src/interface/__generated__/:
+    preset: 'client'
+    plugins: ['typed-document-node']
