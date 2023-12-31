@@ -4,6 +4,7 @@ import { ScrollView } from 'react-native';
 
 import { useGetVegetableMaster } from '@src/interface/hooks/useGetVegetableMaster';
 import { PlaceholderImage } from '@src/components/PlaceholderImage';
+import { SkeletonImageView } from '@src/components/SkeletonImage';
 
 // 画面の幅を取得
 const { width } = Dimensions.get('window');
@@ -12,9 +13,8 @@ export const FridgeScreen = () => {
   const { data } = useGetVegetableMaster();
 
   if (!data) {
-    // 横に3つずつ並べるために、3つずつに分割する
     const rows = [];
-    for (let i = 0; i < 20; i += 3) {
+    for (let i = 0; i < 40; i += 3) {
       rows.push(Array.from({ length: 3 }));
     }
     return (
@@ -23,13 +23,7 @@ export const FridgeScreen = () => {
           <View key={`row-${index}`} style={styles.row}>
             {row.map((_, index) => (
               <View key={index} style={styles.box}>
-                <View
-                  style={{
-                    ...styles.image,
-                    backgroundColor: '#e1e4e8',
-                    borderRadius: 10,
-                  }}
-                />
+                <SkeletonImageView />
               </View>
             ))}
           </View>

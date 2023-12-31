@@ -1,5 +1,7 @@
 import React, { useState, ComponentProps, FC } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
+
+import { SkeletonImageView } from '@src/components/SkeletonImage';
 
 type Props = ComponentProps<typeof Image>;
 
@@ -11,7 +13,7 @@ export const PlaceholderImage: FC<Props> = (props) => {
 
   return (
     <>
-      {!isLoaded && <View style={styles.damiImg} />}
+      {!isLoaded && <SkeletonImageView />}
       <Image
         {...props}
         onLoadEnd={() => setIsLoaded(true)}
@@ -25,13 +27,6 @@ export const PlaceholderImage: FC<Props> = (props) => {
 };
 
 const styles = StyleSheet.create({
-  damiImg: {
-    position: 'absolute',
-    width: 100,
-    height: 80,
-    borderRadius: 10,
-    backgroundColor: '#e1e4e8',
-  },
   image: {
     width: 100,
     height: 80,
