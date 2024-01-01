@@ -10,9 +10,9 @@ type Props = {
 } & ComponentProps<typeof Image>;
 
 /**
- * 画像のプレースホルダーを表示するコンポーネント
+ *
  */
-export const PlaceholderImage: FC<Props> = (props) => {
+export const ItemImage: FC<Props> = (props) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (

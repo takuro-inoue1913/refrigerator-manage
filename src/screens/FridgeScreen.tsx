@@ -3,7 +3,7 @@ import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native';
 
 import { useGetVegetableMaster } from '@src/interface/hooks/useGetVegetableMaster';
-import { PlaceholderImage } from '@src/components/common/PlaceholderImage';
+import { ItemImage } from '@src/components/common/ItemImage';
 import { SkeletonImageViews } from '@src/components/SkeletonImageViews';
 import commonStyle from '@src/utils/commonStyle';
 
@@ -29,10 +29,7 @@ export const FridgeScreen = () => {
         <View key={`row-${index}`} style={styles.row}>
           {row.map((vegetable) => (
             <View key={vegetable.vegetable_id} style={styles.box}>
-              <PlaceholderImage
-                source={{ uri: vegetable.image_uri }}
-                isActive
-              />
+              <ItemImage source={{ uri: vegetable.image_uri }} />
               <Text style={styles.displayName}>{vegetable.display_name}</Text>
             </View>
           ))}
