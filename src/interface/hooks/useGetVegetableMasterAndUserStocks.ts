@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 
 import { GetVegetableMasterAndUnitAndStocksDocument } from '@src/interface/__generated__/graphql';
-import { buildGraphQLUserClient } from '@src/interface/buildGraphQLUserClient';
+import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
 import { idTokenState } from '@src/states/user';
 
 export const useGetVegetableMasterAndUserStocks = () => {

@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 
 import { idTokenState } from '@src/states/user';
 import { GetUserDocument } from '@src/interface/__generated__/graphql';
-import { buildGraphQLUserClient } from '@src/interface/buildGraphQLUserClient';
+import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
 
 export const useGetUser = () => {
   const idToken = useRecoilValue(idTokenState);
