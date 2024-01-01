@@ -5,6 +5,9 @@ type Props = {
   isShowKeyboard: boolean;
 };
 
+/**
+ * トップ画面のロゴを表示するコンポーネント。
+ */
 export const TopLogoImage: FC<Props> = ({ isShowKeyboard }) => {
   return (
     <>

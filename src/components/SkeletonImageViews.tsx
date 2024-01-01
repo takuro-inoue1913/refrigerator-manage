@@ -9,6 +9,9 @@ type Props = {
   number?: number;
 };
 
+/**
+ * 画像のスケルトンを表示するコンポーネント。
+ */
 export const SkeletonImageViews: FC<Props> = ({ number }) => {
   const rowLength = number ?? 40;
 

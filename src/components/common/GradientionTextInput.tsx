@@ -5,6 +5,9 @@ import { CommonGradation } from '@src/components/common/CommonGradation';
 
 type Props = TextInputProps;
 
+/**
+ * グラデーションの枠で囲まれたテキスト入力コンポーネント。
+ */
 export const GradientionTextInput: FC<Props> = (props) => {
   return (
     <View style={styles.gradientBorderContainer}>

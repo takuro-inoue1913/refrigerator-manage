@@ -3,10 +3,9 @@ import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native';
 
 import { useGetVegetableMasterAndUserStocks } from '@src/interface/hooks/useGetVegetableMasterAndUserStocks';
-import { ItemImage } from '@src/components/common/ItemImage';
+import { ItemImage } from '@src/components/ItemImage';
 import { SkeletonImageViews } from '@src/components/SkeletonImageViews';
 import commonStyle from '@src/utils/commonStyle';
-import { CommonGradation } from '@src/components/common/CommonGradation';
 
 // 画面の幅を取得
 const { width } = Dimensions.get('window');
@@ -32,21 +31,11 @@ export const FridgeScreen = () => {
             <View key={vegetable.vegetable_id} style={styles.box}>
               <ItemImage
                 source={{ uri: vegetable.image_uri }}
-                isActive={
-                  vegetable.vegetable_master_vegetable_stocks?.quantity !==
-                    undefined &&
-                  vegetable.vegetable_master_vegetable_stocks.quantity > 0
+                stockQuantity={
+                  vegetable.vegetable_master_vegetable_stocks?.quantity
                 }
+                unitName={vegetable.vegetable_master_unit_master?.unit_name}
               />
-              {vegetable.vegetable_master_vegetable_stocks?.quantity !==
-                undefined && (
-                <CommonGradation style={styles.badgeContainer}>
-                  <Text style={styles.badgeText}>
-                    {vegetable.vegetable_master_vegetable_stocks?.quantity}
-                    {vegetable.vegetable_master_unit_master?.unit_name}
-                  </Text>
-                </CommonGradation>
-              )}
               <Text style={styles.displayName}>{vegetable.display_name}</Text>
             </View>
           ))}

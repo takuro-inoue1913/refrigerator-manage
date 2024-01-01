@@ -3,6 +3,7 @@ import { Animated, StyleSheet } from 'react-native';
 
 import { useSkeletonAnimation } from '@src/hooks/useSkeletonAnimation';
 import commonStyle from '@src/utils/commonStyle';
+
 /**
  * 画像のプレースホルダーを表示するコンポーネント
  */
