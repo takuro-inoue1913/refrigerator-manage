@@ -5,7 +5,9 @@ import { SkeletonImage } from '@src/components/common/SkeletonImage';
 import commonStyle from '@src/utils/commonStyle';
 
 type Props = {
+  /** 画像の読み込みが完了した時に実行される関数。 */
   onLoadEnd?: () => void;
+  /** 画像のアクティブ状態を表すフラグ。 */
   isActive?: boolean;
 } & ComponentProps<typeof Image>;
 
