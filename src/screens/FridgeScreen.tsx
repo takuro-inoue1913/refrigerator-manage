@@ -1,10 +1,11 @@
 import React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native';
 
 import { useGetVegetableMaster } from '@src/interface/hooks/useGetVegetableMaster';
 import { PlaceholderImage } from '@src/components/common/PlaceholderImage';
 import { SkeletonImageViews } from '@src/components/SkeletonImageViews';
+import commonStyle from '@src/utils/commonStyle';
 
 // 画面の幅を取得
 const { width } = Dimensions.get('window');
@@ -28,7 +29,11 @@ export const FridgeScreen = () => {
         <View key={`row-${index}`} style={styles.row}>
           {row.map((vegetable) => (
             <View key={vegetable.vegetable_id} style={styles.box}>
-              <PlaceholderImage source={{ uri: vegetable.image_uri }} />
+              <PlaceholderImage
+                source={{ uri: vegetable.image_uri }}
+                isActive
+              />
+              <Text style={styles.displayName}>{vegetable.display_name}</Text>
             </View>
           ))}
         </View>
@@ -51,11 +56,9 @@ const styles = StyleSheet.create({
     height: 100,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
   },
-  image: {
-    width: 100,
-    height: 80,
-    borderRadius: 10,
+  image: commonStyle.image,
+  displayName: {
+    fontSize: 12,
   },
 });

@@ -2,8 +2,12 @@ import React, { useState, ComponentProps, FC } from 'react';
 import { Image, StyleSheet } from 'react-native';
 
 import { SkeletonImage } from '@src/components/common/SkeletonImage';
+import commonStyle from '@src/utils/commonStyle';
 
-type Props = ComponentProps<typeof Image>;
+type Props = {
+  onLoadEnd?: () => void;
+  isActive?: boolean;
+} & ComponentProps<typeof Image>;
 
 /**
  * 画像のプレースホルダーを表示するコンポーネント
@@ -18,7 +22,7 @@ export const PlaceholderImage: FC<Props> = (props) => {
         {...props}
         onLoadEnd={() => setIsLoaded(true)}
         style={[
-          styles.image,
+          props.isActive ? styles.activeImage : styles.image,
           isLoaded ? styles.imageVisible : styles.imageHidden,
         ]}
       />
@@ -28,9 +32,14 @@ export const PlaceholderImage: FC<Props> = (props) => {
 
 const styles = StyleSheet.create({
   image: {
-    width: 100,
-    height: 80,
-    borderRadius: 10,
+    ...commonStyle.image,
+    borderWidth: 3,
+    borderColor: '#e1e4e8',
+  },
+  activeImage: {
+    ...commonStyle.image,
+    borderWidth: 3,
+    borderColor: '#2ecc71',
   },
   imageVisible: {
     opacity: 1,

@@ -2,7 +2,7 @@ import React from 'react';
 import { Animated, StyleSheet } from 'react-native';
 
 import { useSkeletonAnimation } from '@src/hooks/useSkeletonAnimation';
-
+import commonStyle from '@src/utils/commonStyle';
 /**
  * 画像のプレースホルダーを表示するコンポーネント
  */
@@ -13,10 +13,8 @@ export const SkeletonImage = () => {
 
 const styles = StyleSheet.create({
   skeleton: {
+    ...commonStyle.image,
     position: 'absolute',
-    width: 100,
-    height: 80,
-    borderRadius: 10,
     backgroundColor: '#e1e4e8',
   },
 });
