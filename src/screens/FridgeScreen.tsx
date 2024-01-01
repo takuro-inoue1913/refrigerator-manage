@@ -2,7 +2,7 @@ import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native';
 
-import { useGetVegetableMaster } from '@src/interface/hooks/useGetVegetableMaster';
+import { useGetVegetableMasterAndUserStocks } from '@src/interface/hooks/useGetVegetableMasterAndUserStocks';
 import { ItemImage } from '@src/components/common/ItemImage';
 import { SkeletonImageViews } from '@src/components/SkeletonImageViews';
 import commonStyle from '@src/utils/commonStyle';
@@ -12,7 +12,7 @@ import { CommonGradation } from '@src/components/common/CommonGradation';
 const { width } = Dimensions.get('window');
 
 export const FridgeScreen = () => {
-  const { data } = useGetVegetableMaster();
+  const { data } = useGetVegetableMasterAndUserStocks();
 
   if (!data) {
     return <SkeletonImageViews />;
@@ -30,10 +30,23 @@ export const FridgeScreen = () => {
         <View key={`row-${index}`} style={styles.row}>
           {row.map((vegetable) => (
             <View key={vegetable.vegetable_id} style={styles.box}>
-              <ItemImage source={{ uri: vegetable.image_uri }} isActive />
-              <CommonGradation style={styles.badgeContainer}>
-                <Text style={styles.badgeText}>{999}個</Text>
-              </CommonGradation>
+              <ItemImage
+                source={{ uri: vegetable.image_uri }}
+                isActive={
+                  vegetable.vegetable_master_vegetable_stocks?.quantity !==
+                    undefined &&
+                  vegetable.vegetable_master_vegetable_stocks.quantity > 0
+                }
+              />
+              {vegetable.vegetable_master_vegetable_stocks?.quantity !==
+                undefined && (
+                <CommonGradation style={styles.badgeContainer}>
+                  <Text style={styles.badgeText}>
+                    {vegetable.vegetable_master_vegetable_stocks?.quantity}
+                    {vegetable.vegetable_master_unit_master?.unit_name}
+                  </Text>
+                </CommonGradation>
+              )}
               <Text style={styles.displayName}>{vegetable.display_name}</Text>
             </View>
           ))}

@@ -1,0 +1,17 @@
+# vegetableMaster と unitMaster と stock を取得する。
+query GetVegetableMasterAndUnitAndStocks {
+  vegetable_master {
+    vegetable_id
+    display_name
+    vegetable_name
+    image_uri
+    vegetable_master_unit_master {
+      unit_id
+      unit_name
+    }
+    vegetable_master_vegetable_stocks {
+      stock_id
+      quantity
+    }
+  }
+}

@@ -14,7 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "query GetUser {\n  users {\n    id\n    email\n    created_at\n  }\n}": types.GetUserDocument,
-    "query GetVegetableMaster {\n  vegetable_master {\n    vegetable_id\n    vegetable_name\n    display_name\n    image_uri\n  }\n}": types.GetVegetableMasterDocument,
+    "query GetVegetableMasterAndUnitAndStocks {\n  vegetable_master {\n    vegetable_id\n    display_name\n    vegetable_name\n    image_uri\n    vegetable_master_unit_master {\n      unit_id\n      unit_name\n    }\n    vegetable_master_vegetable_stocks {\n      stock_id\n      quantity\n    }\n  }\n}": types.GetVegetableMasterAndUnitAndStocksDocument,
 };
 
 /**
@@ -38,7 +38,7 @@ export function graphql(source: "query GetUser {\n  users {\n    id\n    email\n
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query GetVegetableMaster {\n  vegetable_master {\n    vegetable_id\n    vegetable_name\n    display_name\n    image_uri\n  }\n}"): (typeof documents)["query GetVegetableMaster {\n  vegetable_master {\n    vegetable_id\n    vegetable_name\n    display_name\n    image_uri\n  }\n}"];
+export function graphql(source: "query GetVegetableMasterAndUnitAndStocks {\n  vegetable_master {\n    vegetable_id\n    display_name\n    vegetable_name\n    image_uri\n    vegetable_master_unit_master {\n      unit_id\n      unit_name\n    }\n    vegetable_master_vegetable_stocks {\n      stock_id\n      quantity\n    }\n  }\n}"): (typeof documents)["query GetVegetableMasterAndUnitAndStocks {\n  vegetable_master {\n    vegetable_id\n    display_name\n    vegetable_name\n    image_uri\n    vegetable_master_unit_master {\n      unit_id\n      unit_name\n    }\n    vegetable_master_vegetable_stocks {\n      stock_id\n      quantity\n    }\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

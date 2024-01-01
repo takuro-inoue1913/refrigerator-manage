@@ -1,8 +1,0 @@
-query GetVegetableMaster {
-  vegetable_master {
-    vegetable_id
-    vegetable_name
-    display_name
-    image_uri
-  }
-}
