@@ -19,24 +19,25 @@ export const FridgeScreen = () => {
 
   // 横に3つずつ並べるために、3つずつに分割する
   const rows = [];
-  for (let i = 0; i < data.length; i += 3) {
-    rows.push(data.slice(i, i + 3));
+  for (let i = 0; i < data.ids.length; i += 3) {
+    rows.push(data.ids.slice(i, i + 3));
   }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {rows.map((row, index) => (
         <View key={`row-${index}`} style={styles.row}>
-          {row.map((vegetable) => (
-            <View key={vegetable.vegetable_id} style={styles.box}>
+          {row.map((vegetableId) => (
+            <View key={data.byId[vegetableId].vegetableId} style={styles.box}>
               <ItemImage
-                source={{ uri: vegetable.image_uri }}
-                stockQuantity={
-                  vegetable.vegetable_master_vegetable_stocks?.quantity
-                }
-                unitName={vegetable.vegetable_master_unit_master?.unit_name}
+                source={{ uri: data.byId[vegetableId].imageUri }}
+                hasStock={data.byId[vegetableId].hasStock}
+                quantity={data.byId[vegetableId].quantity}
+                unitName={data.byId[vegetableId].unitName}
               />
-              <Text style={styles.displayName}>{vegetable.display_name}</Text>
+              <Text style={styles.displayName}>
+                {data.byId[vegetableId].vegetableDisplayName}
+              </Text>
             </View>
           ))}
         </View>

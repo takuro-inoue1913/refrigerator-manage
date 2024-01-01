@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 
+import { idTokenState } from '@src/states/user';
 import { GetVegetableMasterAndUnitAndStocksDocument } from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
-import { idTokenState } from '@src/states/user';
+import { generateVegetablesStocks } from '@src/interface/logics/generate/generateVegetablesStocks';
 
 export const useGetVegetableMasterAndUserStocks = () => {
   const idToken = useRecoilValue(idTokenState);
@@ -12,10 +13,10 @@ export const useGetVegetableMasterAndUserStocks = () => {
     queryKey: ['graphl', 'get', 'vegetable_master'],
     queryFn: async () => {
       const client = buildGraphQLUserClient(idToken);
-      const { vegetable_master } = await client.request(
+      const data = await client.request(
         GetVegetableMasterAndUnitAndStocksDocument,
       );
-      return vegetable_master;
+      return generateVegetablesStocks(data);
     },
     staleTime: 0,
     refetchOnMount: true,

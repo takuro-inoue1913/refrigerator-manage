@@ -8,10 +8,12 @@ import { ItemBadge } from '@src/components/ItemBadge';
 type Props = {
   /** 画像の読み込みが完了した時に実行される関数。 */
   onLoadEnd?: () => void;
+  /** 在庫があるかどうか */
+  hasStock: boolean;
   /** 在庫数 */
-  stockQuantity: number | undefined;
+  quantity: number;
   /** 単位名 */
-  unitName: string | undefined;
+  unitName: string;
 } & ComponentProps<typeof Image>;
 
 /**
@@ -27,15 +29,12 @@ export const ItemImage: FC<Props> = (props) => {
         {...props}
         onLoadEnd={() => setIsLoaded(true)}
         style={[
-          props.stockQuantity ? styles.activeImage : styles.image,
+          props.hasStock ? styles.activeImage : styles.image,
           isLoaded ? styles.imageVisible : styles.imageHidden,
         ]}
       />
-      {isLoaded && props.stockQuantity && (
-        <ItemBadge
-          quantity={props.stockQuantity ?? 0}
-          unitName={props.unitName}
-        />
+      {isLoaded && props.hasStock && (
+        <ItemBadge quantity={props.quantity} unitName={props.unitName} />
       )}
     </>
   );
