@@ -8,7 +8,7 @@ import { ItemBadge } from '@src/components/ItemBadge';
 type Props = {
   /** 画像の読み込みが完了した時に実行される関数。 */
   onLoadEnd?: () => void;
-  /** 在庫があるかどうか。 */
+  /** 在庫数 */
   stockQuantity: number | undefined;
   /** 単位名 */
   unitName: string | undefined;
@@ -31,7 +31,7 @@ export const ItemImage: FC<Props> = (props) => {
           isLoaded ? styles.imageVisible : styles.imageHidden,
         ]}
       />
-      {props.stockQuantity && (
+      {isLoaded && props.stockQuantity && (
         <ItemBadge
           quantity={props.stockQuantity ?? 0}
           unitName={props.unitName}
