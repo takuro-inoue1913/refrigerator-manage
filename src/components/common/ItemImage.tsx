@@ -9,9 +9,6 @@ type Props = {
   isActive?: boolean;
 } & ComponentProps<typeof Image>;
 
-/**
- *
- */
 export const ItemImage: FC<Props> = (props) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
