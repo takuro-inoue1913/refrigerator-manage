@@ -6,7 +6,7 @@ import { GetVegetableMasterAndUnitAndStocksDocument } from '@src/interface/__gen
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
 import { generateVegetablesStocks } from '@src/interface/logics/generate/generateVegetablesStocks';
 
-export const useGetVegetableMasterAndUserStocks = () => {
+export const useVegetablesStocks = () => {
   const idToken = useRecoilValue(idTokenState);
 
   return useQuery({

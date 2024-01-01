@@ -2,7 +2,7 @@ import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native';
 
-import { useGetVegetableMasterAndUserStocks } from '@src/interface/hooks/useGetVegetableMasterAndUserStocks';
+import { useVegetablesStocks } from '@src/interface/hooks/useVegetablesStocks';
 import { ItemImage } from '@src/components/ItemImage';
 import { SkeletonImageViews } from '@src/components/SkeletonImageViews';
 import commonStyle from '@src/utils/commonStyle';
@@ -11,7 +11,7 @@ import commonStyle from '@src/utils/commonStyle';
 const { width } = Dimensions.get('window');
 
 export const FridgeScreen = () => {
-  const { data } = useGetVegetableMasterAndUserStocks();
+  const { data } = useVegetablesStocks();
 
   if (!data) {
     return <SkeletonImageViews />;
