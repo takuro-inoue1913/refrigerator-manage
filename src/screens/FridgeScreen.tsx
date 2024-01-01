@@ -32,7 +32,7 @@ export const FridgeScreen = () => {
             <View key={vegetable.vegetable_id} style={styles.box}>
               <ItemImage source={{ uri: vegetable.image_uri }} isActive />
               <CommonGradation style={styles.badgeContainer}>
-                <Text style={styles.badgeText}>{1}個</Text>
+                <Text style={styles.badgeText}>{999}個</Text>
               </CommonGradation>
               <Text style={styles.displayName}>{vegetable.display_name}</Text>
             </View>
