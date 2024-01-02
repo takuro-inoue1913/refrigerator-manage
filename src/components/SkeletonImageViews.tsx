@@ -37,6 +37,7 @@ export const SkeletonImageViews: FC<Props> = ({ number }) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
+    paddingTop: 80,
   },
   row: {
     flexDirection: 'row',
