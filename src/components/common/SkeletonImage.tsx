@@ -16,6 +16,9 @@ const styles = StyleSheet.create({
   skeleton: {
     ...commonStyle.image,
     position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
     backgroundColor: '#e1e4e8',
   },
 });
