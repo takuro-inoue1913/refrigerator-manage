@@ -1,28 +1,35 @@
 import { useQuery } from '@tanstack/react-query';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { idTokenState } from '@src/states/user';
 import { GetVegetableMasterAndUnitAndStocksDocument } from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
 import { generateVegetablesStocks } from '@src/interface/logics/generate/generateVegetablesStocks';
+import { vegetablesStocksState } from '@src/states/vegetables';
 
 export const useVegetablesStocks = () => {
   const idToken = useRecoilValue(idTokenState);
-
-  return useQuery({
+  const [vegetablesStocks, setVegetablesStocks] = useRecoilState(
+    vegetablesStocksState,
+  );
+  const { isFetching } = useQuery({
     queryKey: ['graphl', 'get', 'vegetable_master'],
     queryFn: async () => {
       const client = buildGraphQLUserClient(idToken);
       const data = await client.request(
         GetVegetableMasterAndUnitAndStocksDocument,
       );
-      return generateVegetablesStocks(data);
+      const _vegetablesStocks = generateVegetablesStocks(data);
+      setVegetablesStocks(_vegetablesStocks);
+      return _vegetablesStocks;
     },
     staleTime: 0,
     refetchOnMount: true,
     refetchOnWindowFocus: true,
-    // staleTime: 5 * 60 * 1000, // データを5分間新鮮とみなす
-    // refetchOnMount: false, // コンポーネントがマウントされた際にはデフォルトでリフェッチしない
-    // refetchOnWindowFocus: false, // ウィンドウフォーカス時にリフェッチしない
   });
+
+  return {
+    vegetablesStocks,
+    isFetching,
+  };
 };

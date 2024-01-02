@@ -17,7 +17,7 @@ export type SelectItems = {
 export const FridgeScreen = () => {
   const [fridgeCategory, setFridgeCategory] =
     useState<FridgeCategory>('vegetables');
-  const { data: vegetablesStocks } = useVegetablesStocks();
+  const { vegetablesStocks, isFetching } = useVegetablesStocks();
 
   const selectItems: SelectItems = [
     { label: '野菜類', value: 'vegetables' },
@@ -28,7 +28,7 @@ export const FridgeScreen = () => {
     setFridgeCategory(category);
   };
 
-  if (!vegetablesStocks) {
+  if (isFetching) {
     return <SkeletonFridgeViews />;
   }
 

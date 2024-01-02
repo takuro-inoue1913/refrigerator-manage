@@ -2,8 +2,8 @@ import React, { FC } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
 import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
-import { VegetablesStocks } from '@src/interface/logics/generate/generateVegetablesStocks';
 import { fridgeCommonStyles } from '@src/utils/commonStyle';
+import { VegetablesStocks } from '@src/states/vegetables';
 
 type Props = {
   /** 野菜の在庫データ */
