@@ -16,7 +16,7 @@ export type SelectItems = {
 export const FridgeScreen = () => {
   const [fridgeCategory, setFridgeCategory] =
     useState<FridgeCategory>('vegetables');
-  const { data } = useVegetablesStocks();
+  const { data: vegetablesStocks } = useVegetablesStocks();
 
   const selectItems: SelectItems = [
     { label: '野菜類', value: 'vegetables' },
@@ -27,14 +27,8 @@ export const FridgeScreen = () => {
     setFridgeCategory(category);
   };
 
-  if (!data) {
+  if (!vegetablesStocks) {
     return <SkeletonFridgeViews />;
-  }
-
-  // 横に3つずつ並べるために、3つずつに分割する
-  const rows = [];
-  for (let i = 0; i < data.ids.length; i += 3) {
-    rows.push(data.ids.slice(i, i + 3));
   }
 
   return (
@@ -44,7 +38,7 @@ export const FridgeScreen = () => {
         selectItems={selectItems}
         onValueChange={handleSelectValueChange}
       />
-      <VegetablesView {...data} />
+      <VegetablesView {...vegetablesStocks} />
     </View>
   );
 };
