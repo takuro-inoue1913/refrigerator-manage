@@ -5,6 +5,7 @@ import { useVegetablesStocks } from '@src/interface/hooks/useVegetablesStocks';
 import { SkeletonFridgeViews } from '@src/components/FridgeScreen/SkeletonFridgeViews';
 import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
 import { VegetablesView } from '@src/components/FridgeScreen/VegetablesView';
+import { MeatsView } from '@src/components/FridgeScreen/MeatsView';
 
 export type FridgeCategory = 'vegetables' | 'meats';
 
@@ -31,6 +32,15 @@ export const FridgeScreen = () => {
     return <SkeletonFridgeViews />;
   }
 
+  const SelectedCategoryView = () => {
+    switch (fridgeCategory) {
+      case 'vegetables':
+        return <VegetablesView data={vegetablesStocks} />;
+      case 'meats':
+        return <MeatsView />;
+    }
+  };
+
   return (
     <View style={styles.screenContainer}>
       <StickyHeader
@@ -38,7 +48,7 @@ export const FridgeScreen = () => {
         selectItems={selectItems}
         onValueChange={handleSelectValueChange}
       />
-      <VegetablesView {...vegetablesStocks} />
+      <SelectedCategoryView />
     </View>
   );
 };

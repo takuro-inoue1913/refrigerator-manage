@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
 import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
 import { VegetablesStocks } from '@src/interface/logics/generate/generateVegetablesStocks';
 import { fridgeCommonStyles } from '@src/utils/commonStyle';
 
+type Props = {
+  /** 野菜の在庫データ */
+  data: VegetablesStocks;
+};
 /**
  * 冷蔵庫の野菜画面を表示するコンポーネント。
  */
-export const VegetablesView = (data: VegetablesStocks) => {
+export const VegetablesView: FC<Props> = ({ data }) => {
   // 横に3つずつ並べるために、3つずつに分割する
   const rows = [];
   for (let i = 0; i < data.ids.length; i += 3) {
