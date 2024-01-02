@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import { ScrollView } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { useVegetablesStocks } from '@src/interface/hooks/useVegetablesStocks';
-import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
 import { SkeletonFridgeViews } from '@src/components/FridgeScreen/SkeletonFridgeViews';
-import commonStyle from '@src/utils/commonStyle';
 import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
-
-// 画面の幅を取得
-const { width } = Dimensions.get('window');
+import { VegetablesView } from '@src/components/FridgeScreen/VegetablesView';
 
 export type FridgeCategory = 'vegetables' | 'meats';
 
@@ -49,25 +44,7 @@ export const FridgeScreen = () => {
         selectItems={selectItems}
         onValueChange={handleSelectValueChange}
       />
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        {rows.map((row, index) => (
-          <View key={`row-${index}`} style={styles.row}>
-            {row.map((vegetableId) => (
-              <View key={data.byId[vegetableId].vegetableId} style={styles.box}>
-                <ItemImage
-                  source={{ uri: data.byId[vegetableId].imageUri }}
-                  hasStock={data.byId[vegetableId].hasStock}
-                  quantity={data.byId[vegetableId].quantity}
-                  unitName={data.byId[vegetableId].unitName}
-                />
-                <Text style={styles.displayName}>
-                  {data.byId[vegetableId].vegetableDisplayName}
-                </Text>
-              </View>
-            ))}
-          </View>
-        ))}
-      </ScrollView>
+      <VegetablesView {...data} />
     </View>
   );
 };
@@ -75,41 +52,5 @@ export const FridgeScreen = () => {
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-  },
-  scrollContainer: {
-    alignItems: 'center',
-    paddingTop: 15,
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    width: width,
-  },
-  box: {
-    position: 'relative',
-    width: width / 3,
-    height: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  image: commonStyle.image,
-  displayName: {
-    fontSize: 12,
-  },
-  badgeContainer: {
-    position: 'absolute',
-    top: -5,
-    right: 5,
-    borderRadius: 50,
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 1,
-  },
-  badgeText: {
-    color: 'white',
-    fontSize: 10,
-    fontWeight: 'bold',
   },
 });

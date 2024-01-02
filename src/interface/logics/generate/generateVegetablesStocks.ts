@@ -3,7 +3,7 @@ import { GetVegetableMasterAndUnitAndStocksQuery } from '@src/interface/__genera
 /**
  * 野菜在庫の型
  */
-type VegetablesStocks = {
+export type VegetablesStocks = {
   ids: number[];
   byId: {
     [vegetableId: number]: {

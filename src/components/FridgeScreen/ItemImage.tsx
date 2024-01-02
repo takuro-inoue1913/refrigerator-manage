@@ -10,7 +10,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { SkeletonImage } from '@src/components/common/SkeletonImage';
-import commonStyle from '@src/utils/commonStyle';
+import { commonStyles } from '@src/utils/commonStyle';
 import { ItemBadge } from '@src/components/FridgeScreen/ItemBadge';
 
 type Props = {
@@ -36,7 +36,7 @@ export const ItemImage: FC<Props> = (props) => {
 
   const handlePress = (event: GestureResponderEvent) => {
     const touchX = event.nativeEvent.locationX;
-    const imageHalfWidth = commonStyle.image.width / 2;
+    const imageHalfWidth = commonStyles.image.width / 2;
     const newTouchedSide = touchX < imageHalfWidth ? 'left' : 'right';
     setTouchedSide(newTouchedSide);
     setOverlayOpacity(0);
@@ -118,12 +118,12 @@ export const ItemImage: FC<Props> = (props) => {
 
 const styles = StyleSheet.create({
   image: {
-    ...commonStyle.image,
+    ...commonStyles.image,
     borderWidth: 3,
     borderColor: '#e1e4e8',
   },
   activeImage: {
-    ...commonStyle.image,
+    ...commonStyles.image,
     borderWidth: 3,
     borderColor: '#2ecc71',
   },
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     left: 0,
-    width: commonStyle.image.width / 2,
+    width: commonStyles.image.width / 2,
     backgroundColor: 'rgba(0,0,0,0.3)',
     borderTopLeftRadius: 15,
     borderBottomLeftRadius: 15,
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     right: 0,
-    width: commonStyle.image.width / 2,
+    width: commonStyles.image.width / 2,
     backgroundColor: 'rgba(0,0,0,0.3)',
     borderTopRightRadius: 15,
     borderBottomRightRadius: 15,
