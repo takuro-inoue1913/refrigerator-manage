@@ -1,5 +1,6 @@
-import React, { useState, ComponentProps, FC } from 'react';
+import React, { useState, ComponentProps, FC, useRef } from 'react';
 import {
+  Animated,
   GestureResponderEvent,
   Image,
   StyleSheet,
@@ -31,6 +32,8 @@ export const ItemImage: FC<Props> = (props) => {
   const [touchedSide, setTouchedSide] = useState<'left' | 'right' | null>(null);
   const [overlayOpacity, setOverlayOpacity] = useState(0);
 
+  const badgePositionY = useRef(new Animated.Value(0)).current;
+
   const handlePress = (event: GestureResponderEvent) => {
     const touchX = event.nativeEvent.locationX;
     const imageHalfWidth = commonStyle.image.width / 2;
@@ -42,6 +45,22 @@ export const ItemImage: FC<Props> = (props) => {
     setTimeout(() => {
       setTouchedSide(null);
     }, 200);
+    handleBadgeAnimation();
+  };
+
+  const handleBadgeAnimation = () => {
+    Animated.sequence([
+      Animated.timing(badgePositionY, {
+        toValue: -20,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(badgePositionY, {
+        toValue: 0,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+    ]).start();
   };
 
   return (
@@ -81,7 +100,16 @@ export const ItemImage: FC<Props> = (props) => {
           </View>
         )}
         {isLoaded && props.hasStock && (
-          <ItemBadge quantity={props.quantity} unitName={props.unitName} />
+          <Animated.View
+            style={{
+              transform: [{ translateY: badgePositionY }],
+              position: 'absolute',
+              top: -5,
+              right: 0,
+            }}
+          >
+            <ItemBadge quantity={props.quantity} unitName={props.unitName} />
+          </Animated.View>
         )}
       </TouchableOpacity>
     </>
