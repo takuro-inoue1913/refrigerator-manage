@@ -1,12 +1,12 @@
 import React from 'react';
-import { Dimensions, StyleSheet, Text, TextStyleIOS, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native';
-import RNPickerSelect, { PickerStyle } from 'react-native-picker-select';
 
 import { useVegetablesStocks } from '@src/interface/hooks/useVegetablesStocks';
 import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
 import { SkeletonImageViews } from '@src/components/FridgeScreen/SkeletonImageViews';
 import commonStyle from '@src/utils/commonStyle';
+import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
 
 // 画面の幅を取得
 const { width } = Dimensions.get('window');
@@ -26,21 +26,8 @@ export const FridgeScreen = () => {
 
   return (
     <View style={styles.screenContainer}>
-      <View style={styles.header}>
-        <RNPickerSelect
-          placeholder={{
-            label: '食材の種類を選択してください。',
-          }}
-          onValueChange={(value) => console.log(value)}
-          items={[
-            { label: '野菜類', value: 'vegetables' },
-            { label: '肉類', value: 'meats' },
-          ]}
-          value={'vegetables'}
-          style={styles.pickerSelect}
-        />
-      </View>
-      <ScrollView contentContainerStyle={styles.container}>
+      <StickyHeader />
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
         {rows.map((row, index) => (
           <View key={`row-${index}`} style={styles.row}>
             {row.map((vegetableId) => (
@@ -67,36 +54,7 @@ const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
   },
-  header: {
-    width: '100%',
-    padding: 20,
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  pickerSelect: {
-    inputIOS: {
-      fontSize: 14,
-      paddingVertical: 10,
-      paddingHorizontal: 10,
-      borderWidth: 1,
-      borderColor: '#ccc',
-      borderRadius: 5,
-      color: 'black',
-      paddingRight: 30,
-    },
-    inputAndroid: {
-      fontSize: 16,
-      paddingHorizontal: 10,
-      paddingVertical: 8,
-      borderWidth: 0.5,
-      borderColor: '#ccc',
-      borderRadius: 10,
-      color: 'black',
-      paddingRight: 30,
-    },
-  } as TextStyleIOS & PickerStyle,
-  container: {
+  scrollContainer: {
     alignItems: 'center',
     paddingTop: 15,
   },
