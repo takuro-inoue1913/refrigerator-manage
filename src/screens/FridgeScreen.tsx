@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native';
 
 import { useVegetablesStocks } from '@src/interface/hooks/useVegetablesStocks';
 import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
-import { SkeletonImageViews } from '@src/components/FridgeScreen/SkeletonImageViews';
+import { SkeletonFridgeViews } from '@src/components/FridgeScreen/SkeletonFridgeViews';
 import commonStyle from '@src/utils/commonStyle';
 import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
 
@@ -33,7 +33,7 @@ export const FridgeScreen = () => {
   };
 
   if (!data) {
-    return <SkeletonImageViews />;
+    return <SkeletonFridgeViews />;
   }
 
   // 横に3つずつ並べるために、3つずつに分割する

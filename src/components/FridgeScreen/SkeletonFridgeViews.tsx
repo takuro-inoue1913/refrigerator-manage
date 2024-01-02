@@ -10,9 +10,9 @@ type Props = {
 };
 
 /**
- * 画像のスケルトンを表示するコンポーネント。
+ * データの読み込み中に表示する冷蔵庫画面のスケルトンコンポーネント。
  */
-export const SkeletonImageViews: FC<Props> = ({ number }) => {
+export const SkeletonFridgeViews: FC<Props> = ({ number }) => {
   const rowLength = number ?? 40;
 
   const rows = [];
