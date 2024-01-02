@@ -1,23 +1,31 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { StyleSheet, TextStyleIOS, View } from 'react-native';
-import RNPickerSelect, { PickerStyle } from 'react-native-picker-select';
+import RNPickerSelect, { Item, PickerStyle } from 'react-native-picker-select';
 
+import { FridgeCategory } from '@src/screens/FridgeScreen';
+
+type Props = {
+  selectedValue: string;
+  selectItems: Item[];
+  onValueChange: (value: FridgeCategory) => void;
+};
 /**
  * 冷蔵庫画面のヘッダーを表示するコンポーネント。
  */
-export const StickyHeader = () => {
+export const StickyHeader: FC<Props> = ({
+  selectedValue,
+  selectItems,
+  onValueChange,
+}) => {
   return (
     <View style={styles.header}>
       <RNPickerSelect
         placeholder={{
           label: '食材の種類を選択してください。',
         }}
-        onValueChange={(value) => console.log(value)}
-        items={[
-          { label: '野菜類', value: 'vegetables' },
-          { label: '肉類', value: 'meats' },
-        ]}
-        value={'vegetables'}
+        onValueChange={onValueChange}
+        items={selectItems}
+        value={selectedValue}
         style={styles.pickerSelect}
       />
     </View>

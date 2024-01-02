@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native';
 
@@ -11,8 +11,26 @@ import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
 // 画面の幅を取得
 const { width } = Dimensions.get('window');
 
+export type FridgeCategory = 'vegetables' | 'meats';
+
+export type SelectItems = {
+  label: string;
+  value: FridgeCategory;
+}[];
+
 export const FridgeScreen = () => {
+  const [fridgeCategory, setFridgeCategory] =
+    useState<FridgeCategory>('vegetables');
   const { data } = useVegetablesStocks();
+
+  const selectItems: SelectItems = [
+    { label: '野菜類', value: 'vegetables' },
+    { label: '肉類', value: 'meats' },
+  ] as const;
+
+  const handleSelectValueChange = (category: FridgeCategory) => {
+    setFridgeCategory(category);
+  };
 
   if (!data) {
     return <SkeletonImageViews />;
@@ -26,7 +44,11 @@ export const FridgeScreen = () => {
 
   return (
     <View style={styles.screenContainer}>
-      <StickyHeader />
+      <StickyHeader
+        selectedValue={fridgeCategory}
+        selectItems={selectItems}
+        onValueChange={handleSelectValueChange}
+      />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         {rows.map((row, index) => (
           <View key={`row-${index}`} style={styles.row}>
