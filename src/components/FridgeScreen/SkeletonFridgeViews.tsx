@@ -22,6 +22,7 @@ export const SkeletonFridgeViews: FC<Props> = ({ number }) => {
   }
   return (
     <>
+      {/* 読み込み中のため、選択肢は空配列 */}
       <StickyHeader
         selectedValue={'vegetables'}
         selectItems={[]}
