@@ -7,6 +7,7 @@ import { FridgeCategory } from '@src/screens/FridgeScreen';
 type Props = {
   selectedValue: string;
   selectItems: Item[];
+  isDisabled?: boolean;
   onValueChange: (value: FridgeCategory) => void;
 };
 /**
@@ -15,6 +16,7 @@ type Props = {
 export const StickyHeader: FC<Props> = ({
   selectedValue,
   selectItems,
+  isDisabled,
   onValueChange,
 }) => {
   return (
@@ -26,7 +28,8 @@ export const StickyHeader: FC<Props> = ({
         onValueChange={onValueChange}
         items={selectItems}
         value={selectedValue}
-        style={styles.pickerSelect}
+        style={isDisabled ? styles.disabledPicker : styles.pickerSelect}
+        disabled={isDisabled}
       />
     </View>
   );
@@ -60,6 +63,28 @@ const styles = StyleSheet.create({
       borderColor: '#ccc',
       borderRadius: 10,
       color: 'black',
+      paddingRight: 30,
+    },
+  } as TextStyleIOS & PickerStyle,
+  disabledPicker: {
+    inputIOS: {
+      fontSize: 14,
+      paddingVertical: 10,
+      paddingHorizontal: 10,
+      borderWidth: 1,
+      borderColor: 'rgba(0,0,0,0.1)',
+      borderRadius: 5,
+      color: '#ccc',
+      paddingRight: 30,
+    },
+    inputAndroid: {
+      fontSize: 16,
+      paddingHorizontal: 10,
+      paddingVertical: 8,
+      borderWidth: 0.5,
+      borderColor: 'rgba(0,0,0,0.1)',
+      borderRadius: 10,
+      color: '#ccc',
       paddingRight: 30,
     },
   } as TextStyleIOS & PickerStyle,

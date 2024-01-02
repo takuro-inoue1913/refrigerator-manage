@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
 
 import { SkeletonImage } from '@src/components/common/SkeletonImage';
+import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
 
 const { width } = Dimensions.get('window');
 
@@ -20,24 +21,31 @@ export const SkeletonFridgeViews: FC<Props> = ({ number }) => {
     rows.push(Array.from({ length: 3 }));
   }
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {rows.map((row, index) => (
-        <View key={`row-${index}`} style={styles.row}>
-          {row.map((_, index) => (
-            <View key={index} style={styles.box}>
-              <SkeletonImage />
-            </View>
-          ))}
-        </View>
-      ))}
-    </ScrollView>
+    <>
+      <StickyHeader
+        selectedValue={'vegetables'}
+        selectItems={[]}
+        onValueChange={() => {}}
+      />
+      <ScrollView contentContainerStyle={styles.container}>
+        {rows.map((row, index) => (
+          <View key={`row-${index}`} style={styles.row}>
+            {row.map((_, index) => (
+              <View key={index} style={styles.box}>
+                <SkeletonImage />
+              </View>
+            ))}
+          </View>
+        ))}
+      </ScrollView>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    paddingTop: 80,
+    paddingTop: 15,
   },
   row: {
     flexDirection: 'row',
