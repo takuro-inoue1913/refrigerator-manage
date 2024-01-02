@@ -15,3 +15,27 @@ query GetVegetableMasterAndUnitAndStocks {
     }
   }
 }
+
+mutation InsertVegetableStock($object: vegetable_stocks_insert_input!) {
+  insert_vegetable_stocks_one(object: $object) {
+    quantity
+    stock_id
+    user_id
+    vegetable_id
+  }
+}
+
+mutation UpdateVegetableStocksByPk(
+  $pkColumns: vegetable_stocks_pk_columns_input!
+  $quantitySet: Int!
+) {
+  update_vegetable_stocks_by_pk(
+    pk_columns: $pkColumns
+    _set: { quantity: $quantitySet }
+  ) {
+    stock_id
+    user_id
+    vegetable_id
+    quantity
+  }
+}
