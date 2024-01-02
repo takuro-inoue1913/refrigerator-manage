@@ -4,8 +4,8 @@ import { ScrollView } from 'react-native';
 import RNPickerSelect, { PickerStyle } from 'react-native-picker-select';
 
 import { useVegetablesStocks } from '@src/interface/hooks/useVegetablesStocks';
-import { ItemImage } from '@src/components/ItemImage';
-import { SkeletonImageViews } from '@src/components/SkeletonImageViews';
+import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
+import { SkeletonImageViews } from '@src/components/FridgeScreen/SkeletonImageViews';
 import commonStyle from '@src/utils/commonStyle';
 
 // 画面の幅を取得

@@ -7,7 +7,7 @@ import { auth } from '@src/utils/firebaseAuth';
 import { GradientionTextInput } from '@src/components/common/GradientionTextInput';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { useIsShowKeyboard } from '@src/hooks/useIsShowKeyboard';
-import { TopLogoImage } from '@src/components/TopLogoImage';
+import { TopLogoImage } from '@src/components/common/TopLogoImage';
 import { handleFirebaseError } from '@src/utils/handleFirebaseError';
 
 export const RegisterScreen = () => {

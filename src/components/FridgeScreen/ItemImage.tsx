@@ -11,7 +11,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { SkeletonImage } from '@src/components/common/SkeletonImage';
 import commonStyle from '@src/utils/commonStyle';
-import { ItemBadge } from '@src/components/ItemBadge';
+import { ItemBadge } from '@src/components/FridgeScreen/ItemBadge';
 
 type Props = {
   /** 画像の読み込みが完了した時に実行される関数。 */

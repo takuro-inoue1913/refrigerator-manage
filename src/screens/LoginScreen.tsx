@@ -8,7 +8,7 @@ import { auth } from '@src/utils/firebaseAuth';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { GradientionTextInput } from '@src/components/common/GradientionTextInput';
 import { useIsShowKeyboard } from '@src/hooks/useIsShowKeyboard';
-import { TopLogoImage } from '@src/components/TopLogoImage';
+import { TopLogoImage } from '@src/components/common/TopLogoImage';
 import { Navigation } from '@src/types';
 import { handleFirebaseError } from '@src/utils/handleFirebaseError';
 
