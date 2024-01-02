@@ -2,12 +2,12 @@ import React, { useState, ComponentProps, FC, useRef } from 'react';
 import {
   Animated,
   GestureResponderEvent,
-  Image,
   StyleSheet,
   TouchableOpacity,
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import CachedImage from 'expo-cached-image';
 
 import { SkeletonImage } from '@src/components/common/SkeletonImage';
 import { commonStyles } from '@src/utils/commonStyle';
@@ -22,7 +22,7 @@ type Props = {
   quantity: number;
   /** 単位名 */
   unitName: string;
-} & ComponentProps<typeof Image>;
+} & ComponentProps<typeof CachedImage>;
 
 /**
  * 項目の画像を表示するコンポーネント。
@@ -67,7 +67,7 @@ export const ItemImage: FC<Props> = (props) => {
     <>
       {!isLoaded && <SkeletonImage />}
       <TouchableOpacity activeOpacity={1} onPress={handlePress}>
-        <Image
+        <CachedImage
           {...props}
           onLoadEnd={() => setIsLoaded(true)}
           style={[

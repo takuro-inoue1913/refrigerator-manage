@@ -33,6 +33,7 @@ export const VegetablesView: FC<Props> = ({ data }) => {
                 hasStock={data.byId[vegetableId].hasStock}
                 quantity={data.byId[vegetableId].quantity}
                 unitName={data.byId[vegetableId].unitName}
+                cacheKey={data.byId[vegetableId].vegetableId.toString()}
               />
               <Text style={fridgeCommonStyles.displayName}>
                 {data.byId[vegetableId].vegetableDisplayName}
