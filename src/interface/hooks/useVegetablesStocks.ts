@@ -13,7 +13,7 @@ export const useVegetablesStocks = () => {
     vegetablesStocksState,
   );
   const { isFetching } = useQuery({
-    queryKey: ['graphl', 'get', 'vegetable_master'],
+    queryKey: ['graphl', 'get', 'vegetables_stocks'],
     queryFn: async () => {
       const client = buildGraphQLUserClient(idToken);
       const data = await client.request(

@@ -14,6 +14,7 @@ export const useGetUser = () => {
       const client = buildGraphQLUserClient(idToken);
       const { users } = await client.request(GetUserDocument);
       console.log('useGetUser: ', users);
+      console.log({ idToken });
       return users[0];
     },
     staleTime: 0,
