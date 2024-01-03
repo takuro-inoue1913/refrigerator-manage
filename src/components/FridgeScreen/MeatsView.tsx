@@ -5,6 +5,7 @@ import { SkeletonImage } from '@src/components/common/SkeletonImage';
 import { fridgeCommonStyles } from '@src/utils/commonStyle';
 import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
 import { SelectFridgeCategory, selectItems } from '@src/utils/consts';
+import { useChunkedArray } from '@src/hooks/useChunkedArray';
 
 type Props = {
   /** 選択されたカテゴリーが変更された時に実行される関数。 */
@@ -15,10 +16,7 @@ type Props = {
  * 冷蔵庫の肉画面を表示するコンポーネント。
  */
 export const MeatsView: FC<Props> = ({ onChangeSelectCategory }) => {
-  const rows = [];
-  for (let i = 0; i < 40; i += 3) {
-    rows.push(Array.from({ length: 3 }));
-  }
+  const rows = useChunkedArray(Array.from({ length: 42 }), 3);
 
   return (
     <>

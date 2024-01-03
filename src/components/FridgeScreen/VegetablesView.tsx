@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo } from 'react';
+import React, { FC, useCallback } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
 import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
@@ -8,6 +8,7 @@ import { useVegetablesStocks } from '@src/interface/hooks/useVegetablesStocks';
 import { SkeletonFridgeViews } from '@src/components/FridgeScreen/SkeletonFridgeViews';
 import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
 import { SelectFridgeCategory, selectItems } from '@src/utils/consts';
+import { useChunkedArray } from '@src/hooks/useChunkedArray';
 
 type Props = {
   /** 選択されたカテゴリーが変更された時に実行される関数。 */
@@ -20,6 +21,8 @@ type Props = {
 export const VegetablesView: FC<Props> = ({ onChangeSelectCategory }) => {
   const { vegetablesStocks, isFetching } = useVegetablesStocks();
   const vegetablesStockActions = useVegetablesStockActions();
+  // 横に3つずつ並べるために、3つずつに分割する
+  const rows = useChunkedArray(vegetablesStocks.ids, 3);
 
   const onIncreaseStock = useCallback(async (vegetableId: number) => {
     vegetablesStockActions.increaseVegetableStock({ vegetableId, quantity: 1 });
@@ -31,15 +34,6 @@ export const VegetablesView: FC<Props> = ({ onChangeSelectCategory }) => {
       quantity: 1,
     });
   }, []);
-
-  // 横に3つずつ並べるために、3つずつに分割する
-  const rows = useMemo(() => {
-    const newRows = [];
-    for (let i = 0; i < vegetablesStocks.ids.length; i += 3) {
-      newRows.push(vegetablesStocks.ids.slice(i, i + 3));
-    }
-    return newRows;
-  }, [vegetablesStocks.ids]);
 
   if (isFetching) {
     return <SkeletonFridgeViews />;

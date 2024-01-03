@@ -4,6 +4,7 @@ import { ScrollView, View } from 'react-native';
 import { SkeletonImage } from '@src/components/common/SkeletonImage';
 import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
 import { fridgeCommonStyles } from '@src/utils/commonStyle';
+import { useChunkedArray } from '@src/hooks/useChunkedArray';
 
 type Props = {
   number?: number;
@@ -12,13 +13,9 @@ type Props = {
 /**
  * データの読み込み中に表示する冷蔵庫画面のスケルトンコンポーネント。
  */
-export const SkeletonFridgeViews: FC<Props> = ({ number }) => {
-  const rowLength = number ?? 40;
+export const SkeletonFridgeViews: FC<Props> = ({ number = 42 }) => {
+  const rows = useChunkedArray(Array.from({ length: number }), 3);
 
-  const rows = [];
-  for (let i = 0; i < rowLength; i += 3) {
-    rows.push(Array.from({ length: 3 }));
-  }
   return (
     <>
       {/* 読み込み中のため、選択肢は空配列 */}
