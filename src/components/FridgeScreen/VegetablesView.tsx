@@ -5,8 +5,8 @@ import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
 import { fridgeCommonStyles } from '@src/utils/commonStyle';
 import { useVegetablesStockActions } from '@src/states/vegetables/action';
 import { useVegetablesStocks } from '@src/interface/hooks/useVegetablesStocks';
-import { SkeletonFridgeViews } from './SkeletonFridgeViews';
-import { StickyHeader } from './StickyHeader';
+import { SkeletonFridgeViews } from '@src/components/FridgeScreen/SkeletonFridgeViews';
+import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
 import { SelectFridgeCategory, selectItems } from '@src/utils/consts';
 
 type Props = {
