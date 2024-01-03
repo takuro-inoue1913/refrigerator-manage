@@ -12,6 +12,7 @@ query GetVegetableMasterAndUnitAndStocks {
     vegetable_master_vegetable_stocks {
       stock_id
       quantity
+      incremental_unit
     }
   }
 }
