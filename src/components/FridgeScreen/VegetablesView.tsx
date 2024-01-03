@@ -31,14 +31,15 @@ export const VegetablesView: FC<Props> = ({ onChangeSelectCategory }) => {
    * 連続でAPIを叩かないようにするための debounce 関数。
    */
   const debouncedUpsertVegetableStock = useCallback(
-    debounce(async ({ vegetableId }) => {
-      if (stockQuantities.current[vegetableId] !== undefined) {
-        await upsertVegetablesStock({
-          vegetableId,
-          quantity: stockQuantities.current[vegetableId],
+    debounce(async () => {
+      // MEMO: debounce 中に複数の項目が更新される可能性があるため、現在オブジェクトに入っている値を全て更新する。
+      Object.entries(stockQuantities.current).forEach(([key, value]) => {
+        upsertVegetablesStock({
+          vegetableId: Number(key),
+          quantity: value,
         });
-        stockQuantities.current[vegetableId] = 0;
-      }
+        delete stockQuantities.current[Number(key)];
+      });
     }, 1000),
     [],
   );
@@ -50,9 +51,7 @@ export const VegetablesView: FC<Props> = ({ onChangeSelectCategory }) => {
         quantity: 1,
       });
       stockQuantities.current[vegetableId] = quantity + 1;
-      debouncedUpsertVegetableStock({
-        vegetableId,
-      });
+      debouncedUpsertVegetableStock();
     },
     [],
   );
@@ -64,7 +63,7 @@ export const VegetablesView: FC<Props> = ({ onChangeSelectCategory }) => {
         quantity: 1,
       });
       stockQuantities.current[vegetableId] = Math.max(quantity - 1, 0);
-      debouncedUpsertVegetableStock({ vegetableId });
+      debouncedUpsertVegetableStock();
     },
     [],
   );
