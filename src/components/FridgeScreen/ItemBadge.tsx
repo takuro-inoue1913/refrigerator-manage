@@ -10,8 +10,26 @@ type Props = {
  * 項目の在庫数を表示するバッジコンポーネント。
  */
 export const ItemBadge: FC<Props> = ({ quantity, unitName }) => {
+  const getBadgeSize = () => {
+    if (quantity >= 1000) {
+      return 55;
+    } else if (quantity >= 100) {
+      return 50;
+    } else {
+      return 40;
+    }
+  };
+
   return (
-    <CommonGradation style={styles.badgeContainer}>
+    <CommonGradation
+      style={[
+        styles.badgeContainer,
+        {
+          width: getBadgeSize(),
+          height: getBadgeSize(),
+        },
+      ]}
+    >
       <Text style={styles.badgeText}>
         {quantity}
         {unitName}
@@ -26,15 +44,13 @@ const styles = StyleSheet.create({
     top: -5,
     right: 5,
     borderRadius: 50,
-    width: 40,
-    height: 40,
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 1,
   },
   badgeText: {
     color: 'white',
-    fontSize: 10,
+    fontSize: 13,
     fontWeight: 'bold',
   },
 });
