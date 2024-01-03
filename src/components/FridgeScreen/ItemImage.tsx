@@ -49,6 +49,7 @@ export const ItemImage: FC<Props> = memo((props) => {
     const newTouchedSide = touchX < imageHalfWidth ? 'left' : 'right';
     setTouchedSide(newTouchedSide);
     setOverlayOpacity(0);
+    // TODO: ここでAPIを叩く。
     switch (newTouchedSide) {
       case 'left':
         await props.onPressDecrease?.(props.targetId);
@@ -58,10 +59,7 @@ export const ItemImage: FC<Props> = memo((props) => {
         break;
     }
     setTimeout(() => setOverlayOpacity(1), 100);
-    // TODO: ここでAPIを叩く。
-    setTimeout(() => {
-      setTouchedSide(null);
-    }, 200);
+    setTimeout(() => setTouchedSide(null), 200);
     handleBadgeAnimation();
   };
 

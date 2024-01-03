@@ -3,17 +3,22 @@ import { ScrollView, Text, View } from 'react-native';
 
 import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
 import { fridgeCommonStyles } from '@src/utils/commonStyle';
-import { VegetablesStocks } from '@src/states/vegetables';
 import { useVegetablesStockActions } from '@src/states/vegetables/action';
+import { useVegetablesStocks } from '@src/interface/hooks/useVegetablesStocks';
+import { SkeletonFridgeViews } from './SkeletonFridgeViews';
+import { StickyHeader } from './StickyHeader';
+import { SelectFridgeCategory, selectItems } from '@src/screens/FridgeScreen';
 
 type Props = {
-  /** 野菜の在庫データ */
-  data: VegetablesStocks;
+  /** 選択されたカテゴリーが変更された時に実行される関数。 */
+  onChangeSelectCategory: (category: SelectFridgeCategory) => void;
 };
+
 /**
  * 冷蔵庫の野菜画面を表示するコンポーネント。
  */
-export const VegetablesView: FC<Props> = ({ data }) => {
+export const VegetablesView: FC<Props> = ({ onChangeSelectCategory }) => {
+  const { vegetablesStocks, isFetching } = useVegetablesStocks();
   const vegetablesStockActions = useVegetablesStockActions();
 
   const onIncreaseStock = useCallback(async (vegetableId: number) => {
@@ -30,37 +35,48 @@ export const VegetablesView: FC<Props> = ({ data }) => {
   // 横に3つずつ並べるために、3つずつに分割する
   const rows = useMemo(() => {
     const newRows = [];
-    for (let i = 0; i < data.ids.length; i += 3) {
-      newRows.push(data.ids.slice(i, i + 3));
+    for (let i = 0; i < vegetablesStocks.ids.length; i += 3) {
+      newRows.push(vegetablesStocks.ids.slice(i, i + 3));
     }
     return newRows;
-  }, [data.ids]);
+  }, [vegetablesStocks.ids]);
+
+  if (isFetching) {
+    return <SkeletonFridgeViews />;
+  }
 
   return (
-    <ScrollView contentContainerStyle={fridgeCommonStyles.scrollContainer}>
-      {rows.map((row, index) => (
-        <View key={`row-${index}`} style={fridgeCommonStyles.row}>
-          {row.map((vegetableId) => (
-            <View
-              key={data.byId[vegetableId].vegetableId}
-              style={fridgeCommonStyles.box}
-            >
-              <ItemImage
-                sourceUri={data.byId[vegetableId].imageUri}
-                targetId={data.byId[vegetableId].vegetableId}
-                hasStock={data.byId[vegetableId].hasStock}
-                quantity={data.byId[vegetableId].quantity}
-                unitName={data.byId[vegetableId].unitName}
-                onPressIncrease={onIncreaseStock}
-                onPressDecrease={onDecreaseStock}
-              />
-              <Text style={fridgeCommonStyles.displayName}>
-                {data.byId[vegetableId].vegetableDisplayName}
-              </Text>
-            </View>
-          ))}
-        </View>
-      ))}
-    </ScrollView>
+    <>
+      <StickyHeader
+        selectedValue={'vegetables'}
+        selectItems={selectItems}
+        onValueChange={onChangeSelectCategory}
+      />
+      <ScrollView contentContainerStyle={fridgeCommonStyles.scrollContainer}>
+        {rows.map((row, index) => (
+          <View key={`row-${index}`} style={fridgeCommonStyles.row}>
+            {row.map((vegetableId) => (
+              <View
+                key={vegetablesStocks.byId[vegetableId].vegetableId}
+                style={fridgeCommonStyles.box}
+              >
+                <ItemImage
+                  sourceUri={vegetablesStocks.byId[vegetableId].imageUri}
+                  targetId={vegetablesStocks.byId[vegetableId].vegetableId}
+                  hasStock={vegetablesStocks.byId[vegetableId].hasStock}
+                  quantity={vegetablesStocks.byId[vegetableId].quantity}
+                  unitName={vegetablesStocks.byId[vegetableId].unitName}
+                  onPressIncrease={onIncreaseStock}
+                  onPressDecrease={onDecreaseStock}
+                />
+                <Text style={fridgeCommonStyles.displayName}>
+                  {vegetablesStocks.byId[vegetableId].vegetableDisplayName}
+                </Text>
+              </View>
+            ))}
+          </View>
+        ))}
+      </ScrollView>
+    </>
   );
 };
