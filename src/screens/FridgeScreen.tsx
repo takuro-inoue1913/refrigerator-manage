@@ -31,7 +31,9 @@ export const FridgeScreen = () => {
           <VegetablesView onChangeSelectCategory={handleSelectCategoryChange} />
         );
       case 'meats':
-        return <MeatsView />;
+        return (
+          <MeatsView onChangeSelectCategory={handleSelectCategoryChange} />
+        );
     }
   };
 
