@@ -1,0 +1,49 @@
+query GetMeatMasterAndUnitAndStocks {
+  meat_master {
+    meat_id
+    display_name
+    meat_name
+    image_uri
+    meat_master_unit_master {
+      unit_id
+      unit_name
+    }
+    meat_master_meat_stocks {
+      stock_id
+      quantity
+      incremental_unit
+    }
+  }
+}
+
+query GetMeatStockByUserIdAndMeatId($userId: String!, $meatId: Int!) {
+  meat_stocks(where: { user_id: { _eq: $userId }, meat_id: { _eq: $meatId } }) {
+    stock_id
+    user_id
+    meat_id
+    quantity
+  }
+}
+
+mutation InsertMeatStock($object: meat_stocks_insert_input!) {
+  insert_meat_stocks_one(object: $object) {
+    quantity
+    stock_id
+    user_id
+    meat_id
+  }
+}
+
+mutation UpdateMeatStock($userId: String!, $meatId: Int!, $quantity: Int!) {
+  update_meat_stocks(
+    where: { user_id: { _eq: $userId }, meat_id: { _eq: $meatId } }
+    _set: { quantity: $quantity }
+  ) {
+    returning {
+      stock_id
+      user_id
+      meat_id
+      quantity
+    }
+  }
+}

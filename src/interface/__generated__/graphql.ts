@@ -80,14 +80,36 @@ export type Meat_Master = {
   image_uri: Scalars['String']['output'];
   /** 肉マスタID */
   meat_id: Scalars['Int']['output'];
-  /** An object relationship */
-  meat_master_meat_stocks?: Maybe<Meet_Stocks>;
+  /** An array relationship */
+  meat_master_meat_stocks: Array<Meat_Stocks>;
+  /** An aggregate relationship */
+  meat_master_meat_stocks_aggregate: Meat_Stocks_Aggregate;
   /** An object relationship */
   meat_master_unit_master?: Maybe<Unit_Master>;
   /** 肉名（ひらがな） */
   meat_name: Scalars['String']['output'];
   /** 単位ID */
   unit_id: Scalars['Int']['output'];
+};
+
+
+/** 肉類のマスターデータ */
+export type Meat_MasterMeat_Master_Meat_StocksArgs = {
+  distinct_on?: InputMaybe<Array<Meat_Stocks_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Meat_Stocks_Order_By>>;
+  where?: InputMaybe<Meat_Stocks_Bool_Exp>;
+};
+
+
+/** 肉類のマスターデータ */
+export type Meat_MasterMeat_Master_Meat_Stocks_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Meat_Stocks_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Meat_Stocks_Order_By>>;
+  where?: InputMaybe<Meat_Stocks_Bool_Exp>;
 };
 
 /** aggregated selection of "meat_master" */
@@ -137,7 +159,8 @@ export type Meat_Master_Bool_Exp = {
   display_name?: InputMaybe<String_Comparison_Exp>;
   image_uri?: InputMaybe<String_Comparison_Exp>;
   meat_id?: InputMaybe<Int_Comparison_Exp>;
-  meat_master_meat_stocks?: InputMaybe<Meet_Stocks_Bool_Exp>;
+  meat_master_meat_stocks?: InputMaybe<Meat_Stocks_Bool_Exp>;
+  meat_master_meat_stocks_aggregate?: InputMaybe<Meat_Stocks_Aggregate_Bool_Exp>;
   meat_master_unit_master?: InputMaybe<Unit_Master_Bool_Exp>;
   meat_name?: InputMaybe<String_Comparison_Exp>;
   unit_id?: InputMaybe<Int_Comparison_Exp>;
@@ -171,7 +194,7 @@ export type Meat_Master_Insert_Input = {
   image_uri?: InputMaybe<Scalars['String']['input']>;
   /** 肉マスタID */
   meat_id?: InputMaybe<Scalars['Int']['input']>;
-  meat_master_meat_stocks?: InputMaybe<Meet_Stocks_Obj_Rel_Insert_Input>;
+  meat_master_meat_stocks?: InputMaybe<Meat_Stocks_Arr_Rel_Insert_Input>;
   meat_master_unit_master?: InputMaybe<Unit_Master_Obj_Rel_Insert_Input>;
   /** 肉名（ひらがな） */
   meat_name?: InputMaybe<Scalars['String']['input']>;
@@ -237,7 +260,7 @@ export type Meat_Master_Order_By = {
   display_name?: InputMaybe<Order_By>;
   image_uri?: InputMaybe<Order_By>;
   meat_id?: InputMaybe<Order_By>;
-  meat_master_meat_stocks?: InputMaybe<Meet_Stocks_Order_By>;
+  meat_master_meat_stocks_aggregate?: InputMaybe<Meat_Stocks_Aggregate_Order_By>;
   meat_master_unit_master?: InputMaybe<Unit_Master_Order_By>;
   meat_name?: InputMaybe<Order_By>;
   unit_id?: InputMaybe<Order_By>;
@@ -385,243 +408,215 @@ export type Meat_Master_Variance_Fields = {
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
-/** ユーザーごとの肉類のストック */
-export type Meet_Stocks = {
-  __typename?: 'meet_stocks';
-  /** 肉マスタID */
-  meet_id: Scalars['Int']['output'];
+/** ユーザーごとの肉ストック */
+export type Meat_Stocks = {
+  __typename?: 'meat_stocks';
+  incremental_unit: Scalars['Int']['output'];
+  meat_id: Scalars['Int']['output'];
   /** An object relationship */
-  meet_stocks_meet_master?: Maybe<Meat_Master>;
+  meat_stocks_meat_master?: Maybe<Meat_Master>;
   /** An object relationship */
-  meet_stocks_users?: Maybe<Users>;
-  /** 在庫数 */
+  meat_stocks_users?: Maybe<Users>;
   quantity: Scalars['Int']['output'];
-  /** ストックID */
   stock_id: Scalars['Int']['output'];
-  /** ユーザーID */
   user_id: Scalars['String']['output'];
 };
 
-/** aggregated selection of "meet_stocks" */
-export type Meet_Stocks_Aggregate = {
-  __typename?: 'meet_stocks_aggregate';
-  aggregate?: Maybe<Meet_Stocks_Aggregate_Fields>;
-  nodes: Array<Meet_Stocks>;
+/** aggregated selection of "meat_stocks" */
+export type Meat_Stocks_Aggregate = {
+  __typename?: 'meat_stocks_aggregate';
+  aggregate?: Maybe<Meat_Stocks_Aggregate_Fields>;
+  nodes: Array<Meat_Stocks>;
 };
 
-export type Meet_Stocks_Aggregate_Bool_Exp = {
-  count?: InputMaybe<Meet_Stocks_Aggregate_Bool_Exp_Count>;
+export type Meat_Stocks_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Meat_Stocks_Aggregate_Bool_Exp_Count>;
 };
 
-export type Meet_Stocks_Aggregate_Bool_Exp_Count = {
-  arguments?: InputMaybe<Array<Meet_Stocks_Select_Column>>;
+export type Meat_Stocks_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Meat_Stocks_Select_Column>>;
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
-  filter?: InputMaybe<Meet_Stocks_Bool_Exp>;
+  filter?: InputMaybe<Meat_Stocks_Bool_Exp>;
   predicate: Int_Comparison_Exp;
 };
 
-/** aggregate fields of "meet_stocks" */
-export type Meet_Stocks_Aggregate_Fields = {
-  __typename?: 'meet_stocks_aggregate_fields';
-  avg?: Maybe<Meet_Stocks_Avg_Fields>;
+/** aggregate fields of "meat_stocks" */
+export type Meat_Stocks_Aggregate_Fields = {
+  __typename?: 'meat_stocks_aggregate_fields';
+  avg?: Maybe<Meat_Stocks_Avg_Fields>;
   count: Scalars['Int']['output'];
-  max?: Maybe<Meet_Stocks_Max_Fields>;
-  min?: Maybe<Meet_Stocks_Min_Fields>;
-  stddev?: Maybe<Meet_Stocks_Stddev_Fields>;
-  stddev_pop?: Maybe<Meet_Stocks_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Meet_Stocks_Stddev_Samp_Fields>;
-  sum?: Maybe<Meet_Stocks_Sum_Fields>;
-  var_pop?: Maybe<Meet_Stocks_Var_Pop_Fields>;
-  var_samp?: Maybe<Meet_Stocks_Var_Samp_Fields>;
-  variance?: Maybe<Meet_Stocks_Variance_Fields>;
+  max?: Maybe<Meat_Stocks_Max_Fields>;
+  min?: Maybe<Meat_Stocks_Min_Fields>;
+  stddev?: Maybe<Meat_Stocks_Stddev_Fields>;
+  stddev_pop?: Maybe<Meat_Stocks_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Meat_Stocks_Stddev_Samp_Fields>;
+  sum?: Maybe<Meat_Stocks_Sum_Fields>;
+  var_pop?: Maybe<Meat_Stocks_Var_Pop_Fields>;
+  var_samp?: Maybe<Meat_Stocks_Var_Samp_Fields>;
+  variance?: Maybe<Meat_Stocks_Variance_Fields>;
 };
 
 
-/** aggregate fields of "meet_stocks" */
-export type Meet_Stocks_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Meet_Stocks_Select_Column>>;
+/** aggregate fields of "meat_stocks" */
+export type Meat_Stocks_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Meat_Stocks_Select_Column>>;
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-/** order by aggregate values of table "meet_stocks" */
-export type Meet_Stocks_Aggregate_Order_By = {
-  avg?: InputMaybe<Meet_Stocks_Avg_Order_By>;
+/** order by aggregate values of table "meat_stocks" */
+export type Meat_Stocks_Aggregate_Order_By = {
+  avg?: InputMaybe<Meat_Stocks_Avg_Order_By>;
   count?: InputMaybe<Order_By>;
-  max?: InputMaybe<Meet_Stocks_Max_Order_By>;
-  min?: InputMaybe<Meet_Stocks_Min_Order_By>;
-  stddev?: InputMaybe<Meet_Stocks_Stddev_Order_By>;
-  stddev_pop?: InputMaybe<Meet_Stocks_Stddev_Pop_Order_By>;
-  stddev_samp?: InputMaybe<Meet_Stocks_Stddev_Samp_Order_By>;
-  sum?: InputMaybe<Meet_Stocks_Sum_Order_By>;
-  var_pop?: InputMaybe<Meet_Stocks_Var_Pop_Order_By>;
-  var_samp?: InputMaybe<Meet_Stocks_Var_Samp_Order_By>;
-  variance?: InputMaybe<Meet_Stocks_Variance_Order_By>;
+  max?: InputMaybe<Meat_Stocks_Max_Order_By>;
+  min?: InputMaybe<Meat_Stocks_Min_Order_By>;
+  stddev?: InputMaybe<Meat_Stocks_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Meat_Stocks_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Meat_Stocks_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Meat_Stocks_Sum_Order_By>;
+  var_pop?: InputMaybe<Meat_Stocks_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Meat_Stocks_Var_Samp_Order_By>;
+  variance?: InputMaybe<Meat_Stocks_Variance_Order_By>;
 };
 
-/** input type for inserting array relation for remote table "meet_stocks" */
-export type Meet_Stocks_Arr_Rel_Insert_Input = {
-  data: Array<Meet_Stocks_Insert_Input>;
+/** input type for inserting array relation for remote table "meat_stocks" */
+export type Meat_Stocks_Arr_Rel_Insert_Input = {
+  data: Array<Meat_Stocks_Insert_Input>;
   /** upsert condition */
-  on_conflict?: InputMaybe<Meet_Stocks_On_Conflict>;
+  on_conflict?: InputMaybe<Meat_Stocks_On_Conflict>;
 };
 
 /** aggregate avg on columns */
-export type Meet_Stocks_Avg_Fields = {
-  __typename?: 'meet_stocks_avg_fields';
-  /** 肉マスタID */
-  meet_id?: Maybe<Scalars['Float']['output']>;
-  /** 在庫数 */
+export type Meat_Stocks_Avg_Fields = {
+  __typename?: 'meat_stocks_avg_fields';
+  incremental_unit?: Maybe<Scalars['Float']['output']>;
+  meat_id?: Maybe<Scalars['Float']['output']>;
   quantity?: Maybe<Scalars['Float']['output']>;
-  /** ストックID */
   stock_id?: Maybe<Scalars['Float']['output']>;
 };
 
-/** order by avg() on columns of table "meet_stocks" */
-export type Meet_Stocks_Avg_Order_By = {
-  /** 肉マスタID */
-  meet_id?: InputMaybe<Order_By>;
-  /** 在庫数 */
+/** order by avg() on columns of table "meat_stocks" */
+export type Meat_Stocks_Avg_Order_By = {
+  incremental_unit?: InputMaybe<Order_By>;
+  meat_id?: InputMaybe<Order_By>;
   quantity?: InputMaybe<Order_By>;
-  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
 };
 
-/** Boolean expression to filter rows from the table "meet_stocks". All fields are combined with a logical 'AND'. */
-export type Meet_Stocks_Bool_Exp = {
-  _and?: InputMaybe<Array<Meet_Stocks_Bool_Exp>>;
-  _not?: InputMaybe<Meet_Stocks_Bool_Exp>;
-  _or?: InputMaybe<Array<Meet_Stocks_Bool_Exp>>;
-  meet_id?: InputMaybe<Int_Comparison_Exp>;
-  meet_stocks_meet_master?: InputMaybe<Meat_Master_Bool_Exp>;
-  meet_stocks_users?: InputMaybe<Users_Bool_Exp>;
+/** Boolean expression to filter rows from the table "meat_stocks". All fields are combined with a logical 'AND'. */
+export type Meat_Stocks_Bool_Exp = {
+  _and?: InputMaybe<Array<Meat_Stocks_Bool_Exp>>;
+  _not?: InputMaybe<Meat_Stocks_Bool_Exp>;
+  _or?: InputMaybe<Array<Meat_Stocks_Bool_Exp>>;
+  incremental_unit?: InputMaybe<Int_Comparison_Exp>;
+  meat_id?: InputMaybe<Int_Comparison_Exp>;
+  meat_stocks_meat_master?: InputMaybe<Meat_Master_Bool_Exp>;
+  meat_stocks_users?: InputMaybe<Users_Bool_Exp>;
   quantity?: InputMaybe<Int_Comparison_Exp>;
   stock_id?: InputMaybe<Int_Comparison_Exp>;
   user_id?: InputMaybe<String_Comparison_Exp>;
 };
 
-/** unique or primary key constraints on table "meet_stocks" */
-export enum Meet_Stocks_Constraint {
+/** unique or primary key constraints on table "meat_stocks" */
+export enum Meat_Stocks_Constraint {
   /** unique or primary key constraint on columns "stock_id" */
-  MeetStocksPkey = 'meet_stocks_pkey'
+  MeatStocksPkey = 'meat_stocks_pkey'
 }
 
-/** input type for incrementing numeric columns in table "meet_stocks" */
-export type Meet_Stocks_Inc_Input = {
-  /** 肉マスタID */
-  meet_id?: InputMaybe<Scalars['Int']['input']>;
-  /** 在庫数 */
+/** input type for incrementing numeric columns in table "meat_stocks" */
+export type Meat_Stocks_Inc_Input = {
+  incremental_unit?: InputMaybe<Scalars['Int']['input']>;
+  meat_id?: InputMaybe<Scalars['Int']['input']>;
   quantity?: InputMaybe<Scalars['Int']['input']>;
-  /** ストックID */
   stock_id?: InputMaybe<Scalars['Int']['input']>;
 };
 
-/** input type for inserting data into table "meet_stocks" */
-export type Meet_Stocks_Insert_Input = {
-  /** 肉マスタID */
-  meet_id?: InputMaybe<Scalars['Int']['input']>;
-  meet_stocks_meet_master?: InputMaybe<Meat_Master_Obj_Rel_Insert_Input>;
-  meet_stocks_users?: InputMaybe<Users_Obj_Rel_Insert_Input>;
-  /** 在庫数 */
+/** input type for inserting data into table "meat_stocks" */
+export type Meat_Stocks_Insert_Input = {
+  incremental_unit?: InputMaybe<Scalars['Int']['input']>;
+  meat_id?: InputMaybe<Scalars['Int']['input']>;
+  meat_stocks_meat_master?: InputMaybe<Meat_Master_Obj_Rel_Insert_Input>;
+  meat_stocks_users?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   quantity?: InputMaybe<Scalars['Int']['input']>;
-  /** ストックID */
   stock_id?: InputMaybe<Scalars['Int']['input']>;
-  /** ユーザーID */
   user_id?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate max on columns */
-export type Meet_Stocks_Max_Fields = {
-  __typename?: 'meet_stocks_max_fields';
-  /** 肉マスタID */
-  meet_id?: Maybe<Scalars['Int']['output']>;
-  /** 在庫数 */
+export type Meat_Stocks_Max_Fields = {
+  __typename?: 'meat_stocks_max_fields';
+  incremental_unit?: Maybe<Scalars['Int']['output']>;
+  meat_id?: Maybe<Scalars['Int']['output']>;
   quantity?: Maybe<Scalars['Int']['output']>;
-  /** ストックID */
   stock_id?: Maybe<Scalars['Int']['output']>;
-  /** ユーザーID */
   user_id?: Maybe<Scalars['String']['output']>;
 };
 
-/** order by max() on columns of table "meet_stocks" */
-export type Meet_Stocks_Max_Order_By = {
-  /** 肉マスタID */
-  meet_id?: InputMaybe<Order_By>;
-  /** 在庫数 */
+/** order by max() on columns of table "meat_stocks" */
+export type Meat_Stocks_Max_Order_By = {
+  incremental_unit?: InputMaybe<Order_By>;
+  meat_id?: InputMaybe<Order_By>;
   quantity?: InputMaybe<Order_By>;
-  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
-  /** ユーザーID */
   user_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
-export type Meet_Stocks_Min_Fields = {
-  __typename?: 'meet_stocks_min_fields';
-  /** 肉マスタID */
-  meet_id?: Maybe<Scalars['Int']['output']>;
-  /** 在庫数 */
+export type Meat_Stocks_Min_Fields = {
+  __typename?: 'meat_stocks_min_fields';
+  incremental_unit?: Maybe<Scalars['Int']['output']>;
+  meat_id?: Maybe<Scalars['Int']['output']>;
   quantity?: Maybe<Scalars['Int']['output']>;
-  /** ストックID */
   stock_id?: Maybe<Scalars['Int']['output']>;
-  /** ユーザーID */
   user_id?: Maybe<Scalars['String']['output']>;
 };
 
-/** order by min() on columns of table "meet_stocks" */
-export type Meet_Stocks_Min_Order_By = {
-  /** 肉マスタID */
-  meet_id?: InputMaybe<Order_By>;
-  /** 在庫数 */
+/** order by min() on columns of table "meat_stocks" */
+export type Meat_Stocks_Min_Order_By = {
+  incremental_unit?: InputMaybe<Order_By>;
+  meat_id?: InputMaybe<Order_By>;
   quantity?: InputMaybe<Order_By>;
-  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
-  /** ユーザーID */
   user_id?: InputMaybe<Order_By>;
 };
 
-/** response of any mutation on the table "meet_stocks" */
-export type Meet_Stocks_Mutation_Response = {
-  __typename?: 'meet_stocks_mutation_response';
+/** response of any mutation on the table "meat_stocks" */
+export type Meat_Stocks_Mutation_Response = {
+  __typename?: 'meat_stocks_mutation_response';
   /** number of rows affected by the mutation */
   affected_rows: Scalars['Int']['output'];
   /** data from the rows affected by the mutation */
-  returning: Array<Meet_Stocks>;
+  returning: Array<Meat_Stocks>;
 };
 
-/** input type for inserting object relation for remote table "meet_stocks" */
-export type Meet_Stocks_Obj_Rel_Insert_Input = {
-  data: Meet_Stocks_Insert_Input;
-  /** upsert condition */
-  on_conflict?: InputMaybe<Meet_Stocks_On_Conflict>;
+/** on_conflict condition type for table "meat_stocks" */
+export type Meat_Stocks_On_Conflict = {
+  constraint: Meat_Stocks_Constraint;
+  update_columns?: Array<Meat_Stocks_Update_Column>;
+  where?: InputMaybe<Meat_Stocks_Bool_Exp>;
 };
 
-/** on_conflict condition type for table "meet_stocks" */
-export type Meet_Stocks_On_Conflict = {
-  constraint: Meet_Stocks_Constraint;
-  update_columns?: Array<Meet_Stocks_Update_Column>;
-  where?: InputMaybe<Meet_Stocks_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "meet_stocks". */
-export type Meet_Stocks_Order_By = {
-  meet_id?: InputMaybe<Order_By>;
-  meet_stocks_meet_master?: InputMaybe<Meat_Master_Order_By>;
-  meet_stocks_users?: InputMaybe<Users_Order_By>;
+/** Ordering options when selecting data from "meat_stocks". */
+export type Meat_Stocks_Order_By = {
+  incremental_unit?: InputMaybe<Order_By>;
+  meat_id?: InputMaybe<Order_By>;
+  meat_stocks_meat_master?: InputMaybe<Meat_Master_Order_By>;
+  meat_stocks_users?: InputMaybe<Users_Order_By>;
   quantity?: InputMaybe<Order_By>;
   stock_id?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: meet_stocks */
-export type Meet_Stocks_Pk_Columns_Input = {
-  /** ストックID */
+/** primary key columns input for table: meat_stocks */
+export type Meat_Stocks_Pk_Columns_Input = {
   stock_id: Scalars['Int']['input'];
 };
 
-/** select columns of table "meet_stocks" */
-export enum Meet_Stocks_Select_Column {
+/** select columns of table "meat_stocks" */
+export enum Meat_Stocks_Select_Column {
   /** column name */
-  MeetId = 'meet_id',
+  IncrementalUnit = 'incremental_unit',
+  /** column name */
+  MeatId = 'meat_id',
   /** column name */
   Quantity = 'quantity',
   /** column name */
@@ -630,126 +625,106 @@ export enum Meet_Stocks_Select_Column {
   UserId = 'user_id'
 }
 
-/** input type for updating data in table "meet_stocks" */
-export type Meet_Stocks_Set_Input = {
-  /** 肉マスタID */
-  meet_id?: InputMaybe<Scalars['Int']['input']>;
-  /** 在庫数 */
+/** input type for updating data in table "meat_stocks" */
+export type Meat_Stocks_Set_Input = {
+  incremental_unit?: InputMaybe<Scalars['Int']['input']>;
+  meat_id?: InputMaybe<Scalars['Int']['input']>;
   quantity?: InputMaybe<Scalars['Int']['input']>;
-  /** ストックID */
   stock_id?: InputMaybe<Scalars['Int']['input']>;
-  /** ユーザーID */
   user_id?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate stddev on columns */
-export type Meet_Stocks_Stddev_Fields = {
-  __typename?: 'meet_stocks_stddev_fields';
-  /** 肉マスタID */
-  meet_id?: Maybe<Scalars['Float']['output']>;
-  /** 在庫数 */
+export type Meat_Stocks_Stddev_Fields = {
+  __typename?: 'meat_stocks_stddev_fields';
+  incremental_unit?: Maybe<Scalars['Float']['output']>;
+  meat_id?: Maybe<Scalars['Float']['output']>;
   quantity?: Maybe<Scalars['Float']['output']>;
-  /** ストックID */
   stock_id?: Maybe<Scalars['Float']['output']>;
 };
 
-/** order by stddev() on columns of table "meet_stocks" */
-export type Meet_Stocks_Stddev_Order_By = {
-  /** 肉マスタID */
-  meet_id?: InputMaybe<Order_By>;
-  /** 在庫数 */
+/** order by stddev() on columns of table "meat_stocks" */
+export type Meat_Stocks_Stddev_Order_By = {
+  incremental_unit?: InputMaybe<Order_By>;
+  meat_id?: InputMaybe<Order_By>;
   quantity?: InputMaybe<Order_By>;
-  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
-export type Meet_Stocks_Stddev_Pop_Fields = {
-  __typename?: 'meet_stocks_stddev_pop_fields';
-  /** 肉マスタID */
-  meet_id?: Maybe<Scalars['Float']['output']>;
-  /** 在庫数 */
+export type Meat_Stocks_Stddev_Pop_Fields = {
+  __typename?: 'meat_stocks_stddev_pop_fields';
+  incremental_unit?: Maybe<Scalars['Float']['output']>;
+  meat_id?: Maybe<Scalars['Float']['output']>;
   quantity?: Maybe<Scalars['Float']['output']>;
-  /** ストックID */
   stock_id?: Maybe<Scalars['Float']['output']>;
 };
 
-/** order by stddev_pop() on columns of table "meet_stocks" */
-export type Meet_Stocks_Stddev_Pop_Order_By = {
-  /** 肉マスタID */
-  meet_id?: InputMaybe<Order_By>;
-  /** 在庫数 */
+/** order by stddev_pop() on columns of table "meat_stocks" */
+export type Meat_Stocks_Stddev_Pop_Order_By = {
+  incremental_unit?: InputMaybe<Order_By>;
+  meat_id?: InputMaybe<Order_By>;
   quantity?: InputMaybe<Order_By>;
-  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
-export type Meet_Stocks_Stddev_Samp_Fields = {
-  __typename?: 'meet_stocks_stddev_samp_fields';
-  /** 肉マスタID */
-  meet_id?: Maybe<Scalars['Float']['output']>;
-  /** 在庫数 */
+export type Meat_Stocks_Stddev_Samp_Fields = {
+  __typename?: 'meat_stocks_stddev_samp_fields';
+  incremental_unit?: Maybe<Scalars['Float']['output']>;
+  meat_id?: Maybe<Scalars['Float']['output']>;
   quantity?: Maybe<Scalars['Float']['output']>;
-  /** ストックID */
   stock_id?: Maybe<Scalars['Float']['output']>;
 };
 
-/** order by stddev_samp() on columns of table "meet_stocks" */
-export type Meet_Stocks_Stddev_Samp_Order_By = {
-  /** 肉マスタID */
-  meet_id?: InputMaybe<Order_By>;
-  /** 在庫数 */
+/** order by stddev_samp() on columns of table "meat_stocks" */
+export type Meat_Stocks_Stddev_Samp_Order_By = {
+  incremental_unit?: InputMaybe<Order_By>;
+  meat_id?: InputMaybe<Order_By>;
   quantity?: InputMaybe<Order_By>;
-  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
 };
 
-/** Streaming cursor of the table "meet_stocks" */
-export type Meet_Stocks_Stream_Cursor_Input = {
+/** Streaming cursor of the table "meat_stocks" */
+export type Meat_Stocks_Stream_Cursor_Input = {
   /** Stream column input with initial value */
-  initial_value: Meet_Stocks_Stream_Cursor_Value_Input;
+  initial_value: Meat_Stocks_Stream_Cursor_Value_Input;
   /** cursor ordering */
   ordering?: InputMaybe<Cursor_Ordering>;
 };
 
 /** Initial value of the column from where the streaming should start */
-export type Meet_Stocks_Stream_Cursor_Value_Input = {
-  /** 肉マスタID */
-  meet_id?: InputMaybe<Scalars['Int']['input']>;
-  /** 在庫数 */
+export type Meat_Stocks_Stream_Cursor_Value_Input = {
+  incremental_unit?: InputMaybe<Scalars['Int']['input']>;
+  meat_id?: InputMaybe<Scalars['Int']['input']>;
   quantity?: InputMaybe<Scalars['Int']['input']>;
-  /** ストックID */
   stock_id?: InputMaybe<Scalars['Int']['input']>;
-  /** ユーザーID */
   user_id?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate sum on columns */
-export type Meet_Stocks_Sum_Fields = {
-  __typename?: 'meet_stocks_sum_fields';
-  /** 肉マスタID */
-  meet_id?: Maybe<Scalars['Int']['output']>;
-  /** 在庫数 */
+export type Meat_Stocks_Sum_Fields = {
+  __typename?: 'meat_stocks_sum_fields';
+  incremental_unit?: Maybe<Scalars['Int']['output']>;
+  meat_id?: Maybe<Scalars['Int']['output']>;
   quantity?: Maybe<Scalars['Int']['output']>;
-  /** ストックID */
   stock_id?: Maybe<Scalars['Int']['output']>;
 };
 
-/** order by sum() on columns of table "meet_stocks" */
-export type Meet_Stocks_Sum_Order_By = {
-  /** 肉マスタID */
-  meet_id?: InputMaybe<Order_By>;
-  /** 在庫数 */
+/** order by sum() on columns of table "meat_stocks" */
+export type Meat_Stocks_Sum_Order_By = {
+  incremental_unit?: InputMaybe<Order_By>;
+  meat_id?: InputMaybe<Order_By>;
   quantity?: InputMaybe<Order_By>;
-  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
 };
 
-/** update columns of table "meet_stocks" */
-export enum Meet_Stocks_Update_Column {
+/** update columns of table "meat_stocks" */
+export enum Meat_Stocks_Update_Column {
   /** column name */
-  MeetId = 'meet_id',
+  IncrementalUnit = 'incremental_unit',
+  /** column name */
+  MeatId = 'meat_id',
   /** column name */
   Quantity = 'quantity',
   /** column name */
@@ -758,75 +733,63 @@ export enum Meet_Stocks_Update_Column {
   UserId = 'user_id'
 }
 
-export type Meet_Stocks_Updates = {
+export type Meat_Stocks_Updates = {
   /** increments the numeric columns with given value of the filtered values */
-  _inc?: InputMaybe<Meet_Stocks_Inc_Input>;
+  _inc?: InputMaybe<Meat_Stocks_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Meet_Stocks_Set_Input>;
+  _set?: InputMaybe<Meat_Stocks_Set_Input>;
   /** filter the rows which have to be updated */
-  where: Meet_Stocks_Bool_Exp;
+  where: Meat_Stocks_Bool_Exp;
 };
 
 /** aggregate var_pop on columns */
-export type Meet_Stocks_Var_Pop_Fields = {
-  __typename?: 'meet_stocks_var_pop_fields';
-  /** 肉マスタID */
-  meet_id?: Maybe<Scalars['Float']['output']>;
-  /** 在庫数 */
+export type Meat_Stocks_Var_Pop_Fields = {
+  __typename?: 'meat_stocks_var_pop_fields';
+  incremental_unit?: Maybe<Scalars['Float']['output']>;
+  meat_id?: Maybe<Scalars['Float']['output']>;
   quantity?: Maybe<Scalars['Float']['output']>;
-  /** ストックID */
   stock_id?: Maybe<Scalars['Float']['output']>;
 };
 
-/** order by var_pop() on columns of table "meet_stocks" */
-export type Meet_Stocks_Var_Pop_Order_By = {
-  /** 肉マスタID */
-  meet_id?: InputMaybe<Order_By>;
-  /** 在庫数 */
+/** order by var_pop() on columns of table "meat_stocks" */
+export type Meat_Stocks_Var_Pop_Order_By = {
+  incremental_unit?: InputMaybe<Order_By>;
+  meat_id?: InputMaybe<Order_By>;
   quantity?: InputMaybe<Order_By>;
-  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
-export type Meet_Stocks_Var_Samp_Fields = {
-  __typename?: 'meet_stocks_var_samp_fields';
-  /** 肉マスタID */
-  meet_id?: Maybe<Scalars['Float']['output']>;
-  /** 在庫数 */
+export type Meat_Stocks_Var_Samp_Fields = {
+  __typename?: 'meat_stocks_var_samp_fields';
+  incremental_unit?: Maybe<Scalars['Float']['output']>;
+  meat_id?: Maybe<Scalars['Float']['output']>;
   quantity?: Maybe<Scalars['Float']['output']>;
-  /** ストックID */
   stock_id?: Maybe<Scalars['Float']['output']>;
 };
 
-/** order by var_samp() on columns of table "meet_stocks" */
-export type Meet_Stocks_Var_Samp_Order_By = {
-  /** 肉マスタID */
-  meet_id?: InputMaybe<Order_By>;
-  /** 在庫数 */
+/** order by var_samp() on columns of table "meat_stocks" */
+export type Meat_Stocks_Var_Samp_Order_By = {
+  incremental_unit?: InputMaybe<Order_By>;
+  meat_id?: InputMaybe<Order_By>;
   quantity?: InputMaybe<Order_By>;
-  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
-export type Meet_Stocks_Variance_Fields = {
-  __typename?: 'meet_stocks_variance_fields';
-  /** 肉マスタID */
-  meet_id?: Maybe<Scalars['Float']['output']>;
-  /** 在庫数 */
+export type Meat_Stocks_Variance_Fields = {
+  __typename?: 'meat_stocks_variance_fields';
+  incremental_unit?: Maybe<Scalars['Float']['output']>;
+  meat_id?: Maybe<Scalars['Float']['output']>;
   quantity?: Maybe<Scalars['Float']['output']>;
-  /** ストックID */
   stock_id?: Maybe<Scalars['Float']['output']>;
 };
 
-/** order by variance() on columns of table "meet_stocks" */
-export type Meet_Stocks_Variance_Order_By = {
-  /** 肉マスタID */
-  meet_id?: InputMaybe<Order_By>;
-  /** 在庫数 */
+/** order by variance() on columns of table "meat_stocks" */
+export type Meat_Stocks_Variance_Order_By = {
+  incremental_unit?: InputMaybe<Order_By>;
+  meat_id?: InputMaybe<Order_By>;
   quantity?: InputMaybe<Order_By>;
-  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
 };
 
@@ -837,10 +800,10 @@ export type Mutation_Root = {
   delete_meat_master?: Maybe<Meat_Master_Mutation_Response>;
   /** delete single row from the table: "meat_master" */
   delete_meat_master_by_pk?: Maybe<Meat_Master>;
-  /** delete data from the table: "meet_stocks" */
-  delete_meet_stocks?: Maybe<Meet_Stocks_Mutation_Response>;
-  /** delete single row from the table: "meet_stocks" */
-  delete_meet_stocks_by_pk?: Maybe<Meet_Stocks>;
+  /** delete data from the table: "meat_stocks" */
+  delete_meat_stocks?: Maybe<Meat_Stocks_Mutation_Response>;
+  /** delete single row from the table: "meat_stocks" */
+  delete_meat_stocks_by_pk?: Maybe<Meat_Stocks>;
   /** delete data from the table: "unit_master" */
   delete_unit_master?: Maybe<Unit_Master_Mutation_Response>;
   /** delete single row from the table: "unit_master" */
@@ -861,10 +824,10 @@ export type Mutation_Root = {
   insert_meat_master?: Maybe<Meat_Master_Mutation_Response>;
   /** insert a single row into the table: "meat_master" */
   insert_meat_master_one?: Maybe<Meat_Master>;
-  /** insert data into the table: "meet_stocks" */
-  insert_meet_stocks?: Maybe<Meet_Stocks_Mutation_Response>;
-  /** insert a single row into the table: "meet_stocks" */
-  insert_meet_stocks_one?: Maybe<Meet_Stocks>;
+  /** insert data into the table: "meat_stocks" */
+  insert_meat_stocks?: Maybe<Meat_Stocks_Mutation_Response>;
+  /** insert a single row into the table: "meat_stocks" */
+  insert_meat_stocks_one?: Maybe<Meat_Stocks>;
   /** insert data into the table: "unit_master" */
   insert_unit_master?: Maybe<Unit_Master_Mutation_Response>;
   /** insert a single row into the table: "unit_master" */
@@ -887,12 +850,12 @@ export type Mutation_Root = {
   update_meat_master_by_pk?: Maybe<Meat_Master>;
   /** update multiples rows of table: "meat_master" */
   update_meat_master_many?: Maybe<Array<Maybe<Meat_Master_Mutation_Response>>>;
-  /** update data of the table: "meet_stocks" */
-  update_meet_stocks?: Maybe<Meet_Stocks_Mutation_Response>;
-  /** update single row of the table: "meet_stocks" */
-  update_meet_stocks_by_pk?: Maybe<Meet_Stocks>;
-  /** update multiples rows of table: "meet_stocks" */
-  update_meet_stocks_many?: Maybe<Array<Maybe<Meet_Stocks_Mutation_Response>>>;
+  /** update data of the table: "meat_stocks" */
+  update_meat_stocks?: Maybe<Meat_Stocks_Mutation_Response>;
+  /** update single row of the table: "meat_stocks" */
+  update_meat_stocks_by_pk?: Maybe<Meat_Stocks>;
+  /** update multiples rows of table: "meat_stocks" */
+  update_meat_stocks_many?: Maybe<Array<Maybe<Meat_Stocks_Mutation_Response>>>;
   /** update data of the table: "unit_master" */
   update_unit_master?: Maybe<Unit_Master_Mutation_Response>;
   /** update single row of the table: "unit_master" */
@@ -933,13 +896,13 @@ export type Mutation_RootDelete_Meat_Master_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootDelete_Meet_StocksArgs = {
-  where: Meet_Stocks_Bool_Exp;
+export type Mutation_RootDelete_Meat_StocksArgs = {
+  where: Meat_Stocks_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_Meet_Stocks_By_PkArgs = {
+export type Mutation_RootDelete_Meat_Stocks_By_PkArgs = {
   stock_id: Scalars['Int']['input'];
 };
 
@@ -1007,16 +970,16 @@ export type Mutation_RootInsert_Meat_Master_OneArgs = {
 
 
 /** mutation root */
-export type Mutation_RootInsert_Meet_StocksArgs = {
-  objects: Array<Meet_Stocks_Insert_Input>;
-  on_conflict?: InputMaybe<Meet_Stocks_On_Conflict>;
+export type Mutation_RootInsert_Meat_StocksArgs = {
+  objects: Array<Meat_Stocks_Insert_Input>;
+  on_conflict?: InputMaybe<Meat_Stocks_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_Meet_Stocks_OneArgs = {
-  object: Meet_Stocks_Insert_Input;
-  on_conflict?: InputMaybe<Meet_Stocks_On_Conflict>;
+export type Mutation_RootInsert_Meat_Stocks_OneArgs = {
+  object: Meat_Stocks_Insert_Input;
+  on_conflict?: InputMaybe<Meat_Stocks_On_Conflict>;
 };
 
 
@@ -1099,24 +1062,24 @@ export type Mutation_RootUpdate_Meat_Master_ManyArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Meet_StocksArgs = {
-  _inc?: InputMaybe<Meet_Stocks_Inc_Input>;
-  _set?: InputMaybe<Meet_Stocks_Set_Input>;
-  where: Meet_Stocks_Bool_Exp;
+export type Mutation_RootUpdate_Meat_StocksArgs = {
+  _inc?: InputMaybe<Meat_Stocks_Inc_Input>;
+  _set?: InputMaybe<Meat_Stocks_Set_Input>;
+  where: Meat_Stocks_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Meet_Stocks_By_PkArgs = {
-  _inc?: InputMaybe<Meet_Stocks_Inc_Input>;
-  _set?: InputMaybe<Meet_Stocks_Set_Input>;
-  pk_columns: Meet_Stocks_Pk_Columns_Input;
+export type Mutation_RootUpdate_Meat_Stocks_By_PkArgs = {
+  _inc?: InputMaybe<Meat_Stocks_Inc_Input>;
+  _set?: InputMaybe<Meat_Stocks_Set_Input>;
+  pk_columns: Meat_Stocks_Pk_Columns_Input;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Meet_Stocks_ManyArgs = {
-  updates: Array<Meet_Stocks_Updates>;
+export type Mutation_RootUpdate_Meat_Stocks_ManyArgs = {
+  updates: Array<Meat_Stocks_Updates>;
 };
 
 
@@ -1229,12 +1192,12 @@ export type Query_Root = {
   meat_master_aggregate: Meat_Master_Aggregate;
   /** fetch data from the table: "meat_master" using primary key columns */
   meat_master_by_pk?: Maybe<Meat_Master>;
-  /** fetch data from the table: "meet_stocks" */
-  meet_stocks: Array<Meet_Stocks>;
-  /** fetch aggregated fields from the table: "meet_stocks" */
-  meet_stocks_aggregate: Meet_Stocks_Aggregate;
-  /** fetch data from the table: "meet_stocks" using primary key columns */
-  meet_stocks_by_pk?: Maybe<Meet_Stocks>;
+  /** fetch data from the table: "meat_stocks" */
+  meat_stocks: Array<Meat_Stocks>;
+  /** fetch aggregated fields from the table: "meat_stocks" */
+  meat_stocks_aggregate: Meat_Stocks_Aggregate;
+  /** fetch data from the table: "meat_stocks" using primary key columns */
+  meat_stocks_by_pk?: Maybe<Meat_Stocks>;
   /** fetch data from the table: "unit_master" */
   unit_master: Array<Unit_Master>;
   /** fetch aggregated fields from the table: "unit_master" */
@@ -1285,25 +1248,25 @@ export type Query_RootMeat_Master_By_PkArgs = {
 };
 
 
-export type Query_RootMeet_StocksArgs = {
-  distinct_on?: InputMaybe<Array<Meet_Stocks_Select_Column>>;
+export type Query_RootMeat_StocksArgs = {
+  distinct_on?: InputMaybe<Array<Meat_Stocks_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Meet_Stocks_Order_By>>;
-  where?: InputMaybe<Meet_Stocks_Bool_Exp>;
+  order_by?: InputMaybe<Array<Meat_Stocks_Order_By>>;
+  where?: InputMaybe<Meat_Stocks_Bool_Exp>;
 };
 
 
-export type Query_RootMeet_Stocks_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Meet_Stocks_Select_Column>>;
+export type Query_RootMeat_Stocks_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Meat_Stocks_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Meet_Stocks_Order_By>>;
-  where?: InputMaybe<Meet_Stocks_Bool_Exp>;
+  order_by?: InputMaybe<Array<Meat_Stocks_Order_By>>;
+  where?: InputMaybe<Meat_Stocks_Bool_Exp>;
 };
 
 
-export type Query_RootMeet_Stocks_By_PkArgs = {
+export type Query_RootMeat_Stocks_By_PkArgs = {
   stock_id: Scalars['Int']['input'];
 };
 
@@ -1409,14 +1372,14 @@ export type Subscription_Root = {
   meat_master_by_pk?: Maybe<Meat_Master>;
   /** fetch data from the table in a streaming manner: "meat_master" */
   meat_master_stream: Array<Meat_Master>;
-  /** fetch data from the table: "meet_stocks" */
-  meet_stocks: Array<Meet_Stocks>;
-  /** fetch aggregated fields from the table: "meet_stocks" */
-  meet_stocks_aggregate: Meet_Stocks_Aggregate;
-  /** fetch data from the table: "meet_stocks" using primary key columns */
-  meet_stocks_by_pk?: Maybe<Meet_Stocks>;
-  /** fetch data from the table in a streaming manner: "meet_stocks" */
-  meet_stocks_stream: Array<Meet_Stocks>;
+  /** fetch data from the table: "meat_stocks" */
+  meat_stocks: Array<Meat_Stocks>;
+  /** fetch aggregated fields from the table: "meat_stocks" */
+  meat_stocks_aggregate: Meat_Stocks_Aggregate;
+  /** fetch data from the table: "meat_stocks" using primary key columns */
+  meat_stocks_by_pk?: Maybe<Meat_Stocks>;
+  /** fetch data from the table in a streaming manner: "meat_stocks" */
+  meat_stocks_stream: Array<Meat_Stocks>;
   /** fetch data from the table: "unit_master" */
   unit_master: Array<Unit_Master>;
   /** fetch aggregated fields from the table: "unit_master" */
@@ -1482,33 +1445,33 @@ export type Subscription_RootMeat_Master_StreamArgs = {
 };
 
 
-export type Subscription_RootMeet_StocksArgs = {
-  distinct_on?: InputMaybe<Array<Meet_Stocks_Select_Column>>;
+export type Subscription_RootMeat_StocksArgs = {
+  distinct_on?: InputMaybe<Array<Meat_Stocks_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Meet_Stocks_Order_By>>;
-  where?: InputMaybe<Meet_Stocks_Bool_Exp>;
+  order_by?: InputMaybe<Array<Meat_Stocks_Order_By>>;
+  where?: InputMaybe<Meat_Stocks_Bool_Exp>;
 };
 
 
-export type Subscription_RootMeet_Stocks_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Meet_Stocks_Select_Column>>;
+export type Subscription_RootMeat_Stocks_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Meat_Stocks_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Meet_Stocks_Order_By>>;
-  where?: InputMaybe<Meet_Stocks_Bool_Exp>;
+  order_by?: InputMaybe<Array<Meat_Stocks_Order_By>>;
+  where?: InputMaybe<Meat_Stocks_Bool_Exp>;
 };
 
 
-export type Subscription_RootMeet_Stocks_By_PkArgs = {
+export type Subscription_RootMeat_Stocks_By_PkArgs = {
   stock_id: Scalars['Int']['input'];
 };
 
 
-export type Subscription_RootMeet_Stocks_StreamArgs = {
+export type Subscription_RootMeat_Stocks_StreamArgs = {
   batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Meet_Stocks_Stream_Cursor_Input>>;
-  where?: InputMaybe<Meet_Stocks_Bool_Exp>;
+  cursor: Array<InputMaybe<Meat_Stocks_Stream_Cursor_Input>>;
+  where?: InputMaybe<Meat_Stocks_Bool_Exp>;
 };
 
 
@@ -1890,9 +1853,9 @@ export type Users = {
   /** ユーザーID */
   id: Scalars['String']['output'];
   /** An array relationship */
-  users_meat_stocks: Array<Meet_Stocks>;
+  user_meat_stocks: Array<Meat_Stocks>;
   /** An aggregate relationship */
-  users_meat_stocks_aggregate: Meet_Stocks_Aggregate;
+  user_meat_stocks_aggregate: Meat_Stocks_Aggregate;
   /** An array relationship */
   users_vegetable_stocks: Array<Vegetable_Stocks>;
   /** An aggregate relationship */
@@ -1901,22 +1864,22 @@ export type Users = {
 
 
 /** frimane ユーザー */
-export type UsersUsers_Meat_StocksArgs = {
-  distinct_on?: InputMaybe<Array<Meet_Stocks_Select_Column>>;
+export type UsersUser_Meat_StocksArgs = {
+  distinct_on?: InputMaybe<Array<Meat_Stocks_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Meet_Stocks_Order_By>>;
-  where?: InputMaybe<Meet_Stocks_Bool_Exp>;
+  order_by?: InputMaybe<Array<Meat_Stocks_Order_By>>;
+  where?: InputMaybe<Meat_Stocks_Bool_Exp>;
 };
 
 
 /** frimane ユーザー */
-export type UsersUsers_Meat_Stocks_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Meet_Stocks_Select_Column>>;
+export type UsersUser_Meat_Stocks_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Meat_Stocks_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Meet_Stocks_Order_By>>;
-  where?: InputMaybe<Meet_Stocks_Bool_Exp>;
+  order_by?: InputMaybe<Array<Meat_Stocks_Order_By>>;
+  where?: InputMaybe<Meat_Stocks_Bool_Exp>;
 };
 
 
@@ -1969,8 +1932,8 @@ export type Users_Bool_Exp = {
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   email?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<String_Comparison_Exp>;
-  users_meat_stocks?: InputMaybe<Meet_Stocks_Bool_Exp>;
-  users_meat_stocks_aggregate?: InputMaybe<Meet_Stocks_Aggregate_Bool_Exp>;
+  user_meat_stocks?: InputMaybe<Meat_Stocks_Bool_Exp>;
+  user_meat_stocks_aggregate?: InputMaybe<Meat_Stocks_Aggregate_Bool_Exp>;
   users_vegetable_stocks?: InputMaybe<Vegetable_Stocks_Bool_Exp>;
   users_vegetable_stocks_aggregate?: InputMaybe<Vegetable_Stocks_Aggregate_Bool_Exp>;
 };
@@ -1989,7 +1952,7 @@ export type Users_Insert_Input = {
   email?: InputMaybe<Scalars['String']['input']>;
   /** ユーザーID */
   id?: InputMaybe<Scalars['String']['input']>;
-  users_meat_stocks?: InputMaybe<Meet_Stocks_Arr_Rel_Insert_Input>;
+  user_meat_stocks?: InputMaybe<Meat_Stocks_Arr_Rel_Insert_Input>;
   users_vegetable_stocks?: InputMaybe<Vegetable_Stocks_Arr_Rel_Insert_Input>;
 };
 
@@ -2043,7 +2006,7 @@ export type Users_Order_By = {
   created_at?: InputMaybe<Order_By>;
   email?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  users_meat_stocks_aggregate?: InputMaybe<Meet_Stocks_Aggregate_Order_By>;
+  user_meat_stocks_aggregate?: InputMaybe<Meat_Stocks_Aggregate_Order_By>;
   users_vegetable_stocks_aggregate?: InputMaybe<Vegetable_Stocks_Aggregate_Order_By>;
 };
 
@@ -2923,6 +2886,35 @@ export type Vegetable_Stocks_Variance_Order_By = {
   vegetable_id?: InputMaybe<Order_By>;
 };
 
+export type GetMeatMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMeatMasterAndUnitAndStocksQuery = { __typename?: 'query_root', meat_master: Array<{ __typename?: 'meat_master', meat_id: number, display_name: string, meat_name: string, image_uri: string, meat_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, meat_master_meat_stocks: Array<{ __typename?: 'meat_stocks', stock_id: number, quantity: number, incremental_unit: number }> }> };
+
+export type GetMeatStockByUserIdAndMeatIdQueryVariables = Exact<{
+  userId: Scalars['String']['input'];
+  meatId: Scalars['Int']['input'];
+}>;
+
+
+export type GetMeatStockByUserIdAndMeatIdQuery = { __typename?: 'query_root', meat_stocks: Array<{ __typename?: 'meat_stocks', stock_id: number, user_id: string, meat_id: number, quantity: number }> };
+
+export type InsertMeatStockMutationVariables = Exact<{
+  object: Meat_Stocks_Insert_Input;
+}>;
+
+
+export type InsertMeatStockMutation = { __typename?: 'mutation_root', insert_meat_stocks_one?: { __typename?: 'meat_stocks', quantity: number, stock_id: number, user_id: string, meat_id: number } | null };
+
+export type UpdateMeatStockMutationVariables = Exact<{
+  userId: Scalars['String']['input'];
+  meatId: Scalars['Int']['input'];
+  quantity: Scalars['Int']['input'];
+}>;
+
+
+export type UpdateMeatStockMutation = { __typename?: 'mutation_root', update_meat_stocks?: { __typename?: 'meat_stocks_mutation_response', returning: Array<{ __typename?: 'meat_stocks', stock_id: number, user_id: string, meat_id: number, quantity: number }> } | null };
+
 export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2958,6 +2950,10 @@ export type UpdateVegetableStockMutationVariables = Exact<{
 export type UpdateVegetableStockMutation = { __typename?: 'mutation_root', update_vegetable_stocks?: { __typename?: 'vegetable_stocks_mutation_response', returning: Array<{ __typename?: 'vegetable_stocks', stock_id: number, user_id: string, vegetable_id: number, quantity: number }> } | null };
 
 
+export const GetMeatMasterAndUnitAndStocksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMeatMasterAndUnitAndStocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"meat_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"meat_id"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"meat_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"meat_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"meat_master_meat_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}}]}}]}}]}}]} as unknown as DocumentNode<GetMeatMasterAndUnitAndStocksQuery, GetMeatMasterAndUnitAndStocksQueryVariables>;
+export const GetMeatStockByUserIdAndMeatIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMeatStockByUserIdAndMeatId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"meatId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"meat_stocks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"meat_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"meatId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"meat_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}}]}}]}}]} as unknown as DocumentNode<GetMeatStockByUserIdAndMeatIdQuery, GetMeatStockByUserIdAndMeatIdQueryVariables>;
+export const InsertMeatStockDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InsertMeatStock"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"object"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"meat_stocks_insert_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_meat_stocks_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"object"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"meat_id"}}]}}]}}]} as unknown as DocumentNode<InsertMeatStockMutation, InsertMeatStockMutationVariables>;
+export const UpdateMeatStockDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateMeatStock"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"meatId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_meat_stocks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"meat_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"meatId"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"quantity"},"value":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"meat_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateMeatStockMutation, UpdateMeatStockMutationVariables>;
 export const GetUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}}]}}]}}]} as unknown as DocumentNode<GetUserQuery, GetUserQueryVariables>;
 export const GetVegetableMasterAndUnitAndStocksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetVegetableMasterAndUnitAndStocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vegetable_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vegetable_id"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"vegetable_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"vegetable_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"vegetable_master_vegetable_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}}]}}]}}]}}]} as unknown as DocumentNode<GetVegetableMasterAndUnitAndStocksQuery, GetVegetableMasterAndUnitAndStocksQueryVariables>;
 export const GetVegetableStockByUserIdAndVegetableIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetVegetableStockByUserIdAndVegetableId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"vegetableId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vegetable_stocks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"vegetable_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"vegetableId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"vegetable_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}}]}}]}}]} as unknown as DocumentNode<GetVegetableStockByUserIdAndVegetableIdQuery, GetVegetableStockByUserIdAndVegetableIdQueryVariables>;
