@@ -3,18 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { VegetablesView } from '@src/components/FridgeScreen/VegetablesView';
 import { MeatsView } from '@src/components/FridgeScreen/MeatsView';
-
-export type SelectFridgeCategory = 'vegetables' | 'meats';
-
-export type SelectItems = {
-  label: string;
-  value: SelectFridgeCategory;
-}[];
-
-export const selectItems: SelectItems = [
-  { label: '野菜類', value: 'vegetables' },
-  { label: '肉類', value: 'meats' },
-] as const;
+import { SelectFridgeCategory } from '@src/utils/consts';
 
 export const FridgeScreen = () => {
   const [selectedCategory, setSelectedCategory] =
