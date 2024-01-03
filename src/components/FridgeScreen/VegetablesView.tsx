@@ -9,6 +9,7 @@ import { SkeletonFridgeViews } from '@src/components/FridgeScreen/SkeletonFridge
 import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
 import { SelectFridgeCategory, selectItems } from '@src/utils/consts';
 import { useChunkedArray } from '@src/hooks/useChunkedArray';
+import { useUpsertVegetableStock } from '@src/interface/hooks/useUpsertVegetableStock';
 
 type Props = {
   /** 選択されたカテゴリーが変更された時に実行される関数。 */
@@ -21,10 +22,12 @@ type Props = {
 export const VegetablesView: FC<Props> = ({ onChangeSelectCategory }) => {
   const { vegetablesStocks, isFetching } = useVegetablesStocks();
   const vegetablesStockActions = useVegetablesStockActions();
+  const upsertVegetablesStock = useUpsertVegetableStock();
   const rows = useChunkedArray(vegetablesStocks.ids, 3);
 
   const onIncreaseStock = useCallback(async (vegetableId: number) => {
     vegetablesStockActions.increaseVegetableStock({ vegetableId, quantity: 1 });
+    upsertVegetablesStock({ vegetableId, quantity: 1 });
   }, []);
 
   const onDecreaseStock = useCallback(async (vegetableId: number) => {
@@ -32,6 +35,7 @@ export const VegetablesView: FC<Props> = ({ onChangeSelectCategory }) => {
       vegetableId,
       quantity: 1,
     });
+    upsertVegetablesStock({ vegetableId, quantity: -1 });
   }, []);
 
   if (isFetching) {
