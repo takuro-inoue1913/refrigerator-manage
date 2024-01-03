@@ -1,15 +1,16 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { StyleSheet, TextStyleIOS, View } from 'react-native';
 import RNPickerSelect, { Item, PickerStyle } from 'react-native-picker-select';
 
 import { SelectFridgeCategory } from '@src/utils/consts';
 
 type Props = {
-  selectedValue: string;
+  selectedValue: SelectFridgeCategory;
   selectItems: Item[];
   isDisabled?: boolean;
   onValueChange: (value: SelectFridgeCategory) => void;
 };
+
 /**
  * 冷蔵庫画面のヘッダーを表示するコンポーネント。
  */
@@ -19,13 +20,19 @@ export const StickyHeader: FC<Props> = ({
   isDisabled,
   onValueChange,
 }) => {
+  // MEMO: onDonePress の時に値が更新されないため、stateを使っている。
+  const [selectedValueState, setSelectedValueState] =
+    useState<SelectFridgeCategory>(selectedValue);
+
   return (
     <View style={styles.header}>
       <RNPickerSelect
         placeholder={{}}
-        onValueChange={onValueChange}
+        doneText={'選択'}
+        onValueChange={(value) => setSelectedValueState(value)}
+        onDonePress={() => onValueChange(selectedValueState)}
         items={selectItems}
-        value={selectedValue}
+        value={selectedValueState}
         style={isDisabled ? styles.disabledPicker : styles.pickerSelect}
         disabled={isDisabled}
       />
