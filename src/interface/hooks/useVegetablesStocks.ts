@@ -13,7 +13,7 @@ export const useVegetablesStocks = () => {
   );
 
   const { isFetching } = useQuery({
-    queryKey: ['graphl', 'get', 'vegetable', 'stock'],
+    queryKey: ['graphl', 'get', 'vegetable', 'master', 'stock'],
     queryFn: async () => {
       const data = await vegetableStockRepository.getAll({ idToken });
       const _vegetablesStocks = generateVegetablesStocks(data);
