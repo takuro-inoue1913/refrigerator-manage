@@ -8,7 +8,11 @@ import { useVegetablesStockActions } from '@src/states/vegetables/action';
 import { useVegetablesStocks } from '@src/interface/hooks/useVegetablesStocks';
 import { SkeletonFridgeViews } from '@src/components/FridgeScreen/SkeletonFridgeViews';
 import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
-import { SelectFridgeCategory, selectItems } from '@src/utils/consts';
+import {
+  SelectFridgeCategory,
+  OnPressImageArgs,
+  selectItems,
+} from '@src/utils/consts';
 import { useChunkedArray } from '@src/hooks/useChunkedArray';
 import { useUpsertVegetableStock } from '@src/interface/hooks/useUpsertVegetableStock';
 
@@ -45,24 +49,35 @@ export const VegetablesView: FC<Props> = ({ onChangeSelectCategory }) => {
   );
 
   const onIncreaseStock = useCallback(
-    async (vegetableId: number, quantity: number) => {
+    async ({
+      targetId: vegetableId,
+      currentQuantity,
+      incrementalUnit,
+    }: OnPressImageArgs) => {
       vegetablesStockActions.increaseVegetableStock({
         vegetableId,
-        quantity: 1,
+        quantity: incrementalUnit,
       });
-      stockQuantities.current[vegetableId] = quantity + 1;
+      stockQuantities.current[vegetableId] = currentQuantity + incrementalUnit;
       debouncedUpsertVegetableStock();
     },
     [],
   );
 
   const onDecreaseStock = useCallback(
-    async (vegetableId: number, quantity: number) => {
+    async ({
+      targetId: vegetableId,
+      currentQuantity,
+      incrementalUnit,
+    }: OnPressImageArgs) => {
       vegetablesStockActions.decreaseVegetableStock({
         vegetableId,
-        quantity: 1,
+        quantity: incrementalUnit,
       });
-      stockQuantities.current[vegetableId] = Math.max(quantity - 1, 0);
+      stockQuantities.current[vegetableId] = Math.max(
+        currentQuantity - incrementalUnit,
+        0,
+      );
       debouncedUpsertVegetableStock();
     },
     [],
@@ -94,6 +109,9 @@ export const VegetablesView: FC<Props> = ({ onChangeSelectCategory }) => {
                   hasStock={vegetablesStocks.byId[vegetableId].hasStock}
                   quantity={vegetablesStocks.byId[vegetableId].quantity}
                   unitName={vegetablesStocks.byId[vegetableId].unitName}
+                  incrementalUnit={
+                    vegetablesStocks.byId[vegetableId].incrementalUnit
+                  }
                   onPressIncrease={onIncreaseStock}
                   onPressDecrease={onDecreaseStock}
                 />

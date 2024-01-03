@@ -12,6 +12,7 @@ import CachedImage from 'expo-cached-image';
 import { SkeletonImage } from '@src/components/common/SkeletonImage';
 import { commonStyles } from '@src/utils/commonStyle';
 import { ItemBadge } from '@src/components/FridgeScreen/ItemBadge';
+import { OnPressImageArgs } from '@src/utils/consts';
 
 type Props = {
   /** 画像のURI */
@@ -22,12 +23,14 @@ type Props = {
   hasStock: boolean;
   /** 在庫数 */
   quantity: number;
+  /** 増減単位 */
+  incrementalUnit: number;
   /** 単位名 */
   unitName: string;
   /** 追加ボタンを押した時に実行される関数。 */
-  onPressIncrease?: (targetId: number, quantity: number) => Promise<void>;
+  onPressIncrease?: (args: OnPressImageArgs) => Promise<void>;
   /** 減らすボタンを押した時に実行される関数。 */
-  onPressDecrease?: (targetId: number, quantity: number) => Promise<void>;
+  onPressDecrease?: (args: OnPressImageArgs) => Promise<void>;
 };
 
 /**
@@ -36,9 +39,10 @@ type Props = {
 export const ItemImage: FC<Props> = memo(
   ({
     sourceUri,
-    targetId,
     hasStock,
+    targetId,
     quantity,
+    incrementalUnit,
     unitName,
     onPressIncrease,
     onPressDecrease,
@@ -59,10 +63,18 @@ export const ItemImage: FC<Props> = memo(
       setOverlayOpacity(0);
       switch (newTouchedSide) {
         case 'left':
-          onPressDecrease?.(targetId, quantity);
+          onPressDecrease?.({
+            targetId,
+            currentQuantity: quantity,
+            incrementalUnit,
+          });
           break;
         case 'right':
-          onPressIncrease?.(targetId, quantity);
+          onPressIncrease?.({
+            targetId,
+            currentQuantity: quantity,
+            incrementalUnit,
+          });
           break;
       }
       setTimeout(() => setOverlayOpacity(1), 100);

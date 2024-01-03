@@ -25,6 +25,8 @@ export type VegetablesStocks = {
       stockId: number | null;
       /** 在庫数 */
       quantity: number;
+      /** 増減単位 */
+      incrementalUnit: number;
     };
   };
 };

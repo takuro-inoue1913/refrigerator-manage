@@ -26,6 +26,8 @@ export const generateVegetablesStocks = (
           cur.vegetable_master_vegetable_stocks.quantity > 0,
         stockId: cur.vegetable_master_vegetable_stocks?.stock_id ?? null,
         quantity: cur.vegetable_master_vegetable_stocks?.quantity ?? 0,
+        incrementalUnit:
+          cur.vegetable_master_vegetable_stocks?.incremental_unit ?? 1,
       };
       ids.push(cur.vegetable_id);
       return acc;
