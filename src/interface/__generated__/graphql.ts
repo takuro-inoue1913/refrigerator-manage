@@ -74,14 +74,19 @@ export enum Cursor_Ordering {
 /** 肉類のマスターデータ */
 export type Meat_Master = {
   __typename?: 'meat_master';
+  /** 表示名 */
   display_name: Scalars['String']['output'];
+  /** 画像URI */
   image_uri: Scalars['String']['output'];
+  /** 肉マスタID */
   meat_id: Scalars['Int']['output'];
   /** An object relationship */
   meat_master_meat_stocks?: Maybe<Meet_Stocks>;
   /** An object relationship */
   meat_master_unit_master?: Maybe<Unit_Master>;
+  /** 肉名（ひらがな） */
   meat_name: Scalars['String']['output'];
+  /** 単位ID */
   unit_id: Scalars['Int']['output'];
 };
 
@@ -118,7 +123,9 @@ export type Meat_Master_Aggregate_FieldsCountArgs = {
 /** aggregate avg on columns */
 export type Meat_Master_Avg_Fields = {
   __typename?: 'meat_master_avg_fields';
+  /** 肉マスタID */
   meat_id?: Maybe<Scalars['Float']['output']>;
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -150,38 +157,55 @@ export enum Meat_Master_Constraint {
 
 /** input type for incrementing numeric columns in table "meat_master" */
 export type Meat_Master_Inc_Input = {
+  /** 肉マスタID */
   meat_id?: InputMaybe<Scalars['Int']['input']>;
+  /** 単位ID */
   unit_id?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** input type for inserting data into table "meat_master" */
 export type Meat_Master_Insert_Input = {
+  /** 表示名 */
   display_name?: InputMaybe<Scalars['String']['input']>;
+  /** 画像URI */
   image_uri?: InputMaybe<Scalars['String']['input']>;
+  /** 肉マスタID */
   meat_id?: InputMaybe<Scalars['Int']['input']>;
   meat_master_meat_stocks?: InputMaybe<Meet_Stocks_Obj_Rel_Insert_Input>;
   meat_master_unit_master?: InputMaybe<Unit_Master_Obj_Rel_Insert_Input>;
+  /** 肉名（ひらがな） */
   meat_name?: InputMaybe<Scalars['String']['input']>;
+  /** 単位ID */
   unit_id?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** aggregate max on columns */
 export type Meat_Master_Max_Fields = {
   __typename?: 'meat_master_max_fields';
+  /** 表示名 */
   display_name?: Maybe<Scalars['String']['output']>;
+  /** 画像URI */
   image_uri?: Maybe<Scalars['String']['output']>;
+  /** 肉マスタID */
   meat_id?: Maybe<Scalars['Int']['output']>;
+  /** 肉名（ひらがな） */
   meat_name?: Maybe<Scalars['String']['output']>;
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Int']['output']>;
 };
 
 /** aggregate min on columns */
 export type Meat_Master_Min_Fields = {
   __typename?: 'meat_master_min_fields';
+  /** 表示名 */
   display_name?: Maybe<Scalars['String']['output']>;
+  /** 画像URI */
   image_uri?: Maybe<Scalars['String']['output']>;
+  /** 肉マスタID */
   meat_id?: Maybe<Scalars['Int']['output']>;
+  /** 肉名（ひらがな） */
   meat_name?: Maybe<Scalars['String']['output']>;
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -221,6 +245,7 @@ export type Meat_Master_Order_By = {
 
 /** primary key columns input for table: meat_master */
 export type Meat_Master_Pk_Columns_Input = {
+  /** 肉マスタID */
   meat_id: Scalars['Int']['input'];
 };
 
@@ -240,31 +265,42 @@ export enum Meat_Master_Select_Column {
 
 /** input type for updating data in table "meat_master" */
 export type Meat_Master_Set_Input = {
+  /** 表示名 */
   display_name?: InputMaybe<Scalars['String']['input']>;
+  /** 画像URI */
   image_uri?: InputMaybe<Scalars['String']['input']>;
+  /** 肉マスタID */
   meat_id?: InputMaybe<Scalars['Int']['input']>;
+  /** 肉名（ひらがな） */
   meat_name?: InputMaybe<Scalars['String']['input']>;
+  /** 単位ID */
   unit_id?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** aggregate stddev on columns */
 export type Meat_Master_Stddev_Fields = {
   __typename?: 'meat_master_stddev_fields';
+  /** 肉マスタID */
   meat_id?: Maybe<Scalars['Float']['output']>;
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Meat_Master_Stddev_Pop_Fields = {
   __typename?: 'meat_master_stddev_pop_fields';
+  /** 肉マスタID */
   meat_id?: Maybe<Scalars['Float']['output']>;
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Meat_Master_Stddev_Samp_Fields = {
   __typename?: 'meat_master_stddev_samp_fields';
+  /** 肉マスタID */
   meat_id?: Maybe<Scalars['Float']['output']>;
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -278,17 +314,24 @@ export type Meat_Master_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Meat_Master_Stream_Cursor_Value_Input = {
+  /** 表示名 */
   display_name?: InputMaybe<Scalars['String']['input']>;
+  /** 画像URI */
   image_uri?: InputMaybe<Scalars['String']['input']>;
+  /** 肉マスタID */
   meat_id?: InputMaybe<Scalars['Int']['input']>;
+  /** 肉名（ひらがな） */
   meat_name?: InputMaybe<Scalars['String']['input']>;
+  /** 単位ID */
   unit_id?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** aggregate sum on columns */
 export type Meat_Master_Sum_Fields = {
   __typename?: 'meat_master_sum_fields';
+  /** 肉マスタID */
   meat_id?: Maybe<Scalars['Int']['output']>;
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -318,34 +361,44 @@ export type Meat_Master_Updates = {
 /** aggregate var_pop on columns */
 export type Meat_Master_Var_Pop_Fields = {
   __typename?: 'meat_master_var_pop_fields';
+  /** 肉マスタID */
   meat_id?: Maybe<Scalars['Float']['output']>;
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate var_samp on columns */
 export type Meat_Master_Var_Samp_Fields = {
   __typename?: 'meat_master_var_samp_fields';
+  /** 肉マスタID */
   meat_id?: Maybe<Scalars['Float']['output']>;
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate variance on columns */
 export type Meat_Master_Variance_Fields = {
   __typename?: 'meat_master_variance_fields';
+  /** 肉マスタID */
   meat_id?: Maybe<Scalars['Float']['output']>;
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** ユーザーごとの肉類のストック */
 export type Meet_Stocks = {
   __typename?: 'meet_stocks';
+  /** 肉マスタID */
   meet_id: Scalars['Int']['output'];
   /** An object relationship */
   meet_stocks_meet_master?: Maybe<Meat_Master>;
   /** An object relationship */
   meet_stocks_users?: Maybe<Users>;
+  /** 在庫数 */
   quantity: Scalars['Int']['output'];
+  /** ストックID */
   stock_id: Scalars['Int']['output'];
+  /** ユーザーID */
   user_id: Scalars['String']['output'];
 };
 
@@ -415,15 +468,21 @@ export type Meet_Stocks_Arr_Rel_Insert_Input = {
 /** aggregate avg on columns */
 export type Meet_Stocks_Avg_Fields = {
   __typename?: 'meet_stocks_avg_fields';
+  /** 肉マスタID */
   meet_id?: Maybe<Scalars['Float']['output']>;
+  /** 在庫数 */
   quantity?: Maybe<Scalars['Float']['output']>;
+  /** ストックID */
   stock_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by avg() on columns of table "meet_stocks" */
 export type Meet_Stocks_Avg_Order_By = {
+  /** 肉マスタID */
   meet_id?: InputMaybe<Order_By>;
+  /** 在庫数 */
   quantity?: InputMaybe<Order_By>;
+  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
 };
 
@@ -448,52 +507,75 @@ export enum Meet_Stocks_Constraint {
 
 /** input type for incrementing numeric columns in table "meet_stocks" */
 export type Meet_Stocks_Inc_Input = {
+  /** 肉マスタID */
   meet_id?: InputMaybe<Scalars['Int']['input']>;
+  /** 在庫数 */
   quantity?: InputMaybe<Scalars['Int']['input']>;
+  /** ストックID */
   stock_id?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** input type for inserting data into table "meet_stocks" */
 export type Meet_Stocks_Insert_Input = {
+  /** 肉マスタID */
   meet_id?: InputMaybe<Scalars['Int']['input']>;
   meet_stocks_meet_master?: InputMaybe<Meat_Master_Obj_Rel_Insert_Input>;
   meet_stocks_users?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  /** 在庫数 */
   quantity?: InputMaybe<Scalars['Int']['input']>;
+  /** ストックID */
   stock_id?: InputMaybe<Scalars['Int']['input']>;
+  /** ユーザーID */
   user_id?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate max on columns */
 export type Meet_Stocks_Max_Fields = {
   __typename?: 'meet_stocks_max_fields';
+  /** 肉マスタID */
   meet_id?: Maybe<Scalars['Int']['output']>;
+  /** 在庫数 */
   quantity?: Maybe<Scalars['Int']['output']>;
+  /** ストックID */
   stock_id?: Maybe<Scalars['Int']['output']>;
+  /** ユーザーID */
   user_id?: Maybe<Scalars['String']['output']>;
 };
 
 /** order by max() on columns of table "meet_stocks" */
 export type Meet_Stocks_Max_Order_By = {
+  /** 肉マスタID */
   meet_id?: InputMaybe<Order_By>;
+  /** 在庫数 */
   quantity?: InputMaybe<Order_By>;
+  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
+  /** ユーザーID */
   user_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Meet_Stocks_Min_Fields = {
   __typename?: 'meet_stocks_min_fields';
+  /** 肉マスタID */
   meet_id?: Maybe<Scalars['Int']['output']>;
+  /** 在庫数 */
   quantity?: Maybe<Scalars['Int']['output']>;
+  /** ストックID */
   stock_id?: Maybe<Scalars['Int']['output']>;
+  /** ユーザーID */
   user_id?: Maybe<Scalars['String']['output']>;
 };
 
 /** order by min() on columns of table "meet_stocks" */
 export type Meet_Stocks_Min_Order_By = {
+  /** 肉マスタID */
   meet_id?: InputMaybe<Order_By>;
+  /** 在庫数 */
   quantity?: InputMaybe<Order_By>;
+  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
+  /** ユーザーID */
   user_id?: InputMaybe<Order_By>;
 };
 
@@ -532,6 +614,7 @@ export type Meet_Stocks_Order_By = {
 
 /** primary key columns input for table: meet_stocks */
 export type Meet_Stocks_Pk_Columns_Input = {
+  /** ストックID */
   stock_id: Scalars['Int']['input'];
 };
 
@@ -549,54 +632,76 @@ export enum Meet_Stocks_Select_Column {
 
 /** input type for updating data in table "meet_stocks" */
 export type Meet_Stocks_Set_Input = {
+  /** 肉マスタID */
   meet_id?: InputMaybe<Scalars['Int']['input']>;
+  /** 在庫数 */
   quantity?: InputMaybe<Scalars['Int']['input']>;
+  /** ストックID */
   stock_id?: InputMaybe<Scalars['Int']['input']>;
+  /** ユーザーID */
   user_id?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate stddev on columns */
 export type Meet_Stocks_Stddev_Fields = {
   __typename?: 'meet_stocks_stddev_fields';
+  /** 肉マスタID */
   meet_id?: Maybe<Scalars['Float']['output']>;
+  /** 在庫数 */
   quantity?: Maybe<Scalars['Float']['output']>;
+  /** ストックID */
   stock_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by stddev() on columns of table "meet_stocks" */
 export type Meet_Stocks_Stddev_Order_By = {
+  /** 肉マスタID */
   meet_id?: InputMaybe<Order_By>;
+  /** 在庫数 */
   quantity?: InputMaybe<Order_By>;
+  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Meet_Stocks_Stddev_Pop_Fields = {
   __typename?: 'meet_stocks_stddev_pop_fields';
+  /** 肉マスタID */
   meet_id?: Maybe<Scalars['Float']['output']>;
+  /** 在庫数 */
   quantity?: Maybe<Scalars['Float']['output']>;
+  /** ストックID */
   stock_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by stddev_pop() on columns of table "meet_stocks" */
 export type Meet_Stocks_Stddev_Pop_Order_By = {
+  /** 肉マスタID */
   meet_id?: InputMaybe<Order_By>;
+  /** 在庫数 */
   quantity?: InputMaybe<Order_By>;
+  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Meet_Stocks_Stddev_Samp_Fields = {
   __typename?: 'meet_stocks_stddev_samp_fields';
+  /** 肉マスタID */
   meet_id?: Maybe<Scalars['Float']['output']>;
+  /** 在庫数 */
   quantity?: Maybe<Scalars['Float']['output']>;
+  /** ストックID */
   stock_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by stddev_samp() on columns of table "meet_stocks" */
 export type Meet_Stocks_Stddev_Samp_Order_By = {
+  /** 肉マスタID */
   meet_id?: InputMaybe<Order_By>;
+  /** 在庫数 */
   quantity?: InputMaybe<Order_By>;
+  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
 };
 
@@ -610,24 +715,34 @@ export type Meet_Stocks_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Meet_Stocks_Stream_Cursor_Value_Input = {
+  /** 肉マスタID */
   meet_id?: InputMaybe<Scalars['Int']['input']>;
+  /** 在庫数 */
   quantity?: InputMaybe<Scalars['Int']['input']>;
+  /** ストックID */
   stock_id?: InputMaybe<Scalars['Int']['input']>;
+  /** ユーザーID */
   user_id?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate sum on columns */
 export type Meet_Stocks_Sum_Fields = {
   __typename?: 'meet_stocks_sum_fields';
+  /** 肉マスタID */
   meet_id?: Maybe<Scalars['Int']['output']>;
+  /** 在庫数 */
   quantity?: Maybe<Scalars['Int']['output']>;
+  /** ストックID */
   stock_id?: Maybe<Scalars['Int']['output']>;
 };
 
 /** order by sum() on columns of table "meet_stocks" */
 export type Meet_Stocks_Sum_Order_By = {
+  /** 肉マスタID */
   meet_id?: InputMaybe<Order_By>;
+  /** 在庫数 */
   quantity?: InputMaybe<Order_By>;
+  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
 };
 
@@ -655,45 +770,63 @@ export type Meet_Stocks_Updates = {
 /** aggregate var_pop on columns */
 export type Meet_Stocks_Var_Pop_Fields = {
   __typename?: 'meet_stocks_var_pop_fields';
+  /** 肉マスタID */
   meet_id?: Maybe<Scalars['Float']['output']>;
+  /** 在庫数 */
   quantity?: Maybe<Scalars['Float']['output']>;
+  /** ストックID */
   stock_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by var_pop() on columns of table "meet_stocks" */
 export type Meet_Stocks_Var_Pop_Order_By = {
+  /** 肉マスタID */
   meet_id?: InputMaybe<Order_By>;
+  /** 在庫数 */
   quantity?: InputMaybe<Order_By>;
+  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
 export type Meet_Stocks_Var_Samp_Fields = {
   __typename?: 'meet_stocks_var_samp_fields';
+  /** 肉マスタID */
   meet_id?: Maybe<Scalars['Float']['output']>;
+  /** 在庫数 */
   quantity?: Maybe<Scalars['Float']['output']>;
+  /** ストックID */
   stock_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by var_samp() on columns of table "meet_stocks" */
 export type Meet_Stocks_Var_Samp_Order_By = {
+  /** 肉マスタID */
   meet_id?: InputMaybe<Order_By>;
+  /** 在庫数 */
   quantity?: InputMaybe<Order_By>;
+  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
 export type Meet_Stocks_Variance_Fields = {
   __typename?: 'meet_stocks_variance_fields';
+  /** 肉マスタID */
   meet_id?: Maybe<Scalars['Float']['output']>;
+  /** 在庫数 */
   quantity?: Maybe<Scalars['Float']['output']>;
+  /** ストックID */
   stock_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by variance() on columns of table "meet_stocks" */
 export type Meet_Stocks_Variance_Order_By = {
+  /** 肉マスタID */
   meet_id?: InputMaybe<Order_By>;
+  /** 在庫数 */
   quantity?: InputMaybe<Order_By>;
+  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
 };
 
@@ -1514,11 +1647,13 @@ export type Timestamptz_Comparison_Exp = {
 /** 単位のマスタデータ */
 export type Unit_Master = {
   __typename?: 'unit_master';
+  /** 単位ID */
   unit_id: Scalars['Int']['output'];
   /** An object relationship */
   unit_master_meat_master?: Maybe<Meat_Master>;
   /** An object relationship */
   unit_master_vegetable_master?: Maybe<Vegetable_Master>;
+  /** 単位名 */
   unit_name: Scalars['String']['output'];
 };
 
@@ -1555,6 +1690,7 @@ export type Unit_Master_Aggregate_FieldsCountArgs = {
 /** aggregate avg on columns */
 export type Unit_Master_Avg_Fields = {
   __typename?: 'unit_master_avg_fields';
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -1577,28 +1713,35 @@ export enum Unit_Master_Constraint {
 
 /** input type for incrementing numeric columns in table "unit_master" */
 export type Unit_Master_Inc_Input = {
+  /** 単位ID */
   unit_id?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** input type for inserting data into table "unit_master" */
 export type Unit_Master_Insert_Input = {
+  /** 単位ID */
   unit_id?: InputMaybe<Scalars['Int']['input']>;
   unit_master_meat_master?: InputMaybe<Meat_Master_Obj_Rel_Insert_Input>;
   unit_master_vegetable_master?: InputMaybe<Vegetable_Master_Obj_Rel_Insert_Input>;
+  /** 単位名 */
   unit_name?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate max on columns */
 export type Unit_Master_Max_Fields = {
   __typename?: 'unit_master_max_fields';
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Int']['output']>;
+  /** 単位名 */
   unit_name?: Maybe<Scalars['String']['output']>;
 };
 
 /** aggregate min on columns */
 export type Unit_Master_Min_Fields = {
   __typename?: 'unit_master_min_fields';
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Int']['output']>;
+  /** 単位名 */
   unit_name?: Maybe<Scalars['String']['output']>;
 };
 
@@ -1635,6 +1778,7 @@ export type Unit_Master_Order_By = {
 
 /** primary key columns input for table: unit_master */
 export type Unit_Master_Pk_Columns_Input = {
+  /** 単位ID */
   unit_id: Scalars['Int']['input'];
 };
 
@@ -1648,25 +1792,30 @@ export enum Unit_Master_Select_Column {
 
 /** input type for updating data in table "unit_master" */
 export type Unit_Master_Set_Input = {
+  /** 単位ID */
   unit_id?: InputMaybe<Scalars['Int']['input']>;
+  /** 単位名 */
   unit_name?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate stddev on columns */
 export type Unit_Master_Stddev_Fields = {
   __typename?: 'unit_master_stddev_fields';
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Unit_Master_Stddev_Pop_Fields = {
   __typename?: 'unit_master_stddev_pop_fields';
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Unit_Master_Stddev_Samp_Fields = {
   __typename?: 'unit_master_stddev_samp_fields';
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -1680,13 +1829,16 @@ export type Unit_Master_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Unit_Master_Stream_Cursor_Value_Input = {
+  /** 単位ID */
   unit_id?: InputMaybe<Scalars['Int']['input']>;
+  /** 単位名 */
   unit_name?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate sum on columns */
 export type Unit_Master_Sum_Fields = {
   __typename?: 'unit_master_sum_fields';
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -1710,26 +1862,32 @@ export type Unit_Master_Updates = {
 /** aggregate var_pop on columns */
 export type Unit_Master_Var_Pop_Fields = {
   __typename?: 'unit_master_var_pop_fields';
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate var_samp on columns */
 export type Unit_Master_Var_Samp_Fields = {
   __typename?: 'unit_master_var_samp_fields';
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate variance on columns */
 export type Unit_Master_Variance_Fields = {
   __typename?: 'unit_master_variance_fields';
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** frimane ユーザー */
 export type Users = {
   __typename?: 'users';
+  /** アカウント作成日 */
   created_at: Scalars['timestamptz']['output'];
+  /** Emailアドレス */
   email: Scalars['String']['output'];
+  /** ユーザーID */
   id: Scalars['String']['output'];
   /** An array relationship */
   users_meat_stocks: Array<Meet_Stocks>;
@@ -1825,8 +1983,11 @@ export enum Users_Constraint {
 
 /** input type for inserting data into table "users" */
 export type Users_Insert_Input = {
+  /** アカウント作成日 */
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  /** Emailアドレス */
   email?: InputMaybe<Scalars['String']['input']>;
+  /** ユーザーID */
   id?: InputMaybe<Scalars['String']['input']>;
   users_meat_stocks?: InputMaybe<Meet_Stocks_Arr_Rel_Insert_Input>;
   users_vegetable_stocks?: InputMaybe<Vegetable_Stocks_Arr_Rel_Insert_Input>;
@@ -1835,16 +1996,22 @@ export type Users_Insert_Input = {
 /** aggregate max on columns */
 export type Users_Max_Fields = {
   __typename?: 'users_max_fields';
+  /** アカウント作成日 */
   created_at?: Maybe<Scalars['timestamptz']['output']>;
+  /** Emailアドレス */
   email?: Maybe<Scalars['String']['output']>;
+  /** ユーザーID */
   id?: Maybe<Scalars['String']['output']>;
 };
 
 /** aggregate min on columns */
 export type Users_Min_Fields = {
   __typename?: 'users_min_fields';
+  /** アカウント作成日 */
   created_at?: Maybe<Scalars['timestamptz']['output']>;
+  /** Emailアドレス */
   email?: Maybe<Scalars['String']['output']>;
+  /** ユーザーID */
   id?: Maybe<Scalars['String']['output']>;
 };
 
@@ -1882,6 +2049,7 @@ export type Users_Order_By = {
 
 /** primary key columns input for table: users */
 export type Users_Pk_Columns_Input = {
+  /** ユーザーID */
   id: Scalars['String']['input'];
 };
 
@@ -1897,8 +2065,11 @@ export enum Users_Select_Column {
 
 /** input type for updating data in table "users" */
 export type Users_Set_Input = {
+  /** アカウント作成日 */
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  /** Emailアドレス */
   email?: InputMaybe<Scalars['String']['input']>;
+  /** ユーザーID */
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -1912,8 +2083,11 @@ export type Users_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Users_Stream_Cursor_Value_Input = {
+  /** アカウント作成日 */
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  /** Emailアドレス */
   email?: InputMaybe<Scalars['String']['input']>;
+  /** ユーザーID */
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -1937,14 +2111,19 @@ export type Users_Updates = {
 /** 野菜のマスタデータ */
 export type Vegetable_Master = {
   __typename?: 'vegetable_master';
+  /** 表示名 */
   display_name: Scalars['String']['output'];
+  /** 画像URI */
   image_uri: Scalars['String']['output'];
+  /** 単位ID */
   unit_id: Scalars['Int']['output'];
+  /** 野菜マスタID */
   vegetable_id: Scalars['Int']['output'];
   /** An object relationship */
   vegetable_master_unit_master?: Maybe<Unit_Master>;
   /** An object relationship */
   vegetable_master_vegetable_stocks?: Maybe<Vegetable_Stocks>;
+  /** 野菜名（ひらがな） */
   vegetable_name: Scalars['String']['output'];
 };
 
@@ -1981,7 +2160,9 @@ export type Vegetable_Master_Aggregate_FieldsCountArgs = {
 /** aggregate avg on columns */
 export type Vegetable_Master_Avg_Fields = {
   __typename?: 'vegetable_master_avg_fields';
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Float']['output']>;
+  /** 野菜マスタID */
   vegetable_id?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -2001,6 +2182,8 @@ export type Vegetable_Master_Bool_Exp = {
 
 /** unique or primary key constraints on table "vegetable_master" */
 export enum Vegetable_Master_Constraint {
+  /** unique or primary key constraint on columns "display_name" */
+  VegetableMasterDisplayNameKey = 'vegetable_master_display_name_key',
   /** unique or primary key constraint on columns "image_uri" */
   VegetableMasterImageUriKey = 'vegetable_master_image_uri_key',
   /** unique or primary key constraint on columns "vegetable_id" */
@@ -2011,38 +2194,55 @@ export enum Vegetable_Master_Constraint {
 
 /** input type for incrementing numeric columns in table "vegetable_master" */
 export type Vegetable_Master_Inc_Input = {
+  /** 単位ID */
   unit_id?: InputMaybe<Scalars['Int']['input']>;
+  /** 野菜マスタID */
   vegetable_id?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** input type for inserting data into table "vegetable_master" */
 export type Vegetable_Master_Insert_Input = {
+  /** 表示名 */
   display_name?: InputMaybe<Scalars['String']['input']>;
+  /** 画像URI */
   image_uri?: InputMaybe<Scalars['String']['input']>;
+  /** 単位ID */
   unit_id?: InputMaybe<Scalars['Int']['input']>;
+  /** 野菜マスタID */
   vegetable_id?: InputMaybe<Scalars['Int']['input']>;
   vegetable_master_unit_master?: InputMaybe<Unit_Master_Obj_Rel_Insert_Input>;
   vegetable_master_vegetable_stocks?: InputMaybe<Vegetable_Stocks_Obj_Rel_Insert_Input>;
+  /** 野菜名（ひらがな） */
   vegetable_name?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate max on columns */
 export type Vegetable_Master_Max_Fields = {
   __typename?: 'vegetable_master_max_fields';
+  /** 表示名 */
   display_name?: Maybe<Scalars['String']['output']>;
+  /** 画像URI */
   image_uri?: Maybe<Scalars['String']['output']>;
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Int']['output']>;
+  /** 野菜マスタID */
   vegetable_id?: Maybe<Scalars['Int']['output']>;
+  /** 野菜名（ひらがな） */
   vegetable_name?: Maybe<Scalars['String']['output']>;
 };
 
 /** aggregate min on columns */
 export type Vegetable_Master_Min_Fields = {
   __typename?: 'vegetable_master_min_fields';
+  /** 表示名 */
   display_name?: Maybe<Scalars['String']['output']>;
+  /** 画像URI */
   image_uri?: Maybe<Scalars['String']['output']>;
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Int']['output']>;
+  /** 野菜マスタID */
   vegetable_id?: Maybe<Scalars['Int']['output']>;
+  /** 野菜名（ひらがな） */
   vegetable_name?: Maybe<Scalars['String']['output']>;
 };
 
@@ -2082,6 +2282,7 @@ export type Vegetable_Master_Order_By = {
 
 /** primary key columns input for table: vegetable_master */
 export type Vegetable_Master_Pk_Columns_Input = {
+  /** 野菜マスタID */
   vegetable_id: Scalars['Int']['input'];
 };
 
@@ -2101,31 +2302,42 @@ export enum Vegetable_Master_Select_Column {
 
 /** input type for updating data in table "vegetable_master" */
 export type Vegetable_Master_Set_Input = {
+  /** 表示名 */
   display_name?: InputMaybe<Scalars['String']['input']>;
+  /** 画像URI */
   image_uri?: InputMaybe<Scalars['String']['input']>;
+  /** 単位ID */
   unit_id?: InputMaybe<Scalars['Int']['input']>;
+  /** 野菜マスタID */
   vegetable_id?: InputMaybe<Scalars['Int']['input']>;
+  /** 野菜名（ひらがな） */
   vegetable_name?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate stddev on columns */
 export type Vegetable_Master_Stddev_Fields = {
   __typename?: 'vegetable_master_stddev_fields';
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Float']['output']>;
+  /** 野菜マスタID */
   vegetable_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Vegetable_Master_Stddev_Pop_Fields = {
   __typename?: 'vegetable_master_stddev_pop_fields';
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Float']['output']>;
+  /** 野菜マスタID */
   vegetable_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Vegetable_Master_Stddev_Samp_Fields = {
   __typename?: 'vegetable_master_stddev_samp_fields';
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Float']['output']>;
+  /** 野菜マスタID */
   vegetable_id?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -2139,17 +2351,24 @@ export type Vegetable_Master_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Vegetable_Master_Stream_Cursor_Value_Input = {
+  /** 表示名 */
   display_name?: InputMaybe<Scalars['String']['input']>;
+  /** 画像URI */
   image_uri?: InputMaybe<Scalars['String']['input']>;
+  /** 単位ID */
   unit_id?: InputMaybe<Scalars['Int']['input']>;
+  /** 野菜マスタID */
   vegetable_id?: InputMaybe<Scalars['Int']['input']>;
+  /** 野菜名（ひらがな） */
   vegetable_name?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate sum on columns */
 export type Vegetable_Master_Sum_Fields = {
   __typename?: 'vegetable_master_sum_fields';
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Int']['output']>;
+  /** 野菜マスタID */
   vegetable_id?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -2179,31 +2398,42 @@ export type Vegetable_Master_Updates = {
 /** aggregate var_pop on columns */
 export type Vegetable_Master_Var_Pop_Fields = {
   __typename?: 'vegetable_master_var_pop_fields';
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Float']['output']>;
+  /** 野菜マスタID */
   vegetable_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate var_samp on columns */
 export type Vegetable_Master_Var_Samp_Fields = {
   __typename?: 'vegetable_master_var_samp_fields';
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Float']['output']>;
+  /** 野菜マスタID */
   vegetable_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate variance on columns */
 export type Vegetable_Master_Variance_Fields = {
   __typename?: 'vegetable_master_variance_fields';
+  /** 単位ID */
   unit_id?: Maybe<Scalars['Float']['output']>;
+  /** 野菜マスタID */
   vegetable_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** ユーザーごとの野菜ストック */
 export type Vegetable_Stocks = {
   __typename?: 'vegetable_stocks';
+  /** 増減単位 */
   incremental_unit: Scalars['Int']['output'];
+  /** 在庫数 */
   quantity: Scalars['Int']['output'];
+  /** ストックID */
   stock_id: Scalars['Int']['output'];
+  /** ユーザーID */
   user_id: Scalars['String']['output'];
+  /** 野菜マスタID */
   vegetable_id: Scalars['Int']['output'];
   /** An object relationship */
   vegetable_stocks_users?: Maybe<Users>;
@@ -2277,17 +2507,25 @@ export type Vegetable_Stocks_Arr_Rel_Insert_Input = {
 /** aggregate avg on columns */
 export type Vegetable_Stocks_Avg_Fields = {
   __typename?: 'vegetable_stocks_avg_fields';
+  /** 増減単位 */
   incremental_unit?: Maybe<Scalars['Float']['output']>;
+  /** 在庫数 */
   quantity?: Maybe<Scalars['Float']['output']>;
+  /** ストックID */
   stock_id?: Maybe<Scalars['Float']['output']>;
+  /** 野菜マスタID */
   vegetable_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by avg() on columns of table "vegetable_stocks" */
 export type Vegetable_Stocks_Avg_Order_By = {
+  /** 増減単位 */
   incremental_unit?: InputMaybe<Order_By>;
+  /** 在庫数 */
   quantity?: InputMaybe<Order_By>;
+  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
+  /** 野菜マスタID */
   vegetable_id?: InputMaybe<Order_By>;
 };
 
@@ -2313,18 +2551,27 @@ export enum Vegetable_Stocks_Constraint {
 
 /** input type for incrementing numeric columns in table "vegetable_stocks" */
 export type Vegetable_Stocks_Inc_Input = {
+  /** 増減単位 */
   incremental_unit?: InputMaybe<Scalars['Int']['input']>;
+  /** 在庫数 */
   quantity?: InputMaybe<Scalars['Int']['input']>;
+  /** ストックID */
   stock_id?: InputMaybe<Scalars['Int']['input']>;
+  /** 野菜マスタID */
   vegetable_id?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** input type for inserting data into table "vegetable_stocks" */
 export type Vegetable_Stocks_Insert_Input = {
+  /** 増減単位 */
   incremental_unit?: InputMaybe<Scalars['Int']['input']>;
+  /** 在庫数 */
   quantity?: InputMaybe<Scalars['Int']['input']>;
+  /** ストックID */
   stock_id?: InputMaybe<Scalars['Int']['input']>;
+  /** ユーザーID */
   user_id?: InputMaybe<Scalars['String']['input']>;
+  /** 野菜マスタID */
   vegetable_id?: InputMaybe<Scalars['Int']['input']>;
   vegetable_stocks_users?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   vegetable_stocks_vegetable_master?: InputMaybe<Vegetable_Master_Obj_Rel_Insert_Input>;
@@ -2333,38 +2580,58 @@ export type Vegetable_Stocks_Insert_Input = {
 /** aggregate max on columns */
 export type Vegetable_Stocks_Max_Fields = {
   __typename?: 'vegetable_stocks_max_fields';
+  /** 増減単位 */
   incremental_unit?: Maybe<Scalars['Int']['output']>;
+  /** 在庫数 */
   quantity?: Maybe<Scalars['Int']['output']>;
+  /** ストックID */
   stock_id?: Maybe<Scalars['Int']['output']>;
+  /** ユーザーID */
   user_id?: Maybe<Scalars['String']['output']>;
+  /** 野菜マスタID */
   vegetable_id?: Maybe<Scalars['Int']['output']>;
 };
 
 /** order by max() on columns of table "vegetable_stocks" */
 export type Vegetable_Stocks_Max_Order_By = {
+  /** 増減単位 */
   incremental_unit?: InputMaybe<Order_By>;
+  /** 在庫数 */
   quantity?: InputMaybe<Order_By>;
+  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
+  /** ユーザーID */
   user_id?: InputMaybe<Order_By>;
+  /** 野菜マスタID */
   vegetable_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Vegetable_Stocks_Min_Fields = {
   __typename?: 'vegetable_stocks_min_fields';
+  /** 増減単位 */
   incremental_unit?: Maybe<Scalars['Int']['output']>;
+  /** 在庫数 */
   quantity?: Maybe<Scalars['Int']['output']>;
+  /** ストックID */
   stock_id?: Maybe<Scalars['Int']['output']>;
+  /** ユーザーID */
   user_id?: Maybe<Scalars['String']['output']>;
+  /** 野菜マスタID */
   vegetable_id?: Maybe<Scalars['Int']['output']>;
 };
 
 /** order by min() on columns of table "vegetable_stocks" */
 export type Vegetable_Stocks_Min_Order_By = {
+  /** 増減単位 */
   incremental_unit?: InputMaybe<Order_By>;
+  /** 在庫数 */
   quantity?: InputMaybe<Order_By>;
+  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
+  /** ユーザーID */
   user_id?: InputMaybe<Order_By>;
+  /** 野菜マスタID */
   vegetable_id?: InputMaybe<Order_By>;
 };
 
@@ -2404,6 +2671,7 @@ export type Vegetable_Stocks_Order_By = {
 
 /** primary key columns input for table: vegetable_stocks */
 export type Vegetable_Stocks_Pk_Columns_Input = {
+  /** ストックID */
   stock_id: Scalars['Int']['input'];
 };
 
@@ -2423,61 +2691,90 @@ export enum Vegetable_Stocks_Select_Column {
 
 /** input type for updating data in table "vegetable_stocks" */
 export type Vegetable_Stocks_Set_Input = {
+  /** 増減単位 */
   incremental_unit?: InputMaybe<Scalars['Int']['input']>;
+  /** 在庫数 */
   quantity?: InputMaybe<Scalars['Int']['input']>;
+  /** ストックID */
   stock_id?: InputMaybe<Scalars['Int']['input']>;
+  /** ユーザーID */
   user_id?: InputMaybe<Scalars['String']['input']>;
+  /** 野菜マスタID */
   vegetable_id?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** aggregate stddev on columns */
 export type Vegetable_Stocks_Stddev_Fields = {
   __typename?: 'vegetable_stocks_stddev_fields';
+  /** 増減単位 */
   incremental_unit?: Maybe<Scalars['Float']['output']>;
+  /** 在庫数 */
   quantity?: Maybe<Scalars['Float']['output']>;
+  /** ストックID */
   stock_id?: Maybe<Scalars['Float']['output']>;
+  /** 野菜マスタID */
   vegetable_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by stddev() on columns of table "vegetable_stocks" */
 export type Vegetable_Stocks_Stddev_Order_By = {
+  /** 増減単位 */
   incremental_unit?: InputMaybe<Order_By>;
+  /** 在庫数 */
   quantity?: InputMaybe<Order_By>;
+  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
+  /** 野菜マスタID */
   vegetable_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Vegetable_Stocks_Stddev_Pop_Fields = {
   __typename?: 'vegetable_stocks_stddev_pop_fields';
+  /** 増減単位 */
   incremental_unit?: Maybe<Scalars['Float']['output']>;
+  /** 在庫数 */
   quantity?: Maybe<Scalars['Float']['output']>;
+  /** ストックID */
   stock_id?: Maybe<Scalars['Float']['output']>;
+  /** 野菜マスタID */
   vegetable_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by stddev_pop() on columns of table "vegetable_stocks" */
 export type Vegetable_Stocks_Stddev_Pop_Order_By = {
+  /** 増減単位 */
   incremental_unit?: InputMaybe<Order_By>;
+  /** 在庫数 */
   quantity?: InputMaybe<Order_By>;
+  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
+  /** 野菜マスタID */
   vegetable_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Vegetable_Stocks_Stddev_Samp_Fields = {
   __typename?: 'vegetable_stocks_stddev_samp_fields';
+  /** 増減単位 */
   incremental_unit?: Maybe<Scalars['Float']['output']>;
+  /** 在庫数 */
   quantity?: Maybe<Scalars['Float']['output']>;
+  /** ストックID */
   stock_id?: Maybe<Scalars['Float']['output']>;
+  /** 野菜マスタID */
   vegetable_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by stddev_samp() on columns of table "vegetable_stocks" */
 export type Vegetable_Stocks_Stddev_Samp_Order_By = {
+  /** 増減単位 */
   incremental_unit?: InputMaybe<Order_By>;
+  /** 在庫数 */
   quantity?: InputMaybe<Order_By>;
+  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
+  /** 野菜マスタID */
   vegetable_id?: InputMaybe<Order_By>;
 };
 
@@ -2491,27 +2788,40 @@ export type Vegetable_Stocks_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Vegetable_Stocks_Stream_Cursor_Value_Input = {
+  /** 増減単位 */
   incremental_unit?: InputMaybe<Scalars['Int']['input']>;
+  /** 在庫数 */
   quantity?: InputMaybe<Scalars['Int']['input']>;
+  /** ストックID */
   stock_id?: InputMaybe<Scalars['Int']['input']>;
+  /** ユーザーID */
   user_id?: InputMaybe<Scalars['String']['input']>;
+  /** 野菜マスタID */
   vegetable_id?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** aggregate sum on columns */
 export type Vegetable_Stocks_Sum_Fields = {
   __typename?: 'vegetable_stocks_sum_fields';
+  /** 増減単位 */
   incremental_unit?: Maybe<Scalars['Int']['output']>;
+  /** 在庫数 */
   quantity?: Maybe<Scalars['Int']['output']>;
+  /** ストックID */
   stock_id?: Maybe<Scalars['Int']['output']>;
+  /** 野菜マスタID */
   vegetable_id?: Maybe<Scalars['Int']['output']>;
 };
 
 /** order by sum() on columns of table "vegetable_stocks" */
 export type Vegetable_Stocks_Sum_Order_By = {
+  /** 増減単位 */
   incremental_unit?: InputMaybe<Order_By>;
+  /** 在庫数 */
   quantity?: InputMaybe<Order_By>;
+  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
+  /** 野菜マスタID */
   vegetable_id?: InputMaybe<Order_By>;
 };
 
@@ -2541,51 +2851,75 @@ export type Vegetable_Stocks_Updates = {
 /** aggregate var_pop on columns */
 export type Vegetable_Stocks_Var_Pop_Fields = {
   __typename?: 'vegetable_stocks_var_pop_fields';
+  /** 増減単位 */
   incremental_unit?: Maybe<Scalars['Float']['output']>;
+  /** 在庫数 */
   quantity?: Maybe<Scalars['Float']['output']>;
+  /** ストックID */
   stock_id?: Maybe<Scalars['Float']['output']>;
+  /** 野菜マスタID */
   vegetable_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by var_pop() on columns of table "vegetable_stocks" */
 export type Vegetable_Stocks_Var_Pop_Order_By = {
+  /** 増減単位 */
   incremental_unit?: InputMaybe<Order_By>;
+  /** 在庫数 */
   quantity?: InputMaybe<Order_By>;
+  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
+  /** 野菜マスタID */
   vegetable_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
 export type Vegetable_Stocks_Var_Samp_Fields = {
   __typename?: 'vegetable_stocks_var_samp_fields';
+  /** 増減単位 */
   incremental_unit?: Maybe<Scalars['Float']['output']>;
+  /** 在庫数 */
   quantity?: Maybe<Scalars['Float']['output']>;
+  /** ストックID */
   stock_id?: Maybe<Scalars['Float']['output']>;
+  /** 野菜マスタID */
   vegetable_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by var_samp() on columns of table "vegetable_stocks" */
 export type Vegetable_Stocks_Var_Samp_Order_By = {
+  /** 増減単位 */
   incremental_unit?: InputMaybe<Order_By>;
+  /** 在庫数 */
   quantity?: InputMaybe<Order_By>;
+  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
+  /** 野菜マスタID */
   vegetable_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
 export type Vegetable_Stocks_Variance_Fields = {
   __typename?: 'vegetable_stocks_variance_fields';
+  /** 増減単位 */
   incremental_unit?: Maybe<Scalars['Float']['output']>;
+  /** 在庫数 */
   quantity?: Maybe<Scalars['Float']['output']>;
+  /** ストックID */
   stock_id?: Maybe<Scalars['Float']['output']>;
+  /** 野菜マスタID */
   vegetable_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by variance() on columns of table "vegetable_stocks" */
 export type Vegetable_Stocks_Variance_Order_By = {
+  /** 増減単位 */
   incremental_unit?: InputMaybe<Order_By>;
+  /** 在庫数 */
   quantity?: InputMaybe<Order_By>;
+  /** ストックID */
   stock_id?: InputMaybe<Order_By>;
+  /** 野菜マスタID */
   vegetable_id?: InputMaybe<Order_By>;
 };
 
