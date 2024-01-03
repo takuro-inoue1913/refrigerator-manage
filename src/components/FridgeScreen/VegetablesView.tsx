@@ -7,7 +7,7 @@ import { useVegetablesStockActions } from '@src/states/vegetables/action';
 import { useVegetablesStocks } from '@src/interface/hooks/useVegetablesStocks';
 import { SkeletonFridgeViews } from './SkeletonFridgeViews';
 import { StickyHeader } from './StickyHeader';
-import { SelectFridgeCategory, selectItems } from '@src/screens/FridgeScreen';
+import { SelectFridgeCategory, selectItems } from '@src/utils/consts';
 
 type Props = {
   /** 選択されたカテゴリーが変更された時に実行される関数。 */
@@ -51,6 +51,7 @@ export const VegetablesView: FC<Props> = ({ onChangeSelectCategory }) => {
         selectedValue={'vegetables'}
         selectItems={selectItems}
         onValueChange={onChangeSelectCategory}
+        isDisabled={isFetching}
       />
       <ScrollView contentContainerStyle={fridgeCommonStyles.scrollContainer}>
         {rows.map((row, index) => (

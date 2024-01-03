@@ -39,7 +39,6 @@ export const ItemImage: FC<Props> = memo((props) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [touchedSide, setTouchedSide] = useState<'left' | 'right' | null>(null);
   const [overlayOpacity, setOverlayOpacity] = useState(0);
-  console.log('ItemImage: ', props.targetId);
 
   const badgePositionY = useRef(new Animated.Value(0)).current;
 
