@@ -1,5 +1,6 @@
 import {
   GetVegetableMasterAndUnitAndStocksDocument,
+  GetVegetableStockByUserIdAndVegetableIdDocument,
   InsertVegetableStockDocument,
   UpdateVegetableStockDocument,
 } from '@src/interface/__generated__/graphql';
@@ -20,6 +21,27 @@ type UpsertVegetableStockArgs = {
 };
 
 export const vegetableStockRepository = {
+  getOne: async ({
+    idToken,
+    userId,
+    vegetableId,
+  }: {
+    idToken: string | null;
+    userId: string;
+    vegetableId: number;
+  }) => {
+    const client = buildGraphQLUserClient(idToken);
+
+    const data = await client.request(
+      GetVegetableStockByUserIdAndVegetableIdDocument,
+      {
+        userId,
+        vegetableId,
+      },
+    );
+
+    return data.vegetable_stocks;
+  },
   getAll: async ({ idToken }: { idToken: string | null }) => {
     const client = buildGraphQLUserClient(idToken);
 

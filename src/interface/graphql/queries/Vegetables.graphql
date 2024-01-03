@@ -16,6 +16,20 @@ query GetVegetableMasterAndUnitAndStocks {
   }
 }
 
+query GetVegetableStockByUserIdAndVegetableId(
+  $userId: String!
+  $vegetableId: Int!
+) {
+  vegetable_stocks(
+    where: { user_id: { _eq: $userId }, vegetable_id: { _eq: $vegetableId } }
+  ) {
+    stock_id
+    user_id
+    vegetable_id
+    quantity
+  }
+}
+
 mutation InsertVegetableStock($object: vegetable_stocks_insert_input!) {
   insert_vegetable_stocks_one(object: $object) {
     quantity

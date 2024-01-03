@@ -1,4 +1,4 @@
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 
 /**
  * 野菜在庫の型
@@ -35,4 +35,12 @@ export const vegetablesStocksState = atom({
     ids: [],
     byId: {},
   } as VegetablesStocks,
+});
+
+export const vegetableStockById = selector({
+  key: 'vegetableStockById',
+  get: ({ get }) => {
+    const vegetablesStocks = get(vegetablesStocksState);
+    return (vegetableId: number) => vegetablesStocks.byId[vegetableId];
+  },
 });
