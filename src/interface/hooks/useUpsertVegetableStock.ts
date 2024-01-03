@@ -34,7 +34,7 @@ export const useUpsertVegetableStock = () => {
         idToken,
         userId: user!.uid,
         vegetableId,
-        quantity: existingStock[0].quantity + quantity,
+        quantity,
       });
       console.log('vegetableStockRepository.update: ', data);
       return data;

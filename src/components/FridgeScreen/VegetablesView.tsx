@@ -1,5 +1,6 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useRef } from 'react';
 import { ScrollView, Text, View } from 'react-native';
+import { debounce } from 'lodash';
 
 import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
 import { fridgeCommonStyles } from '@src/utils/commonStyle';
@@ -23,20 +24,50 @@ export const VegetablesView: FC<Props> = ({ onChangeSelectCategory }) => {
   const { vegetablesStocks, isFetching } = useVegetablesStocks();
   const vegetablesStockActions = useVegetablesStockActions();
   const upsertVegetablesStock = useUpsertVegetableStock();
+  const stockQuantities = useRef<{ [vegetableId: number]: number }>({});
   const rows = useChunkedArray(vegetablesStocks.ids, 3);
 
-  const onIncreaseStock = useCallback(async (vegetableId: number) => {
-    vegetablesStockActions.increaseVegetableStock({ vegetableId, quantity: 1 });
-    upsertVegetablesStock({ vegetableId, quantity: 1 });
-  }, []);
+  /**
+   * 連続でAPIを叩かないようにするための debounce 関数。
+   */
+  const debouncedUpsertVegetableStock = useCallback(
+    debounce(async ({ vegetableId }) => {
+      if (stockQuantities.current[vegetableId] !== undefined) {
+        await upsertVegetablesStock({
+          vegetableId,
+          quantity: stockQuantities.current[vegetableId],
+        });
+        stockQuantities.current[vegetableId] = 0;
+      }
+    }, 1000),
+    [],
+  );
 
-  const onDecreaseStock = useCallback(async (vegetableId: number) => {
-    vegetablesStockActions.decreaseVegetableStock({
-      vegetableId,
-      quantity: 1,
-    });
-    upsertVegetablesStock({ vegetableId, quantity: -1 });
-  }, []);
+  const onIncreaseStock = useCallback(
+    async (vegetableId: number, quantity: number) => {
+      vegetablesStockActions.increaseVegetableStock({
+        vegetableId,
+        quantity: 1,
+      });
+      stockQuantities.current[vegetableId] = quantity + 1;
+      debouncedUpsertVegetableStock({
+        vegetableId,
+      });
+    },
+    [],
+  );
+
+  const onDecreaseStock = useCallback(
+    async (vegetableId: number, quantity: number) => {
+      vegetablesStockActions.decreaseVegetableStock({
+        vegetableId,
+        quantity: 1,
+      });
+      stockQuantities.current[vegetableId] = Math.max(quantity - 1, 0);
+      debouncedUpsertVegetableStock({ vegetableId });
+    },
+    [],
+  );
 
   if (isFetching) {
     return <SkeletonFridgeViews />;

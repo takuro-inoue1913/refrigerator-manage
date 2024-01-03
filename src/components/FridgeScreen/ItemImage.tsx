@@ -25,9 +25,9 @@ type Props = {
   /** 単位名 */
   unitName: string;
   /** 追加ボタンを押した時に実行される関数。 */
-  onPressIncrease?: (targetId: number) => Promise<void>;
+  onPressIncrease?: (targetId: number, quantity: number) => Promise<void>;
   /** 減らすボタンを押した時に実行される関数。 */
-  onPressDecrease?: (targetId: number) => Promise<void>;
+  onPressDecrease?: (targetId: number, quantity: number) => Promise<void>;
 };
 
 /**
@@ -59,10 +59,10 @@ export const ItemImage: FC<Props> = memo(
       setOverlayOpacity(0);
       switch (newTouchedSide) {
         case 'left':
-          onPressDecrease?.(targetId);
+          onPressDecrease?.(targetId, quantity);
           break;
         case 'right':
-          onPressIncrease?.(targetId);
+          onPressIncrease?.(targetId, quantity);
           break;
       }
       setTimeout(() => setOverlayOpacity(1), 100);
