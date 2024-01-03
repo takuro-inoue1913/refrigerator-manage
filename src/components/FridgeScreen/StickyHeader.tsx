@@ -8,7 +8,7 @@ type Props = {
   selectedValue: SelectFridgeCategory;
   selectItems: Item[];
   isDisabled?: boolean;
-  onValueChange: (value: SelectFridgeCategory) => void;
+  onValueChange?: (value: SelectFridgeCategory) => void;
 };
 
 /**
@@ -30,7 +30,7 @@ export const StickyHeader: FC<Props> = ({
         placeholder={{}}
         doneText={'選択'}
         onValueChange={(value) => setSelectedValueState(value)}
-        onDonePress={() => onValueChange(selectedValueState)}
+        onDonePress={() => onValueChange?.(selectedValueState)}
         items={selectItems}
         value={selectedValueState}
         style={isDisabled ? styles.disabledPicker : styles.pickerSelect}

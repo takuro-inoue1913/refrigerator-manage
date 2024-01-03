@@ -5,6 +5,7 @@ import { SkeletonImage } from '@src/components/common/SkeletonImage';
 import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
 import { fridgeCommonStyles } from '@src/utils/commonStyle';
 import { useChunkedArray } from '@src/hooks/useChunkedArray';
+import { selectItems } from '@src/utils/consts';
 
 type Props = {
   number?: number;
@@ -18,11 +19,10 @@ export const SkeletonFridgeViews: FC<Props> = ({ number = 42 }) => {
 
   return (
     <>
-      {/* 読み込み中のため、選択肢は空配列 */}
       <StickyHeader
         selectedValue={'vegetables'}
-        selectItems={[]}
-        onValueChange={() => {}}
+        selectItems={selectItems}
+        isDisabled={true}
       />
       <ScrollView contentContainerStyle={fridgeCommonStyles.scrollContainer}>
         {rows.map((row, index) => (
