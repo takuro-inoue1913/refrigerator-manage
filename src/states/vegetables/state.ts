@@ -1,4 +1,4 @@
-import { atom, selector } from 'recoil';
+import { atom } from 'recoil';
 
 /**
  * 野菜在庫の型
@@ -35,29 +35,4 @@ export const vegetablesStocksState = atom({
     ids: [],
     byId: {},
   } as VegetablesStocks,
-});
-
-export const vegetableStockSelector = selector({
-  key: 'vegetableStockSelector',
-  get: ({ get }) => {
-    const vegetablesStocks = get(vegetablesStocksState);
-    return (vegetableId: number) => {
-      return vegetablesStocks.byId[vegetableId];
-    };
-  },
-  set: ({ set }) => {
-    return (vegetableId: number, quantity: number) => {
-      set(vegetablesStocksState, (prev) => {
-        const _vegetablesStocks = { ...prev };
-        const _hasStock =
-          _vegetablesStocks.byId[vegetableId].quantity + quantity > 0;
-        _vegetablesStocks.byId[vegetableId].hasStock = _hasStock;
-        // MEMO: 0 以下になる場合は、在庫数を 0 にする。
-        _vegetablesStocks.byId[vegetableId].quantity = _hasStock
-          ? _vegetablesStocks.byId[vegetableId].quantity + quantity
-          : 0;
-        return _vegetablesStocks;
-      });
-    };
-  },
 });

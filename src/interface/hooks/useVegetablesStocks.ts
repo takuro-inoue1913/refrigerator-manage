@@ -9,13 +9,14 @@ import { vegetablesStocksState } from '@src/states/vegetables';
 
 export const useVegetablesStocks = () => {
   const idToken = useRecoilValue(idTokenState);
+  const client = buildGraphQLUserClient(idToken);
   const [vegetablesStocks, setVegetablesStocks] = useRecoilState(
     vegetablesStocksState,
   );
+
   const { isFetching } = useQuery({
     queryKey: ['graphl', 'get', 'vegetables_stocks'],
     queryFn: async () => {
-      const client = buildGraphQLUserClient(idToken);
       const data = await client.request(
         GetVegetableMasterAndUnitAndStocksDocument,
       );

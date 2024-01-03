@@ -14,14 +14,20 @@ import { commonStyles } from '@src/utils/commonStyle';
 import { ItemBadge } from '@src/components/FridgeScreen/ItemBadge';
 
 type Props = {
-  /** 画像の読み込みが完了した時に実行される関数。 */
-  onLoadEnd?: () => void;
+  /** 対象データのID */
+  targetId: number;
   /** 在庫があるかどうか */
   hasStock: boolean;
   /** 在庫数 */
   quantity: number;
   /** 単位名 */
   unitName: string;
+  /** 画像の読み込みが完了した時に実行される関数。 */
+  onLoadEnd?: () => void;
+  /** 追加ボタンを押した時に実行される関数。 */
+  onPressIncrease?: (targetId: number) => Promise<void>;
+  /** 減らすボタンを押した時に実行される関数。 */
+  onPressDecrease?: (targetId: number) => Promise<void>;
 } & ComponentProps<typeof CachedImage>;
 
 /**
@@ -34,12 +40,20 @@ export const ItemImage: FC<Props> = (props) => {
 
   const badgePositionY = useRef(new Animated.Value(0)).current;
 
-  const handlePress = (event: GestureResponderEvent) => {
+  const handlePress = async (event: GestureResponderEvent) => {
     const touchX = event.nativeEvent.locationX;
     const imageHalfWidth = commonStyles.image.width / 2;
     const newTouchedSide = touchX < imageHalfWidth ? 'left' : 'right';
     setTouchedSide(newTouchedSide);
     setOverlayOpacity(0);
+    switch (newTouchedSide) {
+      case 'left':
+        await props.onPressDecrease?.(props.targetId);
+        break;
+      case 'right':
+        await props.onPressIncrease?.(props.targetId);
+        break;
+    }
     setTimeout(() => setOverlayOpacity(1), 100);
     // TODO: ここでAPIを叩く。
     setTimeout(() => {

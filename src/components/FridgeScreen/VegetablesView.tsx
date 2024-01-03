@@ -4,6 +4,7 @@ import { ScrollView, Text, View } from 'react-native';
 import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
 import { fridgeCommonStyles } from '@src/utils/commonStyle';
 import { VegetablesStocks } from '@src/states/vegetables';
+import { useVegetablesStockActions } from '@src/states/vegetables/action';
 
 type Props = {
   /** 野菜の在庫データ */
@@ -13,6 +14,19 @@ type Props = {
  * 冷蔵庫の野菜画面を表示するコンポーネント。
  */
 export const VegetablesView: FC<Props> = ({ data }) => {
+  const vegetablesStockActions = useVegetablesStockActions();
+
+  const onIncreaseStock = async (vegetableId: number) => {
+    vegetablesStockActions.increaseVegetableStock({ vegetableId, quantity: 1 });
+  };
+
+  const onDecreaseStock = async (vegetableId: number) => {
+    vegetablesStockActions.decreaseVegetableStock({
+      vegetableId,
+      quantity: 1,
+    });
+  };
+
   // 横に3つずつ並べるために、3つずつに分割する
   const rows = [];
   for (let i = 0; i < data.ids.length; i += 3) {
@@ -30,10 +44,13 @@ export const VegetablesView: FC<Props> = ({ data }) => {
             >
               <ItemImage
                 source={{ uri: data.byId[vegetableId].imageUri }}
+                targetId={data.byId[vegetableId].vegetableId}
                 hasStock={data.byId[vegetableId].hasStock}
                 quantity={data.byId[vegetableId].quantity}
                 unitName={data.byId[vegetableId].unitName}
                 cacheKey={data.byId[vegetableId].vegetableId.toString()}
+                onPressIncrease={onIncreaseStock}
+                onPressDecrease={onDecreaseStock}
               />
               <Text style={fridgeCommonStyles.displayName}>
                 {data.byId[vegetableId].vegetableDisplayName}
