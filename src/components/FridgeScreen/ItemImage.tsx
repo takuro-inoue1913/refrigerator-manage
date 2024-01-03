@@ -1,4 +1,4 @@
-import React, { useState, ComponentProps, FC, useRef } from 'react';
+import React, { useState, ComponentProps, FC, useRef, memo } from 'react';
 import {
   Animated,
   GestureResponderEvent,
@@ -33,10 +33,11 @@ type Props = {
 /**
  * 項目の画像を表示するコンポーネント。
  */
-export const ItemImage: FC<Props> = (props) => {
+export const ItemImage: FC<Props> = memo((props) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [touchedSide, setTouchedSide] = useState<'left' | 'right' | null>(null);
   const [overlayOpacity, setOverlayOpacity] = useState(0);
+  console.log('ItemImage: ', props.targetId);
 
   const badgePositionY = useRef(new Animated.Value(0)).current;
 
@@ -128,7 +129,8 @@ export const ItemImage: FC<Props> = (props) => {
       </TouchableOpacity>
     </>
   );
-};
+});
+ItemImage.displayName = 'ItemImage';
 
 const styles = StyleSheet.create({
   image: {
