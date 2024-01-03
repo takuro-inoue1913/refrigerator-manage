@@ -46,12 +46,11 @@ export const VegetablesView: FC<Props> = ({ data }) => {
               style={fridgeCommonStyles.box}
             >
               <ItemImage
-                source={{ uri: data.byId[vegetableId].imageUri }}
+                sourceUri={data.byId[vegetableId].imageUri}
                 targetId={data.byId[vegetableId].vegetableId}
                 hasStock={data.byId[vegetableId].hasStock}
                 quantity={data.byId[vegetableId].quantity}
                 unitName={data.byId[vegetableId].unitName}
-                cacheKey={data.byId[vegetableId].vegetableId.toString()}
                 onPressIncrease={onIncreaseStock}
                 onPressDecrease={onDecreaseStock}
               />

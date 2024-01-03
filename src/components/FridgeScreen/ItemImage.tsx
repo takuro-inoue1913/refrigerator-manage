@@ -1,4 +1,4 @@
-import React, { useState, ComponentProps, FC, useRef, memo } from 'react';
+import React, { useState, FC, useRef, memo } from 'react';
 import {
   Animated,
   GestureResponderEvent,
@@ -14,6 +14,8 @@ import { commonStyles } from '@src/utils/commonStyle';
 import { ItemBadge } from '@src/components/FridgeScreen/ItemBadge';
 
 type Props = {
+  /** 画像のURI */
+  sourceUri: string;
   /** 対象データのID */
   targetId: number;
   /** 在庫があるかどうか */
@@ -28,7 +30,7 @@ type Props = {
   onPressIncrease?: (targetId: number) => Promise<void>;
   /** 減らすボタンを押した時に実行される関数。 */
   onPressDecrease?: (targetId: number) => Promise<void>;
-} & ComponentProps<typeof CachedImage>;
+};
 
 /**
  * 項目の画像を表示するコンポーネント。
@@ -83,7 +85,8 @@ export const ItemImage: FC<Props> = memo((props) => {
       {!isLoaded && <SkeletonImage />}
       <TouchableOpacity activeOpacity={1} onPress={handlePress}>
         <CachedImage
-          {...props}
+          source={{ uri: props.sourceUri }}
+          cacheKey={props.targetId.toString()}
           onLoadEnd={() => setIsLoaded(true)}
           style={[
             props.hasStock ? styles.activeImage : styles.image,
