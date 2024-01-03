@@ -6,6 +6,12 @@ import {
 } from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
 
+type GetOneVegetableStockArgs = {
+  idToken: string | null;
+  userId: string;
+  vegetableId: number;
+};
+
 type InsertVegetableStockArgs = {
   idToken: string | null;
   userId: string;
@@ -25,11 +31,7 @@ export const vegetableStockRepository = {
     idToken,
     userId,
     vegetableId,
-  }: {
-    idToken: string | null;
-    userId: string;
-    vegetableId: number;
-  }) => {
+  }: GetOneVegetableStockArgs) => {
     const client = buildGraphQLUserClient(idToken);
 
     const data = await client.request(
