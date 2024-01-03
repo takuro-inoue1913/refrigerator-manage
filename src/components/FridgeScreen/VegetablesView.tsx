@@ -21,7 +21,6 @@ type Props = {
 export const VegetablesView: FC<Props> = ({ onChangeSelectCategory }) => {
   const { vegetablesStocks, isFetching } = useVegetablesStocks();
   const vegetablesStockActions = useVegetablesStockActions();
-  // 横に3つずつ並べるために、3つずつに分割する
   const rows = useChunkedArray(vegetablesStocks.ids, 3);
 
   const onIncreaseStock = useCallback(async (vegetableId: number) => {

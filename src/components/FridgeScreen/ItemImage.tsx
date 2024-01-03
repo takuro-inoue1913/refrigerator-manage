@@ -57,7 +57,6 @@ export const ItemImage: FC<Props> = memo(
       const newTouchedSide = touchX < imageHalfWidth ? 'left' : 'right';
       setTouchedSide(newTouchedSide);
       setOverlayOpacity(0);
-      // TODO: ここでAPIを叩く。
       switch (newTouchedSide) {
         case 'left':
           onPressDecrease?.(targetId);

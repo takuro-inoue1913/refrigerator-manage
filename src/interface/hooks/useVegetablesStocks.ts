@@ -15,7 +15,7 @@ export const useVegetablesStocks = () => {
   );
 
   const { isFetching } = useQuery({
-    queryKey: ['graphl', 'get', 'vegetables_stocks'],
+    queryKey: ['graphl', 'get', 'vegetable', 'stock'],
     queryFn: async () => {
       const data = await client.request(
         GetVegetableMasterAndUnitAndStocksDocument,
