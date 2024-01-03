@@ -24,8 +24,6 @@ type Props = {
   quantity: number;
   /** 単位名 */
   unitName: string;
-  /** 画像の読み込みが完了した時に実行される関数。 */
-  onLoadEnd?: () => void;
   /** 追加ボタンを押した時に実行される関数。 */
   onPressIncrease?: (targetId: number) => Promise<void>;
   /** 減らすボタンを押した時に実行される関数。 */
@@ -35,101 +33,115 @@ type Props = {
 /**
  * 項目の画像を表示するコンポーネント。
  */
-export const ItemImage: FC<Props> = memo((props) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [touchedSide, setTouchedSide] = useState<'left' | 'right' | null>(null);
-  const [overlayOpacity, setOverlayOpacity] = useState(0);
+export const ItemImage: FC<Props> = memo(
+  ({
+    sourceUri,
+    targetId,
+    hasStock,
+    quantity,
+    unitName,
+    onPressIncrease,
+    onPressDecrease,
+  }) => {
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [touchedSide, setTouchedSide] = useState<'left' | 'right' | null>(
+      null,
+    );
+    const [overlayOpacity, setOverlayOpacity] = useState(0);
 
-  const badgePositionY = useRef(new Animated.Value(0)).current;
+    const badgePositionY = useRef(new Animated.Value(0)).current;
 
-  const handlePress = async (event: GestureResponderEvent) => {
-    const touchX = event.nativeEvent.locationX;
-    const imageHalfWidth = commonStyles.image.width / 2;
-    const newTouchedSide = touchX < imageHalfWidth ? 'left' : 'right';
-    setTouchedSide(newTouchedSide);
-    setOverlayOpacity(0);
-    // TODO: ここでAPIを叩く。
-    switch (newTouchedSide) {
-      case 'left':
-        await props.onPressDecrease?.(props.targetId);
-        break;
-      case 'right':
-        await props.onPressIncrease?.(props.targetId);
-        break;
-    }
-    setTimeout(() => setOverlayOpacity(1), 100);
-    setTimeout(() => setTouchedSide(null), 200);
-    handleBadgeAnimation();
-  };
+    const handlePress = async (event: GestureResponderEvent) => {
+      const touchX = event.nativeEvent.locationX;
+      const imageHalfWidth = commonStyles.image.width / 2;
+      const newTouchedSide = touchX < imageHalfWidth ? 'left' : 'right';
+      setTouchedSide(newTouchedSide);
+      setOverlayOpacity(0);
+      // TODO: ここでAPIを叩く。
+      switch (newTouchedSide) {
+        case 'left':
+          onPressDecrease?.(targetId);
+          break;
+        case 'right':
+          onPressIncrease?.(targetId);
+          break;
+      }
+      setTimeout(() => setOverlayOpacity(1), 100);
+      setTimeout(() => setTouchedSide(null), 200);
+      handleBadgeAnimation();
+    };
 
-  const handleBadgeAnimation = () => {
-    Animated.sequence([
-      Animated.timing(badgePositionY, {
-        toValue: -20,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-      Animated.timing(badgePositionY, {
-        toValue: 0,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  };
+    const handleBadgeAnimation = () => {
+      Animated.sequence([
+        Animated.timing(badgePositionY, {
+          toValue: -20,
+          duration: 100,
+          useNativeDriver: true,
+        }),
+        Animated.timing(badgePositionY, {
+          toValue: 0,
+          duration: 100,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    };
 
-  return (
-    <>
-      {!isLoaded && <SkeletonImage />}
-      <TouchableOpacity activeOpacity={1} onPress={handlePress}>
-        <CachedImage
-          source={{ uri: props.sourceUri }}
-          cacheKey={props.targetId.toString()}
-          onLoadEnd={() => setIsLoaded(true)}
-          style={[
-            props.hasStock ? styles.activeImage : styles.image,
-            isLoaded ? styles.imageVisible : styles.imageHidden,
-          ]}
-        />
-        {isLoaded && touchedSide && (
-          <View
+    return (
+      <>
+        {!isLoaded && <SkeletonImage />}
+        <TouchableOpacity activeOpacity={1} onPress={handlePress}>
+          <CachedImage
+            source={{ uri: sourceUri }}
+            cacheKey={targetId.toString()}
+            onLoadEnd={() => setIsLoaded(true)}
             style={[
-              touchedSide === 'left' ? styles.overlayLeft : styles.overlayRight,
-              {
-                opacity: overlayOpacity,
-              },
+              hasStock ? styles.activeImage : styles.image,
+              isLoaded ? styles.imageVisible : styles.imageHidden,
             ]}
-            pointerEvents="none"
-          >
-            <Icon
-              name={touchedSide === 'left' ? 'minus' : 'plus'}
-              size={35}
-              color="#fff"
-              // 下側の中央寄せにする
+          />
+          {isLoaded && touchedSide && (
+            <View
+              style={[
+                touchedSide === 'left'
+                  ? styles.overlayLeft
+                  : styles.overlayRight,
+                {
+                  opacity: overlayOpacity,
+                },
+              ]}
+              pointerEvents="none"
+            >
+              <Icon
+                name={touchedSide === 'left' ? 'minus' : 'plus'}
+                size={35}
+                color="#fff"
+                // 下側の中央寄せにする
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: touchedSide === 'left' ? 0 : undefined,
+                  right: touchedSide === 'right' ? 0 : undefined,
+                }}
+              />
+            </View>
+          )}
+          {isLoaded && hasStock && (
+            <Animated.View
               style={{
+                transform: [{ translateY: badgePositionY }],
                 position: 'absolute',
-                bottom: 0,
-                left: touchedSide === 'left' ? 0 : undefined,
-                right: touchedSide === 'right' ? 0 : undefined,
+                top: -5,
+                right: 0,
               }}
-            />
-          </View>
-        )}
-        {isLoaded && props.hasStock && (
-          <Animated.View
-            style={{
-              transform: [{ translateY: badgePositionY }],
-              position: 'absolute',
-              top: -5,
-              right: 0,
-            }}
-          >
-            <ItemBadge quantity={props.quantity} unitName={props.unitName} />
-          </Animated.View>
-        )}
-      </TouchableOpacity>
-    </>
-  );
-});
+            >
+              <ItemBadge quantity={quantity} unitName={unitName} />
+            </Animated.View>
+          )}
+        </TouchableOpacity>
+      </>
+    );
+  },
+);
 ItemImage.displayName = 'ItemImage';
 
 const styles = StyleSheet.create({
