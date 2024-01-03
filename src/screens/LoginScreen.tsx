@@ -11,6 +11,7 @@ import { useIsShowKeyboard } from '@src/hooks/useIsShowKeyboard';
 import { TopLogoImage } from '@src/components/common/TopLogoImage';
 import { Navigation } from '@src/types';
 import { handleFirebaseError } from '@src/utils/handleFirebaseError';
+import { COMMON_COLOR_GREEN } from '@src/utils/consts';
 
 export const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -65,7 +66,7 @@ export const LoginScreen = () => {
       </LinearGradientButton>
       <View style={{ marginTop: 20 }}>
         <Text
-          style={{ color: '#2ecc71' }}
+          style={{ color: COMMON_COLOR_GREEN }}
           onPress={() => navigation.navigate('パスワードリセット')}
         >
           パスワードを忘れた方はこちら

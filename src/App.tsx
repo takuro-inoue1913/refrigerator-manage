@@ -16,6 +16,7 @@ import { CameraScreen } from '@src/screens/CameraScreen';
 import { LoadingScreen } from '@src/screens/LoadingScreen';
 import { PasswordResetScreen } from '@src/screens/PasswordResetScreen';
 import { FridgeScreen } from '@src/screens/FridgeScreen';
+import { COMMON_COLOR_BLUE, COMMON_COLOR_GREEN } from '@src/utils/consts';
 
 export const App: FC = () => {
   const setUser = useSetRecoilState(userState);
@@ -81,8 +82,8 @@ export const App: FC = () => {
             }
             return <Icon name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: '#2ecc71',
-          tabBarInactiveTintColor: '#3498db',
+          tabBarActiveTintColor: COMMON_COLOR_GREEN,
+          tabBarInactiveTintColor: COMMON_COLOR_BLUE,
         })}
       >
         {idToken ? (

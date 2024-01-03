@@ -22,3 +22,8 @@ export const selectItems: SelectItems = [
   { label: '野菜類', value: 'vegetables' },
   { label: '肉類', value: 'meats' },
 ];
+
+/** 共通の青色。 */
+export const COMMON_COLOR_BLUE = '#3498db';
+/** 共通の緑色。 */
+export const COMMON_COLOR_GREEN = '#2ecc71';

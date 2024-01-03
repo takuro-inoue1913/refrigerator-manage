@@ -12,7 +12,7 @@ import CachedImage from 'expo-cached-image';
 import { SkeletonImage } from '@src/components/common/SkeletonImage';
 import { commonStyles } from '@src/utils/commonStyle';
 import { ItemBadge } from '@src/components/FridgeScreen/ItemBadge';
-import { OnPressImageArgs } from '@src/utils/consts';
+import { COMMON_COLOR_GREEN, OnPressImageArgs } from '@src/utils/consts';
 
 type Props = {
   /** 画像のURI */
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   activeImage: {
     ...commonStyles.image,
     borderWidth: 3,
-    borderColor: '#2ecc71',
+    borderColor: COMMON_COLOR_GREEN,
   },
   imageVisible: {
     opacity: 1,
