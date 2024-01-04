@@ -14,6 +14,7 @@ import { SkeletonImage } from '@src/components/common/SkeletonImage';
 import { commonStyles } from '@src/utils/commonStyle';
 import { ItemBadge } from '@src/components/FridgeScreen/ItemBadge';
 import { COMMON_COLOR_GREEN, OnPressImageArgs } from '@src/utils/consts';
+import { ItemDetailModal } from '@src/components/FridgeScreen/ItemDetailModal';
 
 type Props = {
   /** 画像のURI */
@@ -56,6 +57,7 @@ export const ItemImage: FC<Props> = memo(
       null,
     );
     const [overlayOpacity, setOverlayOpacity] = useState(0);
+    const [showModal, setShowModal] = useState(false);
 
     const badgePositionY = useRef(new Animated.Value(0)).current;
 
@@ -101,15 +103,23 @@ export const ItemImage: FC<Props> = memo(
       ]).start();
     };
 
+    const handleLongPress = () => {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+      setShowModal(true);
+    };
+
     return (
       <>
         {!isLoaded && <SkeletonImage />}
-        <Pressable
-          onPress={handlePress}
-          onLongPress={() =>
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
-          }
-        >
+        {showModal && (
+          <ItemDetailModal
+            visible={showModal}
+            onClose={() => setShowModal(false)}
+            sourceUri={sourceUri}
+            cacheKey={cacheKey}
+          />
+        )}
+        <Pressable onPress={handlePress} onLongPress={handleLongPress}>
           <CachedImage
             source={{ uri: sourceUri }}
             cacheKey={cacheKey}

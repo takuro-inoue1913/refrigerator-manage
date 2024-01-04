@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import {
   Modal,
   Animated,
@@ -9,15 +9,28 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
 } from 'react-native';
+import CachedImage from 'expo-cached-image';
+
+import { commonStyles } from '@src/utils/commonStyle';
 
 const { height: windowHeight } = Dimensions.get('window');
 
-export const ItemDetailModal = ({
-  visible,
-  onClose,
-}: {
+type Props = {
+  /** モーダルを表示するかどうか */
   visible: boolean;
+  /** 画像のURI */
+  sourceUri: string;
+  /** 画像のキャッシュキー */
+  cacheKey: string;
+  /** モーダルを閉じる時に実行する関数 */
   onClose: () => void;
+};
+
+export const ItemDetailModal: FC<Props> = ({
+  visible,
+  sourceUri,
+  cacheKey,
+  onClose,
 }) => {
   // Y軸初期位置をウィンドウの外側に設定
   const animatedY = useRef(new Animated.Value(-windowHeight)).current;
@@ -61,7 +74,11 @@ export const ItemDetailModal = ({
                 { transform: [{ translateY: animatedY }] },
               ]}
             >
-              <Text>ここにモーダルの内容が入ります</Text>
+              <CachedImage
+                source={{ uri: sourceUri }}
+                cacheKey={cacheKey}
+                style={styles.image}
+              />
               <TouchableOpacity onPress={closeAnimation}>
                 <Text>閉じる</Text>
               </TouchableOpacity>
@@ -92,5 +109,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  image: {
+    ...commonStyles.image,
+    borderWidth: 3,
+    borderColor: '#e1e4e8',
   },
 });
