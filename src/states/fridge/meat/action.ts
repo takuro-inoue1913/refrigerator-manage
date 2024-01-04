@@ -1,5 +1,5 @@
 import { useRecoilCallback } from 'recoil';
-import { MeatStocks, meatStocksState } from '@src/states/fridge/meat';
+import { MeatStocks, meatStocksState } from '@src/states/fridge/meat/state';
 
 type MeatStockActions = {
   increaseMeatStock: ({

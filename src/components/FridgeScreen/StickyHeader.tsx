@@ -1,38 +1,38 @@
 import React, { FC, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import {
+  SelectFridgeCategory,
+  selectFridgeCategoryState,
+} from '@src/states/fridge';
 import { StyleSheet, TextStyleIOS, View } from 'react-native';
 import RNPickerSelect, { Item, PickerStyle } from 'react-native-picker-select';
 
-import { SelectFridgeCategory } from '@src/utils/consts';
-
 type Props = {
-  selectedValue: SelectFridgeCategory;
   selectItems: Item[];
   isDisabled?: boolean;
-  onValueChange?: (value: SelectFridgeCategory) => void;
 };
 
 /**
  * 冷蔵庫画面のヘッダーを表示するコンポーネント。
  */
-export const StickyHeader: FC<Props> = ({
-  selectedValue,
-  selectItems,
-  isDisabled,
-  onValueChange,
-}) => {
-  // MEMO: onDonePress の時に値が更新されないため、stateを使っている。
-  const [selectedValueState, setSelectedValueState] =
-    useState<SelectFridgeCategory>(selectedValue);
+export const StickyHeader: FC<Props> = ({ selectItems, isDisabled }) => {
+  const [selectFridgeCategory, setSelectFridgeCategory] = useRecoilState(
+    selectFridgeCategoryState,
+  );
+  // MEMO: RNPickerSelect の onValueChange は、値が変更されるたびに呼ばれるため、
+  //       onDonePress の時に値を更新するために一時的に値を保持する。
+  const [tmpState, setTmpState] =
+    useState<SelectFridgeCategory>(selectFridgeCategory);
 
   return (
     <View style={styles.header}>
       <RNPickerSelect
         placeholder={{}}
         doneText={'選択'}
-        onValueChange={(value) => setSelectedValueState(value)}
-        onDonePress={() => onValueChange?.(selectedValueState)}
+        onValueChange={(value) => setTmpState(value)}
+        onDonePress={() => setSelectFridgeCategory(tmpState)}
         items={selectItems}
-        value={selectedValueState}
+        value={tmpState}
         style={isDisabled ? styles.disabledPicker : styles.pickerSelect}
         disabled={isDisabled}
       />

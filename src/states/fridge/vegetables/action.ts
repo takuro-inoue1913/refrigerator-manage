@@ -2,7 +2,7 @@ import { useRecoilCallback } from 'recoil';
 import {
   VegetablesStocks,
   vegetablesStocksState,
-} from '@src/states/fridge/vegetables';
+} from '@src/states/fridge/vegetables/state';
 
 type VegetableStockActions = {
   increaseVegetableStock: ({

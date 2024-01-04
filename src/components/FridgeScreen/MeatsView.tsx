@@ -4,21 +4,16 @@ import { ScrollView, Text, View } from 'react-native';
 import { SkeletonFridgeViews } from '@src/components/FridgeScreen/SkeletonFridgeViews';
 import { fridgeCommonStyles } from '@src/utils/commonStyle';
 import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
-import { SelectFridgeCategory, selectItems } from '@src/utils/consts';
+import { selectItems } from '@src/utils/consts';
 import { useChunkedArray } from '@src/hooks/useChunkedArray';
 import { useMeatStocks } from '@src/interface/hooks/useMeatStocks';
 import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
 import { createEncodeStrings } from '@src/utils/logics/createEncodeStrings';
 
-type Props = {
-  /** 選択されたカテゴリーが変更された時に実行される関数。 */
-  onChangeSelectCategory: (category: SelectFridgeCategory) => void;
-};
-
 /**
  * 冷蔵庫の肉画面を表示するコンポーネント。
  */
-export const MeatsView: FC<Props> = ({ onChangeSelectCategory }) => {
+export const MeatsView: FC = () => {
   const { meatStocks, isFetching } = useMeatStocks();
   const rows = useChunkedArray(meatStocks.ids, 3);
 
@@ -28,12 +23,7 @@ export const MeatsView: FC<Props> = ({ onChangeSelectCategory }) => {
 
   return (
     <>
-      <StickyHeader
-        selectedValue={'meats'}
-        selectItems={selectItems}
-        onValueChange={onChangeSelectCategory}
-        isDisabled={isFetching}
-      />
+      <StickyHeader selectItems={selectItems} isDisabled={isFetching} />
       <ScrollView contentContainerStyle={fridgeCommonStyles.scrollContainer}>
         {rows.map((row, index) => (
           <View key={`row-${index}`} style={fridgeCommonStyles.row}>

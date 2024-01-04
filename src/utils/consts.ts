@@ -1,5 +1,4 @@
-/** FridgeScreen でのカテゴリー。*/
-export type SelectFridgeCategory = 'vegetables' | 'meats';
+import { SelectFridgeCategory } from '@src/states/fridge';
 
 /** FridgeScreen でのカテゴリー選択肢の型。 */
 export type SelectItems = {
@@ -19,8 +18,8 @@ export type OnPressImageArgs = {
 
 /** FridgeScreen でのカテゴリー選択肢。 */
 export const selectItems: SelectItems = [
-  { label: '野菜類', value: 'vegetables' },
-  { label: '肉類', value: 'meats' },
+  { label: '野菜類', value: 'vegetable' },
+  { label: '肉類', value: 'meat' },
 ];
 
 /** 共通の青色。 */

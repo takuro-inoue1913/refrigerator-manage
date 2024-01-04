@@ -19,11 +19,7 @@ export const SkeletonFridgeViews: FC<Props> = ({ number = 42 }) => {
 
   return (
     <>
-      <StickyHeader
-        selectedValue={'vegetables'}
-        selectItems={selectItems}
-        isDisabled={true}
-      />
+      <StickyHeader selectItems={selectItems} isDisabled={true} />
       <ScrollView contentContainerStyle={fridgeCommonStyles.scrollContainer}>
         {rows.map((row, index) => (
           <View key={`row-${index}`} style={fridgeCommonStyles.row}>

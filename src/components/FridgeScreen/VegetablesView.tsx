@@ -8,24 +8,15 @@ import { useVegetablesStockActions } from '@src/states/fridge/vegetables';
 import { useVegetablesStocks } from '@src/interface/hooks/useVegetablesStocks';
 import { SkeletonFridgeViews } from '@src/components/FridgeScreen/SkeletonFridgeViews';
 import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
-import {
-  SelectFridgeCategory,
-  OnPressImageArgs,
-  selectItems,
-} from '@src/utils/consts';
+import { OnPressImageArgs, selectItems } from '@src/utils/consts';
 import { useChunkedArray } from '@src/hooks/useChunkedArray';
 import { useUpsertVegetableStock } from '@src/interface/hooks/useUpsertVegetableStock';
 import { createEncodeStrings } from '@src/utils/logics/createEncodeStrings';
 
-type Props = {
-  /** 選択されたカテゴリーが変更された時に実行される関数。 */
-  onChangeSelectCategory: (category: SelectFridgeCategory) => void;
-};
-
 /**
  * 冷蔵庫の野菜画面を表示するコンポーネント。
  */
-export const VegetablesView: FC<Props> = ({ onChangeSelectCategory }) => {
+export const VegetablesView: FC = () => {
   const { vegetablesStocks, isFetching } = useVegetablesStocks();
   const vegetablesStockActions = useVegetablesStockActions();
   const upsertVegetablesStock = useUpsertVegetableStock();
@@ -90,12 +81,7 @@ export const VegetablesView: FC<Props> = ({ onChangeSelectCategory }) => {
 
   return (
     <>
-      <StickyHeader
-        selectedValue={'vegetables'}
-        selectItems={selectItems}
-        onValueChange={onChangeSelectCategory}
-        isDisabled={isFetching}
-      />
+      <StickyHeader selectItems={selectItems} isDisabled={isFetching} />
       <ScrollView contentContainerStyle={fridgeCommonStyles.scrollContainer}>
         {rows.map((row, index) => (
           <View key={`row-${index}`} style={fridgeCommonStyles.row}>

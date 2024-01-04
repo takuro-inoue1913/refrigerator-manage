@@ -1,28 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useRecoilValue } from 'recoil';
 import { StyleSheet, View } from 'react-native';
 
 import { VegetablesView } from '@src/components/FridgeScreen/VegetablesView';
 import { MeatsView } from '@src/components/FridgeScreen/MeatsView';
-import { SelectFridgeCategory } from '@src/utils/consts';
+import { selectFridgeCategoryState } from '@src/states/fridge';
 
 export const FridgeScreen = () => {
-  const [selectedCategory, setSelectedCategory] =
-    useState<SelectFridgeCategory>('vegetables');
-
-  const handleSelectCategoryChange = (category: SelectFridgeCategory) => {
-    setSelectedCategory(category);
-  };
+  const selectFridgeCategory = useRecoilValue(selectFridgeCategoryState);
 
   const SelectedCategoryView = () => {
-    switch (selectedCategory) {
-      case 'vegetables':
-        return (
-          <VegetablesView onChangeSelectCategory={handleSelectCategoryChange} />
-        );
-      case 'meats':
-        return (
-          <MeatsView onChangeSelectCategory={handleSelectCategoryChange} />
-        );
+    switch (selectFridgeCategory) {
+      case 'vegetable':
+        return <VegetablesView />;
+      case 'meat':
+        return <MeatsView />;
     }
   };
 
