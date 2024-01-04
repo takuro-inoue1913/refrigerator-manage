@@ -15,6 +15,7 @@ import {
 } from '@src/utils/consts';
 import { useChunkedArray } from '@src/hooks/useChunkedArray';
 import { useUpsertVegetableStock } from '@src/interface/hooks/useUpsertVegetableStock';
+import { createEncodeStrings } from '@src/utils/logics/createEncodeStrings';
 
 type Props = {
   /** 選択されたカテゴリーが変更された時に実行される関数。 */
@@ -105,6 +106,10 @@ export const VegetablesView: FC<Props> = ({ onChangeSelectCategory }) => {
               >
                 <ItemImage
                   sourceUri={vegetablesStocks.byId[vegetableId].imageUri}
+                  cacheKey={createEncodeStrings([
+                    vegetablesStocks.byId[vegetableId].vegetableName,
+                    vegetablesStocks.byId[vegetableId].vegetableId.toString(),
+                  ])}
                   targetId={vegetablesStocks.byId[vegetableId].vegetableId}
                   hasStock={vegetablesStocks.byId[vegetableId].hasStock}
                   quantity={vegetablesStocks.byId[vegetableId].quantity}

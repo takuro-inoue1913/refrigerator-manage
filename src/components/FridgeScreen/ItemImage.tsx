@@ -17,6 +17,8 @@ import { COMMON_COLOR_GREEN, OnPressImageArgs } from '@src/utils/consts';
 type Props = {
   /** 画像のURI */
   sourceUri: string;
+  /** 画像のキャッシュキー */
+  cacheKey: string;
   /** 対象データのID */
   targetId: number;
   /** 在庫があるかどうか */
@@ -39,6 +41,7 @@ type Props = {
 export const ItemImage: FC<Props> = memo(
   ({
     sourceUri,
+    cacheKey,
     hasStock,
     targetId,
     quantity,
@@ -103,7 +106,7 @@ export const ItemImage: FC<Props> = memo(
         <TouchableOpacity activeOpacity={1} onPress={handlePress}>
           <CachedImage
             source={{ uri: sourceUri }}
-            cacheKey={targetId.toString()}
+            cacheKey={cacheKey}
             onLoadEnd={() => setIsLoaded(true)}
             style={[
               hasStock ? styles.activeImage : styles.image,
