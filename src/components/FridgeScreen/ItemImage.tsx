@@ -85,6 +85,7 @@ export const ItemImage: FC<Props> = memo(
       }
       setTimeout(() => setOverlayOpacity(1), 100);
       setTimeout(() => setTouchedSide(null), 200);
+      Haptics.selectionAsync();
       handleBadgeAnimation();
     };
 
