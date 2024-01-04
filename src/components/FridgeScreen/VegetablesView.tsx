@@ -10,7 +10,7 @@ import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
 import { selectItems } from '@src/utils/consts';
 import { useChunkedArray } from '@src/hooks/useChunkedArray';
 import { useUpsertVegetableStock } from '@src/interface/hooks/useUpsertVegetableStock';
-import { createEncodeStrings } from '@src/utils/logics/createEncodeStrings';
+import { generateEncodeString } from '@src/utils/logics/createEncodeStrings';
 import { useDebouncedUpsertStock } from '@src/hooks/useDebouncedUpsertStock';
 
 /**
@@ -44,7 +44,7 @@ export const VegetablesView: FC = () => {
               >
                 <ItemImage
                   sourceUri={vegetablesStocks.byId[vegetableId].imageUri}
-                  cacheKey={createEncodeStrings([
+                  cacheKey={generateEncodeString([
                     vegetablesStocks.byId[vegetableId].vegetableName,
                     vegetablesStocks.byId[vegetableId].vegetableId.toString(),
                   ])}
