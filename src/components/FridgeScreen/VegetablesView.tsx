@@ -4,7 +4,7 @@ import { debounce } from 'lodash';
 
 import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
 import { fridgeCommonStyles } from '@src/utils/commonStyle';
-import { useVegetablesStockActions } from '@src/states/fridge/vegetables/action';
+import { useVegetablesStockActions } from '@src/states/fridge/vegetables';
 import { useVegetablesStocks } from '@src/interface/hooks/useVegetablesStocks';
 import { SkeletonFridgeViews } from '@src/components/FridgeScreen/SkeletonFridgeViews';
 import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
