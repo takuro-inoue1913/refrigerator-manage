@@ -80,36 +80,14 @@ export type Meat_Master = {
   image_uri: Scalars['String']['output'];
   /** 肉マスタID */
   meat_id: Scalars['Int']['output'];
-  /** An array relationship */
-  meat_master_meat_stocks: Array<Meat_Stocks>;
-  /** An aggregate relationship */
-  meat_master_meat_stocks_aggregate: Meat_Stocks_Aggregate;
+  /** An object relationship */
+  meat_master_meat_stocks?: Maybe<Meat_Stocks>;
   /** An object relationship */
   meat_master_unit_master?: Maybe<Unit_Master>;
   /** 肉名（ひらがな） */
   meat_name: Scalars['String']['output'];
   /** 単位ID */
   unit_id: Scalars['Int']['output'];
-};
-
-
-/** 肉類のマスターデータ */
-export type Meat_MasterMeat_Master_Meat_StocksArgs = {
-  distinct_on?: InputMaybe<Array<Meat_Stocks_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Meat_Stocks_Order_By>>;
-  where?: InputMaybe<Meat_Stocks_Bool_Exp>;
-};
-
-
-/** 肉類のマスターデータ */
-export type Meat_MasterMeat_Master_Meat_Stocks_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Meat_Stocks_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Meat_Stocks_Order_By>>;
-  where?: InputMaybe<Meat_Stocks_Bool_Exp>;
 };
 
 /** aggregated selection of "meat_master" */
@@ -160,7 +138,6 @@ export type Meat_Master_Bool_Exp = {
   image_uri?: InputMaybe<String_Comparison_Exp>;
   meat_id?: InputMaybe<Int_Comparison_Exp>;
   meat_master_meat_stocks?: InputMaybe<Meat_Stocks_Bool_Exp>;
-  meat_master_meat_stocks_aggregate?: InputMaybe<Meat_Stocks_Aggregate_Bool_Exp>;
   meat_master_unit_master?: InputMaybe<Unit_Master_Bool_Exp>;
   meat_name?: InputMaybe<String_Comparison_Exp>;
   unit_id?: InputMaybe<Int_Comparison_Exp>;
@@ -194,7 +171,7 @@ export type Meat_Master_Insert_Input = {
   image_uri?: InputMaybe<Scalars['String']['input']>;
   /** 肉マスタID */
   meat_id?: InputMaybe<Scalars['Int']['input']>;
-  meat_master_meat_stocks?: InputMaybe<Meat_Stocks_Arr_Rel_Insert_Input>;
+  meat_master_meat_stocks?: InputMaybe<Meat_Stocks_Obj_Rel_Insert_Input>;
   meat_master_unit_master?: InputMaybe<Unit_Master_Obj_Rel_Insert_Input>;
   /** 肉名（ひらがな） */
   meat_name?: InputMaybe<Scalars['String']['input']>;
@@ -260,7 +237,7 @@ export type Meat_Master_Order_By = {
   display_name?: InputMaybe<Order_By>;
   image_uri?: InputMaybe<Order_By>;
   meat_id?: InputMaybe<Order_By>;
-  meat_master_meat_stocks_aggregate?: InputMaybe<Meat_Stocks_Aggregate_Order_By>;
+  meat_master_meat_stocks?: InputMaybe<Meat_Stocks_Order_By>;
   meat_master_unit_master?: InputMaybe<Unit_Master_Order_By>;
   meat_name?: InputMaybe<Order_By>;
   unit_id?: InputMaybe<Order_By>;
@@ -586,6 +563,13 @@ export type Meat_Stocks_Mutation_Response = {
   affected_rows: Scalars['Int']['output'];
   /** data from the rows affected by the mutation */
   returning: Array<Meat_Stocks>;
+};
+
+/** input type for inserting object relation for remote table "meat_stocks" */
+export type Meat_Stocks_Obj_Rel_Insert_Input = {
+  data: Meat_Stocks_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Meat_Stocks_On_Conflict>;
 };
 
 /** on_conflict condition type for table "meat_stocks" */
@@ -2889,7 +2873,7 @@ export type Vegetable_Stocks_Variance_Order_By = {
 export type GetMeatMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMeatMasterAndUnitAndStocksQuery = { __typename?: 'query_root', meat_master: Array<{ __typename?: 'meat_master', meat_id: number, display_name: string, meat_name: string, image_uri: string, meat_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, meat_master_meat_stocks: Array<{ __typename?: 'meat_stocks', stock_id: number, quantity: number, incremental_unit: number }> }> };
+export type GetMeatMasterAndUnitAndStocksQuery = { __typename?: 'query_root', meat_master: Array<{ __typename?: 'meat_master', meat_id: number, display_name: string, meat_name: string, image_uri: string, meat_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, meat_master_meat_stocks?: { __typename?: 'meat_stocks', stock_id: number, quantity: number, incremental_unit: number } | null }> };
 
 export type GetMeatStockByUserIdAndMeatIdQueryVariables = Exact<{
   userId: Scalars['String']['input'];
