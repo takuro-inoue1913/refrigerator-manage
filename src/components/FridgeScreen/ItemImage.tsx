@@ -2,12 +2,13 @@ import React, { useState, FC, useRef, memo } from 'react';
 import {
   Animated,
   GestureResponderEvent,
+  Pressable,
   StyleSheet,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CachedImage from 'expo-cached-image';
+import * as Haptics from 'expo-haptics';
 
 import { SkeletonImage } from '@src/components/common/SkeletonImage';
 import { commonStyles } from '@src/utils/commonStyle';
@@ -103,7 +104,12 @@ export const ItemImage: FC<Props> = memo(
     return (
       <>
         {!isLoaded && <SkeletonImage />}
-        <TouchableOpacity activeOpacity={1} onPress={handlePress}>
+        <Pressable
+          onPress={handlePress}
+          onLongPress={() =>
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
+          }
+        >
           <CachedImage
             source={{ uri: sourceUri }}
             cacheKey={cacheKey}
@@ -151,7 +157,7 @@ export const ItemImage: FC<Props> = memo(
               <ItemBadge quantity={quantity} unitName={unitName} />
             </Animated.View>
           )}
-        </TouchableOpacity>
+        </Pressable>
       </>
     );
   },
