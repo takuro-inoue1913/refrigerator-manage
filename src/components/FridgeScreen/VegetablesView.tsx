@@ -1,6 +1,5 @@
-import React, { FC, useCallback, useRef } from 'react';
+import React, { FC } from 'react';
 import { ScrollView, Text, View } from 'react-native';
-import { debounce } from 'lodash';
 
 import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
 import { fridgeCommonStyles } from '@src/utils/commonStyle';
@@ -8,10 +7,11 @@ import { useVegetablesStockActions } from '@src/states/fridge/vegetables';
 import { useVegetablesStocks } from '@src/interface/hooks/useVegetablesStocks';
 import { SkeletonFridgeViews } from '@src/components/FridgeScreen/SkeletonFridgeViews';
 import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
-import { OnPressImageArgs, selectItems } from '@src/utils/consts';
+import { selectItems } from '@src/utils/consts';
 import { useChunkedArray } from '@src/hooks/useChunkedArray';
 import { useUpsertVegetableStock } from '@src/interface/hooks/useUpsertVegetableStock';
 import { createEncodeStrings } from '@src/utils/logics/createEncodeStrings';
+import { useDebouncedUpsertStock } from '@src/hooks/useDebouncedUpsertStock';
 
 /**
  * 冷蔵庫の野菜画面を表示するコンポーネント。
@@ -19,61 +19,13 @@ import { createEncodeStrings } from '@src/utils/logics/createEncodeStrings';
 export const VegetablesView: FC = () => {
   const { vegetablesStocks, isFetching } = useVegetablesStocks();
   const vegetablesStockActions = useVegetablesStockActions();
-  const upsertVegetablesStock = useUpsertVegetableStock();
-  const stockQuantities = useRef<{ [vegetableId: number]: number }>({});
   const rows = useChunkedArray(vegetablesStocks.ids, 3);
-
-  /**
-   * 連続でAPIを叩かないようにするための debounce 関数。
-   */
-  const debouncedUpsertVegetableStock = useCallback(
-    debounce(async () => {
-      // MEMO: debounce 中に複数の項目が更新される可能性があるため、現在オブジェクトに入っている値を全て更新する。
-      Object.entries(stockQuantities.current).forEach(([key, value]) => {
-        upsertVegetablesStock({
-          id: Number(key),
-          quantity: value,
-        });
-        delete stockQuantities.current[Number(key)];
-      });
-    }, 1000),
-    [],
-  );
-
-  const onIncreaseStock = useCallback(
-    async ({
-      targetId: vegetableId,
-      currentQuantity,
-      incrementalUnit,
-    }: OnPressImageArgs) => {
-      vegetablesStockActions.increaseVegetableStock({
-        id: vegetableId,
-        quantity: incrementalUnit,
-      });
-      stockQuantities.current[vegetableId] = currentQuantity + incrementalUnit;
-      debouncedUpsertVegetableStock();
-    },
-    [],
-  );
-
-  const onDecreaseStock = useCallback(
-    async ({
-      targetId: vegetableId,
-      currentQuantity,
-      incrementalUnit,
-    }: OnPressImageArgs) => {
-      vegetablesStockActions.decreaseVegetableStock({
-        id: vegetableId,
-        quantity: incrementalUnit,
-      });
-      stockQuantities.current[vegetableId] = Math.max(
-        currentQuantity - incrementalUnit,
-        0,
-      );
-      debouncedUpsertVegetableStock();
-    },
-    [],
-  );
+  const upsertVegetablesStock = useUpsertVegetableStock();
+  const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
+    debounceUpsertStock: upsertVegetablesStock,
+    increaseStock: vegetablesStockActions.increaseVegetableStock,
+    decreaseStock: vegetablesStockActions.decreaseVegetableStock,
+  });
 
   if (isFetching) {
     return <SkeletonFridgeViews />;
