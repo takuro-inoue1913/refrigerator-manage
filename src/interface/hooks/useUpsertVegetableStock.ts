@@ -1,7 +1,7 @@
 import { useRecoilValue } from 'recoil';
 
 import { idTokenState, userState } from '@src/states/user';
-import { vegetableStockRepository } from '../repositories/vegetableStockRepository';
+import { vegetableStockRepository } from '@src/interface/repositories/vegetableStockRepository';
 
 export const useUpsertVegetableStock = () => {
   const idToken = useRecoilValue(idTokenState);

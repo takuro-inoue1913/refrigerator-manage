@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 import { StyleSheet, View } from 'react-native';
 
 import { VegetablesView } from '@src/components/FridgeScreen/VegetablesView';
-import { MeatsView } from '@src/components/FridgeScreen/MeatsView';
+import { MeatView } from '@src/components/FridgeScreen/MeatView';
 import { selectFridgeCategoryState } from '@src/states/fridge';
 
 export const FridgeScreen = () => {
@@ -14,7 +14,7 @@ export const FridgeScreen = () => {
       case 'vegetable':
         return <VegetablesView />;
       case 'meat':
-        return <MeatsView />;
+        return <MeatView />;
     }
   };
 
