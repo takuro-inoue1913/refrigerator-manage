@@ -3,20 +3,20 @@ import { MeatStocks, meatStocksState } from '@src/states/fridge/meat/state';
 
 type MeatStockActions = {
   increaseMeatStock: ({
-    meatId,
+    id,
     quantity,
   }: {
     /** 増やす肉ID */
-    meatId: number;
+    id: number;
     /** 増やす数を指定。 */
     quantity: number;
   }) => void;
   decreaseMeatStock: ({
-    meatId,
+    id,
     quantity,
   }: {
     /** 減らす肉ID */
-    meatId: number;
+    id: number;
     /** 減らす数を指定。 */
     quantity: number;
   }) => void;
@@ -26,7 +26,7 @@ export const useMeatStockActions = () => {
   const increaseMeatStock: MeatStockActions['increaseMeatStock'] =
     useRecoilCallback(
       ({ set }) =>
-        ({ meatId, quantity }) => {
+        ({ id: meatId, quantity }) => {
           set(meatStocksState, (prev) => {
             const newStocks: MeatStocks = {
               ids: [...prev.ids],
@@ -51,7 +51,7 @@ export const useMeatStockActions = () => {
   const decreaseMeatStock: MeatStockActions['decreaseMeatStock'] =
     useRecoilCallback(
       ({ set }) =>
-        ({ meatId, quantity }) => {
+        ({ id: meatId, quantity }) => {
           set(meatStocksState, (prev) => {
             const updatedQuantity = prev.byId[meatId].quantity - quantity;
 

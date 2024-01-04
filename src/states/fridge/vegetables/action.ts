@@ -6,20 +6,20 @@ import {
 
 type VegetableStockActions = {
   increaseVegetableStock: ({
-    vegetableId,
+    id,
     quantity,
   }: {
     /** 増やす野菜のID */
-    vegetableId: number;
+    id: number;
     /** 増やす数を指定。 */
     quantity: number;
   }) => void;
   decreaseVegetableStock: ({
-    vegetableId,
+    id,
     quantity,
   }: {
     /** 減らす野菜のID */
-    vegetableId: number;
+    id: number;
     /** 減らす数を指定。 */
     quantity: number;
   }) => void;
@@ -29,7 +29,7 @@ export const useVegetablesStockActions = () => {
   const increaseVegetableStock: VegetableStockActions['increaseVegetableStock'] =
     useRecoilCallback(
       ({ set }) =>
-        ({ vegetableId, quantity }) => {
+        ({ id: vegetableId, quantity }) => {
           set(vegetablesStocksState, (prev) => {
             const newStocks: VegetablesStocks = {
               ids: [...prev.ids],
@@ -54,7 +54,7 @@ export const useVegetablesStockActions = () => {
   const decreaseVegetableStock: VegetableStockActions['decreaseVegetableStock'] =
     useRecoilCallback(
       ({ set }) =>
-        ({ vegetableId, quantity }) => {
+        ({ id: vegetableId, quantity }) => {
           set(vegetablesStocksState, (prev) => {
             const updatedQuantity = prev.byId[vegetableId].quantity - quantity;
 

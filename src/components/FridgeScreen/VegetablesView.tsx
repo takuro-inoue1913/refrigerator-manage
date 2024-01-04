@@ -31,7 +31,7 @@ export const VegetablesView: FC = () => {
       // MEMO: debounce 中に複数の項目が更新される可能性があるため、現在オブジェクトに入っている値を全て更新する。
       Object.entries(stockQuantities.current).forEach(([key, value]) => {
         upsertVegetablesStock({
-          vegetableId: Number(key),
+          id: Number(key),
           quantity: value,
         });
         delete stockQuantities.current[Number(key)];
@@ -47,7 +47,7 @@ export const VegetablesView: FC = () => {
       incrementalUnit,
     }: OnPressImageArgs) => {
       vegetablesStockActions.increaseVegetableStock({
-        vegetableId,
+        id: vegetableId,
         quantity: incrementalUnit,
       });
       stockQuantities.current[vegetableId] = currentQuantity + incrementalUnit;
@@ -63,7 +63,7 @@ export const VegetablesView: FC = () => {
       incrementalUnit,
     }: OnPressImageArgs) => {
       vegetablesStockActions.decreaseVegetableStock({
-        vegetableId,
+        id: vegetableId,
         quantity: incrementalUnit,
       });
       stockQuantities.current[vegetableId] = Math.max(

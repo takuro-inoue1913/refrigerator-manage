@@ -3,17 +3,16 @@ import { useRecoilValue } from 'recoil';
 import { idTokenState, userState } from '@src/states/user';
 import { vegetableStockRepository } from '@src/interface/repositories/vegetableStockRepository';
 
+type UpsertVegetableStockArgs = {
+  id: number;
+  quantity: number;
+};
+
 export const useUpsertVegetableStock = () => {
   const idToken = useRecoilValue(idTokenState);
   const user = useRecoilValue(userState);
 
-  return async ({
-    vegetableId,
-    quantity,
-  }: {
-    vegetableId: number;
-    quantity: number;
-  }) => {
+  return async ({ id: vegetableId, quantity }: UpsertVegetableStockArgs) => {
     const existingStock = await vegetableStockRepository.getOne({
       idToken,
       userId: user!.uid,

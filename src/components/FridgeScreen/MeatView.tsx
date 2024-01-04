@@ -31,7 +31,7 @@ export const MeatView: FC = () => {
       // MEMO: debounce 中に複数の項目が更新される可能性があるため、現在オブジェクトに入っている値を全て更新する。
       Object.entries(stockQuantities.current).forEach(([key, value]) => {
         upsertMeatStock({
-          meatId: Number(key),
+          id: Number(key),
           quantity: value,
         });
         delete stockQuantities.current[Number(key)];
@@ -47,7 +47,7 @@ export const MeatView: FC = () => {
       incrementalUnit,
     }: OnPressImageArgs) => {
       meatStockActions.increaseMeatStock({
-        meatId,
+        id: meatId,
         quantity: incrementalUnit,
       });
       stockQuantities.current[meatId] = currentQuantity + incrementalUnit;
@@ -63,7 +63,7 @@ export const MeatView: FC = () => {
       incrementalUnit,
     }: OnPressImageArgs) => {
       meatStockActions.decreaseMeatStock({
-        meatId,
+        id: meatId,
         quantity: incrementalUnit,
       });
       stockQuantities.current[meatId] = Math.max(
