@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
+  TouchableWithoutFeedback,
 } from 'react-native';
 
 const { height: windowHeight } = Dimensions.get('window');
@@ -24,7 +25,7 @@ export const ItemDetailModal = ({
   // モーダル表示アニメーション
   const startAnimation = () => {
     Animated.timing(animatedY, {
-      toValue: windowHeight / 2, // 画面上端に移動
+      toValue: windowHeight / 4,
       duration: 500,
       useNativeDriver: true,
     }).start();
@@ -51,19 +52,23 @@ export const ItemDetailModal = ({
 
   return (
     <Modal transparent visible={visible} onRequestClose={onClose}>
-      <View style={styles.overlay}>
-        <Animated.View
-          style={[
-            styles.modalContainer,
-            { transform: [{ translateY: animatedY }] },
-          ]}
-        >
-          <Text>ここにモーダルの内容が入ります</Text>
-          <TouchableOpacity onPress={closeAnimation}>
-            <Text>閉じる</Text>
-          </TouchableOpacity>
-        </Animated.View>
-      </View>
+      <TouchableWithoutFeedback onPress={closeAnimation}>
+        <View style={styles.overlay}>
+          <TouchableWithoutFeedback onPress={(e) => e.stopPropagation()}>
+            <Animated.View
+              style={[
+                styles.modalContainer,
+                { transform: [{ translateY: animatedY }] },
+              ]}
+            >
+              <Text>ここにモーダルの内容が入ります</Text>
+              <TouchableOpacity onPress={closeAnimation}>
+                <Text>閉じる</Text>
+              </TouchableOpacity>
+            </Animated.View>
+          </TouchableWithoutFeedback>
+        </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
@@ -76,7 +81,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContainer: {
-    width: '80%',
+    width: '90%',
+    // 仮の高さ
+    height: '50%',
     backgroundColor: 'white',
     borderRadius: 5,
     padding: 20,
