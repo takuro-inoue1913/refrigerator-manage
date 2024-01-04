@@ -3,7 +3,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { idTokenState } from '@src/states/user';
 import { generateMeatStocks } from '@src/interface/logics/generate/generateMeatStocks';
-import { meatStocksState } from '@src/states/meat';
+import { meatStocksState } from '@src/states/fridge/meat';
 import { meatStockRepository } from '@src/interface/repositories/meatStockRepository';
 
 export const useMeatStocks = () => {

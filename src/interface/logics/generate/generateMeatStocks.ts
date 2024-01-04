@@ -1,5 +1,5 @@
 import { GetMeatMasterAndUnitAndStocksQuery } from '@src/interface/__generated__/graphql';
-import { MeatStocks } from '@src/states/meat';
+import { MeatStocks } from '@src/states/fridge/meat';
 
 /**
  * 肉マスタと肉在庫から肉在庫のオブジェクトを生成する。

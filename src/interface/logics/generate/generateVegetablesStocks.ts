@@ -1,5 +1,5 @@
 import { GetVegetableMasterAndUnitAndStocksQuery } from '@src/interface/__generated__/graphql';
-import { VegetablesStocks } from '@src/states/vegetables';
+import { VegetablesStocks } from '@src/states/fridge/vegetables';
 
 /**
  * 野菜マスタと野菜在庫から野菜在庫のオブジェクトを生成する。

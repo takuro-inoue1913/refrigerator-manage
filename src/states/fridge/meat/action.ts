@@ -1,48 +1,45 @@
 import { useRecoilCallback } from 'recoil';
-import {
-  VegetablesStocks,
-  vegetablesStocksState,
-} from '@src/states/vegetables';
+import { MeatStocks, meatStocksState } from '@src/states/fridge/meat';
 
-type VegetableStockActions = {
-  increaseVegetableStock: ({
-    vegetableId,
+type MeatStockActions = {
+  increaseMeatStock: ({
+    meatId,
     quantity,
   }: {
-    /** 増やす野菜のID */
-    vegetableId: number;
+    /** 増やす肉ID */
+    meatId: number;
     /** 増やす数を指定。 */
     quantity: number;
   }) => void;
-  decreaseVegetableStock: ({
-    vegetableId,
+  decreaseMeatStock: ({
+    meatId,
     quantity,
   }: {
-    /** 減らす野菜のID */
-    vegetableId: number;
+    /** 減らす肉ID */
+    meatId: number;
     /** 減らす数を指定。 */
     quantity: number;
   }) => void;
 };
 
-export const useVegetablesStockActions = () => {
-  const increaseVegetableStock: VegetableStockActions['increaseVegetableStock'] =
+export const useMeatStockActions = () => {
+  const increaseMeatStock: MeatStockActions['increaseMeatStock'] =
     useRecoilCallback(
       ({ set }) =>
-        ({ vegetableId, quantity }) => {
-          set(vegetablesStocksState, (prev) => {
-            const newStocks: VegetablesStocks = {
+        ({ meatId, quantity }) => {
+          set(meatStocksState, (prev) => {
+            const newStocks: MeatStocks = {
               ids: [...prev.ids],
               byId: prev.ids.reduce(
                 (acc, cur) => {
                   acc[cur] = { ...prev.byId[cur] };
-                  if (cur === vegetableId) {
+                  if (cur === meatId) {
                     acc[cur].quantity += quantity;
                     acc[cur].hasStock = true;
                   }
                   return acc;
                 },
-                {} as VegetablesStocks['byId'],
+                {} as MeatStocks['byId'],
               ),
             };
             return newStocks;
@@ -51,25 +48,25 @@ export const useVegetablesStockActions = () => {
       [],
     );
 
-  const decreaseVegetableStock: VegetableStockActions['decreaseVegetableStock'] =
+  const decreaseMeatStock: MeatStockActions['decreaseMeatStock'] =
     useRecoilCallback(
       ({ set }) =>
-        ({ vegetableId, quantity }) => {
-          set(vegetablesStocksState, (prev) => {
-            const updatedQuantity = prev.byId[vegetableId].quantity - quantity;
+        ({ meatId, quantity }) => {
+          set(meatStocksState, (prev) => {
+            const updatedQuantity = prev.byId[meatId].quantity - quantity;
 
-            const newStocks: VegetablesStocks = {
+            const newStocks: MeatStocks = {
               ids: [...prev.ids],
               byId: prev.ids.reduce(
                 (acc, cur) => {
                   acc[cur] = { ...prev.byId[cur] };
-                  if (cur === vegetableId) {
+                  if (cur === meatId) {
                     acc[cur].quantity = Math.max(updatedQuantity, 0);
                     acc[cur].hasStock = updatedQuantity > 0;
                   }
                   return acc;
                 },
-                {} as VegetablesStocks['byId'],
+                {} as MeatStocks['byId'],
               ),
             };
             return newStocks;
@@ -79,7 +76,7 @@ export const useVegetablesStockActions = () => {
     );
 
   return {
-    increaseVegetableStock,
-    decreaseVegetableStock,
+    increaseMeatStock,
+    decreaseMeatStock,
   };
 };
