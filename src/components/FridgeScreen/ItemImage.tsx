@@ -86,10 +86,10 @@ export const ItemImage: FC<Props> = memo(
       setTimeout(() => setOverlayOpacity(1), 100);
       setTimeout(() => setTouchedSide(null), 200);
       Haptics.selectionAsync();
-      handleBadgeAnimation();
+      onBounceAnimation();
     };
 
-    const handleBadgeAnimation = () => {
+    const onBounceAnimation = () => {
       Animated.sequence([
         Animated.timing(badgePositionY, {
           toValue: -20,
@@ -105,7 +105,7 @@ export const ItemImage: FC<Props> = memo(
     };
 
     const handleLongPress = () => {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
       setShowModal(true);
     };
 
