@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import {
   Modal,
   Animated,
@@ -8,8 +8,11 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   TextInput,
+  TouchableOpacity,
 } from 'react-native';
 import CachedImage from 'expo-cached-image';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { useIsShowKeyboard } from '@src/hooks/useIsShowKeyboard';
 
@@ -35,6 +38,20 @@ export const ItemDetailModal: FC<Props> = ({
   // Y軸初期位置をウィンドウの外側に設定
   const animatedY = useRef(new Animated.Value(-windowHeight)).current;
   const isShowKeyboard = useIsShowKeyboard();
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date: Date) => {
+    console.warn('A date has been picked: ', date);
+    hideDatePicker();
+  };
 
   // モーダル表示アニメーション
   const startAnimation = () => {
@@ -119,7 +136,13 @@ export const ItemDetailModal: FC<Props> = ({
                   </View>
                   <View style={styles.row}>
                     <Text style={styles.label}>賞味期限:</Text>
-                    <TextInput style={styles.input} placeholder="2024/12/31" />
+                    <TouchableOpacity
+                      style={styles.inputWithIcon}
+                      onPress={showDatePicker}
+                    >
+                      <Text style={styles.dateText}>2024/01/05</Text>
+                      <Text style={styles.icon}>▼</Text>
+                    </TouchableOpacity>
                   </View>
                   <View style={styles.row}>
                     <Text style={styles.label}>メモ:</Text>
@@ -144,6 +167,15 @@ export const ItemDetailModal: FC<Props> = ({
               </View>
             </Animated.View>
           </TouchableWithoutFeedback>
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="date"
+            locale="ja"
+            onConfirm={handleConfirm}
+            onCancel={hideDatePicker}
+            confirmTextIOS="決定"
+            cancelTextIOS="キャンセル"
+          />
         </View>
       </TouchableWithoutFeedback>
     </Modal>
@@ -159,7 +191,7 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     width: '90%',
-    height: '60%',
+    height: 500,
     backgroundColor: 'white',
     borderRadius: 5,
     padding: 15,
@@ -232,5 +264,25 @@ const styles = StyleSheet.create({
   closeButtonText: {
     color: 'white',
     fontWeight: 'bold',
+  },
+  inputWithIcon: {
+    flexDirection: 'row',
+    width: '60%',
+    borderWidth: 1,
+    borderColor: '#ced4da',
+    borderRadius: 4,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  dateText: {
+    flex: 1,
+    fontSize: 16,
+    color: '#ced4da',
+  },
+  icon: {
+    marginLeft: 10,
+    fontSize: 16,
+    color: 'gray',
   },
 });
