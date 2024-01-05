@@ -72,7 +72,7 @@ export const vegetableStockRepository = {
     });
     return data.insert_vegetable_stocks_one;
   },
-  update: async ({
+  updateQuantity: async ({
     idToken,
     userId,
     vegetableId,

@@ -29,7 +29,7 @@ export const useUpsertMeatStock = () => {
       console.log('meatStockRepository.insert: ', data);
       return data;
     } else {
-      const data = await meatStockRepository.update({
+      const data = await meatStockRepository.updateQuantity({
         idToken,
         userId: user!.uid,
         meatId,

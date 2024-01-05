@@ -63,7 +63,7 @@ export const meatStockRepository = {
     });
     return data.insert_meat_stocks_one;
   },
-  update: async ({
+  updateQuantity: async ({
     idToken,
     userId,
     meatId,

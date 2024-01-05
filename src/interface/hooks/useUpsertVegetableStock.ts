@@ -29,7 +29,7 @@ export const useUpsertVegetableStock = () => {
       console.log('vegetableStockRepository.insert: ', data);
       return data;
     } else {
-      const data = await vegetableStockRepository.update({
+      const data = await vegetableStockRepository.updateQuantity({
         idToken,
         userId: user!.uid,
         vegetableId,
