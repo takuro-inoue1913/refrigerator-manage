@@ -62,7 +62,7 @@ export const CameraScreen = () => {
       return;
     }
     requestPermission();
-  }, []);
+  }, [permission, requestPermission]);
 
   if (!permission?.granted) {
     return (

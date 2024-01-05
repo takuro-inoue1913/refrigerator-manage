@@ -45,7 +45,7 @@ export const App: FC = () => {
       setInitializing(false);
     });
     return () => unsubscribe();
-  }, []);
+  }, [setIdToken, setUser]);
 
   if (initializing) return <LoadingScreen />;
 

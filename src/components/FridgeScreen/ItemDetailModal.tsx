@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import {
   Modal,
   Animated,
@@ -55,30 +55,30 @@ export const ItemDetailModal: FC<Props> = ({
   };
 
   // モーダル表示アニメーション
-  const startAnimation = () => {
+  const startAnimation = useCallback(() => {
     Animated.timing(animatedY, {
       toValue: windowHeight / 5,
       duration: 500,
       useNativeDriver: true,
     }).start();
-  };
+  }, [animatedY]);
 
   // モーダル非表示アニメーション
-  const closeAnimation = () => {
+  const closeAnimation = useCallback(() => {
     Animated.timing(animatedY, {
       toValue: -windowHeight, // ウィンドウの外側に移動
       duration: 500,
       useNativeDriver: true,
     }).start(() => onClose());
-  };
+  }, [animatedY, onClose]);
 
-  const moveTopAnimation = () => {
+  const moveTopAnimation = useCallback(() => {
     Animated.timing(animatedY, {
       toValue: 0,
       duration: 500,
       useNativeDriver: true,
     }).start();
-  };
+  }, [animatedY]);
 
   useEffect(() => {
     if (isShowKeyboard) {
@@ -86,7 +86,7 @@ export const ItemDetailModal: FC<Props> = ({
       return;
     }
     startAnimation();
-  }, [isShowKeyboard]);
+  }, [isShowKeyboard, moveTopAnimation, startAnimation]);
 
   useEffect(() => {
     if (visible) {
@@ -94,7 +94,7 @@ export const ItemDetailModal: FC<Props> = ({
     } else {
       closeAnimation();
     }
-  }, [visible]);
+  }, [visible, startAnimation, closeAnimation]);
 
   if (!visible) return <></>;
 

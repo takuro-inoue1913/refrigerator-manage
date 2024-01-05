@@ -22,7 +22,7 @@ export const useSkeletonAnimation = () => {
         }),
       ]),
     ).start();
-  }, []);
+  }, [animatedValue]);
 
   const backgroundColor = animatedValue.interpolate({
     inputRange: [0, 1],
