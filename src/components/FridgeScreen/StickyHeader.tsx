@@ -5,6 +5,7 @@ import {
   selectFridgeCategoryState,
 } from '@src/states/fridge';
 import { StyleSheet, TextStyleIOS, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import RNPickerSelect, { Item, PickerStyle } from 'react-native-picker-select';
 
 type Props = {
@@ -35,7 +36,21 @@ export const StickyHeader: FC<Props> = ({ selectItems, isDisabled }) => {
         value={tmpState}
         style={isDisabled ? styles.disabledPicker : styles.pickerSelect}
         disabled={isDisabled}
-      />
+        Icon={
+          (() => (
+            <View style={styles.iconWrapper}>
+              <Icon
+                name="chevron-down"
+                size={24}
+                color="gray"
+                style={isDisabled ? styles.disabledIcon : undefined}
+              />
+            </View>
+            // MEMO: RNPickerSelect の Icon の型定義が間違っているため、any で回避。
+            // eslint-disable-next-line
+          )) as any
+        }
+      ></RNPickerSelect>
     </View>
   );
 };
@@ -93,4 +108,12 @@ const styles = StyleSheet.create({
       paddingRight: 30,
     },
   } as TextStyleIOS & PickerStyle,
+  iconWrapper: {
+    position: 'absolute',
+    right: 10,
+    top: 8,
+  },
+  disabledIcon: {
+    color: 'rgba(0,0,0,0.1)',
+  },
 });

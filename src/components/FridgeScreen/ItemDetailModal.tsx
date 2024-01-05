@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import CachedImage from 'expo-cached-image';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { useIsShowKeyboard } from '@src/hooks/useIsShowKeyboard';
@@ -141,7 +142,7 @@ export const ItemDetailModal: FC<Props> = ({
                       onPress={showDatePicker}
                     >
                       <Text style={styles.dateText}>2024/01/05</Text>
-                      <Text style={styles.icon}>▼</Text>
+                      <Icon name="chevron-down" size={24} color="gray" />
                     </TouchableOpacity>
                   </View>
                   <View style={styles.row}>
