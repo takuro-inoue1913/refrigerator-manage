@@ -7,11 +7,11 @@ import {
   StyleSheet,
   Dimensions,
   TouchableWithoutFeedback,
+  TextInput,
 } from 'react-native';
 import CachedImage from 'expo-cached-image';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { useIsShowKeyboard } from '@src/hooks/useIsShowKeyboard';
-import { GradientionTextInput } from '../common/GradientionTextInput';
 
 const { height: windowHeight } = Dimensions.get('window');
 
@@ -103,30 +103,20 @@ export const ItemDetailModal: FC<Props> = ({
                 <View style={styles.formContainer}>
                   <View style={styles.row}>
                     <Text style={styles.label}>数量（個）:</Text>
-                    <GradientionTextInput
-                      conteinerWidth={'60%'}
-                      placeholder="1000"
-                    />
+                    <TextInput style={styles.input} placeholder="1000" />
                   </View>
                   <View style={styles.row}>
                     <Text style={styles.label}>増減単位:</Text>
-                    <GradientionTextInput
-                      conteinerWidth={'60%'}
-                      placeholder="1000"
-                    />
+                    <TextInput style={styles.input} placeholder="1000" />
                   </View>
                   <View style={styles.row}>
                     <Text style={styles.label}>賞味期限:</Text>
-                    <GradientionTextInput
-                      conteinerWidth={'60%'}
-                      placeholder="2024/12/31"
-                    />
+                    <TextInput style={styles.input} placeholder="2024/12/31" />
                   </View>
                   <View style={styles.row}>
                     <Text style={styles.label}>メモ:</Text>
-                    <GradientionTextInput
+                    <TextInput
                       style={styles.textArea}
-                      conteinerWidth={'60%'}
                       multiline
                       placeholder=""
                     />
@@ -211,8 +201,22 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
   },
+  input: {
+    width: '60%',
+    borderWidth: 1,
+    borderColor: '#ced4da',
+    borderRadius: 4,
+    padding: 10,
+    fontSize: 16,
+  },
   textArea: {
+    width: '60%',
     height: 70,
+    borderWidth: 1,
+    borderColor: '#ced4da',
+    borderRadius: 4,
+    fontSize: 16,
+    padding: 10,
   },
   footer: {
     alignItems: 'center',
