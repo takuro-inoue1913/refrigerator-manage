@@ -1,4 +1,3 @@
-# vegetableMaster と unitMaster と stock を取得する。
 query GetVegetableMasterAndUnitAndStocks {
   vegetable_master {
     vegetable_id
@@ -13,6 +12,8 @@ query GetVegetableMasterAndUnitAndStocks {
       stock_id
       quantity
       incremental_unit
+      expiration_date
+      memo
     }
   }
 }
@@ -37,10 +38,12 @@ mutation InsertVegetableStock($object: vegetable_stocks_insert_input!) {
     stock_id
     user_id
     vegetable_id
+    expiration_date
+    memo
   }
 }
 
-mutation UpdateVegetableStock(
+mutation UpdateVegetableStockQuantity(
   $userId: String!
   $vegetableId: Int!
   $quantity: Int!

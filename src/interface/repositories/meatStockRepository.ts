@@ -2,7 +2,7 @@ import {
   GetMeatMasterAndUnitAndStocksDocument,
   GetMeatStockByUserIdAndMeatIdDocument,
   InsertMeatStockDocument,
-  UpdateMeatStockDocument,
+  UpdateMeatStockQuantityDocument,
 } from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
 
@@ -57,6 +57,8 @@ export const meatStockRepository = {
         user_id: userId,
         meat_id: meatId,
         quantity,
+        // デフォルト値
+        memo: '',
       },
     });
     return data.insert_meat_stocks_one;
@@ -69,7 +71,7 @@ export const meatStockRepository = {
   }: UpsertMeatStockArgs) => {
     const client = buildGraphQLUserClient(idToken);
 
-    const data = await client.request(UpdateMeatStockDocument, {
+    const data = await client.request(UpdateMeatStockQuantityDocument, {
       userId,
       meatId,
       quantity,

@@ -2,7 +2,7 @@ import {
   GetVegetableMasterAndUnitAndStocksDocument,
   GetVegetableStockByUserIdAndVegetableIdDocument,
   InsertVegetableStockDocument,
-  UpdateVegetableStockDocument,
+  UpdateVegetableStockQuantityDocument,
 } from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
 
@@ -66,6 +66,8 @@ export const vegetableStockRepository = {
         user_id: userId,
         vegetable_id: vegetableId,
         quantity,
+        // デフォルト値
+        memo: '',
       },
     });
     return data.insert_vegetable_stocks_one;
@@ -78,7 +80,7 @@ export const vegetableStockRepository = {
   }: UpsertVegetableStockArgs) => {
     const client = buildGraphQLUserClient(idToken);
 
-    const data = await client.request(UpdateVegetableStockDocument, {
+    const data = await client.request(UpdateVegetableStockQuantityDocument, {
       userId,
       vegetableId,
       quantity,
