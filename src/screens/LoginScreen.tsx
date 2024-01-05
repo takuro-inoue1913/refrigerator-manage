@@ -41,7 +41,7 @@ export const LoginScreen = () => {
       }}
     >
       <TopLogoImage isShowKeyboard={isShowKeyboard} />
-      <View>
+      <View style={{ marginBottom: 20 }}>
         <GradientionTextInput
           style={{ width: 250 }}
           onChangeText={setEmail}

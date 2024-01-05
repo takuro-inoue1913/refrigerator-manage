@@ -3,14 +3,22 @@ import { StyleSheet, TextInput, View, TextInputProps } from 'react-native';
 
 import { CommonGradation } from '@src/components/common/CommonGradation';
 
-type Props = TextInputProps;
+type Props = TextInputProps & {
+  /** コンテナの幅 */
+  conteinerWidth?: number | `${number}%`;
+};
 
 /**
  * グラデーションの枠で囲まれたテキスト入力コンポーネント。
  */
 export const GradientionTextInput: FC<Props> = (props) => {
   return (
-    <View style={styles.gradientBorderContainer}>
+    <View
+      style={{
+        ...styles.gradientBorderContainer,
+        width: props.conteinerWidth ? props.conteinerWidth : undefined,
+      }}
+    >
       <CommonGradation style={styles.gradientBorder}>
         <TextInput
           {...props}
@@ -25,19 +33,17 @@ export const GradientionTextInput: FC<Props> = (props) => {
 
 const styles = StyleSheet.create({
   gradientBorderContainer: {
-    padding: 5, // グラデーションボーダーの太さを調整する
-    borderRadius: 10, // 必要に応じて角丸を調整
+    borderRadius: 5,
   },
   gradientBorder: {
-    // このスタイルがTextInputの「枠」になります
     borderWidth: 1,
     borderColor: 'transparent',
-    borderRadius: 5, // 内側のTextInputの角丸を調整 (外側の半分以下にする)
+    borderRadius: 5,
   },
   textInput: {
-    paddingHorizontal: 10, // 内容と境界線の間のスペース
+    paddingHorizontal: 10,
     paddingVertical: 10,
-    borderRadius: 5, // このスタイルで角丸を統一
+    borderRadius: 5,
     backgroundColor: '#FFFFFF',
   },
 });
