@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { ComponentProps, FC, useCallback, useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
 import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
@@ -7,6 +7,7 @@ import { useVegetablesStockActions } from '@src/states/fridge/vegetables';
 import { useVegetablesStocks } from '@src/interface/hooks/useVegetablesStocks';
 import { SkeletonFridgeViews } from '@src/components/FridgeScreen/SkeletonFridgeViews';
 import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
+import { ItemDetailModal } from '@src/components/FridgeScreen/ItemDetailModal';
 import { selectItems } from '@src/utils/consts';
 import { useChunkedArray } from '@src/hooks/useChunkedArray';
 import { useUpsertVegetableStock } from '@src/interface/hooks/useUpsertVegetableStock';
@@ -17,6 +18,8 @@ import { useDebouncedUpsertStock } from '@src/hooks/useDebouncedUpsertStock';
  * 冷蔵庫の野菜画面を表示するコンポーネント。
  */
 export const VegetablesView: FC = () => {
+  const [modalProps, setModalProps] =
+    useState<ComponentProps<typeof ItemDetailModal>>();
   const { vegetablesStocks, isFetching } = useVegetablesStocks();
   const vegetablesStockActions = useVegetablesStockActions();
   const rows = useChunkedArray(vegetablesStocks.ids, 3);
@@ -26,6 +29,21 @@ export const VegetablesView: FC = () => {
     increaseStock: vegetablesStockActions.increaseVegetableStock,
     decreaseStock: vegetablesStockActions.decreaseVegetableStock,
   });
+
+  const handleLongPress = useCallback(
+    (id: number) => {
+      setModalProps({
+        visible: true,
+        onClose: () => setModalProps(undefined),
+        sourceUri: vegetablesStocks.byId[id].imageUri,
+        cacheKey: generateEncodeString([
+          vegetablesStocks.byId[id].vegetableName,
+          vegetablesStocks.byId[id].vegetableId.toString(),
+        ]),
+      });
+    },
+    [vegetablesStocks.byId],
+  );
 
   if (isFetching) {
     return <SkeletonFridgeViews />;
@@ -57,6 +75,7 @@ export const VegetablesView: FC = () => {
                   }
                   onPressIncrease={onIncreaseStock}
                   onPressDecrease={onDecreaseStock}
+                  onLongPress={handleLongPress}
                 />
                 <Text style={fridgeCommonStyles.displayName}>
                   {vegetablesStocks.byId[vegetableId].vegetableDisplayName}
@@ -66,6 +85,7 @@ export const VegetablesView: FC = () => {
           </View>
         ))}
       </ScrollView>
+      {modalProps && <ItemDetailModal {...modalProps} />}
     </>
   );
 };

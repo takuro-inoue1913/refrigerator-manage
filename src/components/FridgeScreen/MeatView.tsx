@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { ComponentProps, FC, useCallback, useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
 import { SkeletonFridgeViews } from '@src/components/FridgeScreen/SkeletonFridgeViews';
@@ -12,11 +12,14 @@ import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
 import { generateEncodeString } from '@src/utils/logics/createEncodeStrings';
 import { useUpsertMeatStock } from '@src/interface/hooks/useUpsertMeatStock';
 import { useDebouncedUpsertStock } from '@src/hooks/useDebouncedUpsertStock';
+import { ItemDetailModal } from '@src/components/FridgeScreen/ItemDetailModal';
 
 /**
  * 冷蔵庫の肉画面を表示するコンポーネント。
  */
 export const MeatView: FC = () => {
+  const [modalProps, setModalProps] =
+    useState<ComponentProps<typeof ItemDetailModal>>();
   const { meatStocks, isFetching } = useMeatStocks();
   const meatStockActions = useMeatStockActions();
   const rows = useChunkedArray(meatStocks.ids, 3);
@@ -26,6 +29,21 @@ export const MeatView: FC = () => {
     increaseStock: meatStockActions.increaseMeatStock,
     decreaseStock: meatStockActions.decreaseMeatStock,
   });
+
+  const handleLongPress = useCallback(
+    (id: number) => {
+      setModalProps({
+        visible: true,
+        onClose: () => setModalProps(undefined),
+        sourceUri: meatStocks.byId[id].imageUri,
+        cacheKey: generateEncodeString([
+          meatStocks.byId[id].meatName,
+          meatStocks.byId[id].meatId.toString(),
+        ]),
+      });
+    },
+    [meatStocks.byId],
+  );
 
   if (isFetching) {
     return <SkeletonFridgeViews />;
@@ -55,6 +73,7 @@ export const MeatView: FC = () => {
                   incrementalUnit={meatStocks.byId[meatId].incrementalUnit}
                   onPressIncrease={onIncreaseStock}
                   onPressDecrease={onDecreaseStock}
+                  onLongPress={handleLongPress}
                 />
                 <Text style={fridgeCommonStyles.displayName}>
                   {meatStocks.byId[meatId].meatDisplayName}
@@ -64,6 +83,7 @@ export const MeatView: FC = () => {
           </View>
         ))}
       </ScrollView>
+      {modalProps && <ItemDetailModal {...modalProps} />}
     </>
   );
 };

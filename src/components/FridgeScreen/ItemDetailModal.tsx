@@ -19,7 +19,7 @@ import { useIsShowKeyboard } from '@src/hooks/useIsShowKeyboard';
 
 const { height: windowHeight } = Dimensions.get('window');
 
-type Props = {
+export type Props = {
   /** モーダルを表示するかどうか */
   visible: boolean;
   /** 画像のURI */

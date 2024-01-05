@@ -14,7 +14,6 @@ import { SkeletonImage } from '@src/components/common/SkeletonImage';
 import { commonStyles } from '@src/utils/commonStyle';
 import { ItemBadge } from '@src/components/FridgeScreen/ItemBadge';
 import { COMMON_COLOR_GREEN, OnPressImageArgs } from '@src/utils/consts';
-import { ItemDetailModal } from '@src/components/FridgeScreen/ItemDetailModal';
 
 type Props = {
   /** 画像のURI */
@@ -35,6 +34,7 @@ type Props = {
   onPressIncrease?: (args: OnPressImageArgs) => Promise<void>;
   /** 減らすボタンを押した時に実行される関数。 */
   onPressDecrease?: (args: OnPressImageArgs) => Promise<void>;
+  onLongPress?: (targetId: number) => void;
 };
 
 /**
@@ -51,13 +51,13 @@ export const ItemImage: FC<Props> = memo(
     unitName,
     onPressIncrease,
     onPressDecrease,
+    onLongPress,
   }) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [touchedSide, setTouchedSide] = useState<'left' | 'right' | null>(
       null,
     );
     const [overlayOpacity, setOverlayOpacity] = useState(0);
-    const [showModal, setShowModal] = useState(false);
 
     const badgePositionY = useRef(new Animated.Value(0)).current;
 
@@ -106,20 +106,12 @@ export const ItemImage: FC<Props> = memo(
 
     const handleLongPress = () => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-      setShowModal(true);
+      onLongPress?.(targetId);
     };
 
     return (
       <>
         {!isLoaded && <SkeletonImage />}
-        {showModal && (
-          <ItemDetailModal
-            visible={showModal}
-            onClose={() => setShowModal(false)}
-            sourceUri={sourceUri}
-            cacheKey={cacheKey}
-          />
-        )}
         <Pressable onPress={handlePress} onLongPress={handleLongPress}>
           <CachedImage
             source={{ uri: sourceUri }}
