@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import CachedImage from 'expo-cached-image';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
+import { useIsShowKeyboard } from '@src/hooks/useIsShowKeyboard';
 
 const { height: windowHeight } = Dimensions.get('window');
 
@@ -33,11 +34,12 @@ export const ItemDetailModal: FC<Props> = ({
 }) => {
   // Y軸初期位置をウィンドウの外側に設定
   const animatedY = useRef(new Animated.Value(-windowHeight)).current;
+  const isShowKeyboard = useIsShowKeyboard();
 
   // モーダル表示アニメーション
   const startAnimation = () => {
     Animated.timing(animatedY, {
-      toValue: windowHeight / 4,
+      toValue: windowHeight / 5,
       duration: 500,
       useNativeDriver: true,
     }).start();
@@ -51,6 +53,22 @@ export const ItemDetailModal: FC<Props> = ({
       useNativeDriver: true,
     }).start(() => onClose());
   };
+
+  const moveTopAnimation = () => {
+    Animated.timing(animatedY, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  useEffect(() => {
+    if (isShowKeyboard) {
+      moveTopAnimation();
+      return;
+    }
+    startAnimation();
+  }, [isShowKeyboard]);
 
   useEffect(() => {
     if (visible) {
@@ -94,6 +112,14 @@ export const ItemDetailModal: FC<Props> = ({
                   <View style={styles.row}>
                     <Text style={styles.label}>賞味期限:</Text>
                     <TextInput style={styles.input} placeholder="2024/12/31" />
+                  </View>
+                  <View style={styles.row}>
+                    <Text style={styles.label}>メモ:</Text>
+                    <TextInput
+                      style={styles.textArea}
+                      multiline
+                      placeholder=""
+                    />
                   </View>
                   {/* つけるかどうかは不明 */}
                   {/* <Text style={styles.label}>画像で読み取る</Text> */}
@@ -152,8 +178,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: '40%',
-    height: '30%',
+    width: 120,
+    height: 120,
     borderRadius: 15,
   },
   formContainer: {
@@ -176,13 +202,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   input: {
+    width: '60%',
     borderWidth: 1,
     borderColor: '#ced4da',
     borderRadius: 4,
     padding: 10,
-    width: '60%',
     fontSize: 16,
-    backgroundColor: '#fff',
+  },
+  textArea: {
+    width: '60%',
+    height: 70,
+    borderWidth: 1,
+    borderColor: '#ced4da',
+    borderRadius: 4,
+    fontSize: 16,
+    padding: 10,
   },
   footer: {
     alignItems: 'center',
