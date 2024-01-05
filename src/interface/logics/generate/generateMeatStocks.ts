@@ -22,10 +22,13 @@ export const generateMeatStocks = (
         hasStock:
           cur.meat_master_meat_stocks !== undefined &&
           cur.meat_master_meat_stocks !== null &&
+          cur.meat_master_meat_stocks.expiration_date !== null &&
           cur.meat_master_meat_stocks.quantity > 0,
         stockId: cur.meat_master_meat_stocks?.stock_id ?? null,
         quantity: cur.meat_master_meat_stocks?.quantity ?? 0,
         incrementalUnit: cur.meat_master_meat_stocks?.incremental_unit ?? 1,
+        expirationDate: cur.meat_master_meat_stocks?.expiration_date ?? '',
+        memo: cur.meat_master_meat_stocks?.memo ?? '',
       };
       ids.push(cur.meat_id);
       return acc;

@@ -34,12 +34,17 @@ export const MeatView: FC = () => {
     (id: number) => {
       setModalProps({
         visible: true,
-        onClose: () => setModalProps(undefined),
         sourceUri: meatStocks.byId[id].imageUri,
         cacheKey: generateEncodeString([
           meatStocks.byId[id].meatName,
           meatStocks.byId[id].meatId.toString(),
         ]),
+        incrementalUnit: meatStocks.byId[id].incrementalUnit,
+        quantity: meatStocks.byId[id].quantity,
+        unitName: meatStocks.byId[id].unitName,
+        expirationDate: meatStocks.byId[id].expirationDate,
+        memo: meatStocks.byId[id].memo,
+        onClose: () => setModalProps(undefined),
       });
     },
     [meatStocks.byId],

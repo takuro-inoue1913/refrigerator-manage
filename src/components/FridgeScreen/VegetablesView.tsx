@@ -34,12 +34,17 @@ export const VegetablesView: FC = () => {
     (id: number) => {
       setModalProps({
         visible: true,
-        onClose: () => setModalProps(undefined),
         sourceUri: vegetablesStocks.byId[id].imageUri,
         cacheKey: generateEncodeString([
           vegetablesStocks.byId[id].vegetableName,
           vegetablesStocks.byId[id].vegetableId.toString(),
         ]),
+        incrementalUnit: vegetablesStocks.byId[id].incrementalUnit,
+        quantity: vegetablesStocks.byId[id].quantity,
+        unitName: vegetablesStocks.byId[id].unitName,
+        expirationDate: vegetablesStocks.byId[id].expirationDate,
+        memo: vegetablesStocks.byId[id].memo,
+        onClose: () => setModalProps(undefined),
       });
     },
     [vegetablesStocks.byId],

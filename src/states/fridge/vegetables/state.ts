@@ -27,6 +27,10 @@ export type VegetablesStocks = {
       quantity: number;
       /** 増減単位 */
       incrementalUnit: number;
+      /** 賞味期限日 */
+      expirationDate: string;
+      /** メモ */
+      memo: string;
     };
   };
 };

@@ -26,6 +26,16 @@ export type Props = {
   sourceUri: string;
   /** 画像のキャッシュキー */
   cacheKey: string;
+  /** 在庫数 */
+  quantity: number;
+  /** 単位名 */
+  unitName: string;
+  /** 増減単位 */
+  incrementalUnit: number;
+  /** 賞味期限日 */
+  expirationDate: string;
+  /** メモ */
+  memo: string;
   /** モーダルを閉じる時に実行する関数 */
   onClose: () => void;
 };
@@ -34,6 +44,11 @@ export const ItemDetailModal: FC<Props> = ({
   visible,
   sourceUri,
   cacheKey,
+  quantity,
+  unitName,
+  incrementalUnit,
+  expirationDate,
+  memo,
   onClose,
 }) => {
   // Y軸初期位置をウィンドウの外側に設定
@@ -120,9 +135,10 @@ export const ItemDetailModal: FC<Props> = ({
                 />
                 <View style={styles.formContainer}>
                   <View style={styles.row}>
-                    <Text style={styles.label}>数量（個）:</Text>
+                    <Text style={styles.label}>{`数量（${unitName}）:`}</Text>
                     <TextInput
                       style={styles.input}
+                      value={quantity.toString()}
                       keyboardType="numeric"
                       placeholder="1000"
                     />
@@ -131,6 +147,7 @@ export const ItemDetailModal: FC<Props> = ({
                     <Text style={styles.label}>増減単位:</Text>
                     <TextInput
                       style={styles.input}
+                      value={incrementalUnit.toString()}
                       keyboardType="numeric"
                       placeholder="1000"
                     />
@@ -141,7 +158,7 @@ export const ItemDetailModal: FC<Props> = ({
                       style={styles.inputWithIcon}
                       onPress={showDatePicker}
                     >
-                      <Text style={styles.dateText}>2024/01/05</Text>
+                      <Text style={styles.dateText}>{expirationDate}</Text>
                       <Icon name="chevron-down" size={24} color="gray" />
                     </TouchableOpacity>
                   </View>
@@ -149,6 +166,7 @@ export const ItemDetailModal: FC<Props> = ({
                     <Text style={styles.label}>メモ:</Text>
                     <TextInput
                       style={styles.textArea}
+                      value={memo}
                       multiline
                       placeholder=""
                     />
