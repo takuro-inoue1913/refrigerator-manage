@@ -3,6 +3,7 @@ import {
   GetMeatStockByUserIdAndMeatIdDocument,
   InsertMeatStockDocument,
   UpdateMeatStockQuantityDocument,
+  UpdateMeatStockDetailDocument,
 } from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
 
@@ -19,11 +20,20 @@ type InsertMeatStockArgs = {
   quantity: number;
 };
 
-type UpsertMeatStockArgs = {
+type UpdateMeatStockArgs = {
   idToken: string | null;
   userId: string;
   meatId: number;
   quantity: number;
+};
+
+type UpdateDetailArgs = {
+  idToken: string | null;
+  userId: string;
+  meatId: number;
+  quantity: number;
+  expirationDate: string;
+  memo: string;
 };
 
 export const meatStockRepository = {
@@ -68,13 +78,32 @@ export const meatStockRepository = {
     userId,
     meatId,
     quantity,
-  }: UpsertMeatStockArgs) => {
+  }: UpdateMeatStockArgs) => {
     const client = buildGraphQLUserClient(idToken);
 
     const data = await client.request(UpdateMeatStockQuantityDocument, {
       userId,
       meatId,
       quantity,
+    });
+    return data.update_meat_stocks?.returning[0];
+  },
+  updateDetail: async ({
+    idToken,
+    userId,
+    meatId,
+    quantity,
+    expirationDate,
+    memo,
+  }: UpdateDetailArgs) => {
+    const client = buildGraphQLUserClient(idToken);
+
+    const data = await client.request(UpdateMeatStockDetailDocument, {
+      userId,
+      meatId,
+      quantity,
+      expirationDate,
+      memo,
     });
     return data.update_meat_stocks?.returning[0];
   },

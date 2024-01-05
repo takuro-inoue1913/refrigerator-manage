@@ -2,6 +2,7 @@ import {
   GetVegetableMasterAndUnitAndStocksDocument,
   GetVegetableStockByUserIdAndVegetableIdDocument,
   InsertVegetableStockDocument,
+  UpdateVegetableStockDetailDocument,
   UpdateVegetableStockQuantityDocument,
 } from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
@@ -19,11 +20,20 @@ type InsertVegetableStockArgs = {
   quantity: number;
 };
 
-type UpsertVegetableStockArgs = {
+type UpdateVegetableStockArgs = {
   idToken: string | null;
   userId: string;
   vegetableId: number;
   quantity: number;
+};
+
+type UpdateDetailArgs = {
+  idToken: string | null;
+  userId: string;
+  vegetableId: number;
+  quantity: number;
+  expirationDate: string;
+  memo: string;
 };
 
 export const vegetableStockRepository = {
@@ -77,13 +87,32 @@ export const vegetableStockRepository = {
     userId,
     vegetableId,
     quantity,
-  }: UpsertVegetableStockArgs) => {
+  }: UpdateVegetableStockArgs) => {
     const client = buildGraphQLUserClient(idToken);
 
     const data = await client.request(UpdateVegetableStockQuantityDocument, {
       userId,
       vegetableId,
       quantity,
+    });
+    return data.update_vegetable_stocks?.returning[0];
+  },
+  updateDetail: async ({
+    idToken,
+    userId,
+    vegetableId,
+    quantity,
+    expirationDate,
+    memo,
+  }: UpdateDetailArgs) => {
+    const client = buildGraphQLUserClient(idToken);
+
+    const data = await client.request(UpdateVegetableStockDetailDocument, {
+      userId,
+      vegetableId,
+      quantity,
+      expirationDate,
+      memo,
     });
     return data.update_vegetable_stocks?.returning[0];
   },

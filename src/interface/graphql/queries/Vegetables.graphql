@@ -60,3 +60,25 @@ mutation UpdateVegetableStockQuantity(
     }
   }
 }
+
+mutation UpdateVegetableStockDetail(
+  $userId: String!
+  $vegetableId: Int!
+  $quantity: Int!
+  $expirationDate: date!
+  $memo: String!
+) {
+  update_vegetable_stocks(
+    where: { user_id: { _eq: $userId }, vegetable_id: { _eq: $vegetableId } }
+    _set: { quantity: $quantity, expiration_date: $expirationDate, memo: $memo }
+  ) {
+    returning {
+      stock_id
+      user_id
+      vegetable_id
+      quantity
+      expiration_date
+      memo
+    }
+  }
+}
