@@ -103,11 +103,19 @@ export const ItemDetailModal: FC<Props> = ({
                 <View style={styles.formContainer}>
                   <View style={styles.row}>
                     <Text style={styles.label}>数量（個）:</Text>
-                    <TextInput style={styles.input} placeholder="1000" />
+                    <TextInput
+                      style={styles.input}
+                      keyboardType="numeric"
+                      placeholder="1000"
+                    />
                   </View>
                   <View style={styles.row}>
                     <Text style={styles.label}>増減単位:</Text>
-                    <TextInput style={styles.input} placeholder="1000" />
+                    <TextInput
+                      style={styles.input}
+                      keyboardType="numeric"
+                      placeholder="1000"
+                    />
                   </View>
                   <View style={styles.row}>
                     <Text style={styles.label}>賞味期限:</Text>
