@@ -27,7 +27,6 @@ export const useUpsertMeatStockDetail = () => {
       userId: user!.uid,
       meatId,
     });
-    console.log('existingStock: ', existingStock);
     if (existingStock.length === 0) {
       const data = await meatStockRepository.insert({
         idToken,
@@ -35,7 +34,6 @@ export const useUpsertMeatStockDetail = () => {
         meatId,
         quantity,
       });
-      console.log('useUpsertMeatStockDetail.insert: ', data);
       return data;
     } else {
       const data = await meatStockRepository.updateDetail({
@@ -47,7 +45,6 @@ export const useUpsertMeatStockDetail = () => {
         expirationDate,
         memo,
       });
-      console.log('useUpsertMeatStockDetail.updateDetail: ', data);
       return data;
     }
   };

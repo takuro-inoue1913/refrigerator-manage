@@ -27,7 +27,6 @@ export const useUpsertVegetableStockDetail = () => {
       userId: user!.uid,
       vegetableId,
     });
-    console.log('existingStock: ', existingStock);
     if (existingStock.length === 0) {
       const data = await vegetableStockRepository.insert({
         idToken,
@@ -35,7 +34,6 @@ export const useUpsertVegetableStockDetail = () => {
         vegetableId,
         quantity,
       });
-      console.log('useUpsertVegetableStockDetail.insert: ', data);
       return data;
     } else {
       const data = await vegetableStockRepository.updateDetail({
@@ -47,7 +45,6 @@ export const useUpsertVegetableStockDetail = () => {
         expirationDate,
         memo,
       });
-      console.log('useUpsertVegetableStockDetail.updateDetail: ', data);
       return data;
     }
   };
