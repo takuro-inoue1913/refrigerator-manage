@@ -4,7 +4,7 @@ import { ScrollView, Text, View } from 'react-native';
 import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
 import { fridgeCommonStyles } from '@src/utils/commonStyle';
 import { useVegetablesStockActions } from '@src/states/fridge/vegetables';
-import { useVegetablesStocks } from '@src/interface/hooks/user/useVegetablesStocks';
+import { useVegetablesStocks } from '@src/interface/hooks/vegetable/useVegetablesStocks';
 import { SkeletonFridgeViews } from '@src/components/FridgeScreen/SkeletonFridgeViews';
 import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
 import { ItemDetailModal } from '@src/components/FridgeScreen/ItemDetailModal';
@@ -13,6 +13,7 @@ import { useChunkedArray } from '@src/hooks/useChunkedArray';
 import { useUpsertVegetableStock } from '@src/interface/hooks/vegetable/useUpsertVegetableStock';
 import { generateEncodeString } from '@src/utils/logics/createEncodeStrings';
 import { useDebouncedUpsertStock } from '@src/hooks/useDebouncedUpsertStock';
+import { useUpsertVegetableStockDetail } from '@src/interface/hooks/vegetable/useUpsertVegetableStockDetail';
 
 /**
  * 冷蔵庫の野菜画面を表示するコンポーネント。
@@ -24,6 +25,7 @@ export const VegetablesView: FC = () => {
   const vegetablesStockActions = useVegetablesStockActions();
   const rows = useChunkedArray(vegetablesStocks.ids, 3);
   const upsertVegetablesStock = useUpsertVegetableStock();
+  const upsertVegetableStockDetail = useUpsertVegetableStockDetail();
   const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
     debounceUpsertStock: upsertVegetablesStock,
     increaseStock: vegetablesStockActions.increaseVegetableStock,
@@ -47,12 +49,13 @@ export const VegetablesView: FC = () => {
         expirationDate: vegetablesStocks.byId[id].expirationDate,
         memo: vegetablesStocks.byId[id].memo,
         onClose: (formValues) => {
-          console.log(formValues);
           setModalProps(undefined);
+          upsertVegetableStockDetail(formValues);
+          vegetablesStockActions.updateVegetableStockDetail(formValues);
         },
       });
     },
-    [vegetablesStocks.byId],
+    [vegetablesStocks.byId, upsertVegetableStockDetail, vegetablesStockActions],
   );
 
   if (isFetching) {

@@ -13,6 +13,7 @@ import { generateEncodeString } from '@src/utils/logics/createEncodeStrings';
 import { useUpsertMeatStock } from '@src/interface/hooks/meat/useUpsertMeatStock';
 import { useDebouncedUpsertStock } from '@src/hooks/useDebouncedUpsertStock';
 import { ItemDetailModal } from '@src/components/FridgeScreen/ItemDetailModal';
+import { useUpsertMeatStockDetail } from '@src/interface/hooks/meat/useUpsertMeatStockDetail';
 
 /**
  * 冷蔵庫の肉画面を表示するコンポーネント。
@@ -22,6 +23,7 @@ export const MeatView: FC = () => {
     useState<ComponentProps<typeof ItemDetailModal>>();
   const { meatStocks, isFetching } = useMeatStocks();
   const meatStockActions = useMeatStockActions();
+  const upsertMeatStockDetail = useUpsertMeatStockDetail();
   const rows = useChunkedArray(meatStocks.ids, 3);
   const upsertMeatStock = useUpsertMeatStock();
   const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
@@ -46,10 +48,14 @@ export const MeatView: FC = () => {
         unitName: meatStocks.byId[id].unitName,
         expirationDate: meatStocks.byId[id].expirationDate,
         memo: meatStocks.byId[id].memo,
-        onClose: () => setModalProps(undefined),
+        onClose: (formValues) => {
+          setModalProps(undefined);
+          upsertMeatStockDetail(formValues);
+          meatStockActions.updateMeatStockDetail(formValues);
+        },
       });
     },
-    [meatStocks.byId],
+    [meatStocks.byId, meatStockActions, upsertMeatStockDetail],
   );
 
   if (isFetching) {

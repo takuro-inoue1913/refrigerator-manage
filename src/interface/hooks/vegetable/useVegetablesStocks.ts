@@ -12,7 +12,7 @@ export const useVegetablesStocks = () => {
     vegetablesStocksState,
   );
 
-  const { isFetching } = useQuery({
+  const { isFetching, refetch } = useQuery({
     queryKey: ['graphl', 'get', 'vegetable', 'master', 'stock'],
     queryFn: async () => {
       const data = await vegetableStockRepository.getAll({ idToken });
@@ -28,5 +28,6 @@ export const useVegetablesStocks = () => {
   return {
     vegetablesStocks,
     isFetching,
+    refetch,
   };
 };

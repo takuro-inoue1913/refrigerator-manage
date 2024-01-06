@@ -6,7 +6,7 @@ import Toast from 'react-native-toast-message';
 import { auth } from '@src/utils/firebaseAuth';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { handleFirebaseError } from '@src/utils/handleFirebaseError';
-import { useGetUser } from '@src/interface/hooks/useGetUser';
+import { useGetUser } from '@src/interface/hooks/user/useGetUser';
 
 export const HomeScreen = () => {
   const { data } = useGetUser();
