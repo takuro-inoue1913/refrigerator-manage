@@ -147,20 +147,32 @@ export const useVegetablesStockActions = () => {
 
           switch (selectFilterOptions.narrowDown) {
             case '通常':
+              // 通常はID順にソートする。
               sortedIds.sort((a, b) => a - b);
               break;
             case '所有食材':
+              // hasStock が true のもののみをソートする。
               sortedIds = sortedIds.filter((id) => prev.byId[id].hasStock);
               break;
             case '賞味期限が近いもの':
-              sortedIds.sort((a, b) =>
-                dayjs(prev.byId[a].expirationDate).diff(
-                  dayjs(prev.byId[b].expirationDate),
-                ),
-              );
+              // hasStock が true のものを優先してソートし、その後、賞味期限が近いものを優先してソートする。
+              sortedIds.sort((a, b) => {
+                const aHasStock = prev.byId[a].hasStock;
+                const bHasStock = prev.byId[b].hasStock;
+                if (aHasStock && !bHasStock) {
+                  return -1;
+                }
+                if (!aHasStock && bHasStock) {
+                  return 1;
+                }
+                const aExpirationDate = dayjs(prev.byId[a].expirationDate);
+                const bExpirationDate = dayjs(prev.byId[b].expirationDate);
+                return aExpirationDate.diff(bExpirationDate);
+              });
 
               break;
             case 'あいうえお順':
+              // 名前でソートする。
               sortedIds.sort((a, b) =>
                 prev.byId[a].vegetableName.localeCompare(
                   prev.byId[b].vegetableName,
