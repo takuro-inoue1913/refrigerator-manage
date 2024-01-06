@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   TextInput,
   TouchableOpacity,
+  Keyboard,
 } from 'react-native';
 import CachedImage from 'expo-cached-image';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -171,7 +172,12 @@ export const ItemDetailModal: FC<Props> = ({
     <Modal transparent visible={visible} onRequestClose={handleRequestClose}>
       <TouchableWithoutFeedback onPress={closeAnimation}>
         <View style={styles.overlay}>
-          <TouchableWithoutFeedback onPress={(e) => e.stopPropagation()}>
+          <TouchableWithoutFeedback
+            onPress={(e) => {
+              e.stopPropagation();
+              Keyboard.dismiss();
+            }}
+          >
             <Animated.View
               style={[
                 styles.modalContainer,
