@@ -1,22 +1,37 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import {
   SelectFridgeCategory,
   selectFridgeCategoryState,
 } from '@src/states/fridge';
-import { StyleSheet, TextStyleIOS, View } from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  TextStyleIOS,
+  View,
+  TouchableOpacity,
+  Animated,
+  Easing,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import RNPickerSelect, { Item, PickerStyle } from 'react-native-picker-select';
+
+const { width } = Dimensions.get('window');
 
 type Props = {
   selectItems: Item[];
   isDisabled?: boolean;
+  onPressReload?: () => Promise<void>;
 };
 
 /**
  * 冷蔵庫画面のヘッダーを表示するコンポーネント。
  */
-export const StickyHeader: FC<Props> = ({ selectItems, isDisabled }) => {
+export const StickyHeader: FC<Props> = ({
+  selectItems,
+  isDisabled,
+  onPressReload,
+}) => {
   const [selectFridgeCategory, setSelectFridgeCategory] = useRecoilState(
     selectFridgeCategoryState,
   );
@@ -24,9 +39,25 @@ export const StickyHeader: FC<Props> = ({ selectItems, isDisabled }) => {
   //       onDonePress の時に値を更新するために一時的に値を保持する。
   const [tmpState, setTmpState] =
     useState<SelectFridgeCategory>(selectFridgeCategory);
+  const rotateAnimation = useRef(new Animated.Value(0)).current;
 
+  const onReload = async () => {
+    rotateAnimation.setValue(0);
+    Animated.timing(rotateAnimation, {
+      toValue: 1,
+      duration: 1000,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    }).start(() => onPressReload?.());
+  };
+
+  const rotateInterpolate = rotateAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
+  });
   return (
     <View style={styles.header}>
+      <Icon name="filter" size={30} color="gray" />
       <RNPickerSelect
         placeholder={{}}
         doneText={'選択'}
@@ -50,13 +81,21 @@ export const StickyHeader: FC<Props> = ({ selectItems, isDisabled }) => {
             // eslint-disable-next-line
           )) as any
         }
-      ></RNPickerSelect>
+      />
+      <TouchableOpacity activeOpacity={0.5} onPress={onReload}>
+        <Animated.View style={{ transform: [{ rotate: rotateInterpolate }] }}>
+          <Icon name="reload" size={30} color="gray" />
+        </Animated.View>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     width: '100%',
     padding: 20,
     backgroundColor: '#fff',
@@ -74,6 +113,7 @@ const styles = StyleSheet.create({
       borderRadius: 5,
       color: 'black',
       paddingRight: 30,
+      width: width / 1.5,
     },
     inputAndroid: {
       fontSize: 16,
@@ -84,6 +124,7 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       color: 'black',
       paddingRight: 30,
+      width: width / 1.5,
     },
   } as TextStyleIOS & PickerStyle,
   disabledPicker: {
@@ -96,6 +137,7 @@ const styles = StyleSheet.create({
       borderRadius: 5,
       color: '#ccc',
       paddingRight: 30,
+      width: width / 1.5,
     },
     inputAndroid: {
       fontSize: 16,
@@ -106,6 +148,7 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       color: '#ccc',
       paddingRight: 30,
+      width: width / 1.5,
     },
   } as TextStyleIOS & PickerStyle,
   iconWrapper: {

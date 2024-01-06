@@ -21,7 +21,7 @@ import { useRequestUpsertMeatStockDetail } from '@src/interface/hooks/meat/useRe
 export const MeatView: FC = () => {
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
-  const { meatStocks, isFetching } = useRequestGetMeatStocks();
+  const { meatStocks, isFetching, refetch } = useRequestGetMeatStocks();
   const meatStockActions = useMeatStockActions();
   const upsertMeatStockDetail = useRequestUpsertMeatStockDetail();
   const rows = useChunkedArray(meatStocks.ids, 3);
@@ -58,13 +58,21 @@ export const MeatView: FC = () => {
     [meatStocks.byId, meatStockActions, upsertMeatStockDetail],
   );
 
+  const handlePressReload = async () => {
+    await refetch();
+  };
+
   if (isFetching) {
     return <SkeletonFridgeViews />;
   }
 
   return (
     <>
-      <StickyHeader selectItems={selectItems} isDisabled={isFetching} />
+      <StickyHeader
+        selectItems={selectItems}
+        isDisabled={isFetching}
+        onPressReload={handlePressReload}
+      />
       <ScrollView contentContainerStyle={fridgeCommonStyles.scrollContainer}>
         {rows.map((row, index) => (
           <View key={`row-${index}`} style={fridgeCommonStyles.row}>

@@ -10,7 +10,7 @@ export const useRequestGetMeatStocks = () => {
   const idToken = useRecoilValue(idTokenState);
   const [meatStocks, setMeatStocks] = useRecoilState(meatStocksState);
 
-  const { isFetching } = useQuery({
+  const { isFetching, refetch } = useQuery({
     queryKey: ['graphl', 'get', 'meat', 'master', 'stock'],
     queryFn: async () => {
       const data = await meatStockRepository.getAll({ idToken });
@@ -26,5 +26,6 @@ export const useRequestGetMeatStocks = () => {
   return {
     meatStocks,
     isFetching,
+    refetch,
   };
 };

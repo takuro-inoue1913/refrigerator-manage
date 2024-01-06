@@ -21,7 +21,8 @@ import { useRequestUpsertVegetableStockDetail } from '@src/interface/hooks/veget
 export const VegetablesView: FC = () => {
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
-  const { vegetablesStocks, isFetching } = useRequestGetVegetablesStocks();
+  const { vegetablesStocks, isFetching, refetch } =
+    useRequestGetVegetablesStocks();
   const vegetablesStockActions = useVegetablesStockActions();
   const rows = useChunkedArray(vegetablesStocks.ids, 3);
   const upsertVegetablesStock = useRequestUpsertVegetableStock();
@@ -58,13 +59,21 @@ export const VegetablesView: FC = () => {
     [vegetablesStocks.byId, upsertVegetableStockDetail, vegetablesStockActions],
   );
 
+  const handlePressReload = async () => {
+    await refetch();
+  };
+
   if (isFetching) {
     return <SkeletonFridgeViews />;
   }
 
   return (
     <>
-      <StickyHeader selectItems={selectItems} isDisabled={isFetching} />
+      <StickyHeader
+        selectItems={selectItems}
+        isDisabled={isFetching}
+        onPressReload={handlePressReload}
+      />
       <ScrollView contentContainerStyle={fridgeCommonStyles.scrollContainer}>
         {rows.map((row, index) => (
           <View key={`row-${index}`} style={fridgeCommonStyles.row}>
