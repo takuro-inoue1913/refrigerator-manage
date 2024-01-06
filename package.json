@@ -23,6 +23,7 @@
     "@tanstack/react-query": "^5.17.1",
     "@types/react-native-vector-icons": "^6.4.18",
     "axios": "^1.6.3",
+    "dayjs": "^1.11.10",
     "expo": "~49.0.15",
     "expo-cached-image": "^49.0.2",
     "expo-camera": "~13.4.4",

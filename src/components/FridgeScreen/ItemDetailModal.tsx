@@ -13,6 +13,7 @@ import {
 import CachedImage from 'expo-cached-image';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import dayjs from 'dayjs';
 
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { useIsShowKeyboard } from '@src/hooks/useIsShowKeyboard';
@@ -20,12 +21,16 @@ import { useIsShowKeyboard } from '@src/hooks/useIsShowKeyboard';
 const { height: windowHeight } = Dimensions.get('window');
 
 export type Props = {
+  /** 対象データのID */
+  id: number;
   /** モーダルを表示するかどうか */
   visible: boolean;
   /** 画像のURI */
   sourceUri: string;
   /** 画像のキャッシュキー */
   cacheKey: string;
+  /** 項目名 */
+  itemName: string;
   /** 在庫数 */
   quantity: number;
   /** 単位名 */
@@ -37,13 +42,23 @@ export type Props = {
   /** メモ */
   memo: string;
   /** モーダルを閉じる時に実行する関数 */
-  onClose: () => void;
+  onClose: (editForm: EditFormValues) => void;
+};
+
+export type EditFormValues = {
+  id: number;
+  quantity: number;
+  incrementalUnit: number;
+  expirationDate: string;
+  memo: string;
 };
 
 export const ItemDetailModal: FC<Props> = ({
+  id,
   visible,
   sourceUri,
   cacheKey,
+  itemName,
   quantity,
   unitName,
   incrementalUnit,
@@ -54,20 +69,46 @@ export const ItemDetailModal: FC<Props> = ({
   // Y軸初期位置をウィンドウの外側に設定
   const animatedY = useRef(new Animated.Value(-windowHeight)).current;
   const isShowKeyboard = useIsShowKeyboard();
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
+  const [editFormValues, setEditFormValues] = useState<EditFormValues>({
+    id,
+    quantity,
+    incrementalUnit,
+    expirationDate,
+    memo,
+  });
 
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
+  const handleEditForm = useCallback(
+    <K extends keyof EditFormValues>(key: K, value: EditFormValues[K]) => {
+      setEditFormValues((prev) => ({ ...prev, [key]: value }));
+    },
+    [],
+  );
+
+  const showDateTimePicker = () => {
+    setIsDatePickerVisible(true);
   };
 
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
+  const hideDateTimePicker = () => {
+    setIsDatePickerVisible(false);
   };
 
-  const handleConfirm = (date: Date) => {
-    console.warn('A date has been picked: ', date);
-    hideDatePicker();
+  const handleDateTimePickerConfirm = (date: Date) => {
+    handleEditForm('expirationDate', dayjs(date).format('YYYY-MM-DD'));
+    hideDateTimePicker();
   };
+
+  const handleRequestClose = useCallback(() => {
+    onClose({
+      ...editFormValues,
+      incrementalUnit: editFormValues.incrementalUnit ?? 1,
+      // MEMO: 期限が空の場合は今日の日付を入れる。
+      expirationDate:
+        editFormValues.expirationDate !== ''
+          ? editFormValues.expirationDate
+          : dayjs().format('YYYY-MM-DD'),
+    });
+  }, [editFormValues, onClose]);
 
   // モーダル表示アニメーション
   const startAnimation = useCallback(() => {
@@ -84,8 +125,8 @@ export const ItemDetailModal: FC<Props> = ({
       toValue: -windowHeight, // ウィンドウの外側に移動
       duration: 500,
       useNativeDriver: true,
-    }).start(() => onClose());
-  }, [animatedY, onClose]);
+    }).start(() => handleRequestClose());
+  }, [animatedY, handleRequestClose]);
 
   const moveTopAnimation = useCallback(() => {
     Animated.timing(animatedY, {
@@ -114,7 +155,7 @@ export const ItemDetailModal: FC<Props> = ({
   if (!visible) return <></>;
 
   return (
-    <Modal transparent visible={visible} onRequestClose={onClose}>
+    <Modal transparent visible={visible} onRequestClose={handleRequestClose}>
       <TouchableWithoutFeedback onPress={closeAnimation}>
         <View style={styles.overlay}>
           <TouchableWithoutFeedback onPress={(e) => e.stopPropagation()}>
@@ -125,7 +166,7 @@ export const ItemDetailModal: FC<Props> = ({
               ]}
             >
               <View style={styles.header}>
-                <Text style={styles.headerText}>Modal Title</Text>
+                <Text style={styles.headerText}>{itemName}</Text>
               </View>
               <View style={styles.main}>
                 <CachedImage
@@ -138,27 +179,46 @@ export const ItemDetailModal: FC<Props> = ({
                     <Text style={styles.label}>{`数量（${unitName}）:`}</Text>
                     <TextInput
                       style={styles.input}
-                      value={quantity.toString()}
+                      value={
+                        editFormValues.quantity
+                          ? editFormValues.quantity.toString()
+                          : ''
+                      }
                       keyboardType="numeric"
-                      placeholder="1000"
+                      placeholder="100"
+                      onChange={(e) =>
+                        handleEditForm('quantity', Number(e.nativeEvent.text))
+                      }
                     />
                   </View>
                   <View style={styles.row}>
                     <Text style={styles.label}>増減単位:</Text>
                     <TextInput
                       style={styles.input}
-                      value={incrementalUnit.toString()}
+                      value={
+                        editFormValues.incrementalUnit
+                          ? editFormValues.incrementalUnit.toString()
+                          : ''
+                      }
                       keyboardType="numeric"
-                      placeholder="1000"
+                      placeholder="100"
+                      onChange={(e) =>
+                        handleEditForm(
+                          'incrementalUnit',
+                          Number(e.nativeEvent.text),
+                        )
+                      }
                     />
                   </View>
                   <View style={styles.row}>
                     <Text style={styles.label}>賞味期限:</Text>
                     <TouchableOpacity
                       style={styles.inputWithIcon}
-                      onPress={showDatePicker}
+                      onPress={showDateTimePicker}
                     >
-                      <Text style={styles.dateText}>{expirationDate}</Text>
+                      <Text style={styles.dateText}>
+                        {editFormValues.expirationDate}
+                      </Text>
                       <Icon name="chevron-down" size={24} color="gray" />
                     </TouchableOpacity>
                   </View>
@@ -166,9 +226,12 @@ export const ItemDetailModal: FC<Props> = ({
                     <Text style={styles.label}>メモ:</Text>
                     <TextInput
                       style={styles.textArea}
-                      value={memo}
+                      value={editFormValues.memo}
                       multiline
                       placeholder=""
+                      onChange={(e) =>
+                        handleEditForm('memo', e.nativeEvent.text)
+                      }
                     />
                   </View>
                   {/* つけるかどうかは不明 */}
@@ -190,8 +253,8 @@ export const ItemDetailModal: FC<Props> = ({
             isVisible={isDatePickerVisible}
             mode="date"
             locale="ja"
-            onConfirm={handleConfirm}
-            onCancel={hideDatePicker}
+            onConfirm={handleDateTimePickerConfirm}
+            onCancel={hideDateTimePicker}
             confirmTextIOS="決定"
             cancelTextIOS="キャンセル"
           />

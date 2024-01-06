@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+import '@src/utils/dayjsConfig';
 import { App } from '@src/App';
 
 /**
