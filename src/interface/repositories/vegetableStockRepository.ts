@@ -80,6 +80,10 @@ export const vegetableStockRepository = {
         quantity,
         // デフォルト値
         memo: '',
+        // 野菜の増減単位の初期値は 1 とする
+        incremental_unit: 1,
+        // 野菜の賞味期限の初期値は一週間後とする
+        expiration_date: dayjs().add(7, 'day').format('YYYY-MM-DD'),
       },
     });
     return data.insert_vegetable_stocks_one;
@@ -96,12 +100,6 @@ export const vegetableStockRepository = {
       userId,
       vegetableId,
       quantity,
-      // デフォルト値
-      memo: '',
-      // 野菜の増減単位の初期値は 1 とする
-      incremental_unit: 1,
-      // 野菜の賞味期限の初期値は一週間後とする
-      expiration_date: dayjs().add(7, 'day').format('YYYY-MM-DD'),
     });
     return data.update_vegetable_stocks?.returning[0];
   },

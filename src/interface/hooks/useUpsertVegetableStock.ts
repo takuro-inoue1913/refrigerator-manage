@@ -18,7 +18,7 @@ export const useUpsertVegetableStock = () => {
       userId: user!.uid,
       vegetableId,
     });
-    console.log('existingStock: ', existingStock);
+    console.log('useUpsertMeatStock.existingStock: ', existingStock);
     if (existingStock.length === 0) {
       const data = await vegetableStockRepository.insert({
         idToken,
@@ -26,7 +26,7 @@ export const useUpsertVegetableStock = () => {
         vegetableId,
         quantity,
       });
-      console.log('vegetableStockRepository.insert: ', data);
+      console.log('useUpsertMeatStock.insert: ', data);
       return data;
     } else {
       // MEMO: 既存の在庫と同じ数量の場合は更新しない
@@ -39,7 +39,7 @@ export const useUpsertVegetableStock = () => {
         vegetableId,
         quantity,
       });
-      console.log('vegetableStockRepository.update: ', data);
+      console.log('useUpsertMeatStock.update: ', data);
       return data;
     }
   };
