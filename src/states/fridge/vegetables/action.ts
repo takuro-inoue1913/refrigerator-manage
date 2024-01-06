@@ -117,6 +117,7 @@ export const useVegetablesStockActions = () => {
                     acc[cur].incrementalUnit = incrementalUnit;
                     acc[cur].expirationDate = expirationDate;
                     acc[cur].memo = memo;
+                    acc[cur].hasStock = quantity > 0;
                   }
                   return acc;
                 },

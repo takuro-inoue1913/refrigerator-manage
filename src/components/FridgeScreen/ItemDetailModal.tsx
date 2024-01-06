@@ -117,7 +117,8 @@ export const ItemDetailModal: FC<Props> = ({
       duration: 500,
       useNativeDriver: true,
     }).start();
-  }, [animatedY]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // モーダル非表示アニメーション
   const closeAnimation = useCallback(() => {
@@ -126,15 +127,17 @@ export const ItemDetailModal: FC<Props> = ({
       duration: 500,
       useNativeDriver: true,
     }).start(() => handleRequestClose());
-  }, [animatedY, handleRequestClose]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [handleRequestClose]);
 
   const moveTopAnimation = useCallback(() => {
     Animated.timing(animatedY, {
-      toValue: 0,
+      toValue: -1,
       duration: 500,
       useNativeDriver: true,
     }).start();
-  }, [animatedY]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (isShowKeyboard) {
@@ -142,7 +145,8 @@ export const ItemDetailModal: FC<Props> = ({
       return;
     }
     startAnimation();
-  }, [isShowKeyboard, moveTopAnimation, startAnimation]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isShowKeyboard]);
 
   useEffect(() => {
     if (visible) {
@@ -150,7 +154,8 @@ export const ItemDetailModal: FC<Props> = ({
     } else {
       closeAnimation();
     }
-  }, [visible, startAnimation, closeAnimation]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible]);
 
   if (!visible) return <></>;
 
