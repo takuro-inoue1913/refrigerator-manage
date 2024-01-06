@@ -60,16 +60,13 @@ export const StickyHeader: FC<Props> = ({
         onSelect={(selectedItem) => {
           setSelectFridgeCategory(selectedItem);
         }}
-        defaultButtonText={'Select country'}
-        buttonTextAfterSelection={(selectedItem) => {
-          return selectedItem;
-        }}
-        rowTextForSelection={(item) => {
-          return item;
-        }}
         disabled={isDisabled}
-        buttonStyle={styles.dropdown1BtnStyle}
-        buttonTextStyle={styles.dropdown1BtnTxtStyle}
+        buttonStyle={styles.dropdownBtnStyle}
+        buttonTextStyle={
+          isDisabled
+            ? styles.disabledDropdownBtnTxtStyle
+            : styles.dropdownBtnTxtStyle
+        }
         renderDropdownIcon={(isOpened) => {
           return (
             <Icon
@@ -80,9 +77,9 @@ export const StickyHeader: FC<Props> = ({
           );
         }}
         dropdownIconPosition={'right'}
-        dropdownStyle={styles.dropdown1DropdownStyle}
-        rowStyle={styles.dropdown1RowStyle}
-        rowTextStyle={styles.dropdown1RowTxtStyle}
+        dropdownStyle={styles.dropdownDropdownStyle}
+        rowStyle={styles.dropdownRowStyle}
+        rowTextStyle={styles.dropdownRowTxtStyle}
       />
       <TouchableOpacity activeOpacity={0.5} onPress={onReload}>
         <Animated.View style={{ transform: [{ rotate: rotateInterpolate }] }}>
@@ -113,18 +110,19 @@ const styles = StyleSheet.create({
   disabledIcon: {
     color: 'rgba(0,0,0,0.1)',
   },
-  dropdown1BtnStyle: {
+  dropdownBtnStyle: {
     width: width / 1.5,
     backgroundColor: '#FFF',
     borderRadius: 5,
     borderWidth: 1,
     borderColor: 'rgba(0,0,0,0.1)',
   },
-  dropdown1BtnTxtStyle: { color: '#444', textAlign: 'left' },
-  dropdown1DropdownStyle: { backgroundColor: '#EFEFEF' },
-  dropdown1RowStyle: {
+  dropdownBtnTxtStyle: { color: '#444', textAlign: 'left' },
+  disabledDropdownBtnTxtStyle: { color: 'rgba(0,0,0,0.1)', textAlign: 'left' },
+  dropdownDropdownStyle: { backgroundColor: '#EFEFEF' },
+  dropdownRowStyle: {
     backgroundColor: '#EFEFEF',
     borderBottomColor: '#C5C5C5',
   },
-  dropdown1RowTxtStyle: { color: '#444', textAlign: 'left' },
+  dropdownRowTxtStyle: { color: '#444', textAlign: 'left' },
 });
