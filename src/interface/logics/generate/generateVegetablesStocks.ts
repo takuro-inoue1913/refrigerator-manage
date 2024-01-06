@@ -1,5 +1,6 @@
 import { GetVegetableMasterAndUnitAndStocksQuery } from '@src/interface/__generated__/graphql';
 import { VegetablesStocks } from '@src/states/fridge/vegetables';
+import { VEGETABLE_DEFAULT__INCREMENTAL_UNIT } from '@src/utils/consts';
 
 /**
  * 野菜マスタと野菜在庫から野菜在庫のオブジェクトを生成する。
@@ -27,7 +28,8 @@ export const generateVegetablesStocks = (
         stockId: cur.vegetable_master_vegetable_stocks?.stock_id ?? null,
         quantity: cur.vegetable_master_vegetable_stocks?.quantity ?? 0,
         incrementalUnit:
-          cur.vegetable_master_vegetable_stocks?.incremental_unit ?? 1,
+          cur.vegetable_master_vegetable_stocks?.incremental_unit ??
+          VEGETABLE_DEFAULT__INCREMENTAL_UNIT,
         expirationDate:
           cur.vegetable_master_vegetable_stocks?.expiration_date ?? '',
         memo: cur.vegetable_master_vegetable_stocks?.memo ?? '',

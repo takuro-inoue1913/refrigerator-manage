@@ -7,6 +7,7 @@ import {
   UpdateVegetableStockQuantityDocument,
 } from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
+import { VEGETABLE_DEFAULT__INCREMENTAL_UNIT } from '@src/utils/consts';
 
 type GetOneVegetableStockArgs = {
   idToken: string | null;
@@ -80,8 +81,7 @@ export const vegetableStockRepository = {
         quantity,
         // デフォルト値
         memo: '',
-        // 野菜の増減単位の初期値は 1 とする
-        incremental_unit: 1,
+        incremental_unit: VEGETABLE_DEFAULT__INCREMENTAL_UNIT,
         // 野菜の賞味期限の初期値は一週間後とする
         expiration_date: dayjs().add(7, 'day').format('YYYY-MM-DD'),
       },

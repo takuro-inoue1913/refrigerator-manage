@@ -7,6 +7,7 @@ import {
   UpdateMeatStockDetailDocument,
 } from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
+import { MEAT_DEFAULT_INCREMENTAL_UNIT } from '@src/utils/consts';
 
 type GetOneMeatStockArgs = {
   idToken: string | null;
@@ -71,8 +72,7 @@ export const meatStockRepository = {
         quantity,
         // デフォルト値
         memo: '',
-        // 肉の増減単位の初期値は 50g とする
-        incremental_unit: 50,
+        incremental_unit: MEAT_DEFAULT_INCREMENTAL_UNIT,
         // 賞味期限は 3日後 とする
         expiration_date: dayjs().add(3, 'day').format('YYYY-MM-DD'),
       },

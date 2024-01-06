@@ -1,5 +1,6 @@
 import { GetMeatMasterAndUnitAndStocksQuery } from '@src/interface/__generated__/graphql';
 import { MeatStocks } from '@src/states/fridge/meat';
+import { MEAT_DEFAULT_INCREMENTAL_UNIT } from '@src/utils/consts';
 
 /**
  * 肉マスタと肉在庫から肉在庫のオブジェクトを生成する。
@@ -26,8 +27,9 @@ export const generateMeatStocks = (
           cur.meat_master_meat_stocks.quantity > 0,
         stockId: cur.meat_master_meat_stocks?.stock_id ?? null,
         quantity: cur.meat_master_meat_stocks?.quantity ?? 0,
-        // MEMO: 肉の増減単位のデフォルトは50
-        incrementalUnit: cur.meat_master_meat_stocks?.incremental_unit ?? 50,
+        incrementalUnit:
+          cur.meat_master_meat_stocks?.incremental_unit ??
+          MEAT_DEFAULT_INCREMENTAL_UNIT,
         expirationDate: cur.meat_master_meat_stocks?.expiration_date ?? '',
         memo: cur.meat_master_meat_stocks?.memo ?? '',
       };

@@ -26,3 +26,9 @@ export const selectItems: SelectItems = [
 export const COMMON_COLOR_BLUE = '#3498db';
 /** 共通の緑色。 */
 export const COMMON_COLOR_GREEN = '#2ecc71';
+
+/** 野菜の初期上限数。 */
+export const VEGETABLE_DEFAULT__INCREMENTAL_UNIT = 1;
+
+/** 肉の初期上限数。 */
+export const MEAT_DEFAULT_INCREMENTAL_UNIT = 50;
