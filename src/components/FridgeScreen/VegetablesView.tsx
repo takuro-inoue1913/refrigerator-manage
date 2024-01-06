@@ -63,6 +63,10 @@ export const VegetablesView: FC = () => {
     await refetch();
   };
 
+  const handleFilterPress = () => {
+    vegetablesStockActions.filterVegetableStocks();
+  };
+
   if (isFetching) {
     return <SkeletonFridgeViews />;
   }
@@ -73,6 +77,7 @@ export const VegetablesView: FC = () => {
         selectItems={selectItems}
         isDisabled={isFetching}
         onPressReload={handlePressReload}
+        onFilterPress={handleFilterPress}
       />
       <ScrollView contentContainerStyle={fridgeCommonStyles.scrollContainer}>
         {rows.map((row, index) => (

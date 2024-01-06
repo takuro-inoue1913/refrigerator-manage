@@ -1,7 +1,7 @@
 import { useChunkedArray } from '@src/hooks/useChunkedArray';
 import { selectFilterOptionsState } from '@src/states/fridge';
 import { COMMON_COLOR_GREEN, FILTER_OPTIONS } from '@src/utils/consts';
-import React from 'react';
+import React, { FC } from 'react';
 import {
   View,
   Text,
@@ -13,11 +13,23 @@ import { useRecoilState } from 'recoil';
 
 const { width } = Dimensions.get('window');
 
-export const FilterForm = () => {
+type Props = {
+  onPress?: () => void;
+};
+
+export const FilterForm: FC<Props> = ({ onPress }) => {
   const [selectFilterOptions, setSelectFilterOptionsState] = useRecoilState(
     selectFilterOptionsState,
   );
   const narrowDownRow = useChunkedArray(FILTER_OPTIONS.narrowDown, 2);
+
+  const handleNarrowDownPress = (option: string) => {
+    setSelectFilterOptionsState((prev) => ({
+      ...prev,
+      narrowDown: option,
+    }));
+    onPress?.();
+  };
 
   return (
     <View style={styles.container}>
@@ -34,12 +46,7 @@ export const FilterForm = () => {
                     selectFilterOptions.narrowDown === option &&
                       styles.selectedButton,
                   ]}
-                  onPress={() =>
-                    setSelectFilterOptionsState((prev) => ({
-                      ...prev,
-                      narrowDown: option,
-                    }))
-                  }
+                  onPress={() => handleNarrowDownPress(option)}
                 >
                   <Text style={styles.buttonText}>{option}</Text>
                 </TouchableOpacity>

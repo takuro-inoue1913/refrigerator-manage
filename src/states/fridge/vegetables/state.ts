@@ -43,6 +43,15 @@ export const vegetablesStocksState = atom({
   } as VegetablesStocks,
 });
 
+/**
+ * 野菜在庫のIDの配列。絞り込みのために使用する想定。
+ * vegetablesStocksState と同時に更新する。
+ */
+export const vegetablesStocksIdsState = atom({
+  key: 'vegetablesStocksIdsState',
+  default: [] as number[],
+});
+
 export const vegetableStockById = selector({
   key: 'vegetableStockById',
   get: ({ get }) => {

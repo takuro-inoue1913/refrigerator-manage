@@ -1,8 +1,11 @@
 import { useRecoilCallback } from 'recoil';
+import dayjs from 'dayjs';
 import {
   VegetablesStocks,
+  vegetablesStocksIdsState,
   vegetablesStocksState,
 } from '@src/states/fridge/vegetables/state';
+import { selectFilterOptionsState } from '../state';
 
 type VegetableStockActions = {
   increaseVegetableStock: ({
@@ -130,9 +133,58 @@ export const useVegetablesStockActions = () => {
       [],
     );
 
+  const filterVegetableStocks = useRecoilCallback(
+    ({ snapshot, set }) =>
+      async () => {
+        const selectFilterOptions = await snapshot.getPromise(
+          selectFilterOptionsState,
+        );
+        const vegetablesStocksIds = await snapshot.getPromise(
+          vegetablesStocksIdsState,
+        );
+        set(vegetablesStocksState, (prev) => {
+          let sortedIds = [...vegetablesStocksIds];
+
+          switch (selectFilterOptions.narrowDown) {
+            case '通常':
+              sortedIds.sort((a, b) => a - b);
+              break;
+            case '所有食材':
+              sortedIds = sortedIds.filter((id) => prev.byId[id].hasStock);
+              break;
+            case '賞味期限が近いもの':
+              sortedIds.sort((a, b) =>
+                dayjs(prev.byId[a].expirationDate).diff(
+                  dayjs(prev.byId[b].expirationDate),
+                ),
+              );
+
+              break;
+            case 'あいうえお順':
+              sortedIds.sort((a, b) =>
+                prev.byId[a].vegetableName.localeCompare(
+                  prev.byId[b].vegetableName,
+                ),
+              );
+              break;
+            default:
+              sortedIds = prev.ids;
+              break;
+          }
+
+          return {
+            ids: sortedIds,
+            byId: prev.byId,
+          };
+        });
+      },
+    [],
+  );
+
   return {
     increaseVegetableStock,
     decreaseVegetableStock,
     updateVegetableStockDetail,
+    filterVegetableStocks,
   };
 };

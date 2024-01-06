@@ -22,6 +22,7 @@ type Props = {
   selectItems: SelectFridgeCategory[];
   isDisabled?: boolean;
   onPressReload?: () => Promise<void>;
+  onFilterPress?: () => void;
 };
 
 /**
@@ -31,6 +32,7 @@ export const StickyHeader: FC<Props> = ({
   selectItems,
   isDisabled,
   onPressReload,
+  onFilterPress,
 }) => {
   const [selectFridgeCategory, setSelectFridgeCategory] = useRecoilState(
     selectFridgeCategoryState,
@@ -117,7 +119,7 @@ export const StickyHeader: FC<Props> = ({
           },
         ]}
       >
-        <FilterForm />
+        <FilterForm onPress={onFilterPress} />
       </Animated.View>
     </>
   );
