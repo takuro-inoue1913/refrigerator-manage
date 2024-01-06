@@ -47,6 +47,7 @@ export type Props = {
 };
 
 type FormValues = {
+  id: number;
   quantity: number;
   incrementalUnit: number;
   expirationDate: string;
