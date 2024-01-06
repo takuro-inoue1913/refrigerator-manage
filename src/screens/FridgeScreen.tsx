@@ -11,9 +11,9 @@ export const FridgeScreen = () => {
 
   const SelectedCategoryView = () => {
     switch (selectFridgeCategory) {
-      case 'vegetable':
+      case '野菜類':
         return <VegetablesView />;
-      case 'meat':
+      case '肉類':
         return <MeatView />;
     }
   };
