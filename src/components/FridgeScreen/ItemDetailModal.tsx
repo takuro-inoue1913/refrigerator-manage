@@ -42,13 +42,20 @@ export type Props = {
   /** メモ */
   memo: string;
   /** モーダルを閉じる時に実行する関数 */
-  onClose: (editForm: EditFormValues) => void;
+  onClose: (editForm: FormValues) => void;
+};
+
+type FormValues = {
+  quantity: number;
+  incrementalUnit: number;
+  expirationDate: string;
+  memo: string;
 };
 
 export type EditFormValues = {
   id: number;
-  quantity: number;
-  incrementalUnit: number;
+  quantity: number | null;
+  incrementalUnit: number | null;
   expirationDate: string;
   memo: string;
 };
@@ -101,6 +108,7 @@ export const ItemDetailModal: FC<Props> = ({
   const handleRequestClose = useCallback(() => {
     onClose({
       ...editFormValues,
+      quantity: editFormValues.quantity ?? 0,
       incrementalUnit: editFormValues.incrementalUnit ?? 1,
       // MEMO: 期限が空の場合は今日の日付を入れる。
       expirationDate:
@@ -185,14 +193,20 @@ export const ItemDetailModal: FC<Props> = ({
                     <TextInput
                       style={styles.input}
                       value={
-                        editFormValues.quantity
+                        editFormValues.quantity !== null &&
+                        editFormValues.quantity !== undefined
                           ? editFormValues.quantity.toString()
                           : ''
                       }
                       keyboardType="numeric"
                       placeholder="100"
                       onChange={(e) =>
-                        handleEditForm('quantity', Number(e.nativeEvent.text))
+                        handleEditForm(
+                          'quantity',
+                          e.nativeEvent.text !== ''
+                            ? Number(e.nativeEvent.text)
+                            : null,
+                        )
                       }
                     />
                   </View>
@@ -258,6 +272,7 @@ export const ItemDetailModal: FC<Props> = ({
             isVisible={isDatePickerVisible}
             mode="date"
             locale="ja"
+            date={dayjs(editFormValues.expirationDate).toDate()}
             onConfirm={handleDateTimePickerConfirm}
             onCancel={hideDateTimePicker}
             confirmTextIOS="決定"
