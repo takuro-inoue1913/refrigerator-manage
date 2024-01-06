@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import {
   SelectFridgeCategory,
@@ -34,7 +34,19 @@ export const StickyHeader: FC<Props> = ({
   const [selectFridgeCategory, setSelectFridgeCategory] = useRecoilState(
     selectFridgeCategoryState,
   );
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const dropdownAnimation = useRef(new Animated.Value(0)).current;
   const rotateAnimation = useRef(new Animated.Value(0)).current;
+
+  // ドロップダウンの表示切替
+  const toggleDropdown = () => {
+    setDropdownVisible(!isDropdownVisible);
+    Animated.timing(dropdownAnimation, {
+      toValue: isDropdownVisible ? 0 : 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  };
 
   const onReload = async () => {
     rotateAnimation.setValue(0);
@@ -51,42 +63,88 @@ export const StickyHeader: FC<Props> = ({
     outputRange: ['0deg', '360deg'],
   });
 
+  const dropdownTranslateY = dropdownAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [-200, 0],
+  });
+
   return (
-    <View style={styles.header}>
-      <Icon name="filter" size={30} color="gray" />
-      <SelectDropdown
-        data={selectItems}
-        defaultValue={selectFridgeCategory}
-        onSelect={(selectedItem) => {
-          setSelectFridgeCategory(selectedItem);
-        }}
-        disabled={isDisabled}
-        buttonStyle={styles.dropdownBtnStyle}
-        buttonTextStyle={
-          isDisabled
-            ? styles.disabledDropdownBtnTxtStyle
-            : styles.dropdownBtnTxtStyle
-        }
-        renderDropdownIcon={(isOpened) => {
-          return (
-            <Icon
-              name={isOpened ? 'chevron-up' : 'chevron-down'}
-              color={'gray'}
-              size={18}
-            />
-          );
-        }}
-        dropdownIconPosition={'right'}
-        dropdownStyle={styles.dropdownDropdownStyle}
-        rowStyle={styles.dropdownRowStyle}
-        rowTextStyle={styles.dropdownRowTxtStyle}
-      />
-      <TouchableOpacity activeOpacity={0.5} onPress={onReload}>
-        <Animated.View style={{ transform: [{ rotate: rotateInterpolate }] }}>
-          <Icon name="reload" size={30} color="gray" />
-        </Animated.View>
-      </TouchableOpacity>
-    </View>
+    <>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={toggleDropdown}>
+          <Icon name="filter" size={30} color="gray" />
+        </TouchableOpacity>
+        <SelectDropdown
+          data={selectItems}
+          defaultValue={selectFridgeCategory}
+          onSelect={(selectedItem) => {
+            setSelectFridgeCategory(selectedItem);
+          }}
+          disabled={isDisabled}
+          buttonStyle={styles.dropdownBtnStyle}
+          buttonTextStyle={
+            isDisabled
+              ? styles.disabledDropdownBtnTxtStyle
+              : styles.dropdownBtnTxtStyle
+          }
+          renderDropdownIcon={(isOpened) => {
+            return (
+              <Icon
+                name={isOpened ? 'chevron-up' : 'chevron-down'}
+                color={'gray'}
+                size={18}
+              />
+            );
+          }}
+          dropdownIconPosition={'right'}
+          dropdownStyle={styles.dropdownDropdownStyle}
+          rowStyle={styles.dropdownRowStyle}
+          rowTextStyle={styles.dropdownRowTxtStyle}
+        />
+        <TouchableOpacity activeOpacity={0.5} onPress={onReload}>
+          <Animated.View style={{ transform: [{ rotate: rotateInterpolate }] }}>
+            <Icon name="reload" size={30} color="gray" />
+          </Animated.View>
+        </TouchableOpacity>
+      </View>
+      <Animated.View
+        style={[
+          styles.dropdownContainer,
+          {
+            transform: [{ translateY: dropdownTranslateY }],
+            opacity: dropdownAnimation, // 追加のスタイルとして透明度を設定
+          },
+        ]}
+      >
+        <SelectDropdown
+          data={selectItems}
+          defaultValue={selectFridgeCategory}
+          onSelect={(selectedItem) => {
+            setSelectFridgeCategory(selectedItem);
+          }}
+          disabled={isDisabled}
+          buttonStyle={styles.dropdownBtnStyle}
+          buttonTextStyle={
+            isDisabled
+              ? styles.disabledDropdownBtnTxtStyle
+              : styles.dropdownBtnTxtStyle
+          }
+          renderDropdownIcon={(isOpened) => {
+            return (
+              <Icon
+                name={isOpened ? 'chevron-up' : 'chevron-down'}
+                color={'gray'}
+                size={18}
+              />
+            );
+          }}
+          dropdownIconPosition={'right'}
+          dropdownStyle={styles.dropdownDropdownStyle}
+          rowStyle={styles.dropdownRowStyle}
+          rowTextStyle={styles.dropdownRowTxtStyle}
+        />
+      </Animated.View>
+    </>
   );
 };
 
@@ -125,4 +183,12 @@ const styles = StyleSheet.create({
     borderBottomColor: '#C5C5C5',
   },
   dropdownRowTxtStyle: { color: '#444', textAlign: 'left' },
+  dropdownContainer: {
+    position: 'absolute',
+    top: 100, // filter アイコンの下の位置を適切に設定してください。
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    zIndex: 1000, // 必要に応じてz-indexを調整してください。
+  },
 });

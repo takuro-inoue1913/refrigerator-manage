@@ -10,10 +10,11 @@ type Props = {
  * 項目の在庫数を表示するバッジコンポーネント。
  */
 export const ItemBadge: FC<Props> = ({ quantity, unitName }) => {
+  const isKquantity = quantity >= 1000;
+  const quantityValue = isKquantity ? quantity / 1000 : quantity;
+
   const getBadgeSize = () => {
-    if (quantity >= 1000) {
-      return 55;
-    } else if (quantity >= 100) {
+    if (quantity >= 100) {
       return 50;
     } else {
       return 40;
@@ -31,7 +32,8 @@ export const ItemBadge: FC<Props> = ({ quantity, unitName }) => {
       ]}
     >
       <Text style={styles.badgeText}>
-        {quantity}
+        {quantityValue}
+        {isKquantity && 'k'}
         {unitName}
       </Text>
     </CommonGradation>
