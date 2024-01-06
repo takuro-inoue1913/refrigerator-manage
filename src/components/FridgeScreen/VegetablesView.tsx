@@ -4,16 +4,16 @@ import { ScrollView, Text, View } from 'react-native';
 import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
 import { fridgeCommonStyles } from '@src/utils/commonStyle';
 import { useVegetablesStockActions } from '@src/states/fridge/vegetables';
-import { useVegetablesStocks } from '@src/interface/hooks/vegetable/useVegetablesStocks';
+import { useRequestGetVegetablesStocks } from '@src/interface/hooks/vegetable/useRequestGetVegetablesStocks';
 import { SkeletonFridgeViews } from '@src/components/FridgeScreen/SkeletonFridgeViews';
 import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
 import { ItemDetailModal } from '@src/components/FridgeScreen/ItemDetailModal';
 import { selectItems } from '@src/utils/consts';
 import { useChunkedArray } from '@src/hooks/useChunkedArray';
-import { useUpsertVegetableStock } from '@src/interface/hooks/vegetable/useUpsertVegetableStock';
+import { useRequestUpsertVegetableStock } from '@src/interface/hooks/vegetable/useRequestUpsertVegetableStock';
 import { generateEncodeString } from '@src/utils/logics/createEncodeStrings';
 import { useDebouncedUpsertStock } from '@src/hooks/useDebouncedUpsertStock';
-import { useUpsertVegetableStockDetail } from '@src/interface/hooks/vegetable/useUpsertVegetableStockDetail';
+import { useRequestUpsertVegetableStockDetail } from '@src/interface/hooks/vegetable/useRequestUpsertVegetableStockDetail';
 
 /**
  * 冷蔵庫の野菜画面を表示するコンポーネント。
@@ -21,11 +21,11 @@ import { useUpsertVegetableStockDetail } from '@src/interface/hooks/vegetable/us
 export const VegetablesView: FC = () => {
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
-  const { vegetablesStocks, isFetching } = useVegetablesStocks();
+  const { vegetablesStocks, isFetching } = useRequestGetVegetablesStocks();
   const vegetablesStockActions = useVegetablesStockActions();
   const rows = useChunkedArray(vegetablesStocks.ids, 3);
-  const upsertVegetablesStock = useUpsertVegetableStock();
-  const upsertVegetableStockDetail = useUpsertVegetableStockDetail();
+  const upsertVegetablesStock = useRequestUpsertVegetableStock();
+  const upsertVegetableStockDetail = useRequestUpsertVegetableStockDetail();
   const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
     debounceUpsertStock: upsertVegetablesStock,
     increaseStock: vegetablesStockActions.increaseVegetableStock,

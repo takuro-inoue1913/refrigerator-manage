@@ -6,7 +6,7 @@ import { generateMeatStocks } from '@src/interface/logics/generate/generateMeatS
 import { meatStocksState } from '@src/states/fridge/meat';
 import { meatStockRepository } from '@src/interface/repositories/meatStockRepository';
 
-export const useMeatStocks = () => {
+export const useRequestGetMeatStocks = () => {
   const idToken = useRecoilValue(idTokenState);
   const [meatStocks, setMeatStocks] = useRecoilState(meatStocksState);
 

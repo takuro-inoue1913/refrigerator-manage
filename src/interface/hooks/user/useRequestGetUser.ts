@@ -5,7 +5,7 @@ import { idTokenState } from '@src/states/user';
 import { GetUserDocument } from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
 
-export const useGetUser = () => {
+export const useRequestGetUser = () => {
   const idToken = useRecoilValue(idTokenState);
 
   return useQuery({

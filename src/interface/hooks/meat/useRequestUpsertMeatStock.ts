@@ -10,7 +10,7 @@ type UpsertMeatStockArgs = {
   quantity: number;
 };
 
-export const useUpsertMeatStock = () => {
+export const useRequestUpsertMeatStock = () => {
   const idToken = useRecoilValue(idTokenState);
   const user = useRecoilValue(userState);
   const meatStocks = useRecoilValue(meatStocksState);

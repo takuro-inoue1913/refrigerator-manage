@@ -7,13 +7,13 @@ import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
 import { selectItems } from '@src/utils/consts';
 import { useMeatStockActions } from '@src/states/fridge/meat';
 import { useChunkedArray } from '@src/hooks/useChunkedArray';
-import { useMeatStocks } from '@src/interface/hooks/meat/useMeatStocks';
+import { useRequestGetMeatStocks } from '@src/interface/hooks/meat/useRequestGetMeatStocks';
 import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
 import { generateEncodeString } from '@src/utils/logics/createEncodeStrings';
-import { useUpsertMeatStock } from '@src/interface/hooks/meat/useUpsertMeatStock';
+import { useRequestUpsertMeatStock } from '@src/interface/hooks/meat/useRequestUpsertMeatStock';
 import { useDebouncedUpsertStock } from '@src/hooks/useDebouncedUpsertStock';
 import { ItemDetailModal } from '@src/components/FridgeScreen/ItemDetailModal';
-import { useUpsertMeatStockDetail } from '@src/interface/hooks/meat/useUpsertMeatStockDetail';
+import { useRequestUpsertMeatStockDetail } from '@src/interface/hooks/meat/useRequestUpsertMeatStockDetail';
 
 /**
  * 冷蔵庫の肉画面を表示するコンポーネント。
@@ -21,11 +21,11 @@ import { useUpsertMeatStockDetail } from '@src/interface/hooks/meat/useUpsertMea
 export const MeatView: FC = () => {
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
-  const { meatStocks, isFetching } = useMeatStocks();
+  const { meatStocks, isFetching } = useRequestGetMeatStocks();
   const meatStockActions = useMeatStockActions();
-  const upsertMeatStockDetail = useUpsertMeatStockDetail();
+  const upsertMeatStockDetail = useRequestUpsertMeatStockDetail();
   const rows = useChunkedArray(meatStocks.ids, 3);
-  const upsertMeatStock = useUpsertMeatStock();
+  const upsertMeatStock = useRequestUpsertMeatStock();
   const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
     debounceUpsertStock: upsertMeatStock,
     increaseStock: meatStockActions.increaseMeatStock,

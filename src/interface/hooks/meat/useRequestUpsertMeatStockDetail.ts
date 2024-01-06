@@ -1,7 +1,7 @@
 import { useRecoilValue } from 'recoil';
 
 import { idTokenState, userState } from '@src/states/user';
-import { vegetableStockRepository } from '@src/interface/repositories/vegetableStockRepository';
+import { meatStockRepository } from '@src/interface/repositories/meatStockRepository';
 
 type UpsertMeatStockDetail = {
   id: number;
@@ -11,36 +11,36 @@ type UpsertMeatStockDetail = {
   memo: string;
 };
 
-export const useUpsertVegetableStockDetail = () => {
+export const useRequestUpsertMeatStockDetail = () => {
   const idToken = useRecoilValue(idTokenState);
   const user = useRecoilValue(userState);
 
   return async ({
-    id: vegetableId,
+    id: meatId,
     quantity,
     incrementalUnit,
     expirationDate,
     memo,
   }: UpsertMeatStockDetail) => {
-    const existingStock = await vegetableStockRepository.getOne({
+    const existingStock = await meatStockRepository.getOne({
       idToken,
       userId: user!.uid,
-      vegetableId,
+      meatId,
     });
     if (existingStock.length === 0) {
-      const data = await vegetableStockRepository.insert({
+      const data = await meatStockRepository.insert({
         idToken,
         userId: user!.uid,
-        vegetableId,
+        meatId,
         quantity,
         incrementalUnit,
       });
       return data;
     } else {
-      const data = await vegetableStockRepository.updateDetail({
+      const data = await meatStockRepository.updateDetail({
         idToken,
         userId: user!.uid,
-        vegetableId,
+        meatId,
         quantity,
         incrementalUnit,
         expirationDate,

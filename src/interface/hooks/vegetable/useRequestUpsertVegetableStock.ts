@@ -10,7 +10,7 @@ type UpsertVegetableStockArgs = {
   quantity: number;
 };
 
-export const useUpsertVegetableStock = () => {
+export const useRequestUpsertVegetableStock = () => {
   const idToken = useRecoilValue(idTokenState);
   const user = useRecoilValue(userState);
   const vegetablesStocks = useRecoilValue(vegetablesStocksState);

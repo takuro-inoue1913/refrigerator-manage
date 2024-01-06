@@ -6,10 +6,10 @@ import Toast from 'react-native-toast-message';
 import { auth } from '@src/utils/firebaseAuth';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { handleFirebaseError } from '@src/utils/handleFirebaseError';
-import { useGetUser } from '@src/interface/hooks/user/useGetUser';
+import { useRequestGetUser } from '@src/interface/hooks/user/useRequestGetUser';
 
 export const HomeScreen = () => {
-  const { data } = useGetUser();
+  const { data } = useRequestGetUser();
   const handleLogout = () => {
     signOut(auth).catch((error) => {
       Toast.show({
