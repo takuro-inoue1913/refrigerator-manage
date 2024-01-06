@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SelectDropdown from 'react-native-select-dropdown';
+import { FilterForm } from '@src/components/FridgeScreen/FilterForm';
 
 const { width } = Dimensions.get('window');
 
@@ -112,37 +113,11 @@ export const StickyHeader: FC<Props> = ({
           styles.dropdownContainer,
           {
             transform: [{ translateY: dropdownTranslateY }],
-            opacity: dropdownAnimation, // 追加のスタイルとして透明度を設定
+            opacity: dropdownAnimation,
           },
         ]}
       >
-        <SelectDropdown
-          data={selectItems}
-          defaultValue={selectFridgeCategory}
-          onSelect={(selectedItem) => {
-            setSelectFridgeCategory(selectedItem);
-          }}
-          disabled={isDisabled}
-          buttonStyle={styles.dropdownBtnStyle}
-          buttonTextStyle={
-            isDisabled
-              ? styles.disabledDropdownBtnTxtStyle
-              : styles.dropdownBtnTxtStyle
-          }
-          renderDropdownIcon={(isOpened) => {
-            return (
-              <Icon
-                name={isOpened ? 'chevron-up' : 'chevron-down'}
-                color={'gray'}
-                size={18}
-              />
-            );
-          }}
-          dropdownIconPosition={'right'}
-          dropdownStyle={styles.dropdownDropdownStyle}
-          rowStyle={styles.dropdownRowStyle}
-          rowTextStyle={styles.dropdownRowTxtStyle}
-        />
+        <FilterForm />
       </Animated.View>
     </>
   );
@@ -159,6 +134,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
+    zIndex: 100,
   },
   iconWrapper: {
     position: 'absolute',
@@ -185,10 +161,10 @@ const styles = StyleSheet.create({
   dropdownRowTxtStyle: { color: '#444', textAlign: 'left' },
   dropdownContainer: {
     position: 'absolute',
-    top: 100, // filter アイコンの下の位置を適切に設定してください。
+    top: 90,
     left: 0,
     right: 0,
     alignItems: 'center',
-    zIndex: 1000, // 必要に応じてz-indexを調整してください。
+    zIndex: 10,
   },
 });
