@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import {
   GetVegetableMasterAndUnitAndStocksDocument,
   GetVegetableStockByUserIdAndVegetableIdDocument,
@@ -32,6 +33,7 @@ type UpdateDetailArgs = {
   userId: string;
   vegetableId: number;
   quantity: number;
+  incrementalUnit: number;
   expirationDate: string;
   memo: string;
 };
@@ -94,6 +96,12 @@ export const vegetableStockRepository = {
       userId,
       vegetableId,
       quantity,
+      // デフォルト値
+      memo: '',
+      // 野菜の増減単位の初期値は 1 とする
+      incremental_unit: 1,
+      // 野菜の賞味期限の初期値は一週間後とする
+      expiration_date: dayjs().add(7, 'day').format('YYYY-MM-DD'),
     });
     return data.update_vegetable_stocks?.returning[0];
   },
@@ -102,6 +110,7 @@ export const vegetableStockRepository = {
     userId,
     vegetableId,
     quantity,
+    incrementalUnit,
     expirationDate,
     memo,
   }: UpdateDetailArgs) => {
@@ -112,6 +121,7 @@ export const vegetableStockRepository = {
       vegetableId,
       quantity,
       expirationDate,
+      incrementalUnit,
       memo,
     });
     return data.update_vegetable_stocks?.returning[0];

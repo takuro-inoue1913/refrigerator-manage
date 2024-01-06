@@ -60,18 +60,25 @@ mutation UpdateMeatStockDetail(
   $userId: String!
   $meatId: Int!
   $quantity: Int!
+  $incrementalUnit: Int!
   $expirationDate: date!
   $memo: String!
 ) {
   update_meat_stocks(
     where: { user_id: { _eq: $userId }, meat_id: { _eq: $meatId } }
-    _set: { quantity: $quantity, expiration_date: $expirationDate, memo: $memo }
+    _set: {
+      quantity: $quantity
+      incremental_unit: $incrementalUnit
+      expiration_date: $expirationDate
+      memo: $memo
+    }
   ) {
     returning {
       stock_id
       user_id
       meat_id
       quantity
+      incremental_unit
       expiration_date
       memo
     }

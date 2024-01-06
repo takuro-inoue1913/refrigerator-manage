@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import {
   GetMeatMasterAndUnitAndStocksDocument,
   GetMeatStockByUserIdAndMeatIdDocument,
@@ -32,6 +33,7 @@ type UpdateDetailArgs = {
   userId: string;
   meatId: number;
   quantity: number;
+  incrementalUnit: number;
   expirationDate: string;
   memo: string;
 };
@@ -69,6 +71,10 @@ export const meatStockRepository = {
         quantity,
         // デフォルト値
         memo: '',
+        // 肉の増減単位の初期値は 50g とする
+        incremental_unit: 50,
+        // 賞味期限は 3日後 とする
+        expiration_date: dayjs().add(3, 'day').format('YYYY-MM-DD'),
       },
     });
     return data.insert_meat_stocks_one;
@@ -93,6 +99,7 @@ export const meatStockRepository = {
     userId,
     meatId,
     quantity,
+    incrementalUnit,
     expirationDate,
     memo,
   }: UpdateDetailArgs) => {
@@ -102,6 +109,7 @@ export const meatStockRepository = {
       userId,
       meatId,
       quantity,
+      incrementalUnit,
       expirationDate,
       memo,
     });

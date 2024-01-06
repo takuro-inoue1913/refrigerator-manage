@@ -29,6 +29,10 @@ export const useUpsertMeatStock = () => {
       console.log('meatStockRepository.insert: ', data);
       return data;
     } else {
+      // MEMO: 既存の在庫と同じ数量の場合は更新しない
+      if (existingStock[0].quantity === quantity) {
+        return;
+      }
       const data = await meatStockRepository.updateQuantity({
         idToken,
         userId: user!.uid,
