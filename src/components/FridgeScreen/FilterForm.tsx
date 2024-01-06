@@ -1,5 +1,7 @@
 import { useChunkedArray } from '@src/hooks/useChunkedArray';
-import React, { useState } from 'react';
+import { selectFilterOptionsState } from '@src/states/fridge';
+import { COMMON_COLOR_GREEN, FILTER_OPTIONS } from '@src/utils/consts';
+import React from 'react';
 import {
   View,
   Text,
@@ -7,29 +9,37 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
+import { useRecoilState } from 'recoil';
 
 const { width } = Dimensions.get('window');
 
 export const FilterForm = () => {
-  const [selectedValue, setSelectedValue] = useState('通常');
-  const options = ['通常', '所有食材', '賞味期限が近いもの', 'あいうえお順'];
-  const row = useChunkedArray(options, 2);
+  const [selectFilterOptions, setSelectFilterOptionsState] = useRecoilState(
+    selectFilterOptionsState,
+  );
+  const narrowDownRow = useChunkedArray(FILTER_OPTIONS.narrowDown, 2);
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>並び替え</Text>
       <View style={styles.buttonContainer}>
         <View style={styles.buttonColumn}>
-          {row.map((column) => (
+          {narrowDownRow.map((column) => (
             <View key={column[0]} style={styles.buttonContainer}>
               {column.map((option) => (
                 <TouchableOpacity
                   key={option}
                   style={[
                     styles.button,
-                    selectedValue === option && styles.selectedButton,
+                    selectFilterOptions.narrowDown === option &&
+                      styles.selectedButton,
                   ]}
-                  onPress={() => setSelectedValue(option)}
+                  onPress={() =>
+                    setSelectFilterOptionsState((prev) => ({
+                      ...prev,
+                      narrowDown: option,
+                    }))
+                  }
                 >
                   <Text style={styles.buttonText}>{option}</Text>
                 </TouchableOpacity>
@@ -52,6 +62,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     marginBottom: 10,
+    fontWeight: '500',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -75,7 +86,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   selectedButton: {
-    borderColor: 'blue',
-    backgroundColor: '#e0f0ff',
+    borderColor: COMMON_COLOR_GREEN,
+    backgroundColor: '#d2f4e8',
   },
 });
