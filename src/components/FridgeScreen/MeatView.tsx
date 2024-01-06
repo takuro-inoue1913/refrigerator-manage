@@ -7,10 +7,10 @@ import { StickyHeader } from '@src/components/FridgeScreen/StickyHeader';
 import { selectItems } from '@src/utils/consts';
 import { useMeatStockActions } from '@src/states/fridge/meat';
 import { useChunkedArray } from '@src/hooks/useChunkedArray';
-import { useMeatStocks } from '@src/interface/hooks/useMeatStocks';
+import { useMeatStocks } from '@src/interface/hooks/meat/useMeatStocks';
 import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
 import { generateEncodeString } from '@src/utils/logics/createEncodeStrings';
-import { useUpsertMeatStock } from '@src/interface/hooks/useUpsertMeatStock';
+import { useUpsertMeatStock } from '@src/interface/hooks/meat/useUpsertMeatStock';
 import { useDebouncedUpsertStock } from '@src/hooks/useDebouncedUpsertStock';
 import { ItemDetailModal } from '@src/components/FridgeScreen/ItemDetailModal';
 
