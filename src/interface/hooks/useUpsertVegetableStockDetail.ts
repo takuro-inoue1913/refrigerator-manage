@@ -33,6 +33,7 @@ export const useUpsertVegetableStockDetail = () => {
         userId: user!.uid,
         vegetableId,
         quantity,
+        incrementalUnit,
       });
       return data;
     } else {

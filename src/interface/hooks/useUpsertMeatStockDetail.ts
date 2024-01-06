@@ -33,6 +33,7 @@ export const useUpsertMeatStockDetail = () => {
         userId: user!.uid,
         meatId,
         quantity,
+        incrementalUnit,
       });
       return data;
     } else {

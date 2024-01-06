@@ -33,6 +33,7 @@ mutation InsertMeatStock($object: meat_stocks_insert_input!) {
     stock_id
     user_id
     meat_id
+    incremental_unit
     expiration_date
     memo
   }
