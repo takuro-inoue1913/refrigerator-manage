@@ -16,6 +16,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SelectDropdown from 'react-native-select-dropdown';
 import { FilterForm } from '@src/components/FridgeScreen/FilterForm';
+import { COMMON_COLOR_GREEN } from '@src/utils/consts';
 
 const { width, height } = Dimensions.get('window');
 
@@ -115,6 +116,7 @@ export const StickyHeader: FC<Props> = ({
           dropdownIconPosition={'right'}
           dropdownStyle={styles.dropdownDropdownStyle}
           rowStyle={styles.dropdownRowStyle}
+          selectedRowStyle={styles.dropdownSelectRowStyle}
           rowTextStyle={styles.dropdownRowTxtStyle}
         />
         <TouchableOpacity activeOpacity={0.5} onPress={onReload}>
@@ -184,10 +186,15 @@ const styles = StyleSheet.create({
   },
   dropdownBtnTxtStyle: { color: '#444', textAlign: 'left' },
   disabledDropdownBtnTxtStyle: { color: 'rgba(0,0,0,0.1)', textAlign: 'left' },
-  dropdownDropdownStyle: { backgroundColor: '#EFEFEF' },
+  dropdownDropdownStyle: { backgroundColor: '#fff', borderRadius: 5 },
+  dropdownSelectRowStyle: {
+    backgroundColor: '#d2f4e8',
+    borderWidth: 1,
+    borderColor: COMMON_COLOR_GREEN,
+  },
   dropdownRowStyle: {
-    backgroundColor: '#EFEFEF',
-    borderBottomColor: '#C5C5C5',
+    backgroundColor: 'white',
+    borderBottomColor: '#ced4da',
   },
   dropdownRowTxtStyle: { color: '#444', textAlign: 'left' },
   dropdownContainer: {
