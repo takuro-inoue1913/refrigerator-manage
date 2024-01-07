@@ -14,6 +14,7 @@ query GetVegetableMasterAndUnitAndStocks {
       incremental_unit
       expiration_date
       memo
+      is_favorite
     }
   }
 }

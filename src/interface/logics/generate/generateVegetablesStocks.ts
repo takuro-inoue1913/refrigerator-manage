@@ -33,6 +33,7 @@ export const generateVegetablesStocks = (
         expirationDate:
           cur.vegetable_master_vegetable_stocks?.expiration_date ?? '',
         memo: cur.vegetable_master_vegetable_stocks?.memo ?? '',
+        isFavorite: cur.vegetable_master_vegetable_stocks?.is_favorite ?? false,
       };
       ids.push(cur.vegetable_id);
       return acc;

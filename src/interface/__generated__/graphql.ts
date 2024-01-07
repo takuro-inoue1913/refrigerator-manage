@@ -18,6 +18,19 @@ export type Scalars = {
   timestamptz: { input: any; output: any; }
 };
 
+/** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
+export type Boolean_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['Boolean']['input']>;
+  _gt?: InputMaybe<Scalars['Boolean']['input']>;
+  _gte?: InputMaybe<Scalars['Boolean']['input']>;
+  _in?: InputMaybe<Array<Scalars['Boolean']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['Boolean']['input']>;
+  _lte?: InputMaybe<Scalars['Boolean']['input']>;
+  _neq?: InputMaybe<Scalars['Boolean']['input']>;
+  _nin?: InputMaybe<Array<Scalars['Boolean']['input']>>;
+};
+
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
 export type Int_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['Int']['input']>;
@@ -406,6 +419,8 @@ export type Meat_Stocks = {
   expiration_date: Scalars['date']['output'];
   /** 増減単位 */
   incremental_unit: Scalars['Int']['output'];
+  /** お気に入りフラグ */
+  is_favorite: Scalars['Boolean']['output'];
   /** 肉マスタID */
   meat_id: Scalars['Int']['output'];
   /** An object relationship */
@@ -430,7 +445,23 @@ export type Meat_Stocks_Aggregate = {
 };
 
 export type Meat_Stocks_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<Meat_Stocks_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<Meat_Stocks_Aggregate_Bool_Exp_Bool_Or>;
   count?: InputMaybe<Meat_Stocks_Aggregate_Bool_Exp_Count>;
+};
+
+export type Meat_Stocks_Aggregate_Bool_Exp_Bool_And = {
+  arguments: Meat_Stocks_Select_Column_Meat_Stocks_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Meat_Stocks_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Meat_Stocks_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: Meat_Stocks_Select_Column_Meat_Stocks_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Meat_Stocks_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
 };
 
 export type Meat_Stocks_Aggregate_Bool_Exp_Count = {
@@ -517,6 +548,7 @@ export type Meat_Stocks_Bool_Exp = {
   _or?: InputMaybe<Array<Meat_Stocks_Bool_Exp>>;
   expiration_date?: InputMaybe<Date_Comparison_Exp>;
   incremental_unit?: InputMaybe<Int_Comparison_Exp>;
+  is_favorite?: InputMaybe<Boolean_Comparison_Exp>;
   meat_id?: InputMaybe<Int_Comparison_Exp>;
   meat_stocks_meat_master?: InputMaybe<Meat_Master_Bool_Exp>;
   meat_stocks_users?: InputMaybe<Users_Bool_Exp>;
@@ -550,6 +582,8 @@ export type Meat_Stocks_Insert_Input = {
   expiration_date?: InputMaybe<Scalars['date']['input']>;
   /** 増減単位 */
   incremental_unit?: InputMaybe<Scalars['Int']['input']>;
+  /** お気に入りフラグ */
+  is_favorite?: InputMaybe<Scalars['Boolean']['input']>;
   /** 肉マスタID */
   meat_id?: InputMaybe<Scalars['Int']['input']>;
   meat_stocks_meat_master?: InputMaybe<Meat_Master_Obj_Rel_Insert_Input>;
@@ -665,6 +699,7 @@ export type Meat_Stocks_On_Conflict = {
 export type Meat_Stocks_Order_By = {
   expiration_date?: InputMaybe<Order_By>;
   incremental_unit?: InputMaybe<Order_By>;
+  is_favorite?: InputMaybe<Order_By>;
   meat_id?: InputMaybe<Order_By>;
   meat_stocks_meat_master?: InputMaybe<Meat_Master_Order_By>;
   meat_stocks_users?: InputMaybe<Users_Order_By>;
@@ -687,6 +722,8 @@ export enum Meat_Stocks_Select_Column {
   /** column name */
   IncrementalUnit = 'incremental_unit',
   /** column name */
+  IsFavorite = 'is_favorite',
+  /** column name */
   MeatId = 'meat_id',
   /** column name */
   Memo = 'memo',
@@ -698,12 +735,26 @@ export enum Meat_Stocks_Select_Column {
   UserId = 'user_id'
 }
 
+/** select "meat_stocks_aggregate_bool_exp_bool_and_arguments_columns" columns of table "meat_stocks" */
+export enum Meat_Stocks_Select_Column_Meat_Stocks_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  IsFavorite = 'is_favorite'
+}
+
+/** select "meat_stocks_aggregate_bool_exp_bool_or_arguments_columns" columns of table "meat_stocks" */
+export enum Meat_Stocks_Select_Column_Meat_Stocks_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  IsFavorite = 'is_favorite'
+}
+
 /** input type for updating data in table "meat_stocks" */
 export type Meat_Stocks_Set_Input = {
   /** 賞味期限日 */
   expiration_date?: InputMaybe<Scalars['date']['input']>;
   /** 増減単位 */
   incremental_unit?: InputMaybe<Scalars['Int']['input']>;
+  /** お気に入りフラグ */
+  is_favorite?: InputMaybe<Scalars['Boolean']['input']>;
   /** 肉マスタID */
   meat_id?: InputMaybe<Scalars['Int']['input']>;
   /** メモ */
@@ -805,6 +856,8 @@ export type Meat_Stocks_Stream_Cursor_Value_Input = {
   expiration_date?: InputMaybe<Scalars['date']['input']>;
   /** 増減単位 */
   incremental_unit?: InputMaybe<Scalars['Int']['input']>;
+  /** お気に入りフラグ */
+  is_favorite?: InputMaybe<Scalars['Boolean']['input']>;
   /** 肉マスタID */
   meat_id?: InputMaybe<Scalars['Int']['input']>;
   /** メモ */
@@ -848,6 +901,8 @@ export enum Meat_Stocks_Update_Column {
   ExpirationDate = 'expiration_date',
   /** column name */
   IncrementalUnit = 'incremental_unit',
+  /** column name */
+  IsFavorite = 'is_favorite',
   /** column name */
   MeatId = 'meat_id',
   /** column name */
@@ -2543,6 +2598,8 @@ export type Vegetable_Stocks = {
   expiration_date: Scalars['date']['output'];
   /** 増減単位 */
   incremental_unit: Scalars['Int']['output'];
+  /** お気に入りフラグ */
+  is_favorite: Scalars['Boolean']['output'];
   /** メモ */
   memo: Scalars['String']['output'];
   /** 在庫数 */
@@ -2567,7 +2624,23 @@ export type Vegetable_Stocks_Aggregate = {
 };
 
 export type Vegetable_Stocks_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<Vegetable_Stocks_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<Vegetable_Stocks_Aggregate_Bool_Exp_Bool_Or>;
   count?: InputMaybe<Vegetable_Stocks_Aggregate_Bool_Exp_Count>;
+};
+
+export type Vegetable_Stocks_Aggregate_Bool_Exp_Bool_And = {
+  arguments: Vegetable_Stocks_Select_Column_Vegetable_Stocks_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Vegetable_Stocks_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Vegetable_Stocks_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: Vegetable_Stocks_Select_Column_Vegetable_Stocks_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Vegetable_Stocks_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
 };
 
 export type Vegetable_Stocks_Aggregate_Bool_Exp_Count = {
@@ -2654,6 +2727,7 @@ export type Vegetable_Stocks_Bool_Exp = {
   _or?: InputMaybe<Array<Vegetable_Stocks_Bool_Exp>>;
   expiration_date?: InputMaybe<Date_Comparison_Exp>;
   incremental_unit?: InputMaybe<Int_Comparison_Exp>;
+  is_favorite?: InputMaybe<Boolean_Comparison_Exp>;
   memo?: InputMaybe<String_Comparison_Exp>;
   quantity?: InputMaybe<Int_Comparison_Exp>;
   stock_id?: InputMaybe<Int_Comparison_Exp>;
@@ -2687,6 +2761,8 @@ export type Vegetable_Stocks_Insert_Input = {
   expiration_date?: InputMaybe<Scalars['date']['input']>;
   /** 増減単位 */
   incremental_unit?: InputMaybe<Scalars['Int']['input']>;
+  /** お気に入りフラグ */
+  is_favorite?: InputMaybe<Scalars['Boolean']['input']>;
   /** メモ */
   memo?: InputMaybe<Scalars['String']['input']>;
   /** 在庫数 */
@@ -2802,6 +2878,7 @@ export type Vegetable_Stocks_On_Conflict = {
 export type Vegetable_Stocks_Order_By = {
   expiration_date?: InputMaybe<Order_By>;
   incremental_unit?: InputMaybe<Order_By>;
+  is_favorite?: InputMaybe<Order_By>;
   memo?: InputMaybe<Order_By>;
   quantity?: InputMaybe<Order_By>;
   stock_id?: InputMaybe<Order_By>;
@@ -2824,6 +2901,8 @@ export enum Vegetable_Stocks_Select_Column {
   /** column name */
   IncrementalUnit = 'incremental_unit',
   /** column name */
+  IsFavorite = 'is_favorite',
+  /** column name */
   Memo = 'memo',
   /** column name */
   Quantity = 'quantity',
@@ -2835,12 +2914,26 @@ export enum Vegetable_Stocks_Select_Column {
   VegetableId = 'vegetable_id'
 }
 
+/** select "vegetable_stocks_aggregate_bool_exp_bool_and_arguments_columns" columns of table "vegetable_stocks" */
+export enum Vegetable_Stocks_Select_Column_Vegetable_Stocks_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  IsFavorite = 'is_favorite'
+}
+
+/** select "vegetable_stocks_aggregate_bool_exp_bool_or_arguments_columns" columns of table "vegetable_stocks" */
+export enum Vegetable_Stocks_Select_Column_Vegetable_Stocks_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  IsFavorite = 'is_favorite'
+}
+
 /** input type for updating data in table "vegetable_stocks" */
 export type Vegetable_Stocks_Set_Input = {
   /** 賞味期限日 */
   expiration_date?: InputMaybe<Scalars['date']['input']>;
   /** 増減単位 */
   incremental_unit?: InputMaybe<Scalars['Int']['input']>;
+  /** お気に入りフラグ */
+  is_favorite?: InputMaybe<Scalars['Boolean']['input']>;
   /** メモ */
   memo?: InputMaybe<Scalars['String']['input']>;
   /** 在庫数 */
@@ -2942,6 +3035,8 @@ export type Vegetable_Stocks_Stream_Cursor_Value_Input = {
   expiration_date?: InputMaybe<Scalars['date']['input']>;
   /** 増減単位 */
   incremental_unit?: InputMaybe<Scalars['Int']['input']>;
+  /** お気に入りフラグ */
+  is_favorite?: InputMaybe<Scalars['Boolean']['input']>;
   /** メモ */
   memo?: InputMaybe<Scalars['String']['input']>;
   /** 在庫数 */
@@ -2985,6 +3080,8 @@ export enum Vegetable_Stocks_Update_Column {
   ExpirationDate = 'expiration_date',
   /** column name */
   IncrementalUnit = 'incremental_unit',
+  /** column name */
+  IsFavorite = 'is_favorite',
   /** column name */
   Memo = 'memo',
   /** column name */
@@ -3084,7 +3181,7 @@ export type Vegetable_Stocks_Variance_Order_By = {
 export type GetMeatMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMeatMasterAndUnitAndStocksQuery = { __typename?: 'query_root', meat_master: Array<{ __typename?: 'meat_master', meat_id: number, display_name: string, meat_name: string, image_uri: string, meat_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, meat_master_meat_stocks?: { __typename?: 'meat_stocks', stock_id: number, quantity: number, incremental_unit: number, expiration_date: any, memo: string } | null }> };
+export type GetMeatMasterAndUnitAndStocksQuery = { __typename?: 'query_root', meat_master: Array<{ __typename?: 'meat_master', meat_id: number, display_name: string, meat_name: string, image_uri: string, meat_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, meat_master_meat_stocks?: { __typename?: 'meat_stocks', stock_id: number, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
 
 export type GetMeatStockByUserIdAndMeatIdQueryVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -3131,7 +3228,7 @@ export type GetUserQuery = { __typename?: 'query_root', users: Array<{ __typenam
 export type GetVegetableMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetVegetableMasterAndUnitAndStocksQuery = { __typename?: 'query_root', vegetable_master: Array<{ __typename?: 'vegetable_master', vegetable_id: number, display_name: string, vegetable_name: string, image_uri: string, vegetable_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, vegetable_master_vegetable_stocks?: { __typename?: 'vegetable_stocks', stock_id: number, quantity: number, incremental_unit: number, expiration_date: any, memo: string } | null }> };
+export type GetVegetableMasterAndUnitAndStocksQuery = { __typename?: 'query_root', vegetable_master: Array<{ __typename?: 'vegetable_master', vegetable_id: number, display_name: string, vegetable_name: string, image_uri: string, vegetable_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, vegetable_master_vegetable_stocks?: { __typename?: 'vegetable_stocks', stock_id: number, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
 
 export type GetVegetableStockByUserIdAndVegetableIdQueryVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -3171,13 +3268,13 @@ export type UpdateVegetableStockDetailMutationVariables = Exact<{
 export type UpdateVegetableStockDetailMutation = { __typename?: 'mutation_root', update_vegetable_stocks?: { __typename?: 'vegetable_stocks_mutation_response', returning: Array<{ __typename?: 'vegetable_stocks', stock_id: number, user_id: string, vegetable_id: number, quantity: number, incremental_unit: number, expiration_date: any, memo: string }> } | null };
 
 
-export const GetMeatMasterAndUnitAndStocksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMeatMasterAndUnitAndStocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"meat_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"meat_id"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"meat_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"meat_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"meat_master_meat_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}}]}}]}}]} as unknown as DocumentNode<GetMeatMasterAndUnitAndStocksQuery, GetMeatMasterAndUnitAndStocksQueryVariables>;
+export const GetMeatMasterAndUnitAndStocksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMeatMasterAndUnitAndStocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"meat_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"meat_id"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"meat_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"meat_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"meat_master_meat_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}}]}}]}}]}}]} as unknown as DocumentNode<GetMeatMasterAndUnitAndStocksQuery, GetMeatMasterAndUnitAndStocksQueryVariables>;
 export const GetMeatStockByUserIdAndMeatIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMeatStockByUserIdAndMeatId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"meatId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"meat_stocks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"meat_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"meatId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"meat_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}}]}}]}}]} as unknown as DocumentNode<GetMeatStockByUserIdAndMeatIdQuery, GetMeatStockByUserIdAndMeatIdQueryVariables>;
 export const InsertMeatStockDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InsertMeatStock"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"object"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"meat_stocks_insert_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_meat_stocks_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"object"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"meat_id"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}}]}}]} as unknown as DocumentNode<InsertMeatStockMutation, InsertMeatStockMutationVariables>;
 export const UpdateMeatStockQuantityDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateMeatStockQuantity"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"meatId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"expirationDate"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"date"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_meat_stocks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"meat_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"meatId"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"quantity"},"value":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"expiration_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"expirationDate"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"meat_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateMeatStockQuantityMutation, UpdateMeatStockQuantityMutationVariables>;
 export const UpdateMeatStockDetailDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateMeatStockDetail"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"meatId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"incrementalUnit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"expirationDate"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"date"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"memo"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_meat_stocks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"meat_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"meatId"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"quantity"},"value":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"incremental_unit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"incrementalUnit"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"expiration_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"expirationDate"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"memo"},"value":{"kind":"Variable","name":{"kind":"Name","value":"memo"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"meat_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateMeatStockDetailMutation, UpdateMeatStockDetailMutationVariables>;
 export const GetUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}}]}}]}}]} as unknown as DocumentNode<GetUserQuery, GetUserQueryVariables>;
-export const GetVegetableMasterAndUnitAndStocksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetVegetableMasterAndUnitAndStocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vegetable_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vegetable_id"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"vegetable_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"vegetable_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"vegetable_master_vegetable_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}}]}}]}}]} as unknown as DocumentNode<GetVegetableMasterAndUnitAndStocksQuery, GetVegetableMasterAndUnitAndStocksQueryVariables>;
+export const GetVegetableMasterAndUnitAndStocksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetVegetableMasterAndUnitAndStocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vegetable_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vegetable_id"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"vegetable_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"vegetable_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"vegetable_master_vegetable_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}}]}}]}}]}}]} as unknown as DocumentNode<GetVegetableMasterAndUnitAndStocksQuery, GetVegetableMasterAndUnitAndStocksQueryVariables>;
 export const GetVegetableStockByUserIdAndVegetableIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetVegetableStockByUserIdAndVegetableId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"vegetableId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vegetable_stocks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"vegetable_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"vegetableId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"vegetable_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}}]}}]}}]} as unknown as DocumentNode<GetVegetableStockByUserIdAndVegetableIdQuery, GetVegetableStockByUserIdAndVegetableIdQueryVariables>;
 export const InsertVegetableStockDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InsertVegetableStock"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"object"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"vegetable_stocks_insert_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_vegetable_stocks_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"object"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"vegetable_id"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}}]}}]} as unknown as DocumentNode<InsertVegetableStockMutation, InsertVegetableStockMutationVariables>;
 export const UpdateVegetableStockQuantityDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateVegetableStockQuantity"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"vegetableId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"expirationDate"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"date"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_vegetable_stocks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"vegetable_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"vegetableId"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"quantity"},"value":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"expiration_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"expirationDate"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"vegetable_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateVegetableStockQuantityMutation, UpdateVegetableStockQuantityMutationVariables>;

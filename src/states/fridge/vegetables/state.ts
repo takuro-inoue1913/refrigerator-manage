@@ -31,6 +31,8 @@ export type VegetablesStocks = {
       expirationDate: string;
       /** メモ */
       memo: string;
+      /** お気に入りかどうか */
+      isFavorite: boolean;
     };
   };
 };
