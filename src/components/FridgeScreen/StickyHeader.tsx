@@ -11,12 +11,13 @@ import {
   TouchableOpacity,
   Animated,
   Easing,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SelectDropdown from 'react-native-select-dropdown';
 import { FilterForm } from '@src/components/FridgeScreen/FilterForm';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 type Props = {
   selectItems: SelectFridgeCategory[];
@@ -38,6 +39,7 @@ export const StickyHeader: FC<Props> = ({
     selectFridgeCategoryState,
   );
   const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const [isOverlayVisible, setOverlayVisible] = useState(false);
   const dropdownAnimation = useRef(new Animated.Value(0)).current;
   const rotateAnimation = useRef(new Animated.Value(0)).current;
 
@@ -49,6 +51,17 @@ export const StickyHeader: FC<Props> = ({
       duration: 300,
       useNativeDriver: true,
     }).start();
+    setOverlayVisible(!isOverlayVisible);
+  };
+
+  const closeFilterForm = () => {
+    setDropdownVisible(false);
+    Animated.timing(dropdownAnimation, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+    setOverlayVisible(false);
   };
 
   const onReload = async () => {
@@ -110,6 +123,11 @@ export const StickyHeader: FC<Props> = ({
           </Animated.View>
         </TouchableOpacity>
       </View>
+      {isOverlayVisible && (
+        <TouchableWithoutFeedback onPress={closeFilterForm}>
+          <View style={styles.overlay}></View>
+        </TouchableWithoutFeedback>
+      )}
       <Animated.View
         style={[
           styles.dropdownContainer,
@@ -145,6 +163,17 @@ const styles = StyleSheet.create({
   },
   disabledIcon: {
     color: 'rgba(0,0,0,0.1)',
+  },
+  overlay: {
+    position: 'absolute',
+    width: '100%',
+    height: height,
+    left: 0,
+    right: 0,
+    top: 0,
+    // 透過させる
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    zIndex: 9,
   },
   dropdownBtnStyle: {
     width: width / 1.5,
