@@ -4,7 +4,7 @@ import { atom } from 'recoil';
 export type SelectFridgeCategory = '野菜類' | '肉類';
 
 export type SelectFilterOptions = {
-  narrowDown: (typeof FILTER_OPTIONS)['narrowDown'][number];
+  sort: (typeof FILTER_OPTIONS)['sort'][number];
 };
 
 export const selectFridgeCategoryState = atom<SelectFridgeCategory>({
@@ -15,6 +15,6 @@ export const selectFridgeCategoryState = atom<SelectFridgeCategory>({
 export const selectFilterOptionsState = atom<SelectFilterOptions>({
   key: 'selectFilterOptionsState',
   default: {
-    narrowDown: '通常',
+    sort: '通常',
   },
 });

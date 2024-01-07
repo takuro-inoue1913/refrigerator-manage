@@ -21,7 +21,7 @@ export const FilterForm: FC<Props> = ({ onPress }) => {
   const [selectFilterOptions, setSelectFilterOptionsState] = useRecoilState(
     selectFilterOptionsState,
   );
-  const narrowDownRow = useChunkedArray(FILTER_OPTIONS.narrowDown, 2);
+  const narrowDownRow = useChunkedArray(FILTER_OPTIONS.sort, 2);
 
   const handleNarrowDownPress = (option: string) => {
     setSelectFilterOptionsState((prev) => ({
@@ -43,7 +43,7 @@ export const FilterForm: FC<Props> = ({ onPress }) => {
                   key={option}
                   style={[
                     styles.button,
-                    selectFilterOptions.narrowDown === option &&
+                    selectFilterOptions.sort === option &&
                       styles.selectedButton,
                   ]}
                   onPress={() => handleNarrowDownPress(option)}

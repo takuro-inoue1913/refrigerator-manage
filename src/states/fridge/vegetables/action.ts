@@ -49,17 +49,17 @@ type VegetableStockActions = {
   }) => void;
 };
 
-export const filterVegetablesStocksNarrowDown = ({
+export const filterVegetablesStock = ({
   vegetablesStocks,
   originalIds,
-  narrowDown,
+  sort,
 }: {
   vegetablesStocks: VegetablesStocks;
   originalIds: number[];
-  narrowDown: SelectFilterOptions['narrowDown'];
+  sort: SelectFilterOptions['sort'];
 }) => {
   let sortedIds = [...originalIds];
-  switch (narrowDown) {
+  switch (sort) {
     case '通常':
       // 通常はID順にソートする。
       sortedIds.sort((a, b) => a - b);
@@ -197,10 +197,10 @@ export const useVegetablesStockActions = () => {
           vegetablesStocksIdsState,
         );
         set(vegetablesStocksState, (prev) => {
-          const sortedIds = filterVegetablesStocksNarrowDown({
+          const sortedIds = filterVegetablesStock({
             vegetablesStocks: prev,
             originalIds: vegetablesStocksIds,
-            narrowDown: selectFilterOptions.narrowDown,
+            sort: selectFilterOptions.sort,
           });
           return {
             ids: sortedIds,
