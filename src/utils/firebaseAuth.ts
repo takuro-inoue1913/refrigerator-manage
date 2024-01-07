@@ -29,7 +29,7 @@ const firebaseOptions: FirebaseOptions = {
 const app = initializeApp(firebaseOptions);
 
 // 認証オブジェクトの初期化をプラットフォーム毎に分ける
-let auth;
+let auth: ReturnType<typeof initializeAuth>;
 
 if (Platform.OS === 'web') {
   // Webプラットフォーム用の初期化
