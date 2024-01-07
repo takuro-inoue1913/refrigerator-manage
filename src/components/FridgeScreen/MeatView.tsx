@@ -14,6 +14,7 @@ import { useRequestUpsertMeatStock } from '@src/interface/hooks/meat/useRequestU
 import { useDebouncedUpsertStock } from '@src/hooks/useDebouncedUpsertStock';
 import { ItemDetailModal } from '@src/components/FridgeScreen/ItemDetailModal';
 import { useRequestUpsertMeatStockDetail } from '@src/interface/hooks/meat/useRequestUpsertMeatStockDetail';
+import { GestureHandlerView } from './GestureHandlerView';
 
 /**
  * 冷蔵庫の肉画面を表示するコンポーネント。
@@ -78,37 +79,39 @@ export const MeatView: FC = () => {
         onPressReload={handlePressReload}
         onFilterPress={handleFilterPress}
       />
-      <ScrollView contentContainerStyle={fridgeCommonStyles.scrollContainer}>
-        {rows.map((row, index) => (
-          <View key={`row-${index}`} style={fridgeCommonStyles.row}>
-            {row.map((meatId) => (
-              <View
-                key={meatStocks.byId[meatId].meatId}
-                style={fridgeCommonStyles.box}
-              >
-                <ItemImage
-                  sourceUri={meatStocks.byId[meatId].imageUri}
-                  cacheKey={generateEncodeString([
-                    meatStocks.byId[meatId].meatName,
-                    meatStocks.byId[meatId].meatId.toString(),
-                  ])}
-                  targetId={meatStocks.byId[meatId].meatId}
-                  hasStock={meatStocks.byId[meatId].hasStock}
-                  quantity={meatStocks.byId[meatId].quantity}
-                  unitName={meatStocks.byId[meatId].unitName}
-                  incrementalUnit={meatStocks.byId[meatId].incrementalUnit}
-                  onPressIncrease={onIncreaseStock}
-                  onPressDecrease={onDecreaseStock}
-                  onLongPress={handleLongPress}
-                />
-                <Text style={fridgeCommonStyles.displayName}>
-                  {meatStocks.byId[meatId].meatDisplayName}
-                </Text>
-              </View>
-            ))}
-          </View>
-        ))}
-      </ScrollView>
+      <GestureHandlerView>
+        <ScrollView contentContainerStyle={fridgeCommonStyles.scrollContainer}>
+          {rows.map((row, index) => (
+            <View key={`row-${index}`} style={fridgeCommonStyles.row}>
+              {row.map((meatId) => (
+                <View
+                  key={meatStocks.byId[meatId].meatId}
+                  style={fridgeCommonStyles.box}
+                >
+                  <ItemImage
+                    sourceUri={meatStocks.byId[meatId].imageUri}
+                    cacheKey={generateEncodeString([
+                      meatStocks.byId[meatId].meatName,
+                      meatStocks.byId[meatId].meatId.toString(),
+                    ])}
+                    targetId={meatStocks.byId[meatId].meatId}
+                    hasStock={meatStocks.byId[meatId].hasStock}
+                    quantity={meatStocks.byId[meatId].quantity}
+                    unitName={meatStocks.byId[meatId].unitName}
+                    incrementalUnit={meatStocks.byId[meatId].incrementalUnit}
+                    onPressIncrease={onIncreaseStock}
+                    onPressDecrease={onDecreaseStock}
+                    onLongPress={handleLongPress}
+                  />
+                  <Text style={fridgeCommonStyles.displayName}>
+                    {meatStocks.byId[meatId].meatDisplayName}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          ))}
+        </ScrollView>
+      </GestureHandlerView>
       {modalProps && <ItemDetailModal {...modalProps} />}
     </>
   );

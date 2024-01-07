@@ -1,4 +1,5 @@
 import { selectFridgeCategoryState } from '@src/states/fridge';
+import { selectItems } from '@src/utils/consts';
 import React, { FC } from 'react';
 import { Alert, Dimensions } from 'react-native';
 import {
@@ -6,7 +7,7 @@ import {
   PanGestureHandler,
   State,
 } from 'react-native-gesture-handler';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 type Props = {
   children: React.ReactNode;
@@ -18,7 +19,10 @@ const halfScreenWidth = screenWidth / 4;
  * 左右のスワイプを検知するコンポーネント。
  */
 export const GestureHandlerView: FC<Props> = ({ children }) => {
-  const setSelectFridgeCategory = useSetRecoilState(selectFridgeCategoryState);
+  const [selectFridgeCategory, setSelectFridgeCategory] = useRecoilState(
+    selectFridgeCategoryState,
+  );
+  selectItems;
 
   const onSwipe = ({
     nativeEvent,
@@ -30,12 +34,25 @@ export const GestureHandlerView: FC<Props> = ({ children }) => {
   }) => {
     if (nativeEvent.oldState === State.ACTIVE) {
       const { translationX } = nativeEvent;
+
+      // 右にスワイプされた場合、selectItems から 現在選択されているカテゴリー の前のカテゴリーを取得する
       if (translationX > halfScreenWidth) {
-        setSelectFridgeCategory('野菜類');
+        selectItems.find((item, index) => {
+          if (item === selectFridgeCategory) {
+            setSelectFridgeCategory(
+              selectItems[index - 1] ?? selectItems[selectItems.length - 1],
+            );
+          }
+        });
         Alert.alert('Swiped Right', 'You swiped right!');
       }
+      // 左にスワイプされた場合、selectItems から 現在選択されているカテゴリー の次のカテゴリーを取得する
       if (translationX < -halfScreenWidth) {
-        setSelectFridgeCategory('肉類');
+        selectItems.find((item, index) => {
+          if (item === selectFridgeCategory) {
+            setSelectFridgeCategory(selectItems[index + 1] ?? selectItems[0]);
+          }
+        });
         Alert.alert('Swiped Left', 'You swiped left!');
       }
     }
