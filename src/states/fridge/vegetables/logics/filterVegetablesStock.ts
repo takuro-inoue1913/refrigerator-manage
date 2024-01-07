@@ -22,8 +22,8 @@ export const filterVegetablesStock = ({
   let sortedIds = [...originalIds];
   switch (selectFilterOptions.sort) {
     case '通常':
-      // 通常はID順にソートする。
-      sortedIds.sort((a, b) => a - b);
+      // 通常はそのままの順番で表示する。
+      sortedIds = [...originalIds];
       break;
     case '所有食材':
       // hasStock が true のものを優先してソートし、、その後、残りのものを id 順にソートする。

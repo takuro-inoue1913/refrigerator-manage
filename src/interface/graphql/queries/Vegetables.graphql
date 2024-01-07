@@ -1,5 +1,9 @@
 query GetVegetableMasterAndUnitAndStocks {
-  vegetable_master {
+  vegetable_master(
+    order_by: {
+      vegetable_master_vegetable_stocks: { is_favorite: desc_nulls_last }
+    }
+  ) {
     vegetable_id
     display_name
     vegetable_name

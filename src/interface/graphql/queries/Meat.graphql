@@ -1,5 +1,7 @@
 query GetMeatMasterAndUnitAndStocks {
-  meat_master {
+  meat_master(
+    order_by: { meat_master_meat_stocks: { is_favorite: desc_nulls_last } }
+  ) {
     meat_id
     display_name
     meat_name
