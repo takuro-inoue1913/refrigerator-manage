@@ -34,6 +34,9 @@ query GetVegetableStockByUserIdAndVegetableId(
     user_id
     vegetable_id
     quantity
+    expiration_date
+    memo
+    is_favorite
   }
 }
 
@@ -46,6 +49,7 @@ mutation InsertVegetableStock($object: vegetable_stocks_insert_input!) {
     incremental_unit
     expiration_date
     memo
+    is_favorite
   }
 }
 

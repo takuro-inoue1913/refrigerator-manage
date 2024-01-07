@@ -16,6 +16,7 @@ import { ItemDetailModal } from '@src/components/FridgeScreen/ItemDetailModal';
 import { useRequestUpsertMeatStockDetail } from '@src/interface/hooks/meat/useRequestUpsertMeatStockDetail';
 import { GestureHandlerView } from './GestureHandlerView';
 import { ItemDisplayContents } from './ItemDisplayContents';
+import { useRequestUpsertMeatFavorite } from '@src/interface/hooks/meat/useRequestUpsertMeatFavorite';
 
 /**
  * 冷蔵庫の肉画面を表示するコンポーネント。
@@ -25,11 +26,12 @@ export const MeatView: FC = () => {
     useState<ComponentProps<typeof ItemDetailModal>>();
   const { meatStocks, isFetching, refetch } = useRequestGetMeatStocks();
   const meatStockActions = useMeatStockActions();
-  const upsertMeatStockDetail = useRequestUpsertMeatStockDetail();
+  const requestUpsertMeatFavorite = useRequestUpsertMeatFavorite();
+  const requestUpsertMeatStockDetail = useRequestUpsertMeatStockDetail();
   const rows = useChunkedArray(meatStocks.ids, 3);
-  const upsertMeatStock = useRequestUpsertMeatStock();
+  const requestUpsertMeatStock = useRequestUpsertMeatStock();
   const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
-    debounceUpsertStock: upsertMeatStock,
+    debounceUpsertStock: requestUpsertMeatStock,
     increaseStock: meatStockActions.increaseMeatStock,
     decreaseStock: meatStockActions.decreaseMeatStock,
   });
@@ -52,12 +54,12 @@ export const MeatView: FC = () => {
         memo: meatStocks.byId[id].memo,
         onClose: (formValues) => {
           setModalProps(undefined);
-          upsertMeatStockDetail(formValues);
+          requestUpsertMeatStockDetail(formValues);
           meatStockActions.updateMeatStockDetail(formValues);
         },
       });
     },
-    [meatStocks.byId, meatStockActions, upsertMeatStockDetail],
+    [meatStocks.byId, meatStockActions, requestUpsertMeatStockDetail],
   );
 
   const handlePressReload = async () => {
@@ -70,6 +72,10 @@ export const MeatView: FC = () => {
 
   const handleItemDisplayContents = (targetId: number) => {
     meatStockActions.updateIsFavorite({
+      id: targetId,
+      isFavorite: !meatStocks.byId[targetId].isFavorite,
+    });
+    requestUpsertMeatFavorite({
       id: targetId,
       isFavorite: !meatStocks.byId[targetId].isFavorite,
     });

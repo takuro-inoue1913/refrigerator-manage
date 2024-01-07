@@ -16,6 +16,7 @@ import { useDebouncedUpsertStock } from '@src/hooks/useDebouncedUpsertStock';
 import { useRequestUpsertVegetableStockDetail } from '@src/interface/hooks/vegetable/useRequestUpsertVegetableStockDetail';
 import { GestureHandlerView } from '@src/components/FridgeScreen/GestureHandlerView';
 import { ItemDisplayContents } from './ItemDisplayContents';
+import { useRequestUpsertVegetableIsFavorite } from '@src/interface/hooks/vegetable/useRequestUpsertVegetableIsFavorite';
 
 /**
  * 冷蔵庫の野菜画面を表示するコンポーネント。
@@ -27,10 +28,13 @@ export const VegetablesView: FC = () => {
     useRequestGetVegetablesStocks();
   const vegetablesStockActions = useVegetablesStockActions();
   const rows = useChunkedArray(vegetablesStocks.ids, 3);
-  const upsertVegetablesStock = useRequestUpsertVegetableStock();
-  const upsertVegetableStockDetail = useRequestUpsertVegetableStockDetail();
+  const requestUpsertVegetablesStock = useRequestUpsertVegetableStock();
+  const requestUpsertVegetableIsFavorite =
+    useRequestUpsertVegetableIsFavorite();
+  const requestUpsertVegetableStockDetail =
+    useRequestUpsertVegetableStockDetail();
   const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
-    debounceUpsertStock: upsertVegetablesStock,
+    debounceUpsertStock: requestUpsertVegetablesStock,
     increaseStock: vegetablesStockActions.increaseVegetableStock,
     decreaseStock: vegetablesStockActions.decreaseVegetableStock,
   });
@@ -53,12 +57,16 @@ export const VegetablesView: FC = () => {
         memo: vegetablesStocks.byId[id].memo,
         onClose: (formValues) => {
           setModalProps(undefined);
-          upsertVegetableStockDetail(formValues);
+          requestUpsertVegetableStockDetail(formValues);
           vegetablesStockActions.updateVegetableStockDetail(formValues);
         },
       });
     },
-    [vegetablesStocks.byId, upsertVegetableStockDetail, vegetablesStockActions],
+    [
+      vegetablesStocks.byId,
+      requestUpsertVegetableStockDetail,
+      vegetablesStockActions,
+    ],
   );
 
   const handlePressReload = async () => {
@@ -71,6 +79,10 @@ export const VegetablesView: FC = () => {
 
   const handleItemDisplayContents = (targetId: number) => {
     vegetablesStockActions.updateIsFavorite({
+      id: targetId,
+      isFavorite: !vegetablesStocks.byId[targetId].isFavorite,
+    });
+    requestUpsertVegetableIsFavorite({
       id: targetId,
       isFavorite: !vegetablesStocks.byId[targetId].isFavorite,
     });
