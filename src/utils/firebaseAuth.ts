@@ -1,6 +1,9 @@
 import { initializeApp, FirebaseOptions } from 'firebase/app';
 import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
+import { Platform } from 'react-native';
 import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+
+// 環境変数のインポート
 import {
   FIREBASE_API_KEY,
   FIREBASE_AUTH_DOMAIN,
@@ -11,6 +14,7 @@ import {
   FIREBASE_MEASUREMENT_ID,
 } from '@env';
 
+// Firebase構成オブジェクト
 const firebaseOptions: FirebaseOptions = {
   apiKey: FIREBASE_API_KEY,
   authDomain: FIREBASE_AUTH_DOMAIN,
@@ -21,8 +25,20 @@ const firebaseOptions: FirebaseOptions = {
   measurementId: FIREBASE_MEASUREMENT_ID,
 };
 
+// Firebaseアプリの初期化
 const app = initializeApp(firebaseOptions);
 
-export const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(ReactNativeAsyncStorage),
-});
+// 認証オブジェクトの初期化をプラットフォーム毎に分ける
+let auth;
+
+if (Platform.OS === 'web') {
+  // Webプラットフォーム用の初期化
+  auth = initializeAuth(app);
+} else {
+  auth = initializeAuth(app, {
+    persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+  });
+}
+
+// 外部から利用可能にするためにauthをエクスポート
+export { auth };
