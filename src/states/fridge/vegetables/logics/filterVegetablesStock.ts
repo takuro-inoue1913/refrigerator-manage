@@ -1,6 +1,10 @@
-import dayjs from 'dayjs';
 import { SelectFilterOptions } from '@src/states/fridge/state';
 import { VegetablesStocks } from '@src/states/fridge/vegetables/state';
+import {
+  sortOwnedIngredients,
+  sortNearingExpirationDate,
+  sortAiueo,
+} from '@src/utils/logics/sortByFunctions';
 
 /**
  * 野菜在庫を絞り込む。
@@ -26,64 +30,16 @@ export const filterVegetablesStock = ({
       sortedIds = [...originalIds];
       break;
     case '所有食材':
-      // hasStock が true のものを優先してソートし、、その後、残りのものを id 順にソートする。
-      {
-        const sortedIdsWithStock = [...sortedIds].filter(
-          (id) => vegetablesStocks.byId[id].hasStock,
-        );
-        const sortedIdsWithoutStock = [...sortedIds].filter(
-          (id) => !vegetablesStocks.byId[id].hasStock,
-        );
-        sortedIds = [...sortedIdsWithStock, ...sortedIdsWithoutStock];
-      }
+      sortedIds = sortOwnedIngredients(originalIds, vegetablesStocks);
       break;
     case '賞味期限が近いもの':
-      // hasStock が true のものを賞味期限が近いものを優先してソートし、その後、残りのものを賞味期限が近いものを優先してソートする。
-      {
-        const now = dayjs();
-        const sortedIdsWithExpirationDate = [...sortedIds]
-          .filter((id) => vegetablesStocks.byId[id].hasStock)
-          .sort((a, b) => {
-            const aExpirationDate = dayjs(
-              vegetablesStocks.byId[a].expirationDate,
-            );
-            const bExpirationDate = dayjs(
-              vegetablesStocks.byId[b].expirationDate,
-            );
-            const aDiff = aExpirationDate.diff(now, 'day');
-            const bDiff = bExpirationDate.diff(now, 'day');
-            return aDiff - bDiff;
-          });
-        const sortedIdsWithoutExpirationDate = [...sortedIds]
-          .filter((id) => !vegetablesStocks.byId[id].hasStock)
-          .sort((a, b) => {
-            const aExpirationDate = dayjs(
-              vegetablesStocks.byId[a].expirationDate,
-            );
-            const bExpirationDate = dayjs(
-              vegetablesStocks.byId[b].expirationDate,
-            );
-            const aDiff = aExpirationDate.diff(now, 'day');
-            const bDiff = bExpirationDate.diff(now, 'day');
-            return aDiff - bDiff;
-          });
-        sortedIds = [
-          ...sortedIdsWithExpirationDate,
-          ...sortedIdsWithoutExpirationDate,
-        ];
-      }
-
+      sortedIds = sortNearingExpirationDate(originalIds, vegetablesStocks);
       break;
     case 'あいうえお順':
-      // 名前でソートする。
-      sortedIds.sort((a, b) =>
-        vegetablesStocks.byId[a].name.localeCompare(
-          vegetablesStocks.byId[b].name,
-        ),
-      );
+      sortedIds = sortAiueo(originalIds, vegetablesStocks);
       break;
     default:
-      sortedIds = vegetablesStocks.ids;
+      sortedIds = [...originalIds];
       break;
   }
   return sortedIds;

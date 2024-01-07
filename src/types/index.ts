@@ -44,3 +44,11 @@ export type FridgeStock = {
   /** 基本賞味期限期間 */
   defaultExpirationPeriod: number;
 };
+
+/** 正規化された配列の型 */
+export type NormalizedArray<T> = {
+  ids: number[];
+  byId: {
+    [key: number]: T;
+  };
+};
