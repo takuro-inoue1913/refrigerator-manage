@@ -26,7 +26,7 @@ export const FilterForm: FC<Props> = ({ onPress }) => {
   const handleNarrowDownPress = (option: string) => {
     setSelectFilterOptionsState((prev) => ({
       ...prev,
-      narrowDown: option,
+      sort: option,
     }));
     onPress?.();
   };
