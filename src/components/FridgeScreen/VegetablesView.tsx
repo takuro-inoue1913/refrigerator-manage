@@ -108,6 +108,7 @@ export const VegetablesView: FC = () => {
                     onLongPress={handleLongPress}
                   />
                   <ItemDisplayContents
+                    targetId={vegetablesStocks.byId[vegetableId].vegetableId}
                     isFavorite={vegetablesStocks.byId[vegetableId].isFavorite}
                     displayName={
                       vegetablesStocks.byId[vegetableId].vegetableDisplayName
