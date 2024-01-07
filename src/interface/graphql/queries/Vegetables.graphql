@@ -68,6 +68,25 @@ mutation UpdateVegetableStockQuantity(
     }
   }
 }
+
+mutation UpdateVegetableStockIsFavorite(
+  $userId: String!
+  $vegetableId: Int!
+  $isFavorite: Boolean!
+) {
+  update_vegetable_stocks(
+    where: { user_id: { _eq: $userId }, vegetable_id: { _eq: $vegetableId } }
+    _set: { is_favorite: $isFavorite }
+  ) {
+    returning {
+      stock_id
+      user_id
+      vegetable_id
+      is_favorite
+    }
+  }
+}
+
 mutation UpdateVegetableStockDetail(
   $userId: String!
   $vegetableId: Int!

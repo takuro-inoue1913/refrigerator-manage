@@ -62,6 +62,24 @@ mutation UpdateMeatStockQuantity(
   }
 }
 
+mutation UpdateMeatStockIsFavorite(
+  $userId: String!
+  $meatId: Int!
+  $isFavorite: Boolean!
+) {
+  update_meat_stocks(
+    where: { user_id: { _eq: $userId }, meat_id: { _eq: $meatId } }
+    _set: { is_favorite: $isFavorite }
+  ) {
+    returning {
+      stock_id
+      user_id
+      meat_id
+      is_favorite
+    }
+  }
+}
+
 mutation UpdateMeatStockDetail(
   $userId: String!
   $meatId: Int!
