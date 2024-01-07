@@ -69,6 +69,13 @@ export const VegetablesView: FC = () => {
     vegetablesStockActions.filterVegetableStocks();
   };
 
+  const handleItemDisplayContents = (targetId: number) => {
+    vegetablesStockActions.updateIsFavorite({
+      id: targetId,
+      isFavorite: !vegetablesStocks.byId[targetId].isFavorite,
+    });
+  };
+
   if (isFetching) {
     return <SkeletonFridgeViews />;
   }
@@ -113,6 +120,7 @@ export const VegetablesView: FC = () => {
                     displayName={
                       vegetablesStocks.byId[vegetableId].vegetableDisplayName
                     }
+                    onPress={handleItemDisplayContents}
                   />
                 </View>
               ))}

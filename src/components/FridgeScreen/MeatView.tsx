@@ -68,6 +68,13 @@ export const MeatView: FC = () => {
     meatStockActions.filterMeatStocks();
   };
 
+  const handleItemDisplayContents = (targetId: number) => {
+    meatStockActions.updateIsFavorite({
+      id: targetId,
+      isFavorite: !meatStocks.byId[targetId].isFavorite,
+    });
+  };
+
   if (isFetching) {
     return <SkeletonFridgeViews />;
   }
@@ -108,6 +115,7 @@ export const MeatView: FC = () => {
                     targetId={meatStocks.byId[meatId].meatId}
                     isFavorite={meatStocks.byId[meatId].isFavorite}
                     displayName={meatStocks.byId[meatId].meatDisplayName}
+                    onPress={handleItemDisplayContents}
                   />
                 </View>
               ))}

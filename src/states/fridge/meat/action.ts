@@ -33,7 +33,7 @@ type MeatStockActions = {
     expirationDate,
     memo,
   }: {
-    /** 更新する野菜のID */
+    /** 更新する肉ID */
     id: number;
     /** 更新する数量を指定。 */
     quantity: number;
@@ -43,6 +43,16 @@ type MeatStockActions = {
     expirationDate: string;
     /** 更新するメモを指定。 */
     memo: string;
+  }) => void;
+  filterVegetableStocks: () => void;
+  updateIsFavorite: ({
+    id,
+    isFavorite,
+  }: {
+    /** 更新する肉ID */
+    id: number;
+    /** 更新するお気に入りの状態を指定。 */
+    isFavorite: boolean;
   }) => void;
 };
 
@@ -127,31 +137,57 @@ export const useMeatStockActions = () => {
       [],
     );
 
-  const filterMeatStocks = useRecoilCallback(
-    ({ snapshot, set }) =>
-      async () => {
-        const selectFilterOptions = await snapshot.getPromise(
-          selectFilterOptionsState,
-        );
-        const meatStocksIds = await snapshot.getPromise(meatStocksIdsState);
-        set(meatStocksState, (prev) => {
-          const sortedIds = filterMeatStock({
-            meatStocks: prev,
-            originalIds: meatStocksIds,
-            selectFilterOptions,
+  const filterMeatStocks: MeatStockActions['filterVegetableStocks'] =
+    useRecoilCallback(
+      ({ snapshot, set }) =>
+        async () => {
+          const selectFilterOptions = await snapshot.getPromise(
+            selectFilterOptionsState,
+          );
+          const meatStocksIds = await snapshot.getPromise(meatStocksIdsState);
+          set(meatStocksState, (prev) => {
+            const sortedIds = filterMeatStock({
+              meatStocks: prev,
+              originalIds: meatStocksIds,
+              selectFilterOptions,
+            });
+            return {
+              ids: sortedIds,
+              byId: prev.byId,
+            };
           });
-          return {
-            ids: sortedIds,
-            byId: prev.byId,
-          };
-        });
-      },
-    [],
-  );
+        },
+      [],
+    );
+
+  const updateIsFavorite: MeatStockActions['updateIsFavorite'] =
+    useRecoilCallback(
+      ({ set }) =>
+        ({ id: meatId, isFavorite }) => {
+          set(meatStocksState, (prev) => {
+            const newStocks: MeatStocks = {
+              ids: [...prev.ids],
+              byId: prev.ids.reduce(
+                (acc, cur) => {
+                  acc[cur] = { ...prev.byId[cur] };
+                  if (cur === meatId) {
+                    acc[cur].isFavorite = isFavorite;
+                  }
+                  return acc;
+                },
+                {} as MeatStocks['byId'],
+              ),
+            };
+            return newStocks;
+          });
+        },
+      [],
+    );
   return {
     increaseMeatStock,
     decreaseMeatStock,
     updateMeatStockDetail,
     filterMeatStocks,
+    updateIsFavorite,
   };
 };

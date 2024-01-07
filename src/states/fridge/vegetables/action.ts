@@ -44,6 +44,16 @@ type VegetableStockActions = {
     /** 更新するメモを指定。 */
     memo: string;
   }) => void;
+  filterVegetableStocks: () => void;
+  updateIsFavorite: ({
+    id,
+    isFavorite,
+  }: {
+    /** 更新する野菜のID */
+    id: number;
+    /** 更新するお気に入りの状態を指定。 */
+    isFavorite: boolean;
+  }) => void;
 };
 
 export const useVegetablesStockActions = () => {
@@ -133,34 +143,66 @@ export const useVegetablesStockActions = () => {
       [],
     );
 
-  const filterVegetableStocks = useRecoilCallback(
-    ({ snapshot, set }) =>
-      async () => {
-        const selectFilterOptions = await snapshot.getPromise(
-          selectFilterOptionsState,
-        );
-        const vegetablesStocksIds = await snapshot.getPromise(
-          vegetablesStocksIdsState,
-        );
-        set(vegetablesStocksState, (prev) => {
-          const sortedIds = filterVegetablesStock({
-            vegetablesStocks: prev,
-            originalIds: vegetablesStocksIds,
-            selectFilterOptions,
+  const filterVegetableStocks: VegetableStockActions['filterVegetableStocks'] =
+    useRecoilCallback(
+      ({ snapshot, set }) =>
+        async () => {
+          const selectFilterOptions = await snapshot.getPromise(
+            selectFilterOptionsState,
+          );
+          const vegetablesStocksIds = await snapshot.getPromise(
+            vegetablesStocksIdsState,
+          );
+          set(vegetablesStocksState, (prev) => {
+            const sortedIds = filterVegetablesStock({
+              vegetablesStocks: prev,
+              originalIds: vegetablesStocksIds,
+              selectFilterOptions,
+            });
+            return {
+              ids: sortedIds,
+              byId: prev.byId,
+            };
           });
-          return {
-            ids: sortedIds,
-            byId: prev.byId,
-          };
-        });
-      },
-    [],
-  );
+        },
+      [],
+    );
+
+  const updateIsFavorite: VegetableStockActions['updateIsFavorite'] =
+    useRecoilCallback(
+      ({ set }) =>
+        ({
+          id: vegetableId,
+          isFavorite,
+        }: {
+          id: number;
+          isFavorite: boolean;
+        }) => {
+          set(vegetablesStocksState, (prev) => {
+            const newStocks: VegetablesStocks = {
+              ids: [...prev.ids],
+              byId: prev.ids.reduce(
+                (acc, cur) => {
+                  acc[cur] = { ...prev.byId[cur] };
+                  if (cur === vegetableId) {
+                    acc[cur].isFavorite = isFavorite;
+                  }
+                  return acc;
+                },
+                {} as VegetablesStocks['byId'],
+              ),
+            };
+            return newStocks;
+          });
+        },
+      [],
+    );
 
   return {
     increaseVegetableStock,
     decreaseVegetableStock,
     updateVegetableStockDetail,
     filterVegetableStocks,
+    updateIsFavorite,
   };
 };
