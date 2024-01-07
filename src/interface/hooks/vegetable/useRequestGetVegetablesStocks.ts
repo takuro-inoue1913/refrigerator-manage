@@ -27,9 +27,6 @@ export const useRequestGetVegetablesStocks = () => {
       setVegetablesStocksIdsState(_vegetablesStocks.ids);
       return _vegetablesStocks;
     },
-    staleTime: 0,
-    refetchOnMount: true,
-    refetchOnWindowFocus: true,
   });
 
   return {

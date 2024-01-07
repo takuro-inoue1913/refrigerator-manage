@@ -18,9 +18,6 @@ export const useRequestGetMeatStocks = () => {
       setMeatStocks(_meatStocks);
       return _meatStocks;
     },
-    staleTime: 0,
-    refetchOnMount: true,
-    refetchOnWindowFocus: true,
   });
 
   return {
