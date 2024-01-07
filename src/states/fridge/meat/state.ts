@@ -43,6 +43,15 @@ export const meatStocksState = atom({
   } as MeatStocks,
 });
 
+/**
+ * 肉在庫のIDの配列。絞り込みのために使用する想定。
+ * meatStocksState と同時に更新する。
+ */
+export const meatStocksIdsState = atom({
+  key: 'meatStocksIdsState',
+  default: [] as number[],
+});
+
 export const meatStockById = selector({
   key: 'meatStockById',
   get: ({ get }) => {

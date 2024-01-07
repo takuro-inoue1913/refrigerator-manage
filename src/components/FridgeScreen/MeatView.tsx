@@ -62,6 +62,10 @@ export const MeatView: FC = () => {
     await refetch();
   };
 
+  const handleFilterPress = () => {
+    meatStockActions.filterMeatStocks();
+  };
+
   if (isFetching) {
     return <SkeletonFridgeViews />;
   }
@@ -72,6 +76,7 @@ export const MeatView: FC = () => {
         selectItems={selectItems}
         isDisabled={isFetching}
         onPressReload={handlePressReload}
+        onFilterPress={handleFilterPress}
       />
       <ScrollView contentContainerStyle={fridgeCommonStyles.scrollContainer}>
         {rows.map((row, index) => (

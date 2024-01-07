@@ -1,5 +1,11 @@
 import { useRecoilCallback } from 'recoil';
-import { MeatStocks, meatStocksState } from '@src/states/fridge/meat/state';
+import {
+  MeatStocks,
+  meatStocksIdsState,
+  meatStocksState,
+} from '@src/states/fridge/meat/state';
+import { filterMeatStock } from '@src/states/fridge/meat/logics/filterMeatStock';
+import { selectFilterOptionsState } from '@src/states/fridge';
 
 type MeatStockActions = {
   increaseMeatStock: ({
@@ -121,9 +127,31 @@ export const useMeatStockActions = () => {
       [],
     );
 
+  const filterMeatStocks = useRecoilCallback(
+    ({ snapshot, set }) =>
+      async () => {
+        const selectFilterOptions = await snapshot.getPromise(
+          selectFilterOptionsState,
+        );
+        const meatStocksIds = await snapshot.getPromise(meatStocksIdsState);
+        set(meatStocksState, (prev) => {
+          const sortedIds = filterMeatStock({
+            meatStocks: prev,
+            originalIds: meatStocksIds,
+            selectFilterOptions,
+          });
+          return {
+            ids: sortedIds,
+            byId: prev.byId,
+          };
+        });
+      },
+    [],
+  );
   return {
     increaseMeatStock,
     decreaseMeatStock,
     updateMeatStockDetail,
+    filterMeatStocks,
   };
 };
