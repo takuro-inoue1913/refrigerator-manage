@@ -36,7 +36,6 @@ export const useRequestUpsertMeatFavorite = () => {
         quantity: meatStocksRef.current.byId[meatId].quantity,
         incrementalUnit: meatStocksRef.current.byId[meatId].incrementalUnit,
       });
-      console.log(data);
       return data;
     } else {
       const data = await meatStockRepository.updateIsFavorite({
@@ -45,7 +44,6 @@ export const useRequestUpsertMeatFavorite = () => {
         meatId,
         isFavorite,
       });
-      console.log(data);
       return data;
     }
   };

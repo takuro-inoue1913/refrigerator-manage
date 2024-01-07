@@ -37,7 +37,6 @@ export const useRequestUpsertVegetableIsFavorite = () => {
           vegetablesStocksRef.current.byId[vegetableId].incrementalUnit,
         isFavorite: isFavorite,
       });
-      console.log(data);
       return data;
     } else {
       const data = await vegetableStockRepository.updateIsFavorite({
@@ -46,7 +45,6 @@ export const useRequestUpsertVegetableIsFavorite = () => {
         vegetableId,
         isFavorite,
       });
-      console.log(data);
       return data;
     }
   };
