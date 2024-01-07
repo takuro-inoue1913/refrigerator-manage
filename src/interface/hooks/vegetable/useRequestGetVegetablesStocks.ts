@@ -7,7 +7,9 @@ import {
   vegetablesStocksIdsState,
   vegetablesStocksState,
 } from '@src/states/fridge/vegetables';
+import { selectFilterOptionsState } from '@src/states/fridge';
 import { vegetableStockRepository } from '@src/interface/repositories/vegetableStockRepository';
+import { filterVegetablesStock } from '@src/states/fridge/vegetables/logics/filterVegetablesStock';
 
 export const useRequestGetVegetablesStocks = () => {
   const idToken = useRecoilValue(idTokenState);
@@ -17,15 +19,24 @@ export const useRequestGetVegetablesStocks = () => {
   const setVegetablesStocksIdsState = useSetRecoilState(
     vegetablesStocksIdsState,
   );
+  const selectFilterOptions = useRecoilValue(selectFilterOptionsState);
 
   const { isFetching, refetch } = useQuery({
     queryKey: ['graphl', 'get', 'vegetable', 'master', 'stock'],
     queryFn: async () => {
       const data = await vegetableStockRepository.getAll({ idToken });
       const _vegetablesStocks = generateVegetablesStocks(data);
-      setVegetablesStocks(_vegetablesStocks);
+      setVegetablesStocks({
+        byId: _vegetablesStocks.byId,
+        ids: filterVegetablesStock({
+          vegetablesStocks: _vegetablesStocks,
+          originalIds: _vegetablesStocks.ids,
+          selectFilterOptions,
+        }),
+      });
       setVegetablesStocksIdsState(_vegetablesStocks.ids);
-      return _vegetablesStocks;
+
+      return data;
     },
   });
 
