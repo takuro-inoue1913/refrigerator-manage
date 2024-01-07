@@ -1,6 +1,7 @@
 import { GetMeatMasterAndUnitAndStocksQuery } from '@src/interface/__generated__/graphql';
 import { MeatStocks } from '@src/states/fridge/meat';
 import { getIncrementalUnit } from '@src/utils/logics/getIncrementalUnit';
+import dayjs from 'dayjs';
 
 /**
  * 肉マスタと肉在庫から肉在庫のオブジェクトを生成する。
@@ -30,7 +31,11 @@ export const generateMeatStocks = (
         incrementalUnit:
           cur.meat_master_meat_stocks?.incremental_unit ??
           getIncrementalUnit(cur.meat_master_unit_master?.unit_name ?? ''),
-        expirationDate: cur.meat_master_meat_stocks?.expiration_date ?? '',
+        expirationDate:
+          cur.meat_master_meat_stocks?.expiration_date ??
+          dayjs()
+            .add(cur.default_expiration_period, 'day')
+            .format('YYYY-MM-DD'),
         memo: cur.meat_master_meat_stocks?.memo ?? '',
         isFavorite: cur.meat_master_meat_stocks?.is_favorite ?? false,
         defaultExpirationPeriod: cur.default_expiration_period,
