@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     bottom: 0,
-    right: 0,
+    right: 18,
     width: commonStyles.image.width / 2,
     backgroundColor: 'rgba(0,0,0,0.3)',
     borderTopRightRadius: 15,
