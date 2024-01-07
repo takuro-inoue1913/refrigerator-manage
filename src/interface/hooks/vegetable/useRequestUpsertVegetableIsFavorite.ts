@@ -35,6 +35,8 @@ export const useRequestUpsertVegetableIsFavorite = () => {
         quantity: vegetablesStocksRef.current.byId[vegetableId].quantity,
         incrementalUnit:
           vegetablesStocksRef.current.byId[vegetableId].incrementalUnit,
+        defaultExpirationPeriod:
+          vegetablesStocksRef.current.byId[vegetableId].defaultExpirationPeriod,
         isFavorite: isFavorite,
       });
       return data;

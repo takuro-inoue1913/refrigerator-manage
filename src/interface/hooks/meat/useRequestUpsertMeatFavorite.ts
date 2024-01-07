@@ -35,6 +35,8 @@ export const useRequestUpsertMeatFavorite = () => {
         isFavorite,
         quantity: meatStocksRef.current.byId[meatId].quantity,
         incrementalUnit: meatStocksRef.current.byId[meatId].incrementalUnit,
+        defaultExpirationPeriod:
+          meatStocksRef.current.byId[meatId].defaultExpirationPeriod,
       });
       return data;
     } else {

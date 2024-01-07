@@ -34,6 +34,8 @@ export const useRequestUpsertMeatStock = () => {
         meatId,
         quantity,
         incrementalUnit: meatStocksRef.current.byId[meatId].incrementalUnit,
+        defaultExpirationPeriod:
+          meatStocksRef.current.byId[meatId].defaultExpirationPeriod,
       });
       return data;
     } else {
@@ -46,6 +48,8 @@ export const useRequestUpsertMeatStock = () => {
         userId: user!.uid,
         meatId,
         quantity,
+        defaultExpirationPeriod:
+          meatStocksRef.current.byId[meatId].defaultExpirationPeriod,
       });
       return data;
     }

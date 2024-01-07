@@ -21,6 +21,7 @@ type InsertMeatStockArgs = {
   meatId: number;
   quantity: number;
   incrementalUnit: number;
+  defaultExpirationPeriod: number;
   isFavorite?: boolean;
 };
 
@@ -29,6 +30,7 @@ type UpdateMeatStockArgs = {
   userId: string;
   meatId: number;
   quantity: number;
+  defaultExpirationPeriod: number;
 };
 
 type UpdateDetailArgs = {
@@ -72,6 +74,7 @@ export const meatStockRepository = {
     meatId,
     quantity,
     incrementalUnit,
+    defaultExpirationPeriod,
     isFavorite,
   }: InsertMeatStockArgs) => {
     const client = buildGraphQLUserClient(idToken);
@@ -84,8 +87,9 @@ export const meatStockRepository = {
         // デフォルト値
         memo: '',
         incremental_unit: incrementalUnit,
-        // 賞味期限は 3日後 とする
-        expiration_date: dayjs().add(3, 'day').format('YYYY-MM-DD'),
+        expiration_date: dayjs()
+          .add(defaultExpirationPeriod, 'day')
+          .format('YYYY-MM-DD'),
         is_favorite: isFavorite ?? false,
       },
     });
@@ -96,6 +100,7 @@ export const meatStockRepository = {
     userId,
     meatId,
     quantity,
+    defaultExpirationPeriod,
   }: UpdateMeatStockArgs) => {
     const client = buildGraphQLUserClient(idToken);
 
@@ -103,8 +108,9 @@ export const meatStockRepository = {
       userId,
       meatId,
       quantity,
-      // 在庫更新時には賞味期限を3日後に更新する
-      expirationDate: dayjs().add(3, 'day').format('YYYY-MM-DD'),
+      expirationDate: dayjs()
+        .add(defaultExpirationPeriod, 'day')
+        .format('YYYY-MM-DD'),
     });
     return data.update_meat_stocks?.returning[0];
   },

@@ -21,6 +21,7 @@ type InsertVegetableStockArgs = {
   vegetableId: number;
   quantity: number;
   incrementalUnit: number;
+  defaultExpirationPeriod: number;
   isFavorite?: boolean;
 };
 
@@ -29,6 +30,7 @@ type UpdateVegetableStockArgs = {
   userId: string;
   vegetableId: number;
   quantity: number;
+  defaultExpirationPeriod: number;
 };
 
 type UpdateDetailArgs = {
@@ -81,6 +83,7 @@ export const vegetableStockRepository = {
     vegetableId,
     quantity,
     incrementalUnit,
+    defaultExpirationPeriod,
     isFavorite,
   }: InsertVegetableStockArgs) => {
     const client = buildGraphQLUserClient(idToken);
@@ -93,8 +96,9 @@ export const vegetableStockRepository = {
         // デフォルト値
         memo: '',
         incremental_unit: incrementalUnit,
-        // 野菜の賞味期限の初期値は一週間後とする
-        expiration_date: dayjs().add(7, 'day').format('YYYY-MM-DD'),
+        expiration_date: dayjs()
+          .add(defaultExpirationPeriod, 'day')
+          .format('YYYY-MM-DD'),
         is_favorite: isFavorite ?? false,
       },
     });
@@ -105,6 +109,7 @@ export const vegetableStockRepository = {
     userId,
     vegetableId,
     quantity,
+    defaultExpirationPeriod,
   }: UpdateVegetableStockArgs) => {
     const client = buildGraphQLUserClient(idToken);
 
@@ -112,8 +117,9 @@ export const vegetableStockRepository = {
       userId,
       vegetableId,
       quantity,
-      // 在庫更新時には賞味期限を一週間後に更新する
-      expirationDate: dayjs().add(7, 'day').format('YYYY-MM-DD'),
+      expirationDate: dayjs()
+        .add(defaultExpirationPeriod, 'day')
+        .format('YYYY-MM-DD'),
     });
     return data.update_vegetable_stocks?.returning[0];
   },

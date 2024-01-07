@@ -35,6 +35,8 @@ export const useRequestUpsertVegetableStock = () => {
         quantity,
         incrementalUnit:
           vegetablesStocksRef.current.byId[vegetableId].incrementalUnit,
+        defaultExpirationPeriod:
+          vegetablesStocksRef.current.byId[vegetableId].defaultExpirationPeriod,
       });
       return data;
     } else {
@@ -47,6 +49,8 @@ export const useRequestUpsertVegetableStock = () => {
         userId: user!.uid,
         vegetableId,
         quantity,
+        defaultExpirationPeriod:
+          vegetablesStocksRef.current.byId[vegetableId].defaultExpirationPeriod,
       });
       return data;
     }
