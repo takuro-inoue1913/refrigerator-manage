@@ -92,6 +92,8 @@ export const meatStockRepository = {
       userId,
       meatId,
       quantity,
+      // 在庫更新時には賞味期限を3日後に更新する
+      expirationDate: dayjs().add(3, 'day').format('YYYY-MM-DD'),
     });
     return data.update_meat_stocks?.returning[0];
   },

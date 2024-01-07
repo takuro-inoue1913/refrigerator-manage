@@ -101,6 +101,8 @@ export const vegetableStockRepository = {
       userId,
       vegetableId,
       quantity,
+      // 在庫更新時には賞味期限を一週間後に更新する
+      expirationDate: dayjs().add(7, 'day').format('YYYY-MM-DD'),
     });
     return data.update_vegetable_stocks?.returning[0];
   },

@@ -48,20 +48,21 @@ mutation UpdateVegetableStockQuantity(
   $userId: String!
   $vegetableId: Int!
   $quantity: Int!
+  $expirationDate: date
 ) {
   update_vegetable_stocks(
     where: { user_id: { _eq: $userId }, vegetable_id: { _eq: $vegetableId } }
-    _set: { quantity: $quantity }
+    _set: { quantity: $quantity, expiration_date: $expirationDate }
   ) {
     returning {
       stock_id
       user_id
       vegetable_id
       quantity
+      expiration_date
     }
   }
 }
-
 mutation UpdateVegetableStockDetail(
   $userId: String!
   $vegetableId: Int!
