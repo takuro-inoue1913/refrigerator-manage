@@ -5,7 +5,10 @@ import {
   vegetablesStocksIdsState,
   vegetablesStocksState,
 } from '@src/states/fridge/vegetables/state';
-import { selectFilterOptionsState } from '../state';
+import {
+  SelectFilterOptions,
+  selectFilterOptionsState,
+} from '@src/states/fridge/state';
 
 type VegetableStockActions = {
   increaseVegetableStock: ({
@@ -44,6 +47,57 @@ type VegetableStockActions = {
     /** 更新するメモを指定。 */
     memo: string;
   }) => void;
+};
+
+export const filterVegetablesStocksNarrowDown = ({
+  vegetablesStocks,
+  originalIds,
+  narrowDown,
+}: {
+  vegetablesStocks: VegetablesStocks;
+  originalIds: number[];
+  narrowDown: SelectFilterOptions['narrowDown'];
+}) => {
+  let sortedIds = [...originalIds];
+  switch (narrowDown) {
+    case '通常':
+      // 通常はID順にソートする。
+      sortedIds.sort((a, b) => a - b);
+      break;
+    case '所有食材':
+      // hasStock が true のもののみをソートする。
+      sortedIds = sortedIds.filter((id) => vegetablesStocks.byId[id].hasStock);
+      break;
+    case '賞味期限が近いもの':
+      // hasStock が true のものを優先してソートし、その後、賞味期限が近いものを優先してソートする。
+      sortedIds.sort((a, b) => {
+        const aHasStock = vegetablesStocks.byId[a].hasStock;
+        const bHasStock = vegetablesStocks.byId[b].hasStock;
+        if (aHasStock && !bHasStock) {
+          return -1;
+        }
+        if (!aHasStock && bHasStock) {
+          return 1;
+        }
+        const aExpirationDate = dayjs(vegetablesStocks.byId[a].expirationDate);
+        const bExpirationDate = dayjs(vegetablesStocks.byId[b].expirationDate);
+        return aExpirationDate.diff(bExpirationDate);
+      });
+
+      break;
+    case 'あいうえお順':
+      // 名前でソートする。
+      sortedIds.sort((a, b) =>
+        vegetablesStocks.byId[a].vegetableName.localeCompare(
+          vegetablesStocks.byId[b].vegetableName,
+        ),
+      );
+      break;
+    default:
+      sortedIds = vegetablesStocks.ids;
+      break;
+  }
+  return sortedIds;
 };
 
 export const useVegetablesStockActions = () => {
@@ -143,47 +197,11 @@ export const useVegetablesStockActions = () => {
           vegetablesStocksIdsState,
         );
         set(vegetablesStocksState, (prev) => {
-          let sortedIds = [...vegetablesStocksIds];
-
-          switch (selectFilterOptions.narrowDown) {
-            case '通常':
-              // 通常はID順にソートする。
-              sortedIds.sort((a, b) => a - b);
-              break;
-            case '所有食材':
-              // hasStock が true のもののみをソートする。
-              sortedIds = sortedIds.filter((id) => prev.byId[id].hasStock);
-              break;
-            case '賞味期限が近いもの':
-              // hasStock が true のものを優先してソートし、その後、賞味期限が近いものを優先してソートする。
-              sortedIds.sort((a, b) => {
-                const aHasStock = prev.byId[a].hasStock;
-                const bHasStock = prev.byId[b].hasStock;
-                if (aHasStock && !bHasStock) {
-                  return -1;
-                }
-                if (!aHasStock && bHasStock) {
-                  return 1;
-                }
-                const aExpirationDate = dayjs(prev.byId[a].expirationDate);
-                const bExpirationDate = dayjs(prev.byId[b].expirationDate);
-                return aExpirationDate.diff(bExpirationDate);
-              });
-
-              break;
-            case 'あいうえお順':
-              // 名前でソートする。
-              sortedIds.sort((a, b) =>
-                prev.byId[a].vegetableName.localeCompare(
-                  prev.byId[b].vegetableName,
-                ),
-              );
-              break;
-            default:
-              sortedIds = prev.ids;
-              break;
-          }
-
+          const sortedIds = filterVegetablesStocksNarrowDown({
+            vegetablesStocks: prev,
+            originalIds: vegetablesStocksIds,
+            narrowDown: selectFilterOptions.narrowDown,
+          });
           return {
             ids: sortedIds,
             byId: prev.byId,
