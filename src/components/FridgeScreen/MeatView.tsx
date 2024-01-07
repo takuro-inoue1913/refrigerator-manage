@@ -1,5 +1,5 @@
 import React, { ComponentProps, FC, useCallback, useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import { SkeletonFridgeViews } from '@src/components/FridgeScreen/SkeletonFridgeViews';
 import { fridgeCommonStyles } from '@src/utils/commonStyle';
@@ -15,6 +15,7 @@ import { useDebouncedUpsertStock } from '@src/hooks/useDebouncedUpsertStock';
 import { ItemDetailModal } from '@src/components/FridgeScreen/ItemDetailModal';
 import { useRequestUpsertMeatStockDetail } from '@src/interface/hooks/meat/useRequestUpsertMeatStockDetail';
 import { GestureHandlerView } from './GestureHandlerView';
+import { ItemDisplayContents } from './ItemDisplayContents';
 
 /**
  * 冷蔵庫の肉画面を表示するコンポーネント。
@@ -103,9 +104,10 @@ export const MeatView: FC = () => {
                     onPressDecrease={onDecreaseStock}
                     onLongPress={handleLongPress}
                   />
-                  <Text style={fridgeCommonStyles.displayName}>
-                    {meatStocks.byId[meatId].meatDisplayName}
-                  </Text>
+                  <ItemDisplayContents
+                    isFavorite={meatStocks.byId[meatId].isFavorite}
+                    displayName={meatStocks.byId[meatId].meatDisplayName}
+                  />
                 </View>
               ))}
             </View>

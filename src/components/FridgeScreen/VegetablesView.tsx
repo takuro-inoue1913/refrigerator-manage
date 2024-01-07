@@ -1,5 +1,5 @@
 import React, { ComponentProps, FC, useCallback, useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
 import { fridgeCommonStyles } from '@src/utils/commonStyle';
@@ -15,6 +15,7 @@ import { generateEncodeString } from '@src/utils/logics/createEncodeStrings';
 import { useDebouncedUpsertStock } from '@src/hooks/useDebouncedUpsertStock';
 import { useRequestUpsertVegetableStockDetail } from '@src/interface/hooks/vegetable/useRequestUpsertVegetableStockDetail';
 import { GestureHandlerView } from '@src/components/FridgeScreen/GestureHandlerView';
+import { ItemDisplayContents } from './ItemDisplayContents';
 
 /**
  * 冷蔵庫の野菜画面を表示するコンポーネント。
@@ -106,9 +107,12 @@ export const VegetablesView: FC = () => {
                     onPressDecrease={onDecreaseStock}
                     onLongPress={handleLongPress}
                   />
-                  <Text style={fridgeCommonStyles.displayName}>
-                    {vegetablesStocks.byId[vegetableId].vegetableDisplayName}
-                  </Text>
+                  <ItemDisplayContents
+                    isFavorite={vegetablesStocks.byId[vegetableId].isFavorite}
+                    displayName={
+                      vegetablesStocks.byId[vegetableId].vegetableDisplayName
+                    }
+                  />
                 </View>
               ))}
             </View>

@@ -23,12 +23,8 @@ export const fridgeCommonStyles = StyleSheet.create({
   box: {
     position: 'relative',
     width: width / 3,
-    height: 100,
+    height: 120,
     justifyContent: 'center',
-    alignItems: 'center',
   },
   image: commonStyles.image,
-  displayName: {
-    fontSize: 12,
-  },
 });
