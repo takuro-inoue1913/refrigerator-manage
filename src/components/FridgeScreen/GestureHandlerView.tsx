@@ -31,8 +31,6 @@ export const GestureHandlerView: FC<Props> = ({ children }) => {
     if (nativeEvent.oldState === State.ACTIVE) {
       const { translationX } = nativeEvent;
 
-      console.log('translationX', translationX);
-
       // 右にスワイプされた場合、selectItems から 現在選択されているカテゴリー の前のカテゴリーを取得する
       if (translationX > 30) {
         selectItems.find((item, index) => {
