@@ -13,7 +13,8 @@ import * as Haptics from 'expo-haptics';
 import { SkeletonImage } from '@src/components/common/SkeletonImage';
 import { commonStyles } from '@src/utils/commonStyle';
 import { ItemBadge } from '@src/components/FridgeScreen/ItemBadge';
-import { COMMON_COLOR_GREEN, OnPressImageArgs } from '@src/utils/consts';
+import { COMMON_COLOR_GREEN } from '@src/utils/consts';
+import { OnPressImageArgs } from '@src/types';
 
 type Props = {
   /** 画像のURI */

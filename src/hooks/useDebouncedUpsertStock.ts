@@ -1,6 +1,6 @@
+import { OnPressImageArgs } from '@src/types';
 import { debounce } from 'lodash';
 import { useCallback, useRef } from 'react';
-import { OnPressImageArgs } from '@src/utils/consts';
 
 type FnArgs = {
   id: number;
