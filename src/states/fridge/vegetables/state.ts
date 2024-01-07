@@ -1,4 +1,5 @@
 import { atom, selector } from 'recoil';
+import { FridgeStock } from '@src/types';
 
 /**
  * 野菜在庫の型
@@ -6,36 +7,7 @@ import { atom, selector } from 'recoil';
 export type VegetablesStocks = {
   ids: number[];
   byId: {
-    [vegetableId: number]: {
-      /** 野菜ID */
-      id: number;
-      /** 野菜名 */
-      name: string;
-      /** 野菜表示名 */
-      displayName: string;
-      /** 野菜画像URI */
-      imageUri: string;
-      /** 単位ID */
-      unitId: number;
-      /** 単位名 */
-      unitName: string;
-      /** 在庫があるかどうか */
-      hasStock: boolean;
-      /** 在庫ID */
-      stockId: number | null;
-      /** 在庫数 */
-      quantity: number;
-      /** 増減単位 */
-      incrementalUnit: number;
-      /** 賞味期限日 */
-      expirationDate: string;
-      /** メモ */
-      memo: string;
-      /** お気に入りかどうか */
-      isFavorite: boolean;
-      /** 基本賞味期限期間 */
-      defaultExpirationPeriod: number;
-    };
+    [vegetableId: number]: FridgeStock;
   };
 };
 
