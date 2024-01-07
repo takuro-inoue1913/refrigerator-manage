@@ -6,6 +6,7 @@ query GetMeatMasterAndUnitAndStocks {
     display_name
     meat_name
     image_uri
+    default_expiration_period
     meat_master_unit_master {
       unit_id
       unit_name

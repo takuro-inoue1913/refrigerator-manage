@@ -33,6 +33,7 @@ export const generateMeatStocks = (
         expirationDate: cur.meat_master_meat_stocks?.expiration_date ?? '',
         memo: cur.meat_master_meat_stocks?.memo ?? '',
         isFavorite: cur.meat_master_meat_stocks?.is_favorite ?? false,
+        defaultExpirationPeriod: cur.default_expiration_period,
       };
       ids.push(cur.meat_id);
       return acc;

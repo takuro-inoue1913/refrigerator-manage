@@ -33,6 +33,8 @@ export type VegetablesStocks = {
       memo: string;
       /** お気に入りかどうか */
       isFavorite: boolean;
+      /** 基本賞味期限期間 */
+      defaultExpirationPeriod: number;
     };
   };
 };

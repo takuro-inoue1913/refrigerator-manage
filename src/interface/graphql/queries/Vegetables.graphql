@@ -8,6 +8,7 @@ query GetVegetableMasterAndUnitAndStocks {
     display_name
     vegetable_name
     image_uri
+    default_expiration_period
     vegetable_master_unit_master {
       unit_id
       unit_name
