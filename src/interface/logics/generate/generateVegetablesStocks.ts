@@ -14,9 +14,9 @@ export const generateVegetablesStocks = (
   const byId = data.vegetable_master.reduce(
     (acc, cur) => {
       acc[cur.vegetable_id] = {
-        vegetableId: cur.vegetable_id,
-        vegetableName: cur.vegetable_name,
-        vegetableDisplayName: cur.display_name,
+        id: cur.vegetable_id,
+        name: cur.vegetable_name,
+        displayName: cur.display_name,
         imageUri: cur.image_uri,
         // MEMO: 野菜の単位は必ず存在するため、! をつけている
         unitId: cur.vegetable_master_unit_master!.unit_id,

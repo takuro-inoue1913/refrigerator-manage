@@ -8,11 +8,11 @@ export type MeatStocks = {
   byId: {
     [meatId: number]: {
       /** 肉ID */
-      meatId: number;
+      id: number;
       /** 肉名 */
-      meatName: string;
+      name: string;
       /** 肉表示名 */
-      meatDisplayName: string;
+      displayName: string;
       /** 肉画像URI */
       imageUri: string;
       /** 単位ID */

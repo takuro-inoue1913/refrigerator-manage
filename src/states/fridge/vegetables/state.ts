@@ -8,11 +8,11 @@ export type VegetablesStocks = {
   byId: {
     [vegetableId: number]: {
       /** 野菜ID */
-      vegetableId: number;
+      id: number;
       /** 野菜名 */
-      vegetableName: string;
+      name: string;
       /** 野菜表示名 */
-      vegetableDisplayName: string;
+      displayName: string;
       /** 野菜画像URI */
       imageUri: string;
       /** 単位ID */

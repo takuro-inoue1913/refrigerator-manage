@@ -69,7 +69,7 @@ export const filterMeatStock = ({
     case 'あいうえお順':
       // 名前でソートする。
       sortedIds.sort((a, b) =>
-        meatStocks.byId[a].meatName.localeCompare(meatStocks.byId[b].meatName),
+        meatStocks.byId[a].name.localeCompare(meatStocks.byId[b].name),
       );
       break;
     default:

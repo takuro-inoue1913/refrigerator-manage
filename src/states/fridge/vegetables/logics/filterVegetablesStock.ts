@@ -77,8 +77,8 @@ export const filterVegetablesStock = ({
     case 'あいうえお順':
       // 名前でソートする。
       sortedIds.sort((a, b) =>
-        vegetablesStocks.byId[a].vegetableName.localeCompare(
-          vegetablesStocks.byId[b].vegetableName,
+        vegetablesStocks.byId[a].name.localeCompare(
+          vegetablesStocks.byId[b].name,
         ),
       );
       break;

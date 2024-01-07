@@ -43,13 +43,13 @@ export const VegetablesView: FC = () => {
     (id: number) => {
       setModalProps({
         visible: true,
-        id: vegetablesStocks.byId[id].vegetableId,
+        id: vegetablesStocks.byId[id].id,
         sourceUri: vegetablesStocks.byId[id].imageUri,
         cacheKey: generateEncodeString([
-          vegetablesStocks.byId[id].vegetableName,
-          vegetablesStocks.byId[id].vegetableId.toString(),
+          vegetablesStocks.byId[id].name,
+          vegetablesStocks.byId[id].id.toString(),
         ]),
-        itemName: vegetablesStocks.byId[id].vegetableDisplayName,
+        itemName: vegetablesStocks.byId[id].displayName,
         incrementalUnit: vegetablesStocks.byId[id].incrementalUnit,
         quantity: vegetablesStocks.byId[id].quantity,
         unitName: vegetablesStocks.byId[id].unitName,
@@ -106,16 +106,16 @@ export const VegetablesView: FC = () => {
             <View key={`row-${index}`} style={fridgeCommonStyles.row}>
               {row.map((vegetableId) => (
                 <View
-                  key={vegetablesStocks.byId[vegetableId].vegetableId}
+                  key={vegetablesStocks.byId[vegetableId].id}
                   style={fridgeCommonStyles.box}
                 >
                   <ItemImage
                     sourceUri={vegetablesStocks.byId[vegetableId].imageUri}
                     cacheKey={generateEncodeString([
-                      vegetablesStocks.byId[vegetableId].vegetableName,
-                      vegetablesStocks.byId[vegetableId].vegetableId.toString(),
+                      vegetablesStocks.byId[vegetableId].name,
+                      vegetablesStocks.byId[vegetableId].id.toString(),
                     ])}
-                    targetId={vegetablesStocks.byId[vegetableId].vegetableId}
+                    targetId={vegetablesStocks.byId[vegetableId].id}
                     hasStock={vegetablesStocks.byId[vegetableId].hasStock}
                     quantity={vegetablesStocks.byId[vegetableId].quantity}
                     unitName={vegetablesStocks.byId[vegetableId].unitName}
@@ -127,11 +127,9 @@ export const VegetablesView: FC = () => {
                     onLongPress={handleLongPress}
                   />
                   <ItemDisplayContents
-                    targetId={vegetablesStocks.byId[vegetableId].vegetableId}
+                    targetId={vegetablesStocks.byId[vegetableId].id}
                     isFavorite={vegetablesStocks.byId[vegetableId].isFavorite}
-                    displayName={
-                      vegetablesStocks.byId[vegetableId].vegetableDisplayName
-                    }
+                    displayName={vegetablesStocks.byId[vegetableId].displayName}
                     onPress={handleItemDisplayContents}
                   />
                 </View>

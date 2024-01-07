@@ -13,9 +13,9 @@ export const generateMeatStocks = (
   const byId = data.meat_master.reduce(
     (acc, cur) => {
       acc[cur.meat_id] = {
-        meatId: cur.meat_id,
-        meatName: cur.meat_name,
-        meatDisplayName: cur.display_name,
+        id: cur.meat_id,
+        name: cur.meat_name,
+        displayName: cur.display_name,
         imageUri: cur.image_uri,
         // MEMO: 単位は必ず存在するため、! をつけている
         unitId: cur.meat_master_unit_master!.unit_id,

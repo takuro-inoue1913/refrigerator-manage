@@ -40,13 +40,13 @@ export const MeatView: FC = () => {
     (id: number) => {
       setModalProps({
         visible: true,
-        id: meatStocks.byId[id].meatId,
+        id: meatStocks.byId[id].id,
         sourceUri: meatStocks.byId[id].imageUri,
         cacheKey: generateEncodeString([
-          meatStocks.byId[id].meatName,
-          meatStocks.byId[id].meatId.toString(),
+          meatStocks.byId[id].name,
+          meatStocks.byId[id].id.toString(),
         ]),
-        itemName: meatStocks.byId[id].meatDisplayName,
+        itemName: meatStocks.byId[id].displayName,
         incrementalUnit: meatStocks.byId[id].incrementalUnit,
         quantity: meatStocks.byId[id].quantity,
         unitName: meatStocks.byId[id].unitName,
@@ -99,16 +99,16 @@ export const MeatView: FC = () => {
             <View key={`row-${index}`} style={fridgeCommonStyles.row}>
               {row.map((meatId) => (
                 <View
-                  key={meatStocks.byId[meatId].meatId}
+                  key={meatStocks.byId[meatId].id}
                   style={fridgeCommonStyles.box}
                 >
                   <ItemImage
                     sourceUri={meatStocks.byId[meatId].imageUri}
                     cacheKey={generateEncodeString([
-                      meatStocks.byId[meatId].meatName,
-                      meatStocks.byId[meatId].meatId.toString(),
+                      meatStocks.byId[meatId].name,
+                      meatStocks.byId[meatId].id.toString(),
                     ])}
-                    targetId={meatStocks.byId[meatId].meatId}
+                    targetId={meatStocks.byId[meatId].id}
                     hasStock={meatStocks.byId[meatId].hasStock}
                     quantity={meatStocks.byId[meatId].quantity}
                     unitName={meatStocks.byId[meatId].unitName}
@@ -118,9 +118,9 @@ export const MeatView: FC = () => {
                     onLongPress={handleLongPress}
                   />
                   <ItemDisplayContents
-                    targetId={meatStocks.byId[meatId].meatId}
+                    targetId={meatStocks.byId[meatId].id}
                     isFavorite={meatStocks.byId[meatId].isFavorite}
-                    displayName={meatStocks.byId[meatId].meatDisplayName}
+                    displayName={meatStocks.byId[meatId].displayName}
                     onPress={handleItemDisplayContents}
                   />
                 </View>
