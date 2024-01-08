@@ -17,6 +17,7 @@ import { LoadingScreen } from '@src/screens/LoadingScreen';
 import { PasswordResetScreen } from '@src/screens/PasswordResetScreen';
 import { FridgeScreen } from '@src/screens/FridgeScreen';
 import { COMMON_COLOR_BLUE, COMMON_COLOR_GREEN } from '@src/utils/consts';
+import { FridgeItemCreateScreen } from './screens/FridgeIitemCreateScreen';
 
 export const App: FC = () => {
   const setUser = useSetRecoilState(userState);
@@ -61,6 +62,15 @@ export const App: FC = () => {
     );
   };
 
+  const FridgeStack = () => {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="冷蔵庫管理" component={FridgeScreen} />
+        <Stack.Screen name="食材新規登録" component={FridgeItemCreateScreen} />
+      </Stack.Navigator>
+    );
+  };
+
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -73,9 +83,9 @@ export const App: FC = () => {
             } else if (route.name === '読み取り') {
               iconName = 'camera';
             }
-            if (route.name === '冷蔵庫管理') {
+            if (route.name === 'FridgeStack') {
               iconName = 'fridge';
-            } else if (route.name === 'Login') {
+            } else if (route.name === 'LoginStack') {
               iconName = 'login';
             } else if (route.name === '新規登録') {
               iconName = 'account-plus';
@@ -89,13 +99,17 @@ export const App: FC = () => {
         {idToken ? (
           <>
             <Tab.Screen name="マイページ" component={HomeScreen} />
-            <Tab.Screen name="冷蔵庫管理" component={FridgeScreen} />
+            <Tab.Screen
+              name="FridgeStack"
+              options={{ headerShown: false }}
+              component={FridgeStack}
+            />
             <Tab.Screen name="読み取り" component={CameraScreen} />
           </>
         ) : (
           <>
             <Tab.Screen
-              name="Login"
+              name="LoginStack"
               options={{ headerShown: false }}
               component={LoginStack}
             />
