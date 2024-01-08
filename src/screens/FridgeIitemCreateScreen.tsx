@@ -14,6 +14,7 @@ import { useForm, Controller } from 'react-hook-form';
 import * as ImagePicker from 'expo-image-picker';
 import * as ImageManipulator from 'expo-image-manipulator';
 import * as FileSystem from 'expo-file-system';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export const FridgeItemCreateScreen = () => {
   const {
@@ -94,7 +95,6 @@ export const FridgeItemCreateScreen = () => {
       <Controller
         control={control}
         name="image"
-        defaultValue={null}
         render={({ field: { value, onChange } }) => (
           <TouchableOpacity
             onPress={() => handleChoosePhoto(onChange)}
@@ -103,7 +103,11 @@ export const FridgeItemCreateScreen = () => {
             {value ? (
               <Image source={{ uri: value.uri }} style={styles.imagePreview} />
             ) : (
-              <Text>画像をアップロード</Text>
+              <View>
+                <Text>
+                  <Icon name="image-plus" style={styles.icon} />
+                </Text>
+              </View>
             )}
           </TouchableOpacity>
         )}
@@ -216,19 +220,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
+    backgroundColor: '#fff',
   },
   imageUploader: {
-    marginBottom: 20,
+    marginBottom: 30,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#000',
-    width: 100,
-    height: 100,
+    borderWidth: 5,
+    borderColor: '#e1e4e8',
+    borderStyle: 'dotted',
+    backgroundColor: 'transparent',
+    width: 150,
+    height: 150,
+    borderRadius: 15,
   },
   imagePreview: {
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
+    borderRadius: 15,
   },
   input: {
     height: 40,
@@ -240,5 +249,9 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: 'red',
+  },
+  icon: {
+    fontSize: 80,
+    color: '#e1e4e8',
   },
 });
