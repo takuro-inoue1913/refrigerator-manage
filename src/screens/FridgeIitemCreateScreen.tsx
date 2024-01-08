@@ -7,31 +7,48 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  Alert,
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
-import ImagePicker from 'react-native-image-picker';
+import * as ImagePicker from 'expo-image-picker';
 
 export const FridgeItemCreateScreen = () => {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<{
+    image: { uri: string } | null;
+    displayName: string;
+    nameKana: string;
+    expiryPeriod: string;
+    incrementUnit: string;
+    unitName: string;
+  }>();
 
-  const handleChoosePhoto = (onChange) => {
-    const options = {
-      noData: true,
-    };
+  const handleChoosePhoto = async () => {
+    const mediaLibrary =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (mediaLibrary.status !== 'granted') {
+      Alert.alert('写真へのアクセス許可を ON にしてください');
+      return;
+    }
 
-    ImagePicker.launchImageLibrary(options, (response) => {
-      if (response.uri) {
-        onChange(response);
-      }
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      allowsMultipleSelection: false,
+      aspect: [1, 1],
+      quality: 1,
     });
+
+    if (!result.canceled) {
+      console.log(result);
+    }
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = () => {
+    console.log('submit');
     // ここでデータを保存する処理を行います。
   };
 
@@ -41,9 +58,9 @@ export const FridgeItemCreateScreen = () => {
         control={control}
         name="image"
         defaultValue={null}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { value } }) => (
           <TouchableOpacity
-            onPress={() => handleChoosePhoto(onChange)}
+            onPress={() => handleChoosePhoto()}
             style={styles.imageUploader}
           >
             {value ? (
@@ -78,6 +95,7 @@ export const FridgeItemCreateScreen = () => {
         name="nameKana"
         rules={{
           required: '名前（ひらがな）は必須です',
+          // eslint-disable-next-line no-irregular-whitespace
           pattern: /^[あ-んー　]*$/,
         }}
         render={({ field: { onChange, onBlur, value } }) => (
