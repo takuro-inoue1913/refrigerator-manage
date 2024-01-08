@@ -95,6 +95,7 @@ export const FridgeItemCreateScreen = () => {
       <Controller
         control={control}
         name="image"
+        rules={{ required: '画像は必須です。' }}
         render={({ field: { value, onChange } }) => (
           <TouchableOpacity
             onPress={() => handleChoosePhoto(onChange)}
@@ -112,11 +113,20 @@ export const FridgeItemCreateScreen = () => {
           </TouchableOpacity>
         )}
       />
+      {errors.image && (
+        <Text style={styles.errorText}>{errors.image.message}</Text>
+      )}
 
       <Controller
         control={control}
         name="displayName"
-        rules={{ required: '表示名は必須です' }}
+        rules={{
+          required: '表示名は必須です。',
+          maxLength: {
+            value: 6,
+            message: '表示名は6文字以内で入力してください。',
+          },
+        }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
             style={styles.input}
@@ -135,9 +145,12 @@ export const FridgeItemCreateScreen = () => {
         control={control}
         name="nameKana"
         rules={{
-          required: '名前（ひらがな）は必須です',
-          // eslint-disable-next-line no-irregular-whitespace
-          pattern: /^[あ-んー　]*$/,
+          required: '名前（ひらがな）は必須です。',
+          pattern: {
+            // eslint-disable-next-line no-irregular-whitespace
+            value: /^[あ-んー　]*$/,
+            message: '名前（ひらがな）はひらがなのみで入力してください。',
+          },
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
@@ -150,13 +163,19 @@ export const FridgeItemCreateScreen = () => {
         )}
       />
       {errors.nameKana && (
-        <Text style={styles.errorText}>名前のひらがなが無効です</Text>
+        <Text style={styles.errorText}>{errors.nameKana.message}</Text>
       )}
 
       <Controller
         control={control}
         name="expiryPeriod"
-        rules={{ required: '基本期間は必須です', min: 1 }}
+        rules={{
+          required: '賞味期限の基本期間は必須です。',
+          pattern: {
+            value: /^\d+$/,
+            message: '賞味期限の基本期間は数値のみで入力してください。',
+          },
+        }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
             style={styles.input}
@@ -169,13 +188,19 @@ export const FridgeItemCreateScreen = () => {
         )}
       />
       {errors.expiryPeriod && (
-        <Text style={styles.errorText}>有効な期間を入力してください</Text>
+        <Text style={styles.errorText}>{errors.expiryPeriod.message}</Text>
       )}
 
       <Controller
         control={control}
         name="incrementUnit"
-        rules={{ required: '増減単位は必須です', min: 1 }}
+        rules={{
+          required: '増減単位は必須です。',
+          pattern: {
+            value: /^\d+$/,
+            message: '増減単位は数値のみで入力してください。',
+          },
+        }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
             style={styles.input}
@@ -188,13 +213,35 @@ export const FridgeItemCreateScreen = () => {
         )}
       />
       {errors.incrementUnit && (
-        <Text style={styles.errorText}>有効な増減単位を入力してください</Text>
+        <Text style={styles.errorText}>{errors.incrementUnit.message}</Text>
       )}
 
       <Controller
         control={control}
         name="unitName"
-        rules={{ required: '単位名は必須です' }}
+        rules={{
+          required: '単位名は必須です。',
+          validate: (value) =>
+            [
+              '個',
+              '本',
+              'g',
+              '束',
+              '袋',
+              '枚',
+              '箱',
+              '缶',
+              'L',
+              'ml',
+              'cc',
+              'カップ',
+              '合',
+              '切',
+              'パック',
+              '玉',
+              '丁',
+            ].includes(value) || '無効な単位名です。',
+        }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
             style={styles.input}
