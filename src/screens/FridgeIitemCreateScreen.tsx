@@ -12,6 +12,8 @@ import {
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import * as ImagePicker from 'expo-image-picker';
+import * as ImageManipulator from 'expo-image-manipulator';
+import * as FileSystem from 'expo-file-system';
 
 export const FridgeItemCreateScreen = () => {
   const {
@@ -27,7 +29,30 @@ export const FridgeItemCreateScreen = () => {
     unitName: string;
   }>();
 
-  const handleChoosePhoto = async () => {
+  /** 画像をリサイズする */
+  const resizeImage = async (uri: string): Promise<string> => {
+    const result = await ImageManipulator.manipulateAsync(
+      uri,
+      [
+        {
+          resize: {
+            width: 500,
+            height: 500,
+          },
+        },
+      ],
+      { compress: 0, format: ImageManipulator.SaveFormat.PNG },
+    );
+
+    const fileInfo = await FileSystem.getInfoAsync(result.uri);
+    return fileInfo.uri;
+  };
+
+  const handleChoosePhoto = async (
+    // MEMO: react-hook-form の field.onChange の型に合わせるため。
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onChange: (...event: any[]) => void,
+  ) => {
     const mediaLibrary =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (mediaLibrary.status !== 'granted') {
@@ -55,8 +80,8 @@ export const FridgeItemCreateScreen = () => {
       aspect: [1, 1],
       quality: 1,
     });
-
-    return result;
+    const uri = await resizeImage(result.assets?.[0].uri as string);
+    onChange({ uri });
   };
 
   const onSubmit = () => {
@@ -72,10 +97,7 @@ export const FridgeItemCreateScreen = () => {
         defaultValue={null}
         render={({ field: { value, onChange } }) => (
           <TouchableOpacity
-            onPress={async () => {
-              const result = await handleChoosePhoto();
-              onChange({ uri: result?.assets?.[0].uri });
-            }}
+            onPress={() => handleChoosePhoto(onChange)}
             style={styles.imageUploader}
           >
             {value ? (
