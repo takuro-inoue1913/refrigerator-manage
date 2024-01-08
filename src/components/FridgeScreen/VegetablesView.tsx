@@ -17,7 +17,7 @@ import { useRequestUpsertVegetableStockDetail } from '@src/interface/hooks/veget
 import { GestureHandlerView } from '@src/components/FridgeScreen/GestureHandlerView';
 import { ItemDisplayContents } from './ItemDisplayContents';
 import { useRequestUpsertVegetableIsFavorite } from '@src/interface/hooks/vegetable/useRequestUpsertVegetableIsFavorite';
-import { SkeletonImage } from '../common/SkeletonImage';
+import { PlusImage } from '@src/components/common/PlusImage';
 
 /**
  * 冷蔵庫の野菜画面を表示するコンポーネント。
@@ -137,7 +137,7 @@ export const VegetablesView: FC = () => {
               ))}
               {index === rows.length - 1 && (
                 <View style={fridgeCommonStyles.box}>
-                  <SkeletonImage />
+                  <PlusImage />
                 </View>
               )}
             </View>
