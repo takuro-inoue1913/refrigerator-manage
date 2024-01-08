@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     left: 0,
+    marginTop: 6,
     backgroundColor: '#e1e4e8',
   },
 });
