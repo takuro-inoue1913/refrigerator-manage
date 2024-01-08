@@ -56,9 +56,7 @@ export const FridgeItemCreateScreen = () => {
       quality: 1,
     });
 
-    if (!result.canceled) {
-      console.log(result);
-    }
+    return result;
   };
 
   const onSubmit = () => {
@@ -72,9 +70,12 @@ export const FridgeItemCreateScreen = () => {
         control={control}
         name="image"
         defaultValue={null}
-        render={({ field: { value } }) => (
+        render={({ field: { value, onChange } }) => (
           <TouchableOpacity
-            onPress={() => handleChoosePhoto()}
+            onPress={async () => {
+              const result = await handleChoosePhoto();
+              onChange({ uri: result?.assets?.[0].uri });
+            }}
             style={styles.imageUploader}
           >
             {value ? (
