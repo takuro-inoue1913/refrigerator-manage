@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  Linking,
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import * as ImagePicker from 'expo-image-picker';
@@ -30,7 +31,20 @@ export const FridgeItemCreateScreen = () => {
     const mediaLibrary =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (mediaLibrary.status !== 'granted') {
-      Alert.alert('写真へのアクセス許可を ON にしてください');
+      Alert.alert(
+        '写真へのアクセス許可が必要です。',
+        '写真をアップロードする場合は、設定画面からカメラへのアクセスを許可してください。',
+        [
+          {
+            text: 'キャンセル',
+            style: 'cancel',
+          },
+          {
+            text: '設定を開く',
+            onPress: () => Linking.openURL('app-settings:'),
+          },
+        ],
+      );
       return;
     }
 
