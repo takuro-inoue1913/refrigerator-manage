@@ -19,10 +19,12 @@ import * as FileSystem from 'expo-file-system';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Dropdown } from 'react-native-element-dropdown';
 import { COMMON_COLOR_GREEN } from '@src/utils/consts';
+import { getIncrementalUnit } from '@src/utils/logics/getIncrementalUnit';
 
 export const FridgeItemCreateScreen = () => {
   const {
     control,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<{
@@ -130,6 +132,17 @@ export const FridgeItemCreateScreen = () => {
     });
     const uri = await resizeImage(result.assets?.[0].uri as string);
     onChange({ uri });
+  };
+
+  const handleUnitChange = (
+    item: { unit_id: number; unit_name: string },
+    // MEMO: react-hook-form の field.onChange の型に合わせるため。
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onChange: (...event: any[]) => void,
+  ) => {
+    setValue('unitName', item.unit_name);
+    setValue('incrementUnit', String(getIncrementalUnit(item.unit_name)));
+    onChange(item);
   };
 
   const onSubmit = () => {
@@ -272,7 +285,7 @@ export const FridgeItemCreateScreen = () => {
             placeholder="単位名 *選んだ単位名でデフォルトの増減単位が設定されます。"
             searchPlaceholder="単位名を検索"
             value={value}
-            onChange={onChange}
+            onChange={(item) => handleUnitChange(item, onChange)}
             renderItem={(item) => {
               return (
                 <View style={styles.item}>
