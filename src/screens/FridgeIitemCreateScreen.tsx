@@ -10,6 +10,7 @@ import {
   Image,
   Alert,
   Linking,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import * as ImagePicker from 'expo-image-picker';
@@ -136,7 +137,15 @@ export const FridgeItemCreateScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={'position'}
+      contentContainerStyle={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+      style={styles.container}
+    >
       <Controller
         control={control}
         name="image"
@@ -236,32 +245,6 @@ export const FridgeItemCreateScreen = () => {
       {errors.expiryPeriod && (
         <Text style={styles.errorText}>{errors.expiryPeriod.message}</Text>
       )}
-
-      <Controller
-        control={control}
-        name="incrementUnit"
-        rules={{
-          required: '増減単位は必須です。',
-          pattern: {
-            value: /^\d+$/,
-            message: '増減単位は数値のみで入力してください。',
-          },
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            placeholder="増減単位 ※ +- での在庫の増減量になります。"
-            keyboardType="numeric"
-          />
-        )}
-      />
-      {errors.incrementUnit && (
-        <Text style={styles.errorText}>{errors.incrementUnit.message}</Text>
-      )}
-
       <Controller
         control={control}
         name="unitName"
@@ -308,20 +291,42 @@ export const FridgeItemCreateScreen = () => {
           />
         )}
       />
+      <Controller
+        control={control}
+        name="incrementUnit"
+        rules={{
+          required: '増減単位は必須です。',
+          pattern: {
+            value: /^\d+$/,
+            message: '増減単位は数値のみで入力してください。',
+          },
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            style={styles.input}
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            placeholder="増減単位 ※ +- での在庫の増減量になります。"
+            keyboardType="numeric"
+          />
+        )}
+      />
+      {errors.incrementUnit && (
+        <Text style={styles.errorText}>{errors.incrementUnit.message}</Text>
+      )}
       {errors.unitName && (
         <Text style={styles.errorText}>{errors.unitName.message}</Text>
       )}
 
       <Button title="保存" onPress={handleSubmit(onSubmit)} />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     padding: 20,
     backgroundColor: '#fff',
   },
@@ -360,6 +365,7 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     width: '90%',
+    marginBottom: 15,
     height: 42,
     backgroundColor: 'white',
     borderRadius: 4,
