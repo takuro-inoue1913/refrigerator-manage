@@ -132,8 +132,9 @@ export const FridgeItemCreateScreen = () => {
             style={styles.input}
             onBlur={onBlur}
             onChangeText={onChange}
+            accessibilityLabel="表示名"
             value={value}
-            placeholder="表示名"
+            placeholder="表示名 (6文字以内) ※リストに表示されます。"
           />
         )}
       />
@@ -158,7 +159,7 @@ export const FridgeItemCreateScreen = () => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            placeholder="名前（ひらがな）"
+            placeholder="名前 (ひらがな) ※絞込や検索に使用します。"
           />
         )}
       />
@@ -182,7 +183,7 @@ export const FridgeItemCreateScreen = () => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            placeholder="賞味期限の基本期間 (日数)"
+            placeholder="賞味期限期間 (日数)"
             keyboardType="numeric"
           />
         )}
@@ -207,7 +208,7 @@ export const FridgeItemCreateScreen = () => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            placeholder="増減単位"
+            placeholder="増減単位 ※ +- での在庫の増減量になります。"
             keyboardType="numeric"
           />
         )}
@@ -248,7 +249,7 @@ export const FridgeItemCreateScreen = () => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            placeholder="単位名"
+            placeholder="単位名 ※在庫の単位になります。"
           />
         )}
       />
@@ -287,12 +288,13 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   input: {
-    height: 40,
-    borderBottomWidth: 1,
-    borderColor: '#000',
-    marginBottom: 10,
-    width: '100%',
+    width: '90%',
+    borderWidth: 1,
+    borderColor: '#ced4da',
+    borderRadius: 4,
     padding: 10,
+    fontSize: 16,
+    marginBottom: 15,
   },
   errorText: {
     color: 'red',
