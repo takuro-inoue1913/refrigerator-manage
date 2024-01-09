@@ -1,4 +1,5 @@
 import React from 'react';
+import { isEqual } from 'lodash';
 import {
   View,
   Text,
@@ -289,14 +290,21 @@ export const FridgeItemCreateScreen = () => {
             searchPlaceholder="単位名を検索"
             value={value}
             onChange={onChange}
-            renderItem={(item) => (
-              <View style={styles.item}>
-                <Text style={styles.textItem}>{item.unit_name}</Text>
-                {item.unit_id === Number(value) && (
-                  <Icon name="check" size={20} color="#0f0" />
-                )}
-              </View>
-            )}
+            renderItem={(item) => {
+              return (
+                <View style={styles.item}>
+                  <Text style={styles.textItem}>{item.unit_name}</Text>
+                  {isEqual(item, value) && (
+                    <Icon
+                      name="check"
+                      style={styles.itemIcon}
+                      size={20}
+                      color="#0f0"
+                    />
+                  )}
+                </View>
+              );
+            }}
           />
         )}
       />
@@ -391,5 +399,8 @@ const styles = StyleSheet.create({
     height: 40,
     fontSize: 16,
     // color: '#ced4da',
+  },
+  itemIcon: {
+    marginRight: 5,
   },
 });
