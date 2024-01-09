@@ -15,6 +15,7 @@ import * as ImagePicker from 'expo-image-picker';
 import * as ImageManipulator from 'expo-image-manipulator';
 import * as FileSystem from 'expo-file-system';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Dropdown } from 'react-native-element-dropdown';
 
 export const FridgeItemCreateScreen = () => {
   const {
@@ -29,6 +30,49 @@ export const FridgeItemCreateScreen = () => {
     incrementUnit: string;
     unitName: string;
   }>();
+
+  const unitMasterData = [
+    {
+      unit_id: 3,
+      unit_name: '個',
+    },
+    {
+      unit_id: 4,
+      unit_name: '本',
+    },
+    {
+      unit_id: 5,
+      unit_name: 'g',
+    },
+    {
+      unit_id: 7,
+      unit_name: '束',
+    },
+    {
+      unit_id: 8,
+      unit_name: '袋',
+    },
+    {
+      unit_id: 6,
+      unit_name: '切',
+    },
+    {
+      unit_id: 9,
+      unit_name: '缶',
+    },
+    {
+      unit_id: 10,
+      unit_name: '枚',
+    },
+    {
+      unit_id: 11,
+      unit_name: '玉',
+    },
+    {
+      unit_id: 12,
+      unit_name: '丁',
+    },
+  ];
 
   /** 画像をリサイズする */
   const resizeImage = async (uri: string): Promise<string> => {
@@ -222,34 +266,37 @@ export const FridgeItemCreateScreen = () => {
         name="unitName"
         rules={{
           required: '単位名は必須です。',
-          validate: (value) =>
-            [
-              '個',
-              '本',
-              'g',
-              '束',
-              '袋',
-              '枚',
-              '箱',
-              '缶',
-              'L',
-              'ml',
-              'cc',
-              'カップ',
-              '合',
-              '切',
-              'パック',
-              '玉',
-              '丁',
-            ].includes(value) || '無効な単位名です。',
+          validate: (value) => {
+            const unit = unitMasterData.find(
+              (item) => item.unit_name === value,
+            );
+            return unit ? true : '無効な単位名です。';
+          },
         }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
-            onBlur={onBlur}
-            onChangeText={onChange}
+        render={({ field: { onChange, value } }) => (
+          <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={unitMasterData}
+            search
+            maxHeight={300}
+            labelField="unit_name"
+            valueField="unit_id"
+            placeholder="単位名"
+            searchPlaceholder="単位名を検索"
             value={value}
-            placeholder="単位名 ※在庫の単位になります。"
+            onChange={onChange}
+            renderItem={(item) => (
+              <View style={styles.item}>
+                <Text style={styles.textItem}>{item.unit_name}</Text>
+                {item.unit_id === Number(value) && (
+                  <Icon name="check" size={20} color="#0f0" />
+                )}
+              </View>
+            )}
           />
         )}
       />
@@ -302,5 +349,47 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 80,
     color: '#e1e4e8',
+  },
+  dropdown: {
+    width: '90%',
+    height: 42,
+    backgroundColor: 'white',
+    borderRadius: 4,
+    padding: 12,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
+  },
+  item: {
+    padding: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  textItem: {
+    flex: 1,
+    fontSize: 16,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+    color: '#ced4da',
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+    // color: '#ced4da',
   },
 });
