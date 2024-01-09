@@ -18,6 +18,7 @@ import * as ImageManipulator from 'expo-image-manipulator';
 import * as FileSystem from 'expo-file-system';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Dropdown } from 'react-native-element-dropdown';
+import { COMMON_COLOR_GREEN } from '@src/utils/consts';
 
 export const FridgeItemCreateScreen = () => {
   const {
@@ -265,11 +266,10 @@ export const FridgeItemCreateScreen = () => {
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
             data={unitMasterData}
-            search
-            maxHeight={300}
+            maxHeight={150}
             labelField="unit_name"
             valueField="unit_id"
-            placeholder="単位名"
+            placeholder="単位名 *選んだ単位名でデフォルトの増減単位が設定されます。"
             searchPlaceholder="単位名を検索"
             value={value}
             onChange={onChange}
@@ -282,7 +282,7 @@ export const FridgeItemCreateScreen = () => {
                       name="check"
                       style={styles.itemIcon}
                       size={20}
-                      color="#0f0"
+                      color={COMMON_COLOR_GREEN}
                     />
                   )}
                 </View>
