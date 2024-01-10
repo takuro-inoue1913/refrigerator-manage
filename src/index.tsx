@@ -5,14 +5,15 @@ import { App } from '@src/App';
 
 import '@src/utils/dayjsConfig';
 
-const DebugObserver = () => {
+const DebugObserver = ({ isDebug }: { isDebug?: boolean }) => {
   const snapshot = useRecoilSnapshot();
   useEffect(() => {
+    if (!isDebug) return;
     console.debug('The following atoms were modified:');
     for (const node of snapshot.getNodes_UNSTABLE({ isModified: true })) {
       console.debug(node.key, snapshot.getLoadable(node));
     }
-  }, [snapshot]);
+  }, [snapshot, isDebug]);
 
   return null;
 };
@@ -26,7 +27,7 @@ export const AppWrapper: FC = () => {
 
   return (
     <RecoilRoot>
-      <DebugObserver />
+      <DebugObserver isDebug />
       <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>
