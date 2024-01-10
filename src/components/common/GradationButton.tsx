@@ -1,11 +1,12 @@
 import React, { FC, ReactNode } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { CommonGradation } from '@src/components/common/CommonGradation';
 
 type Props = {
   width?: number;
   height?: number;
   borderRadius?: number;
+  disabled?: boolean;
   onPress: () => void;
   children?: ReactNode;
 };
@@ -17,9 +18,26 @@ export const LinearGradientButton: FC<Props> = ({
   width,
   height,
   borderRadius,
+  disabled,
   onPress,
   children,
 }) => {
+  if (disabled) {
+    return (
+      <View
+        style={{
+          ...styles.disabled,
+          ...{
+            width: width ?? 'auto',
+            height: height ?? 50,
+            borderRadius: borderRadius ?? 50,
+          },
+        }}
+      >
+        {children}
+      </View>
+    );
+  }
   return (
     <TouchableOpacity onPress={onPress}>
       <CommonGradation
@@ -43,5 +61,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
+  },
+  disabled: {
+    backgroundColor: '#e1e4e8',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
