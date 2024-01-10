@@ -89,6 +89,10 @@ export enum Cursor_Ordering {
 export type Custom_Meat_Master = {
   __typename?: 'custom_meat_master';
   custom_meat_id: Scalars['Int']['output'];
+  /** An object relationship */
+  custom_meat_master_unit_master?: Maybe<Unit_Master>;
+  /** An object relationship */
+  custom_meat_master_users?: Maybe<Users>;
   custom_meat_name: Scalars['String']['output'];
   default_expiration_period: Scalars['Int']['output'];
   display_name: Scalars['String']['output'];
@@ -102,6 +106,17 @@ export type Custom_Meat_Master_Aggregate = {
   __typename?: 'custom_meat_master_aggregate';
   aggregate?: Maybe<Custom_Meat_Master_Aggregate_Fields>;
   nodes: Array<Custom_Meat_Master>;
+};
+
+export type Custom_Meat_Master_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Custom_Meat_Master_Aggregate_Bool_Exp_Count>;
+};
+
+export type Custom_Meat_Master_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Custom_Meat_Master_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Custom_Meat_Master_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
 };
 
 /** aggregate fields of "custom_meat_master" */
@@ -127,6 +142,28 @@ export type Custom_Meat_Master_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+/** order by aggregate values of table "custom_meat_master" */
+export type Custom_Meat_Master_Aggregate_Order_By = {
+  avg?: InputMaybe<Custom_Meat_Master_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Custom_Meat_Master_Max_Order_By>;
+  min?: InputMaybe<Custom_Meat_Master_Min_Order_By>;
+  stddev?: InputMaybe<Custom_Meat_Master_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Custom_Meat_Master_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Custom_Meat_Master_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Custom_Meat_Master_Sum_Order_By>;
+  var_pop?: InputMaybe<Custom_Meat_Master_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Custom_Meat_Master_Var_Samp_Order_By>;
+  variance?: InputMaybe<Custom_Meat_Master_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "custom_meat_master" */
+export type Custom_Meat_Master_Arr_Rel_Insert_Input = {
+  data: Array<Custom_Meat_Master_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Custom_Meat_Master_On_Conflict>;
+};
+
 /** aggregate avg on columns */
 export type Custom_Meat_Master_Avg_Fields = {
   __typename?: 'custom_meat_master_avg_fields';
@@ -135,12 +172,21 @@ export type Custom_Meat_Master_Avg_Fields = {
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by avg() on columns of table "custom_meat_master" */
+export type Custom_Meat_Master_Avg_Order_By = {
+  custom_meat_id?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
+};
+
 /** Boolean expression to filter rows from the table "custom_meat_master". All fields are combined with a logical 'AND'. */
 export type Custom_Meat_Master_Bool_Exp = {
   _and?: InputMaybe<Array<Custom_Meat_Master_Bool_Exp>>;
   _not?: InputMaybe<Custom_Meat_Master_Bool_Exp>;
   _or?: InputMaybe<Array<Custom_Meat_Master_Bool_Exp>>;
   custom_meat_id?: InputMaybe<Int_Comparison_Exp>;
+  custom_meat_master_unit_master?: InputMaybe<Unit_Master_Bool_Exp>;
+  custom_meat_master_users?: InputMaybe<Users_Bool_Exp>;
   custom_meat_name?: InputMaybe<String_Comparison_Exp>;
   default_expiration_period?: InputMaybe<Int_Comparison_Exp>;
   display_name?: InputMaybe<String_Comparison_Exp>;
@@ -171,6 +217,8 @@ export type Custom_Meat_Master_Inc_Input = {
 /** input type for inserting data into table "custom_meat_master" */
 export type Custom_Meat_Master_Insert_Input = {
   custom_meat_id?: InputMaybe<Scalars['Int']['input']>;
+  custom_meat_master_unit_master?: InputMaybe<Unit_Master_Obj_Rel_Insert_Input>;
+  custom_meat_master_users?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   custom_meat_name?: InputMaybe<Scalars['String']['input']>;
   default_expiration_period?: InputMaybe<Scalars['Int']['input']>;
   display_name?: InputMaybe<Scalars['String']['input']>;
@@ -191,6 +239,17 @@ export type Custom_Meat_Master_Max_Fields = {
   user_id?: Maybe<Scalars['String']['output']>;
 };
 
+/** order by max() on columns of table "custom_meat_master" */
+export type Custom_Meat_Master_Max_Order_By = {
+  custom_meat_id?: InputMaybe<Order_By>;
+  custom_meat_name?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  display_name?: InputMaybe<Order_By>;
+  image_uri?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type Custom_Meat_Master_Min_Fields = {
   __typename?: 'custom_meat_master_min_fields';
@@ -203,6 +262,17 @@ export type Custom_Meat_Master_Min_Fields = {
   user_id?: Maybe<Scalars['String']['output']>;
 };
 
+/** order by min() on columns of table "custom_meat_master" */
+export type Custom_Meat_Master_Min_Order_By = {
+  custom_meat_id?: InputMaybe<Order_By>;
+  custom_meat_name?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  display_name?: InputMaybe<Order_By>;
+  image_uri?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
 /** response of any mutation on the table "custom_meat_master" */
 export type Custom_Meat_Master_Mutation_Response = {
   __typename?: 'custom_meat_master_mutation_response';
@@ -210,6 +280,13 @@ export type Custom_Meat_Master_Mutation_Response = {
   affected_rows: Scalars['Int']['output'];
   /** data from the rows affected by the mutation */
   returning: Array<Custom_Meat_Master>;
+};
+
+/** input type for inserting object relation for remote table "custom_meat_master" */
+export type Custom_Meat_Master_Obj_Rel_Insert_Input = {
+  data: Custom_Meat_Master_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Custom_Meat_Master_On_Conflict>;
 };
 
 /** on_conflict condition type for table "custom_meat_master" */
@@ -222,6 +299,8 @@ export type Custom_Meat_Master_On_Conflict = {
 /** Ordering options when selecting data from "custom_meat_master". */
 export type Custom_Meat_Master_Order_By = {
   custom_meat_id?: InputMaybe<Order_By>;
+  custom_meat_master_unit_master?: InputMaybe<Unit_Master_Order_By>;
+  custom_meat_master_users?: InputMaybe<Users_Order_By>;
   custom_meat_name?: InputMaybe<Order_By>;
   default_expiration_period?: InputMaybe<Order_By>;
   display_name?: InputMaybe<Order_By>;
@@ -272,6 +351,13 @@ export type Custom_Meat_Master_Stddev_Fields = {
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev() on columns of table "custom_meat_master" */
+export type Custom_Meat_Master_Stddev_Order_By = {
+  custom_meat_id?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_pop on columns */
 export type Custom_Meat_Master_Stddev_Pop_Fields = {
   __typename?: 'custom_meat_master_stddev_pop_fields';
@@ -280,12 +366,26 @@ export type Custom_Meat_Master_Stddev_Pop_Fields = {
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev_pop() on columns of table "custom_meat_master" */
+export type Custom_Meat_Master_Stddev_Pop_Order_By = {
+  custom_meat_id?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_samp on columns */
 export type Custom_Meat_Master_Stddev_Samp_Fields = {
   __typename?: 'custom_meat_master_stddev_samp_fields';
   custom_meat_id?: Maybe<Scalars['Float']['output']>;
   default_expiration_period?: Maybe<Scalars['Float']['output']>;
   unit_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "custom_meat_master" */
+export type Custom_Meat_Master_Stddev_Samp_Order_By = {
+  custom_meat_id?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "custom_meat_master" */
@@ -313,6 +413,13 @@ export type Custom_Meat_Master_Sum_Fields = {
   custom_meat_id?: Maybe<Scalars['Int']['output']>;
   default_expiration_period?: Maybe<Scalars['Int']['output']>;
   unit_id?: Maybe<Scalars['Int']['output']>;
+};
+
+/** order by sum() on columns of table "custom_meat_master" */
+export type Custom_Meat_Master_Sum_Order_By = {
+  custom_meat_id?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "custom_meat_master" */
@@ -350,12 +457,26 @@ export type Custom_Meat_Master_Var_Pop_Fields = {
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by var_pop() on columns of table "custom_meat_master" */
+export type Custom_Meat_Master_Var_Pop_Order_By = {
+  custom_meat_id?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate var_samp on columns */
 export type Custom_Meat_Master_Var_Samp_Fields = {
   __typename?: 'custom_meat_master_var_samp_fields';
   custom_meat_id?: Maybe<Scalars['Float']['output']>;
   default_expiration_period?: Maybe<Scalars['Float']['output']>;
   unit_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_samp() on columns of table "custom_meat_master" */
+export type Custom_Meat_Master_Var_Samp_Order_By = {
+  custom_meat_id?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
@@ -366,10 +487,21 @@ export type Custom_Meat_Master_Variance_Fields = {
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by variance() on columns of table "custom_meat_master" */
+export type Custom_Meat_Master_Variance_Order_By = {
+  custom_meat_id?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
+};
+
 /** ユーザごとに追加される野菜類マスタ */
 export type Custom_Vegetable_Master = {
   __typename?: 'custom_vegetable_master';
   custom_vegetable_id: Scalars['Int']['output'];
+  /** An object relationship */
+  custom_vegetable_master_uint_master?: Maybe<Unit_Master>;
+  /** An object relationship */
+  custom_vegetable_master_users?: Maybe<Users>;
   custom_vegetable_name: Scalars['String']['output'];
   default_expiration_period: Scalars['Int']['output'];
   display_name: Scalars['String']['output'];
@@ -383,6 +515,17 @@ export type Custom_Vegetable_Master_Aggregate = {
   __typename?: 'custom_vegetable_master_aggregate';
   aggregate?: Maybe<Custom_Vegetable_Master_Aggregate_Fields>;
   nodes: Array<Custom_Vegetable_Master>;
+};
+
+export type Custom_Vegetable_Master_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Custom_Vegetable_Master_Aggregate_Bool_Exp_Count>;
+};
+
+export type Custom_Vegetable_Master_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Custom_Vegetable_Master_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Custom_Vegetable_Master_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
 };
 
 /** aggregate fields of "custom_vegetable_master" */
@@ -408,6 +551,28 @@ export type Custom_Vegetable_Master_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+/** order by aggregate values of table "custom_vegetable_master" */
+export type Custom_Vegetable_Master_Aggregate_Order_By = {
+  avg?: InputMaybe<Custom_Vegetable_Master_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Custom_Vegetable_Master_Max_Order_By>;
+  min?: InputMaybe<Custom_Vegetable_Master_Min_Order_By>;
+  stddev?: InputMaybe<Custom_Vegetable_Master_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Custom_Vegetable_Master_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Custom_Vegetable_Master_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Custom_Vegetable_Master_Sum_Order_By>;
+  var_pop?: InputMaybe<Custom_Vegetable_Master_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Custom_Vegetable_Master_Var_Samp_Order_By>;
+  variance?: InputMaybe<Custom_Vegetable_Master_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "custom_vegetable_master" */
+export type Custom_Vegetable_Master_Arr_Rel_Insert_Input = {
+  data: Array<Custom_Vegetable_Master_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Custom_Vegetable_Master_On_Conflict>;
+};
+
 /** aggregate avg on columns */
 export type Custom_Vegetable_Master_Avg_Fields = {
   __typename?: 'custom_vegetable_master_avg_fields';
@@ -416,12 +581,21 @@ export type Custom_Vegetable_Master_Avg_Fields = {
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by avg() on columns of table "custom_vegetable_master" */
+export type Custom_Vegetable_Master_Avg_Order_By = {
+  custom_vegetable_id?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
+};
+
 /** Boolean expression to filter rows from the table "custom_vegetable_master". All fields are combined with a logical 'AND'. */
 export type Custom_Vegetable_Master_Bool_Exp = {
   _and?: InputMaybe<Array<Custom_Vegetable_Master_Bool_Exp>>;
   _not?: InputMaybe<Custom_Vegetable_Master_Bool_Exp>;
   _or?: InputMaybe<Array<Custom_Vegetable_Master_Bool_Exp>>;
   custom_vegetable_id?: InputMaybe<Int_Comparison_Exp>;
+  custom_vegetable_master_uint_master?: InputMaybe<Unit_Master_Bool_Exp>;
+  custom_vegetable_master_users?: InputMaybe<Users_Bool_Exp>;
   custom_vegetable_name?: InputMaybe<String_Comparison_Exp>;
   default_expiration_period?: InputMaybe<Int_Comparison_Exp>;
   display_name?: InputMaybe<String_Comparison_Exp>;
@@ -452,6 +626,8 @@ export type Custom_Vegetable_Master_Inc_Input = {
 /** input type for inserting data into table "custom_vegetable_master" */
 export type Custom_Vegetable_Master_Insert_Input = {
   custom_vegetable_id?: InputMaybe<Scalars['Int']['input']>;
+  custom_vegetable_master_uint_master?: InputMaybe<Unit_Master_Obj_Rel_Insert_Input>;
+  custom_vegetable_master_users?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   custom_vegetable_name?: InputMaybe<Scalars['String']['input']>;
   default_expiration_period?: InputMaybe<Scalars['Int']['input']>;
   display_name?: InputMaybe<Scalars['String']['input']>;
@@ -472,6 +648,17 @@ export type Custom_Vegetable_Master_Max_Fields = {
   user_id?: Maybe<Scalars['String']['output']>;
 };
 
+/** order by max() on columns of table "custom_vegetable_master" */
+export type Custom_Vegetable_Master_Max_Order_By = {
+  custom_vegetable_id?: InputMaybe<Order_By>;
+  custom_vegetable_name?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  display_name?: InputMaybe<Order_By>;
+  image_uri?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type Custom_Vegetable_Master_Min_Fields = {
   __typename?: 'custom_vegetable_master_min_fields';
@@ -484,6 +671,17 @@ export type Custom_Vegetable_Master_Min_Fields = {
   user_id?: Maybe<Scalars['String']['output']>;
 };
 
+/** order by min() on columns of table "custom_vegetable_master" */
+export type Custom_Vegetable_Master_Min_Order_By = {
+  custom_vegetable_id?: InputMaybe<Order_By>;
+  custom_vegetable_name?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  display_name?: InputMaybe<Order_By>;
+  image_uri?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
 /** response of any mutation on the table "custom_vegetable_master" */
 export type Custom_Vegetable_Master_Mutation_Response = {
   __typename?: 'custom_vegetable_master_mutation_response';
@@ -491,6 +689,13 @@ export type Custom_Vegetable_Master_Mutation_Response = {
   affected_rows: Scalars['Int']['output'];
   /** data from the rows affected by the mutation */
   returning: Array<Custom_Vegetable_Master>;
+};
+
+/** input type for inserting object relation for remote table "custom_vegetable_master" */
+export type Custom_Vegetable_Master_Obj_Rel_Insert_Input = {
+  data: Custom_Vegetable_Master_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Custom_Vegetable_Master_On_Conflict>;
 };
 
 /** on_conflict condition type for table "custom_vegetable_master" */
@@ -503,6 +708,8 @@ export type Custom_Vegetable_Master_On_Conflict = {
 /** Ordering options when selecting data from "custom_vegetable_master". */
 export type Custom_Vegetable_Master_Order_By = {
   custom_vegetable_id?: InputMaybe<Order_By>;
+  custom_vegetable_master_uint_master?: InputMaybe<Unit_Master_Order_By>;
+  custom_vegetable_master_users?: InputMaybe<Users_Order_By>;
   custom_vegetable_name?: InputMaybe<Order_By>;
   default_expiration_period?: InputMaybe<Order_By>;
   display_name?: InputMaybe<Order_By>;
@@ -553,6 +760,13 @@ export type Custom_Vegetable_Master_Stddev_Fields = {
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev() on columns of table "custom_vegetable_master" */
+export type Custom_Vegetable_Master_Stddev_Order_By = {
+  custom_vegetable_id?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_pop on columns */
 export type Custom_Vegetable_Master_Stddev_Pop_Fields = {
   __typename?: 'custom_vegetable_master_stddev_pop_fields';
@@ -561,12 +775,26 @@ export type Custom_Vegetable_Master_Stddev_Pop_Fields = {
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev_pop() on columns of table "custom_vegetable_master" */
+export type Custom_Vegetable_Master_Stddev_Pop_Order_By = {
+  custom_vegetable_id?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_samp on columns */
 export type Custom_Vegetable_Master_Stddev_Samp_Fields = {
   __typename?: 'custom_vegetable_master_stddev_samp_fields';
   custom_vegetable_id?: Maybe<Scalars['Float']['output']>;
   default_expiration_period?: Maybe<Scalars['Float']['output']>;
   unit_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "custom_vegetable_master" */
+export type Custom_Vegetable_Master_Stddev_Samp_Order_By = {
+  custom_vegetable_id?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "custom_vegetable_master" */
@@ -594,6 +822,13 @@ export type Custom_Vegetable_Master_Sum_Fields = {
   custom_vegetable_id?: Maybe<Scalars['Int']['output']>;
   default_expiration_period?: Maybe<Scalars['Int']['output']>;
   unit_id?: Maybe<Scalars['Int']['output']>;
+};
+
+/** order by sum() on columns of table "custom_vegetable_master" */
+export type Custom_Vegetable_Master_Sum_Order_By = {
+  custom_vegetable_id?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "custom_vegetable_master" */
@@ -631,6 +866,13 @@ export type Custom_Vegetable_Master_Var_Pop_Fields = {
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by var_pop() on columns of table "custom_vegetable_master" */
+export type Custom_Vegetable_Master_Var_Pop_Order_By = {
+  custom_vegetable_id?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate var_samp on columns */
 export type Custom_Vegetable_Master_Var_Samp_Fields = {
   __typename?: 'custom_vegetable_master_var_samp_fields';
@@ -639,12 +881,26 @@ export type Custom_Vegetable_Master_Var_Samp_Fields = {
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by var_samp() on columns of table "custom_vegetable_master" */
+export type Custom_Vegetable_Master_Var_Samp_Order_By = {
+  custom_vegetable_id?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate variance on columns */
 export type Custom_Vegetable_Master_Variance_Fields = {
   __typename?: 'custom_vegetable_master_variance_fields';
   custom_vegetable_id?: Maybe<Scalars['Float']['output']>;
   default_expiration_period?: Maybe<Scalars['Float']['output']>;
   unit_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "custom_vegetable_master" */
+export type Custom_Vegetable_Master_Variance_Order_By = {
+  custom_vegetable_id?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
@@ -2675,6 +2931,10 @@ export type Unit_Master = {
   /** 単位ID */
   unit_id: Scalars['Int']['output'];
   /** An object relationship */
+  unit_master_custom_meat_master?: Maybe<Custom_Meat_Master>;
+  /** An object relationship */
+  unit_master_custom_vegetable_master?: Maybe<Custom_Vegetable_Master>;
+  /** An object relationship */
   unit_master_meat_master?: Maybe<Meat_Master>;
   /** An object relationship */
   unit_master_vegetable_master?: Maybe<Vegetable_Master>;
@@ -2725,6 +2985,8 @@ export type Unit_Master_Bool_Exp = {
   _not?: InputMaybe<Unit_Master_Bool_Exp>;
   _or?: InputMaybe<Array<Unit_Master_Bool_Exp>>;
   unit_id?: InputMaybe<Int_Comparison_Exp>;
+  unit_master_custom_meat_master?: InputMaybe<Custom_Meat_Master_Bool_Exp>;
+  unit_master_custom_vegetable_master?: InputMaybe<Custom_Vegetable_Master_Bool_Exp>;
   unit_master_meat_master?: InputMaybe<Meat_Master_Bool_Exp>;
   unit_master_vegetable_master?: InputMaybe<Vegetable_Master_Bool_Exp>;
   unit_name?: InputMaybe<String_Comparison_Exp>;
@@ -2746,6 +3008,8 @@ export type Unit_Master_Inc_Input = {
 export type Unit_Master_Insert_Input = {
   /** 単位ID */
   unit_id?: InputMaybe<Scalars['Int']['input']>;
+  unit_master_custom_meat_master?: InputMaybe<Custom_Meat_Master_Obj_Rel_Insert_Input>;
+  unit_master_custom_vegetable_master?: InputMaybe<Custom_Vegetable_Master_Obj_Rel_Insert_Input>;
   unit_master_meat_master?: InputMaybe<Meat_Master_Obj_Rel_Insert_Input>;
   unit_master_vegetable_master?: InputMaybe<Vegetable_Master_Obj_Rel_Insert_Input>;
   /** 単位名 */
@@ -2796,6 +3060,8 @@ export type Unit_Master_On_Conflict = {
 /** Ordering options when selecting data from "unit_master". */
 export type Unit_Master_Order_By = {
   unit_id?: InputMaybe<Order_By>;
+  unit_master_custom_meat_master?: InputMaybe<Custom_Meat_Master_Order_By>;
+  unit_master_custom_vegetable_master?: InputMaybe<Custom_Vegetable_Master_Order_By>;
   unit_master_meat_master?: InputMaybe<Meat_Master_Order_By>;
   unit_master_vegetable_master?: InputMaybe<Vegetable_Master_Order_By>;
   unit_name?: InputMaybe<Order_By>;
@@ -2919,6 +3185,14 @@ export type Users = {
   /** An aggregate relationship */
   user_meat_stocks_aggregate: Meat_Stocks_Aggregate;
   /** An array relationship */
+  users_custom_meat_master: Array<Custom_Meat_Master>;
+  /** An aggregate relationship */
+  users_custom_meat_master_aggregate: Custom_Meat_Master_Aggregate;
+  /** An array relationship */
+  users_custom_vegetable_master: Array<Custom_Vegetable_Master>;
+  /** An aggregate relationship */
+  users_custom_vegetable_master_aggregate: Custom_Vegetable_Master_Aggregate;
+  /** An array relationship */
   users_vegetable_stocks: Array<Vegetable_Stocks>;
   /** An aggregate relationship */
   users_vegetable_stocks_aggregate: Vegetable_Stocks_Aggregate;
@@ -2942,6 +3216,46 @@ export type UsersUser_Meat_Stocks_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Meat_Stocks_Order_By>>;
   where?: InputMaybe<Meat_Stocks_Bool_Exp>;
+};
+
+
+/** frimane ユーザー */
+export type UsersUsers_Custom_Meat_MasterArgs = {
+  distinct_on?: InputMaybe<Array<Custom_Meat_Master_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Custom_Meat_Master_Order_By>>;
+  where?: InputMaybe<Custom_Meat_Master_Bool_Exp>;
+};
+
+
+/** frimane ユーザー */
+export type UsersUsers_Custom_Meat_Master_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Custom_Meat_Master_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Custom_Meat_Master_Order_By>>;
+  where?: InputMaybe<Custom_Meat_Master_Bool_Exp>;
+};
+
+
+/** frimane ユーザー */
+export type UsersUsers_Custom_Vegetable_MasterArgs = {
+  distinct_on?: InputMaybe<Array<Custom_Vegetable_Master_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Custom_Vegetable_Master_Order_By>>;
+  where?: InputMaybe<Custom_Vegetable_Master_Bool_Exp>;
+};
+
+
+/** frimane ユーザー */
+export type UsersUsers_Custom_Vegetable_Master_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Custom_Vegetable_Master_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Custom_Vegetable_Master_Order_By>>;
+  where?: InputMaybe<Custom_Vegetable_Master_Bool_Exp>;
 };
 
 
@@ -2996,6 +3310,10 @@ export type Users_Bool_Exp = {
   id?: InputMaybe<String_Comparison_Exp>;
   user_meat_stocks?: InputMaybe<Meat_Stocks_Bool_Exp>;
   user_meat_stocks_aggregate?: InputMaybe<Meat_Stocks_Aggregate_Bool_Exp>;
+  users_custom_meat_master?: InputMaybe<Custom_Meat_Master_Bool_Exp>;
+  users_custom_meat_master_aggregate?: InputMaybe<Custom_Meat_Master_Aggregate_Bool_Exp>;
+  users_custom_vegetable_master?: InputMaybe<Custom_Vegetable_Master_Bool_Exp>;
+  users_custom_vegetable_master_aggregate?: InputMaybe<Custom_Vegetable_Master_Aggregate_Bool_Exp>;
   users_vegetable_stocks?: InputMaybe<Vegetable_Stocks_Bool_Exp>;
   users_vegetable_stocks_aggregate?: InputMaybe<Vegetable_Stocks_Aggregate_Bool_Exp>;
 };
@@ -3015,6 +3333,8 @@ export type Users_Insert_Input = {
   /** ユーザーID */
   id?: InputMaybe<Scalars['String']['input']>;
   user_meat_stocks?: InputMaybe<Meat_Stocks_Arr_Rel_Insert_Input>;
+  users_custom_meat_master?: InputMaybe<Custom_Meat_Master_Arr_Rel_Insert_Input>;
+  users_custom_vegetable_master?: InputMaybe<Custom_Vegetable_Master_Arr_Rel_Insert_Input>;
   users_vegetable_stocks?: InputMaybe<Vegetable_Stocks_Arr_Rel_Insert_Input>;
 };
 
@@ -3069,6 +3389,8 @@ export type Users_Order_By = {
   email?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   user_meat_stocks_aggregate?: InputMaybe<Meat_Stocks_Aggregate_Order_By>;
+  users_custom_meat_master_aggregate?: InputMaybe<Custom_Meat_Master_Aggregate_Order_By>;
+  users_custom_vegetable_master_aggregate?: InputMaybe<Custom_Vegetable_Master_Aggregate_Order_By>;
   users_vegetable_stocks_aggregate?: InputMaybe<Vegetable_Stocks_Aggregate_Order_By>;
 };
 
