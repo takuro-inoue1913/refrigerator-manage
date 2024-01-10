@@ -4,7 +4,6 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   StyleSheet,
   TouchableOpacity,
   Image,
@@ -20,6 +19,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Dropdown } from 'react-native-element-dropdown';
 import { COMMON_COLOR_GREEN } from '@src/utils/consts';
 import { getIncrementalUnit } from '@src/utils/logics/getIncrementalUnit';
+import { LinearGradientButton } from '@src/components/common/GradationButton';
 
 export const FridgeItemCreateScreen = () => {
   const {
@@ -160,179 +160,201 @@ export const FridgeItemCreateScreen = () => {
       }}
       style={styles.container}
     >
-      <Controller
-        control={control}
-        name="image"
-        rules={{ required: '画像は必須です。' }}
-        render={({ field: { value, onChange } }) => (
-          <TouchableOpacity
-            onPress={() => handleChoosePhoto(onChange)}
-            style={styles.imageUploader}
-          >
-            {value ? (
-              <Image source={{ uri: value.uri }} style={styles.imagePreview} />
-            ) : (
-              <View>
-                <Text>
-                  <Icon name="image-plus" style={styles.icon} />
-                </Text>
-              </View>
-            )}
-          </TouchableOpacity>
-        )}
-      />
-      {errors.image && (
-        <Text style={styles.errorText}>{errors.image.message}</Text>
-      )}
-
-      <Controller
-        control={control}
-        name="displayName"
-        rules={{
-          required: '表示名は必須です。',
-          maxLength: {
-            value: 6,
-            message: '表示名は6文字以内で入力してください。',
-          },
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
-            onBlur={onBlur}
-            onChangeText={onChange}
-            accessibilityLabel="表示名"
-            value={value}
-            placeholder="表示名 (6文字以内) ※リストに表示されます。"
-          />
-        )}
-      />
-      {errors.displayName && (
-        <Text style={styles.errorText}>{errors.displayName.message}</Text>
-      )}
-
-      <Controller
-        control={control}
-        name="nameKana"
-        rules={{
-          required: '名前（ひらがな）は必須です。',
-          pattern: {
-            // eslint-disable-next-line no-irregular-whitespace
-            value: /^[あ-んー　]*$/,
-            message: '名前（ひらがな）はひらがなのみで入力してください。',
-          },
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            placeholder="名前 (ひらがな) ※絞込や検索に使用します。"
-          />
-        )}
-      />
-      {errors.nameKana && (
-        <Text style={styles.errorText}>{errors.nameKana.message}</Text>
-      )}
-
-      <Controller
-        control={control}
-        name="expiryPeriod"
-        rules={{
-          required: '賞味期限の基本期間は必須です。',
-          pattern: {
-            value: /^\d+$/,
-            message: '賞味期限の基本期間は数値のみで入力してください。',
-          },
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            placeholder="賞味期限期間 (日数)"
-            keyboardType="numeric"
-          />
-        )}
-      />
-      {errors.expiryPeriod && (
-        <Text style={styles.errorText}>{errors.expiryPeriod.message}</Text>
-      )}
-      <Controller
-        control={control}
-        name="unitName"
-        rules={{
-          required: '単位名は必須です。',
-          validate: (value) => {
-            const unit = unitMasterData.find(
-              (item) => item.unit_name === value,
-            );
-            return unit ? true : '無効な単位名です。';
-          },
-        }}
-        render={({ field: { onChange, value } }) => (
-          <Dropdown
-            style={styles.dropdown}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={unitMasterData}
-            maxHeight={150}
-            labelField="unit_name"
-            valueField="unit_id"
-            placeholder="単位名 *選んだ単位名でデフォルトの増減単位が設定されます。"
-            searchPlaceholder="単位名を検索"
-            value={value}
-            onChange={(item) => handleUnitChange(item, onChange)}
-            renderItem={(item) => {
-              return (
-                <View style={styles.item}>
-                  <Text style={styles.textItem}>{item.unit_name}</Text>
-                  {isEqual(item, value) && (
-                    <Icon
-                      name="check"
-                      style={styles.itemIcon}
-                      size={20}
-                      color={COMMON_COLOR_GREEN}
-                    />
-                  )}
+      <View style={errors.image ? styles.formItemHasError : styles.formItem}>
+        <Controller
+          control={control}
+          name="image"
+          rules={{ required: '画像は必須です。' }}
+          render={({ field: { value, onChange } }) => (
+            <TouchableOpacity
+              onPress={() => handleChoosePhoto(onChange)}
+              style={styles.imageUploader}
+            >
+              {value ? (
+                <Image
+                  source={{ uri: value.uri }}
+                  style={styles.imagePreview}
+                />
+              ) : (
+                <View>
+                  <Text>
+                    <Icon name="image-plus" style={styles.icon} />
+                  </Text>
                 </View>
+              )}
+            </TouchableOpacity>
+          )}
+        />
+        {errors.image && (
+          <Text style={styles.errorText}>{errors.image.message}</Text>
+        )}
+      </View>
+      <View
+        style={errors.displayName ? styles.formItemHasError : styles.formItem}
+      >
+        <Controller
+          control={control}
+          name="displayName"
+          rules={{
+            required: '表示名は必須です。',
+            maxLength: {
+              value: 6,
+              message: '表示名は6文字以内で入力してください。',
+            },
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              accessibilityLabel="表示名"
+              value={value}
+              placeholder="表示名 (6文字以内) ※リストに表示されます。"
+            />
+          )}
+        />
+        {errors.displayName && (
+          <Text style={styles.errorText}>{errors.displayName.message}</Text>
+        )}
+      </View>
+      <View style={errors.nameKana ? styles.formItemHasError : styles.formItem}>
+        <Controller
+          control={control}
+          name="nameKana"
+          rules={{
+            required: '名前（ひらがな）は必須です。',
+            pattern: {
+              // eslint-disable-next-line no-irregular-whitespace
+              value: /^[あ-んー　]*$/,
+              message: '名前（ひらがな）はひらがなのみで入力してください。',
+            },
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="名前 (ひらがな) ※絞込や検索に使用します。"
+            />
+          )}
+        />
+        {errors.nameKana && (
+          <Text style={styles.errorText}>{errors.nameKana.message}</Text>
+        )}
+      </View>
+      <View
+        style={errors.expiryPeriod ? styles.formItemHasError : styles.formItem}
+      >
+        <Controller
+          control={control}
+          name="expiryPeriod"
+          rules={{
+            required: '賞味期限の基本期間は必須です。',
+            pattern: {
+              value: /^\d+$/,
+              message: '賞味期限の基本期間は数値のみで入力してください。',
+            },
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="賞味期限期間 (日数)"
+              keyboardType="numeric"
+            />
+          )}
+        />
+        {errors.expiryPeriod && (
+          <Text style={styles.errorText}>{errors.expiryPeriod.message}</Text>
+        )}
+      </View>
+      <View style={errors.unitName ? styles.formItemHasError : styles.formItem}>
+        <Controller
+          control={control}
+          name="unitName"
+          rules={{
+            required: '単位名は必須です。',
+            validate: (value) => {
+              const unit = unitMasterData.find(
+                (item) => item.unit_name === value,
               );
-            }}
-          />
+              return unit ? true : '無効な単位名です。';
+            },
+          }}
+          render={({ field: { onChange, value } }) => (
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.dropdownPlaceholderStyle}
+              selectedTextStyle={styles.dropdownSelectedTextStyle}
+              iconStyle={styles.dropdownIconStyle}
+              data={unitMasterData}
+              maxHeight={150}
+              labelField="unit_name"
+              valueField="unit_id"
+              placeholder="単位名 *初期の増減単位が設定されます。"
+              searchPlaceholder="単位名を検索"
+              value={value}
+              onChange={(item) => handleUnitChange(item, onChange)}
+              renderItem={(item) => {
+                return (
+                  <View style={styles.dropdownItem}>
+                    <Text style={styles.dropdownTextItem}>
+                      {item.unit_name}
+                    </Text>
+                    {isEqual(item, value) && (
+                      <Icon
+                        name="check"
+                        style={styles.dropdownItemIcon}
+                        size={20}
+                        color={COMMON_COLOR_GREEN}
+                      />
+                    )}
+                  </View>
+                );
+              }}
+            />
+          )}
+        />
+        {errors.unitName && (
+          <Text style={styles.errorText}>{errors.unitName.message}</Text>
         )}
-      />
-      <Controller
-        control={control}
-        name="incrementUnit"
-        rules={{
-          required: '増減単位は必須です。',
-          pattern: {
-            value: /^\d+$/,
-            message: '増減単位は数値のみで入力してください。',
-          },
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            placeholder="増減単位 ※ +- での在庫の増減量になります。"
-            keyboardType="numeric"
-          />
+      </View>
+      <View
+        style={errors.incrementUnit ? styles.formItemHasError : styles.formItem}
+      >
+        <Controller
+          control={control}
+          name="incrementUnit"
+          rules={{
+            required: '増減単位は必須です。',
+            pattern: {
+              value: /^\d+$/,
+              message: '増減単位は数値のみで入力してください。',
+            },
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="増減単位 ※ +- での在庫の増減量になります。"
+              keyboardType="numeric"
+            />
+          )}
+        />
+        {errors.incrementUnit && (
+          <Text style={styles.errorText}>{errors.incrementUnit.message}</Text>
         )}
-      />
-      {errors.incrementUnit && (
-        <Text style={styles.errorText}>{errors.incrementUnit.message}</Text>
-      )}
-      {errors.unitName && (
-        <Text style={styles.errorText}>{errors.unitName.message}</Text>
-      )}
-
-      <Button title="保存" onPress={handleSubmit(onSubmit)} />
+      </View>
+      <View style={styles.submitButtonWrapper}>
+        <LinearGradientButton width={250} onPress={handleSubmit(onSubmit)}>
+          <Text style={{ color: 'white' }}>登録</Text>
+        </LinearGradientButton>
+      </View>
     </KeyboardAvoidingView>
   );
 };
@@ -343,8 +365,17 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#fff',
   },
+  formItem: {
+    marginBottom: 26,
+    alignItems: 'center',
+    width: '100%',
+  },
+  formItemHasError: {
+    alignItems: 'center',
+    width: '100%',
+    marginBottom: 4,
+  },
   imageUploader: {
-    marginBottom: 30,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 5,
@@ -367,18 +398,20 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     padding: 10,
     fontSize: 16,
-    marginBottom: 15,
   },
   errorText: {
+    marginTop: 5,
     color: 'red',
   },
   icon: {
     fontSize: 80,
     color: '#e1e4e8',
   },
+  submitButtonWrapper: {
+    padding: 10,
+  },
   dropdown: {
     width: '90%',
-    marginBottom: 15,
     height: 42,
     backgroundColor: 'white',
     borderRadius: 4,
@@ -393,33 +426,28 @@ const styles = StyleSheet.create({
 
     elevation: 2,
   },
-  item: {
+  dropdownItem: {
     padding: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  textItem: {
+  dropdownTextItem: {
     flex: 1,
     fontSize: 16,
   },
-  placeholderStyle: {
+  dropdownPlaceholderStyle: {
     fontSize: 16,
     color: '#ced4da',
   },
-  selectedTextStyle: {
+  dropdownSelectedTextStyle: {
     fontSize: 16,
   },
-  iconStyle: {
+  dropdownIconStyle: {
     width: 20,
     height: 20,
   },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 16,
-    // color: '#ced4da',
-  },
-  itemIcon: {
+  dropdownItemIcon: {
     marginRight: 5,
   },
 });
