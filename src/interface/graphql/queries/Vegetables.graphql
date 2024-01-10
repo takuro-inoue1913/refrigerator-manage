@@ -120,3 +120,31 @@ mutation UpdateVegetableStockDetail(
     }
   }
 }
+
+mutation InsertCustomVegetableMaster(
+  $userId: String!
+  $vegetableName: String!
+  $displayName: String!
+  $imageUri: String!
+  $defaultExpirationPeriod: Int!
+  $unitId: Int!
+) {
+  insert_custom_vegetable_master_one(
+    object: {
+      user_id: $userId
+      custom_vegetable_name: $vegetableName
+      display_name: $displayName
+      image_uri: $imageUri
+      default_expiration_period: $defaultExpirationPeriod
+      unit_id: $unitId
+    }
+  ) {
+    custom_vegetable_id
+    user_id
+    custom_vegetable_name
+    display_name
+    image_uri
+    default_expiration_period
+    unit_id
+  }
+}
