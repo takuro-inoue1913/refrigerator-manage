@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { View, Text, KeyboardAvoidingView, Platform } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 
 import { auth } from '@src/utils/firebaseAuth';
@@ -9,15 +8,15 @@ import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { GradientionTextInput } from '@src/components/common/GradientionTextInput';
 import { useIsShowKeyboard } from '@src/hooks/useIsShowKeyboard';
 import { TopLogoImage } from '@src/components/common/TopLogoImage';
-import { Navigation } from '@src/types';
 import { handleFirebaseError } from '@src/utils/handleFirebaseError';
 import { COMMON_COLOR_GREEN } from '@src/utils/consts';
+import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 
 export const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const isShowKeyboard = useIsShowKeyboard();
-  const navigation = useNavigation<Navigation>();
+  const navigation = useTypedNavigation();
 
   const handleLogin = async () => {
     await signInWithEmailAndPassword(auth, email, password).catch((error) => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { isEqual } from 'lodash';
 import {
   View,
@@ -17,11 +17,18 @@ import * as ImageManipulator from 'expo-image-manipulator';
 import * as FileSystem from 'expo-file-system';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Dropdown } from 'react-native-element-dropdown';
+import { RouteProp } from '@react-navigation/native';
 import { COMMON_COLOR_GREEN } from '@src/utils/consts';
 import { getIncrementalUnit } from '@src/utils/logics/getIncrementalUnit';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
+import { RootStackParamList } from '@src/types';
 
-export const FridgeItemCreateScreen = () => {
+type Props = {
+  route: RouteProp<RootStackParamList, '食材新規登録'>;
+};
+
+export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
+  console.log(route.params);
   const {
     control,
     setValue,
@@ -401,7 +408,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     marginTop: 5,
-    color: 'red',
+    color: '#dc3545',
   },
   icon: {
     fontSize: 80,

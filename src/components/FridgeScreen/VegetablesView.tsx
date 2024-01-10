@@ -18,8 +18,7 @@ import { GestureHandlerView } from '@src/components/FridgeScreen/GestureHandlerV
 import { ItemDisplayContents } from './ItemDisplayContents';
 import { useRequestUpsertVegetableIsFavorite } from '@src/interface/hooks/vegetable/useRequestUpsertVegetableIsFavorite';
 import { PlusImage } from '@src/components/common/PlusImage';
-import { useNavigation } from '@react-navigation/native';
-import { Navigation } from '@src/types';
+import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 
 /**
  * 冷蔵庫の野菜画面を表示するコンポーネント。
@@ -27,7 +26,7 @@ import { Navigation } from '@src/types';
 export const VegetablesView: FC = () => {
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
-  const navigation = useNavigation<Navigation>();
+  const navigation = useTypedNavigation();
   const { vegetablesStocks, isFetching, refetch } =
     useRequestGetVegetablesStocks();
   const vegetablesStockActions = useVegetablesStockActions();
@@ -141,7 +140,11 @@ export const VegetablesView: FC = () => {
               {index === rows.length - 1 && (
                 <View style={fridgeCommonStyles.box}>
                   <PlusImage
-                    onPress={() => navigation.navigate('食材新規登録')}
+                    onPress={() =>
+                      navigation.navigate('食材新規登録', {
+                        fridgeCategory: '野菜類',
+                      })
+                    }
                   />
                 </View>
               )}

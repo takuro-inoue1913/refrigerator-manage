@@ -17,14 +17,15 @@ import { LoadingScreen } from '@src/screens/LoadingScreen';
 import { PasswordResetScreen } from '@src/screens/PasswordResetScreen';
 import { FridgeScreen } from '@src/screens/FridgeScreen';
 import { COMMON_COLOR_BLUE, COMMON_COLOR_GREEN } from '@src/utils/consts';
-import { FridgeItemCreateScreen } from './screens/FridgeIitemCreateScreen';
+import { FridgeItemCreateScreen } from '@src/screens/FridgeIitemCreateScreen';
+import { RootStackParamList } from '@src/types';
 
 export const App: FC = () => {
   const setUser = useSetRecoilState(userState);
   const [idToken, setIdToken] = useRecoilState(idTokenState);
   const [initializing, setInitializing] = useState(true);
   const Tab = createBottomTabNavigator();
-  const Stack = createNativeStackNavigator();
+  const Stack = createNativeStackNavigator<RootStackParamList>();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {

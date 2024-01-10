@@ -1,6 +1,14 @@
-/** useNavigation hook */
-export type Navigation = {
-  navigate: (screen: string) => void;
+import { SelectFridgeCategory } from '@src/states/fridge';
+
+export type FridgeItemCreateRouteParams = {
+  fridgeCategory: SelectFridgeCategory;
+};
+
+export type RootStackParamList = {
+  ログイン: undefined;
+  冷蔵庫管理: undefined;
+  食材新規登録: FridgeItemCreateRouteParams;
+  パスワードリセット: undefined;
 };
 
 /** 画像を押したときの引数の型。 */
