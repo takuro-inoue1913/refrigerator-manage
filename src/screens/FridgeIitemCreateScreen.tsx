@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { isEqual } from 'lodash';
 import {
   View,
@@ -12,6 +12,8 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
+  Animated,
+  Easing,
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import * as ImagePicker from 'expo-image-picker';
@@ -36,6 +38,7 @@ type Props = {
 };
 
 export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
+  const [isSending, setIsSending] = useState(true);
   const user = useRecoilValue(userState);
   const navigation = useTypedNavigation();
   const requestInsertCustomVegetableMaster =
@@ -54,6 +57,19 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
     incrementUnit: string;
     unit: { unit_id: number; unit_name: string };
   }>();
+  const spinValue = useRef(new Animated.Value(0)).current;
+
+  const startSpinning = useCallback(() => {
+    spinValue.setValue(0);
+    Animated.loop(
+      Animated.timing(spinValue, {
+        toValue: 1,
+        duration: 800,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      }),
+    ).start();
+  }, [spinValue]);
 
   const unitMasterData = [
     {
@@ -165,6 +181,7 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
   };
 
   const onSubmit = async () => {
+    setIsSending(true);
     switch (route.params.fridgeCategory) {
       case '野菜類': {
         await requestInsertCustomVegetableMaster({
@@ -181,6 +198,7 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
       getValues('image.uri'),
       'user-custom-images/' + user?.uid,
     );
+    setIsSending(false);
 
     Toast.show({
       type: 'success',
@@ -188,6 +206,17 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
     });
     navigation.navigate('冷蔵庫管理');
   };
+
+  useEffect(() => {
+    if (isSending) {
+      startSpinning();
+    }
+  }, [isSending, startSpinning]);
+
+  const spin = spinValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
+  });
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -200,6 +229,17 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
         }}
         style={styles.container}
       >
+        {isSending && (
+          <View style={styles.loadingMask}>
+            <Animated.View
+              style={{
+                transform: [{ rotate: spin }],
+              }}
+            >
+              <Icon name="loading" size={80} color={COMMON_COLOR_GREEN} />
+            </Animated.View>
+          </View>
+        )}
         <View style={errors.image ? styles.formItemHasError : styles.formItem}>
           <Controller
             control={control}
@@ -391,8 +431,14 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
           )}
         </View>
         <View style={styles.submitButtonWrapper}>
-          <LinearGradientButton width={250} onPress={handleSubmit(onSubmit)}>
-            <Text style={{ color: 'white' }}>登録</Text>
+          <LinearGradientButton
+            width={250}
+            disabled={isSending}
+            onPress={handleSubmit(onSubmit)}
+          >
+            <Text style={{ color: 'white' }}>
+              {isSending ? '登録中...' : '登録'}
+            </Text>
           </LinearGradientButton>
         </View>
       </KeyboardAvoidingView>
@@ -403,7 +449,6 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: '#fff',
   },
   formItem: {
@@ -433,7 +478,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   input: {
-    width: '90%',
+    width: '80%',
     borderWidth: 1,
     borderColor: '#ced4da',
     borderRadius: 4,
@@ -452,7 +497,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   dropdown: {
-    width: '90%',
+    width: '80%',
     height: 42,
     backgroundColor: 'white',
     borderRadius: 4,
@@ -490,5 +535,17 @@ const styles = StyleSheet.create({
   },
   dropdownItemIcon: {
     marginRight: 5,
+  },
+  loadingMask: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    width: '100%',
+    backgroundColor: 'rgba(0,0,0,0.05)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1000,
   },
 });
