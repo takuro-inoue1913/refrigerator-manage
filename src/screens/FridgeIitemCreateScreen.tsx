@@ -22,17 +22,27 @@ import { COMMON_COLOR_GREEN } from '@src/utils/consts';
 import { getIncrementalUnit } from '@src/utils/logics/getIncrementalUnit';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { RootStackParamList } from '@src/types';
+import { useRecoilValue } from 'recoil';
+import { userState } from '@src/states/user';
+import { uploadUserImage } from '@src/interface/firebase/uploadUserImage';
+import { useRequestInsertCustomVegetableMaster } from '@src/interface/hooks/vegetable/useRequestInsertCustomVegetableMaster';
+import Toast from 'react-native-toast-message';
+import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 
 type Props = {
   route: RouteProp<RootStackParamList, '食材新規登録'>;
 };
 
 export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
-  console.log(route.params);
+  const user = useRecoilValue(userState);
+  const navigation = useTypedNavigation();
+  const requestInsertCustomVegetableMaster =
+    useRequestInsertCustomVegetableMaster();
   const {
     control,
     setValue,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<{
     image: { uri: string } | null;
@@ -40,7 +50,7 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
     nameKana: string;
     expiryPeriod: string;
     incrementUnit: string;
-    unitName: string;
+    unit: { unit_id: number; unit_name: string };
   }>();
 
   const unitMasterData = [
@@ -147,14 +157,34 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onChange: (...event: any[]) => void,
   ) => {
-    setValue('unitName', item.unit_name);
+    setValue('unit', item);
     setValue('incrementUnit', String(getIncrementalUnit(item.unit_name)));
     onChange(item);
   };
 
-  const onSubmit = () => {
-    console.log('submit');
-    // ここでデータを保存する処理を行います。
+  const onSubmit = async () => {
+    switch (route.params.fridgeCategory) {
+      case '野菜類': {
+        await requestInsertCustomVegetableMaster({
+          displayName: getValues('displayName'),
+          vegetableName: getValues('nameKana'),
+          imageUri: getValues('image.uri'),
+          defaultExpirationPeriod: Number(getValues('expiryPeriod')),
+          unitId: getValues('unit.unit_id'),
+        });
+        break;
+      }
+    }
+    await uploadUserImage(
+      getValues('image.uri'),
+      'user-custom-images/' + user?.uid,
+    );
+
+    Toast.show({
+      type: 'success',
+      text1: `「${getValues('displayName')}」を登録しました。`,
+    });
+    navigation.navigate('冷蔵庫管理');
   };
 
   return (
@@ -278,18 +308,12 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
           <Text style={styles.errorText}>{errors.expiryPeriod.message}</Text>
         )}
       </View>
-      <View style={errors.unitName ? styles.formItemHasError : styles.formItem}>
+      <View style={errors.unit ? styles.formItemHasError : styles.formItem}>
         <Controller
           control={control}
-          name="unitName"
+          name="unit"
           rules={{
             required: '単位名は必須です。',
-            validate: (value) => {
-              const unit = unitMasterData.find(
-                (item) => item.unit_name === value,
-              );
-              return unit ? true : '無効な単位名です。';
-            },
           }}
           render={({ field: { onChange, value } }) => (
             <Dropdown
@@ -325,8 +349,8 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
             />
           )}
         />
-        {errors.unitName && (
-          <Text style={styles.errorText}>{errors.unitName.message}</Text>
+        {errors.unit && (
+          <Text style={styles.errorText}>{errors.unit.message}</Text>
         )}
       </View>
       <View
