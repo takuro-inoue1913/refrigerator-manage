@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { storage } from '@src/utils/firebaseAuth';
+import { storage } from '@src/utils/firebaseSettings';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 /**

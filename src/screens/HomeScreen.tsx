@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { signOut } from 'firebase/auth';
 import Toast from 'react-native-toast-message';
 
-import { auth } from '@src/utils/firebaseAuth';
+import { auth } from '@src/utils/firebaseSettings';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { handleFirebaseError } from '@src/utils/handleFirebaseError';
 import { useRequestGetUser } from '@src/interface/hooks/user/useRequestGetUser';

@@ -10,7 +10,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { HomeScreen } from '@src/screens/HomeScreen';
 import { RegisterScreen } from '@src/screens/RegisterScreen';
 import { LoginScreen } from '@src/screens/LoginScreen';
-import { auth } from '@src/utils/firebaseAuth';
+import { auth } from '@src/utils/firebaseSettings';
 import { userState, idTokenState } from '@src/states/user';
 import { CameraScreen } from '@src/screens/CameraScreen';
 import { LoadingScreen } from '@src/screens/LoadingScreen';

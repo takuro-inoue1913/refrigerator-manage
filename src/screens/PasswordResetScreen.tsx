@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text } from 'react-native';
 import { sendPasswordResetEmail } from 'firebase/auth';
-import { auth } from '@src/utils/firebaseAuth';
+import { auth } from '@src/utils/firebaseSettings';
 import Toast from 'react-native-toast-message';
 
 import { GradientionTextInput } from '@src/components/common/GradientionTextInput';

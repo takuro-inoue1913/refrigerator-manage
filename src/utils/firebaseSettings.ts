@@ -1,5 +1,6 @@
 import { initializeApp, FirebaseOptions } from 'firebase/app';
 import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
+import { getStorage } from 'firebase/storage';
 import { Platform } from 'react-native';
 import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -27,6 +28,7 @@ const firebaseOptions: FirebaseOptions = {
 
 // Firebaseアプリの初期化
 const app = initializeApp(firebaseOptions);
+const storage = getStorage(app);
 
 // 認証オブジェクトの初期化をプラットフォーム毎に分ける
 let auth: ReturnType<typeof initializeAuth>;
@@ -40,5 +42,4 @@ if (Platform.OS === 'web') {
   });
 }
 
-// 外部から利用可能にするためにauthをエクスポート
-export { auth };
+export { auth, storage };

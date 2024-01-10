@@ -3,7 +3,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { View, Text, KeyboardAvoidingView, Platform } from 'react-native';
 import Toast from 'react-native-toast-message';
 
-import { auth } from '@src/utils/firebaseAuth';
+import { auth } from '@src/utils/firebaseSettings';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { GradientionTextInput } from '@src/components/common/GradientionTextInput';
 import { useIsShowKeyboard } from '@src/hooks/useIsShowKeyboard';
