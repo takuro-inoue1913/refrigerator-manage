@@ -38,7 +38,7 @@ type Props = {
 };
 
 export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
-  const [isSending, setIsSending] = useState(true);
+  const [isSending, setIsSending] = useState(false);
   const user = useRecoilValue(userState);
   const navigation = useTypedNavigation();
   const requestInsertCustomVegetableMaster =
@@ -182,9 +182,10 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
 
   const onSubmit = async () => {
     setIsSending(true);
+    let result = null;
     switch (route.params.fridgeCategory) {
       case '野菜類': {
-        await requestInsertCustomVegetableMaster({
+        result = await requestInsertCustomVegetableMaster({
           displayName: getValues('displayName'),
           vegetableName: getValues('nameKana'),
           imageUri: getValues('image.uri'),
@@ -193,6 +194,10 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
         });
         break;
       }
+    }
+    if (!result) {
+      setIsSending(false);
+      return;
     }
     await uploadUserImage(
       getValues('image.uri'),
@@ -543,7 +548,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     width: '100%',
-    backgroundColor: 'rgba(0,0,0,0.05)',
+    backgroundColor: 'rgba(0,0,0,0.1)',
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 1000,
