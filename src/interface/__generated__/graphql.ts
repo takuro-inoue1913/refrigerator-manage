@@ -85,6 +85,568 @@ export enum Cursor_Ordering {
   Desc = 'DESC'
 }
 
+/** ユーザごとに追加される肉類マスタ */
+export type Custom_Meat_Master = {
+  __typename?: 'custom_meat_master';
+  custom_meat_id: Scalars['Int']['output'];
+  custom_meat_name: Scalars['String']['output'];
+  default_expiration_period: Scalars['Int']['output'];
+  display_name: Scalars['String']['output'];
+  image_uri: Scalars['String']['output'];
+  unit_id: Scalars['Int']['output'];
+  user_id: Scalars['String']['output'];
+};
+
+/** aggregated selection of "custom_meat_master" */
+export type Custom_Meat_Master_Aggregate = {
+  __typename?: 'custom_meat_master_aggregate';
+  aggregate?: Maybe<Custom_Meat_Master_Aggregate_Fields>;
+  nodes: Array<Custom_Meat_Master>;
+};
+
+/** aggregate fields of "custom_meat_master" */
+export type Custom_Meat_Master_Aggregate_Fields = {
+  __typename?: 'custom_meat_master_aggregate_fields';
+  avg?: Maybe<Custom_Meat_Master_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Custom_Meat_Master_Max_Fields>;
+  min?: Maybe<Custom_Meat_Master_Min_Fields>;
+  stddev?: Maybe<Custom_Meat_Master_Stddev_Fields>;
+  stddev_pop?: Maybe<Custom_Meat_Master_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Custom_Meat_Master_Stddev_Samp_Fields>;
+  sum?: Maybe<Custom_Meat_Master_Sum_Fields>;
+  var_pop?: Maybe<Custom_Meat_Master_Var_Pop_Fields>;
+  var_samp?: Maybe<Custom_Meat_Master_Var_Samp_Fields>;
+  variance?: Maybe<Custom_Meat_Master_Variance_Fields>;
+};
+
+
+/** aggregate fields of "custom_meat_master" */
+export type Custom_Meat_Master_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Custom_Meat_Master_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Custom_Meat_Master_Avg_Fields = {
+  __typename?: 'custom_meat_master_avg_fields';
+  custom_meat_id?: Maybe<Scalars['Float']['output']>;
+  default_expiration_period?: Maybe<Scalars['Float']['output']>;
+  unit_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "custom_meat_master". All fields are combined with a logical 'AND'. */
+export type Custom_Meat_Master_Bool_Exp = {
+  _and?: InputMaybe<Array<Custom_Meat_Master_Bool_Exp>>;
+  _not?: InputMaybe<Custom_Meat_Master_Bool_Exp>;
+  _or?: InputMaybe<Array<Custom_Meat_Master_Bool_Exp>>;
+  custom_meat_id?: InputMaybe<Int_Comparison_Exp>;
+  custom_meat_name?: InputMaybe<String_Comparison_Exp>;
+  default_expiration_period?: InputMaybe<Int_Comparison_Exp>;
+  display_name?: InputMaybe<String_Comparison_Exp>;
+  image_uri?: InputMaybe<String_Comparison_Exp>;
+  unit_id?: InputMaybe<Int_Comparison_Exp>;
+  user_id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "custom_meat_master" */
+export enum Custom_Meat_Master_Constraint {
+  /** unique or primary key constraint on columns "custom_meat_name" */
+  CustomMeatMasterCustomMeatNameKey = 'custom_meat_master_custom_meat_name_key',
+  /** unique or primary key constraint on columns "display_name" */
+  CustomMeatMasterDisplayNameKey = 'custom_meat_master_display_name_key',
+  /** unique or primary key constraint on columns "image_uri" */
+  CustomMeatMasterImageUriKey = 'custom_meat_master_image_uri_key',
+  /** unique or primary key constraint on columns "custom_meat_id" */
+  CustomMeatMasterPkey = 'custom_meat_master_pkey'
+}
+
+/** input type for incrementing numeric columns in table "custom_meat_master" */
+export type Custom_Meat_Master_Inc_Input = {
+  custom_meat_id?: InputMaybe<Scalars['Int']['input']>;
+  default_expiration_period?: InputMaybe<Scalars['Int']['input']>;
+  unit_id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** input type for inserting data into table "custom_meat_master" */
+export type Custom_Meat_Master_Insert_Input = {
+  custom_meat_id?: InputMaybe<Scalars['Int']['input']>;
+  custom_meat_name?: InputMaybe<Scalars['String']['input']>;
+  default_expiration_period?: InputMaybe<Scalars['Int']['input']>;
+  display_name?: InputMaybe<Scalars['String']['input']>;
+  image_uri?: InputMaybe<Scalars['String']['input']>;
+  unit_id?: InputMaybe<Scalars['Int']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Custom_Meat_Master_Max_Fields = {
+  __typename?: 'custom_meat_master_max_fields';
+  custom_meat_id?: Maybe<Scalars['Int']['output']>;
+  custom_meat_name?: Maybe<Scalars['String']['output']>;
+  default_expiration_period?: Maybe<Scalars['Int']['output']>;
+  display_name?: Maybe<Scalars['String']['output']>;
+  image_uri?: Maybe<Scalars['String']['output']>;
+  unit_id?: Maybe<Scalars['Int']['output']>;
+  user_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Custom_Meat_Master_Min_Fields = {
+  __typename?: 'custom_meat_master_min_fields';
+  custom_meat_id?: Maybe<Scalars['Int']['output']>;
+  custom_meat_name?: Maybe<Scalars['String']['output']>;
+  default_expiration_period?: Maybe<Scalars['Int']['output']>;
+  display_name?: Maybe<Scalars['String']['output']>;
+  image_uri?: Maybe<Scalars['String']['output']>;
+  unit_id?: Maybe<Scalars['Int']['output']>;
+  user_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "custom_meat_master" */
+export type Custom_Meat_Master_Mutation_Response = {
+  __typename?: 'custom_meat_master_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Custom_Meat_Master>;
+};
+
+/** on_conflict condition type for table "custom_meat_master" */
+export type Custom_Meat_Master_On_Conflict = {
+  constraint: Custom_Meat_Master_Constraint;
+  update_columns?: Array<Custom_Meat_Master_Update_Column>;
+  where?: InputMaybe<Custom_Meat_Master_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "custom_meat_master". */
+export type Custom_Meat_Master_Order_By = {
+  custom_meat_id?: InputMaybe<Order_By>;
+  custom_meat_name?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  display_name?: InputMaybe<Order_By>;
+  image_uri?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: custom_meat_master */
+export type Custom_Meat_Master_Pk_Columns_Input = {
+  custom_meat_id: Scalars['Int']['input'];
+};
+
+/** select columns of table "custom_meat_master" */
+export enum Custom_Meat_Master_Select_Column {
+  /** column name */
+  CustomMeatId = 'custom_meat_id',
+  /** column name */
+  CustomMeatName = 'custom_meat_name',
+  /** column name */
+  DefaultExpirationPeriod = 'default_expiration_period',
+  /** column name */
+  DisplayName = 'display_name',
+  /** column name */
+  ImageUri = 'image_uri',
+  /** column name */
+  UnitId = 'unit_id',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "custom_meat_master" */
+export type Custom_Meat_Master_Set_Input = {
+  custom_meat_id?: InputMaybe<Scalars['Int']['input']>;
+  custom_meat_name?: InputMaybe<Scalars['String']['input']>;
+  default_expiration_period?: InputMaybe<Scalars['Int']['input']>;
+  display_name?: InputMaybe<Scalars['String']['input']>;
+  image_uri?: InputMaybe<Scalars['String']['input']>;
+  unit_id?: InputMaybe<Scalars['Int']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Custom_Meat_Master_Stddev_Fields = {
+  __typename?: 'custom_meat_master_stddev_fields';
+  custom_meat_id?: Maybe<Scalars['Float']['output']>;
+  default_expiration_period?: Maybe<Scalars['Float']['output']>;
+  unit_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Custom_Meat_Master_Stddev_Pop_Fields = {
+  __typename?: 'custom_meat_master_stddev_pop_fields';
+  custom_meat_id?: Maybe<Scalars['Float']['output']>;
+  default_expiration_period?: Maybe<Scalars['Float']['output']>;
+  unit_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Custom_Meat_Master_Stddev_Samp_Fields = {
+  __typename?: 'custom_meat_master_stddev_samp_fields';
+  custom_meat_id?: Maybe<Scalars['Float']['output']>;
+  default_expiration_period?: Maybe<Scalars['Float']['output']>;
+  unit_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "custom_meat_master" */
+export type Custom_Meat_Master_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Custom_Meat_Master_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Custom_Meat_Master_Stream_Cursor_Value_Input = {
+  custom_meat_id?: InputMaybe<Scalars['Int']['input']>;
+  custom_meat_name?: InputMaybe<Scalars['String']['input']>;
+  default_expiration_period?: InputMaybe<Scalars['Int']['input']>;
+  display_name?: InputMaybe<Scalars['String']['input']>;
+  image_uri?: InputMaybe<Scalars['String']['input']>;
+  unit_id?: InputMaybe<Scalars['Int']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Custom_Meat_Master_Sum_Fields = {
+  __typename?: 'custom_meat_master_sum_fields';
+  custom_meat_id?: Maybe<Scalars['Int']['output']>;
+  default_expiration_period?: Maybe<Scalars['Int']['output']>;
+  unit_id?: Maybe<Scalars['Int']['output']>;
+};
+
+/** update columns of table "custom_meat_master" */
+export enum Custom_Meat_Master_Update_Column {
+  /** column name */
+  CustomMeatId = 'custom_meat_id',
+  /** column name */
+  CustomMeatName = 'custom_meat_name',
+  /** column name */
+  DefaultExpirationPeriod = 'default_expiration_period',
+  /** column name */
+  DisplayName = 'display_name',
+  /** column name */
+  ImageUri = 'image_uri',
+  /** column name */
+  UnitId = 'unit_id',
+  /** column name */
+  UserId = 'user_id'
+}
+
+export type Custom_Meat_Master_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Custom_Meat_Master_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Custom_Meat_Master_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Custom_Meat_Master_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Custom_Meat_Master_Var_Pop_Fields = {
+  __typename?: 'custom_meat_master_var_pop_fields';
+  custom_meat_id?: Maybe<Scalars['Float']['output']>;
+  default_expiration_period?: Maybe<Scalars['Float']['output']>;
+  unit_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Custom_Meat_Master_Var_Samp_Fields = {
+  __typename?: 'custom_meat_master_var_samp_fields';
+  custom_meat_id?: Maybe<Scalars['Float']['output']>;
+  default_expiration_period?: Maybe<Scalars['Float']['output']>;
+  unit_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Custom_Meat_Master_Variance_Fields = {
+  __typename?: 'custom_meat_master_variance_fields';
+  custom_meat_id?: Maybe<Scalars['Float']['output']>;
+  default_expiration_period?: Maybe<Scalars['Float']['output']>;
+  unit_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** ユーザごとに追加される野菜類マスタ */
+export type Custom_Vegetable_Master = {
+  __typename?: 'custom_vegetable_master';
+  custom_vegetable_id: Scalars['Int']['output'];
+  custom_vegetable_name: Scalars['String']['output'];
+  default_expiration_period: Scalars['Int']['output'];
+  display_name: Scalars['String']['output'];
+  image_uri: Scalars['String']['output'];
+  unit_id: Scalars['Int']['output'];
+  user_id: Scalars['String']['output'];
+};
+
+/** aggregated selection of "custom_vegetable_master" */
+export type Custom_Vegetable_Master_Aggregate = {
+  __typename?: 'custom_vegetable_master_aggregate';
+  aggregate?: Maybe<Custom_Vegetable_Master_Aggregate_Fields>;
+  nodes: Array<Custom_Vegetable_Master>;
+};
+
+/** aggregate fields of "custom_vegetable_master" */
+export type Custom_Vegetable_Master_Aggregate_Fields = {
+  __typename?: 'custom_vegetable_master_aggregate_fields';
+  avg?: Maybe<Custom_Vegetable_Master_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Custom_Vegetable_Master_Max_Fields>;
+  min?: Maybe<Custom_Vegetable_Master_Min_Fields>;
+  stddev?: Maybe<Custom_Vegetable_Master_Stddev_Fields>;
+  stddev_pop?: Maybe<Custom_Vegetable_Master_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Custom_Vegetable_Master_Stddev_Samp_Fields>;
+  sum?: Maybe<Custom_Vegetable_Master_Sum_Fields>;
+  var_pop?: Maybe<Custom_Vegetable_Master_Var_Pop_Fields>;
+  var_samp?: Maybe<Custom_Vegetable_Master_Var_Samp_Fields>;
+  variance?: Maybe<Custom_Vegetable_Master_Variance_Fields>;
+};
+
+
+/** aggregate fields of "custom_vegetable_master" */
+export type Custom_Vegetable_Master_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Custom_Vegetable_Master_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Custom_Vegetable_Master_Avg_Fields = {
+  __typename?: 'custom_vegetable_master_avg_fields';
+  custom_vegetable_id?: Maybe<Scalars['Float']['output']>;
+  default_expiration_period?: Maybe<Scalars['Float']['output']>;
+  unit_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "custom_vegetable_master". All fields are combined with a logical 'AND'. */
+export type Custom_Vegetable_Master_Bool_Exp = {
+  _and?: InputMaybe<Array<Custom_Vegetable_Master_Bool_Exp>>;
+  _not?: InputMaybe<Custom_Vegetable_Master_Bool_Exp>;
+  _or?: InputMaybe<Array<Custom_Vegetable_Master_Bool_Exp>>;
+  custom_vegetable_id?: InputMaybe<Int_Comparison_Exp>;
+  custom_vegetable_name?: InputMaybe<String_Comparison_Exp>;
+  default_expiration_period?: InputMaybe<Int_Comparison_Exp>;
+  display_name?: InputMaybe<String_Comparison_Exp>;
+  image_uri?: InputMaybe<String_Comparison_Exp>;
+  unit_id?: InputMaybe<Int_Comparison_Exp>;
+  user_id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "custom_vegetable_master" */
+export enum Custom_Vegetable_Master_Constraint {
+  /** unique or primary key constraint on columns "custom_vegetable_name" */
+  CustomVegetableMasterCustomVegetableNameKey = 'custom_vegetable_master_custom_vegetable_name_key',
+  /** unique or primary key constraint on columns "display_name" */
+  CustomVegetableMasterDisplayNameKey = 'custom_vegetable_master_display_name_key',
+  /** unique or primary key constraint on columns "image_uri" */
+  CustomVegetableMasterImageUriKey = 'custom_vegetable_master_image_uri_key',
+  /** unique or primary key constraint on columns "custom_vegetable_id" */
+  CustomVegetableMasterPkey = 'custom_vegetable_master_pkey'
+}
+
+/** input type for incrementing numeric columns in table "custom_vegetable_master" */
+export type Custom_Vegetable_Master_Inc_Input = {
+  custom_vegetable_id?: InputMaybe<Scalars['Int']['input']>;
+  default_expiration_period?: InputMaybe<Scalars['Int']['input']>;
+  unit_id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** input type for inserting data into table "custom_vegetable_master" */
+export type Custom_Vegetable_Master_Insert_Input = {
+  custom_vegetable_id?: InputMaybe<Scalars['Int']['input']>;
+  custom_vegetable_name?: InputMaybe<Scalars['String']['input']>;
+  default_expiration_period?: InputMaybe<Scalars['Int']['input']>;
+  display_name?: InputMaybe<Scalars['String']['input']>;
+  image_uri?: InputMaybe<Scalars['String']['input']>;
+  unit_id?: InputMaybe<Scalars['Int']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Custom_Vegetable_Master_Max_Fields = {
+  __typename?: 'custom_vegetable_master_max_fields';
+  custom_vegetable_id?: Maybe<Scalars['Int']['output']>;
+  custom_vegetable_name?: Maybe<Scalars['String']['output']>;
+  default_expiration_period?: Maybe<Scalars['Int']['output']>;
+  display_name?: Maybe<Scalars['String']['output']>;
+  image_uri?: Maybe<Scalars['String']['output']>;
+  unit_id?: Maybe<Scalars['Int']['output']>;
+  user_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Custom_Vegetable_Master_Min_Fields = {
+  __typename?: 'custom_vegetable_master_min_fields';
+  custom_vegetable_id?: Maybe<Scalars['Int']['output']>;
+  custom_vegetable_name?: Maybe<Scalars['String']['output']>;
+  default_expiration_period?: Maybe<Scalars['Int']['output']>;
+  display_name?: Maybe<Scalars['String']['output']>;
+  image_uri?: Maybe<Scalars['String']['output']>;
+  unit_id?: Maybe<Scalars['Int']['output']>;
+  user_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "custom_vegetable_master" */
+export type Custom_Vegetable_Master_Mutation_Response = {
+  __typename?: 'custom_vegetable_master_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Custom_Vegetable_Master>;
+};
+
+/** on_conflict condition type for table "custom_vegetable_master" */
+export type Custom_Vegetable_Master_On_Conflict = {
+  constraint: Custom_Vegetable_Master_Constraint;
+  update_columns?: Array<Custom_Vegetable_Master_Update_Column>;
+  where?: InputMaybe<Custom_Vegetable_Master_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "custom_vegetable_master". */
+export type Custom_Vegetable_Master_Order_By = {
+  custom_vegetable_id?: InputMaybe<Order_By>;
+  custom_vegetable_name?: InputMaybe<Order_By>;
+  default_expiration_period?: InputMaybe<Order_By>;
+  display_name?: InputMaybe<Order_By>;
+  image_uri?: InputMaybe<Order_By>;
+  unit_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: custom_vegetable_master */
+export type Custom_Vegetable_Master_Pk_Columns_Input = {
+  custom_vegetable_id: Scalars['Int']['input'];
+};
+
+/** select columns of table "custom_vegetable_master" */
+export enum Custom_Vegetable_Master_Select_Column {
+  /** column name */
+  CustomVegetableId = 'custom_vegetable_id',
+  /** column name */
+  CustomVegetableName = 'custom_vegetable_name',
+  /** column name */
+  DefaultExpirationPeriod = 'default_expiration_period',
+  /** column name */
+  DisplayName = 'display_name',
+  /** column name */
+  ImageUri = 'image_uri',
+  /** column name */
+  UnitId = 'unit_id',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "custom_vegetable_master" */
+export type Custom_Vegetable_Master_Set_Input = {
+  custom_vegetable_id?: InputMaybe<Scalars['Int']['input']>;
+  custom_vegetable_name?: InputMaybe<Scalars['String']['input']>;
+  default_expiration_period?: InputMaybe<Scalars['Int']['input']>;
+  display_name?: InputMaybe<Scalars['String']['input']>;
+  image_uri?: InputMaybe<Scalars['String']['input']>;
+  unit_id?: InputMaybe<Scalars['Int']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Custom_Vegetable_Master_Stddev_Fields = {
+  __typename?: 'custom_vegetable_master_stddev_fields';
+  custom_vegetable_id?: Maybe<Scalars['Float']['output']>;
+  default_expiration_period?: Maybe<Scalars['Float']['output']>;
+  unit_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Custom_Vegetable_Master_Stddev_Pop_Fields = {
+  __typename?: 'custom_vegetable_master_stddev_pop_fields';
+  custom_vegetable_id?: Maybe<Scalars['Float']['output']>;
+  default_expiration_period?: Maybe<Scalars['Float']['output']>;
+  unit_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Custom_Vegetable_Master_Stddev_Samp_Fields = {
+  __typename?: 'custom_vegetable_master_stddev_samp_fields';
+  custom_vegetable_id?: Maybe<Scalars['Float']['output']>;
+  default_expiration_period?: Maybe<Scalars['Float']['output']>;
+  unit_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "custom_vegetable_master" */
+export type Custom_Vegetable_Master_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Custom_Vegetable_Master_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Custom_Vegetable_Master_Stream_Cursor_Value_Input = {
+  custom_vegetable_id?: InputMaybe<Scalars['Int']['input']>;
+  custom_vegetable_name?: InputMaybe<Scalars['String']['input']>;
+  default_expiration_period?: InputMaybe<Scalars['Int']['input']>;
+  display_name?: InputMaybe<Scalars['String']['input']>;
+  image_uri?: InputMaybe<Scalars['String']['input']>;
+  unit_id?: InputMaybe<Scalars['Int']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Custom_Vegetable_Master_Sum_Fields = {
+  __typename?: 'custom_vegetable_master_sum_fields';
+  custom_vegetable_id?: Maybe<Scalars['Int']['output']>;
+  default_expiration_period?: Maybe<Scalars['Int']['output']>;
+  unit_id?: Maybe<Scalars['Int']['output']>;
+};
+
+/** update columns of table "custom_vegetable_master" */
+export enum Custom_Vegetable_Master_Update_Column {
+  /** column name */
+  CustomVegetableId = 'custom_vegetable_id',
+  /** column name */
+  CustomVegetableName = 'custom_vegetable_name',
+  /** column name */
+  DefaultExpirationPeriod = 'default_expiration_period',
+  /** column name */
+  DisplayName = 'display_name',
+  /** column name */
+  ImageUri = 'image_uri',
+  /** column name */
+  UnitId = 'unit_id',
+  /** column name */
+  UserId = 'user_id'
+}
+
+export type Custom_Vegetable_Master_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Custom_Vegetable_Master_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Custom_Vegetable_Master_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Custom_Vegetable_Master_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Custom_Vegetable_Master_Var_Pop_Fields = {
+  __typename?: 'custom_vegetable_master_var_pop_fields';
+  custom_vegetable_id?: Maybe<Scalars['Float']['output']>;
+  default_expiration_period?: Maybe<Scalars['Float']['output']>;
+  unit_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Custom_Vegetable_Master_Var_Samp_Fields = {
+  __typename?: 'custom_vegetable_master_var_samp_fields';
+  custom_vegetable_id?: Maybe<Scalars['Float']['output']>;
+  default_expiration_period?: Maybe<Scalars['Float']['output']>;
+  unit_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Custom_Vegetable_Master_Variance_Fields = {
+  __typename?: 'custom_vegetable_master_variance_fields';
+  custom_vegetable_id?: Maybe<Scalars['Float']['output']>;
+  default_expiration_period?: Maybe<Scalars['Float']['output']>;
+  unit_id?: Maybe<Scalars['Float']['output']>;
+};
+
 /** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
 export type Date_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['date']['input']>;
@@ -1038,6 +1600,14 @@ export type Meat_Stocks_Variance_Order_By = {
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
+  /** delete data from the table: "custom_meat_master" */
+  delete_custom_meat_master?: Maybe<Custom_Meat_Master_Mutation_Response>;
+  /** delete single row from the table: "custom_meat_master" */
+  delete_custom_meat_master_by_pk?: Maybe<Custom_Meat_Master>;
+  /** delete data from the table: "custom_vegetable_master" */
+  delete_custom_vegetable_master?: Maybe<Custom_Vegetable_Master_Mutation_Response>;
+  /** delete single row from the table: "custom_vegetable_master" */
+  delete_custom_vegetable_master_by_pk?: Maybe<Custom_Vegetable_Master>;
   /** delete data from the table: "meat_master" */
   delete_meat_master?: Maybe<Meat_Master_Mutation_Response>;
   /** delete single row from the table: "meat_master" */
@@ -1062,6 +1632,14 @@ export type Mutation_Root = {
   delete_vegetable_stocks?: Maybe<Vegetable_Stocks_Mutation_Response>;
   /** delete single row from the table: "vegetable_stocks" */
   delete_vegetable_stocks_by_pk?: Maybe<Vegetable_Stocks>;
+  /** insert data into the table: "custom_meat_master" */
+  insert_custom_meat_master?: Maybe<Custom_Meat_Master_Mutation_Response>;
+  /** insert a single row into the table: "custom_meat_master" */
+  insert_custom_meat_master_one?: Maybe<Custom_Meat_Master>;
+  /** insert data into the table: "custom_vegetable_master" */
+  insert_custom_vegetable_master?: Maybe<Custom_Vegetable_Master_Mutation_Response>;
+  /** insert a single row into the table: "custom_vegetable_master" */
+  insert_custom_vegetable_master_one?: Maybe<Custom_Vegetable_Master>;
   /** insert data into the table: "meat_master" */
   insert_meat_master?: Maybe<Meat_Master_Mutation_Response>;
   /** insert a single row into the table: "meat_master" */
@@ -1086,6 +1664,18 @@ export type Mutation_Root = {
   insert_vegetable_stocks?: Maybe<Vegetable_Stocks_Mutation_Response>;
   /** insert a single row into the table: "vegetable_stocks" */
   insert_vegetable_stocks_one?: Maybe<Vegetable_Stocks>;
+  /** update data of the table: "custom_meat_master" */
+  update_custom_meat_master?: Maybe<Custom_Meat_Master_Mutation_Response>;
+  /** update single row of the table: "custom_meat_master" */
+  update_custom_meat_master_by_pk?: Maybe<Custom_Meat_Master>;
+  /** update multiples rows of table: "custom_meat_master" */
+  update_custom_meat_master_many?: Maybe<Array<Maybe<Custom_Meat_Master_Mutation_Response>>>;
+  /** update data of the table: "custom_vegetable_master" */
+  update_custom_vegetable_master?: Maybe<Custom_Vegetable_Master_Mutation_Response>;
+  /** update single row of the table: "custom_vegetable_master" */
+  update_custom_vegetable_master_by_pk?: Maybe<Custom_Vegetable_Master>;
+  /** update multiples rows of table: "custom_vegetable_master" */
+  update_custom_vegetable_master_many?: Maybe<Array<Maybe<Custom_Vegetable_Master_Mutation_Response>>>;
   /** update data of the table: "meat_master" */
   update_meat_master?: Maybe<Meat_Master_Mutation_Response>;
   /** update single row of the table: "meat_master" */
@@ -1122,6 +1712,30 @@ export type Mutation_Root = {
   update_vegetable_stocks_by_pk?: Maybe<Vegetable_Stocks>;
   /** update multiples rows of table: "vegetable_stocks" */
   update_vegetable_stocks_many?: Maybe<Array<Maybe<Vegetable_Stocks_Mutation_Response>>>;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Custom_Meat_MasterArgs = {
+  where: Custom_Meat_Master_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Custom_Meat_Master_By_PkArgs = {
+  custom_meat_id: Scalars['Int']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Custom_Vegetable_MasterArgs = {
+  where: Custom_Vegetable_Master_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Custom_Vegetable_Master_By_PkArgs = {
+  custom_vegetable_id: Scalars['Int']['input'];
 };
 
 
@@ -1194,6 +1808,34 @@ export type Mutation_RootDelete_Vegetable_StocksArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Vegetable_Stocks_By_PkArgs = {
   stock_id: Scalars['Int']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Custom_Meat_MasterArgs = {
+  objects: Array<Custom_Meat_Master_Insert_Input>;
+  on_conflict?: InputMaybe<Custom_Meat_Master_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Custom_Meat_Master_OneArgs = {
+  object: Custom_Meat_Master_Insert_Input;
+  on_conflict?: InputMaybe<Custom_Meat_Master_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Custom_Vegetable_MasterArgs = {
+  objects: Array<Custom_Vegetable_Master_Insert_Input>;
+  on_conflict?: InputMaybe<Custom_Vegetable_Master_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Custom_Vegetable_Master_OneArgs = {
+  object: Custom_Vegetable_Master_Insert_Input;
+  on_conflict?: InputMaybe<Custom_Vegetable_Master_On_Conflict>;
 };
 
 
@@ -1278,6 +1920,50 @@ export type Mutation_RootInsert_Vegetable_StocksArgs = {
 export type Mutation_RootInsert_Vegetable_Stocks_OneArgs = {
   object: Vegetable_Stocks_Insert_Input;
   on_conflict?: InputMaybe<Vegetable_Stocks_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Custom_Meat_MasterArgs = {
+  _inc?: InputMaybe<Custom_Meat_Master_Inc_Input>;
+  _set?: InputMaybe<Custom_Meat_Master_Set_Input>;
+  where: Custom_Meat_Master_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Custom_Meat_Master_By_PkArgs = {
+  _inc?: InputMaybe<Custom_Meat_Master_Inc_Input>;
+  _set?: InputMaybe<Custom_Meat_Master_Set_Input>;
+  pk_columns: Custom_Meat_Master_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Custom_Meat_Master_ManyArgs = {
+  updates: Array<Custom_Meat_Master_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Custom_Vegetable_MasterArgs = {
+  _inc?: InputMaybe<Custom_Vegetable_Master_Inc_Input>;
+  _set?: InputMaybe<Custom_Vegetable_Master_Set_Input>;
+  where: Custom_Vegetable_Master_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Custom_Vegetable_Master_By_PkArgs = {
+  _inc?: InputMaybe<Custom_Vegetable_Master_Inc_Input>;
+  _set?: InputMaybe<Custom_Vegetable_Master_Set_Input>;
+  pk_columns: Custom_Vegetable_Master_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Custom_Vegetable_Master_ManyArgs = {
+  updates: Array<Custom_Vegetable_Master_Updates>;
 };
 
 
@@ -1428,6 +2114,18 @@ export enum Order_By {
 
 export type Query_Root = {
   __typename?: 'query_root';
+  /** fetch data from the table: "custom_meat_master" */
+  custom_meat_master: Array<Custom_Meat_Master>;
+  /** fetch aggregated fields from the table: "custom_meat_master" */
+  custom_meat_master_aggregate: Custom_Meat_Master_Aggregate;
+  /** fetch data from the table: "custom_meat_master" using primary key columns */
+  custom_meat_master_by_pk?: Maybe<Custom_Meat_Master>;
+  /** fetch data from the table: "custom_vegetable_master" */
+  custom_vegetable_master: Array<Custom_Vegetable_Master>;
+  /** fetch aggregated fields from the table: "custom_vegetable_master" */
+  custom_vegetable_master_aggregate: Custom_Vegetable_Master_Aggregate;
+  /** fetch data from the table: "custom_vegetable_master" using primary key columns */
+  custom_vegetable_master_by_pk?: Maybe<Custom_Vegetable_Master>;
   /** fetch data from the table: "meat_master" */
   meat_master: Array<Meat_Master>;
   /** fetch aggregated fields from the table: "meat_master" */
@@ -1464,6 +2162,52 @@ export type Query_Root = {
   vegetable_stocks_aggregate: Vegetable_Stocks_Aggregate;
   /** fetch data from the table: "vegetable_stocks" using primary key columns */
   vegetable_stocks_by_pk?: Maybe<Vegetable_Stocks>;
+};
+
+
+export type Query_RootCustom_Meat_MasterArgs = {
+  distinct_on?: InputMaybe<Array<Custom_Meat_Master_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Custom_Meat_Master_Order_By>>;
+  where?: InputMaybe<Custom_Meat_Master_Bool_Exp>;
+};
+
+
+export type Query_RootCustom_Meat_Master_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Custom_Meat_Master_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Custom_Meat_Master_Order_By>>;
+  where?: InputMaybe<Custom_Meat_Master_Bool_Exp>;
+};
+
+
+export type Query_RootCustom_Meat_Master_By_PkArgs = {
+  custom_meat_id: Scalars['Int']['input'];
+};
+
+
+export type Query_RootCustom_Vegetable_MasterArgs = {
+  distinct_on?: InputMaybe<Array<Custom_Vegetable_Master_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Custom_Vegetable_Master_Order_By>>;
+  where?: InputMaybe<Custom_Vegetable_Master_Bool_Exp>;
+};
+
+
+export type Query_RootCustom_Vegetable_Master_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Custom_Vegetable_Master_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Custom_Vegetable_Master_Order_By>>;
+  where?: InputMaybe<Custom_Vegetable_Master_Bool_Exp>;
+};
+
+
+export type Query_RootCustom_Vegetable_Master_By_PkArgs = {
+  custom_vegetable_id: Scalars['Int']['input'];
 };
 
 
@@ -1606,6 +2350,22 @@ export type Query_RootVegetable_Stocks_By_PkArgs = {
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
+  /** fetch data from the table: "custom_meat_master" */
+  custom_meat_master: Array<Custom_Meat_Master>;
+  /** fetch aggregated fields from the table: "custom_meat_master" */
+  custom_meat_master_aggregate: Custom_Meat_Master_Aggregate;
+  /** fetch data from the table: "custom_meat_master" using primary key columns */
+  custom_meat_master_by_pk?: Maybe<Custom_Meat_Master>;
+  /** fetch data from the table in a streaming manner: "custom_meat_master" */
+  custom_meat_master_stream: Array<Custom_Meat_Master>;
+  /** fetch data from the table: "custom_vegetable_master" */
+  custom_vegetable_master: Array<Custom_Vegetable_Master>;
+  /** fetch aggregated fields from the table: "custom_vegetable_master" */
+  custom_vegetable_master_aggregate: Custom_Vegetable_Master_Aggregate;
+  /** fetch data from the table: "custom_vegetable_master" using primary key columns */
+  custom_vegetable_master_by_pk?: Maybe<Custom_Vegetable_Master>;
+  /** fetch data from the table in a streaming manner: "custom_vegetable_master" */
+  custom_vegetable_master_stream: Array<Custom_Vegetable_Master>;
   /** fetch data from the table: "meat_master" */
   meat_master: Array<Meat_Master>;
   /** fetch aggregated fields from the table: "meat_master" */
@@ -1654,6 +2414,66 @@ export type Subscription_Root = {
   vegetable_stocks_by_pk?: Maybe<Vegetable_Stocks>;
   /** fetch data from the table in a streaming manner: "vegetable_stocks" */
   vegetable_stocks_stream: Array<Vegetable_Stocks>;
+};
+
+
+export type Subscription_RootCustom_Meat_MasterArgs = {
+  distinct_on?: InputMaybe<Array<Custom_Meat_Master_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Custom_Meat_Master_Order_By>>;
+  where?: InputMaybe<Custom_Meat_Master_Bool_Exp>;
+};
+
+
+export type Subscription_RootCustom_Meat_Master_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Custom_Meat_Master_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Custom_Meat_Master_Order_By>>;
+  where?: InputMaybe<Custom_Meat_Master_Bool_Exp>;
+};
+
+
+export type Subscription_RootCustom_Meat_Master_By_PkArgs = {
+  custom_meat_id: Scalars['Int']['input'];
+};
+
+
+export type Subscription_RootCustom_Meat_Master_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Custom_Meat_Master_Stream_Cursor_Input>>;
+  where?: InputMaybe<Custom_Meat_Master_Bool_Exp>;
+};
+
+
+export type Subscription_RootCustom_Vegetable_MasterArgs = {
+  distinct_on?: InputMaybe<Array<Custom_Vegetable_Master_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Custom_Vegetable_Master_Order_By>>;
+  where?: InputMaybe<Custom_Vegetable_Master_Bool_Exp>;
+};
+
+
+export type Subscription_RootCustom_Vegetable_Master_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Custom_Vegetable_Master_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Custom_Vegetable_Master_Order_By>>;
+  where?: InputMaybe<Custom_Vegetable_Master_Bool_Exp>;
+};
+
+
+export type Subscription_RootCustom_Vegetable_Master_By_PkArgs = {
+  custom_vegetable_id: Scalars['Int']['input'];
+};
+
+
+export type Subscription_RootCustom_Vegetable_Master_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Custom_Vegetable_Master_Stream_Cursor_Input>>;
+  where?: InputMaybe<Custom_Vegetable_Master_Bool_Exp>;
 };
 
 
