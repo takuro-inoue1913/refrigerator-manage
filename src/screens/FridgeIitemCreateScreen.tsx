@@ -183,12 +183,17 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
   const onSubmit = async () => {
     setIsSending(true);
     let result = null;
+
+    const imageUri = await uploadUserImage(
+      getValues('image.uri'),
+      'user-custom-images/' + user?.uid,
+    );
     switch (route.params.fridgeCategory) {
       case '野菜類': {
         result = await requestInsertCustomVegetableMaster({
           displayName: getValues('displayName'),
           vegetableName: getValues('nameKana'),
-          imageUri: getValues('image.uri'),
+          imageUri,
           defaultExpirationPeriod: Number(getValues('expiryPeriod')),
           unitId: getValues('unit.unit_id'),
         });
@@ -199,10 +204,6 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
       setIsSending(false);
       return;
     }
-    await uploadUserImage(
-      getValues('image.uri'),
-      'user-custom-images/' + user?.uid,
-    );
     setIsSending(false);
 
     Toast.show({

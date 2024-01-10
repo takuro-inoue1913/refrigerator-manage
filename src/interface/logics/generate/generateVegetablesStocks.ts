@@ -1,4 +1,7 @@
-import { GetVegetableMasterAndUnitAndStocksQuery } from '@src/interface/__generated__/graphql';
+import {
+  GetVegetableMasterAndUnitAndStocksQuery,
+  GetCustomVegetableMasterAndUnitAndStocksQuery,
+} from '@src/interface/__generated__/graphql';
 import { VegetablesStocks } from '@src/states/fridge/vegetables';
 import { getIncrementalUnit } from '@src/utils/logics/getIncrementalUnit';
 import dayjs from 'dayjs';
@@ -7,11 +10,40 @@ import dayjs from 'dayjs';
  * 野菜マスタと野菜在庫から野菜在庫のオブジェクトを生成する。
  * @param {GetVegetableMasterAndUnitAndStocksQuery} data
  */
-export const generateVegetablesStocks = (
-  data: GetVegetableMasterAndUnitAndStocksQuery,
-): VegetablesStocks => {
+export const generateVegetablesStocks = (data: {
+  vegetableMasterData: GetVegetableMasterAndUnitAndStocksQuery;
+  customVegetableMasterData: GetCustomVegetableMasterAndUnitAndStocksQuery;
+}): VegetablesStocks => {
   const ids: number[] = [];
-  const byId = data.vegetable_master.reduce(
+  const vegetableMasterData = convertVegetableMasterData(
+    data.vegetableMasterData.vegetable_master,
+  );
+  const customVegetableMasterData = convertVegetableMasterData(
+    data.customVegetableMasterData.custom_vegetable_master,
+  );
+  ids.push(...Object.keys(vegetableMasterData).map((id) => Number(id)));
+  ids.push(...Object.keys(customVegetableMasterData).map((id) => Number(id)));
+
+  const byId = {
+    ...vegetableMasterData,
+    ...customVegetableMasterData,
+  };
+
+  return {
+    ids,
+    byId,
+  };
+};
+
+const convertVegetableMasterData = (
+  masterData:
+    | GetVegetableMasterAndUnitAndStocksQuery['vegetable_master']
+    | GetCustomVegetableMasterAndUnitAndStocksQuery['custom_vegetable_master'],
+): VegetablesStocks['byId'] => {
+  if (masterData.length === 0) {
+    return {} as VegetablesStocks['byId'];
+  }
+  return masterData.reduce(
     (acc, cur) => {
       acc[cur.vegetable_id] = {
         id: cur.vegetable_id,
@@ -40,14 +72,8 @@ export const generateVegetablesStocks = (
         isFavorite: cur.vegetable_master_vegetable_stocks?.is_favorite ?? false,
         defaultExpirationPeriod: cur.default_expiration_period,
       };
-      ids.push(cur.vegetable_id);
       return acc;
     },
     {} as VegetablesStocks['byId'],
   );
-
-  return {
-    ids,
-    byId,
-  };
 };

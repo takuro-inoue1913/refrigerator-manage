@@ -24,6 +24,32 @@ query GetVegetableMasterAndUnitAndStocks {
   }
 }
 
+query GetCustomVegetableMasterAndUnitAndStocks {
+  custom_vegetable_master(
+    order_by: {
+      custom_vegetable_master_vegetable_stocks: { is_favorite: desc_nulls_last }
+    }
+  ) {
+    vegetable_id: custom_vegetable_id
+    vegetable_name: custom_vegetable_name
+    display_name
+    image_uri
+    default_expiration_period
+    vegetable_master_unit_master: custom_vegetable_master_uint_master {
+      unit_id
+      unit_name
+    }
+    vegetable_master_vegetable_stocks: custom_vegetable_master_vegetable_stocks {
+      stock_id
+      quantity
+      incremental_unit
+      expiration_date
+      memo
+      is_favorite
+    }
+  }
+}
+
 query GetVegetableStockByUserIdAndVegetableId(
   $userId: String!
   $vegetableId: Int!
