@@ -2,6 +2,20 @@ import dayjs from 'dayjs';
 
 import { FridgeStock, NormalizedArray } from '@src/types';
 
+export const sortNormal = (
+  sortedIds: string[],
+  fridgeStocks: NormalizedArray<FridgeStock>,
+) => {
+  // isFavoriteがtrueのものを先頭に持ってくる。
+  const sortedIdsWithFavorite = [...sortedIds].filter(
+    (id) => fridgeStocks.byId[id].isFavorite,
+  );
+  const sortedIdsWithoutFavorite = [...sortedIds].filter(
+    (id) => !fridgeStocks.byId[id].isFavorite,
+  );
+  return [...sortedIdsWithFavorite, ...sortedIdsWithoutFavorite];
+};
+
 /** 所有食材ソート関数 */
 export const sortOwnedIngredients = (
   sortedIds: string[],

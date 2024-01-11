@@ -4,6 +4,7 @@ import {
   sortOwnedIngredients,
   sortNearingExpirationDate,
   sortAiueo,
+  sortNormal,
 } from '@src/utils/logics/sortByFunctions';
 
 /**
@@ -26,8 +27,7 @@ export const filterMeatStock = ({
   let sortedIds = [...originalIds];
   switch (selectFilterOptions.sort) {
     case '通常':
-      // 通常はそのままの順番で表示する。
-      sortedIds = [...originalIds];
+      sortedIds = sortNormal(originalIds, meatStocks);
       break;
     case '所有食材':
       sortedIds = sortOwnedIngredients(originalIds, meatStocks);
