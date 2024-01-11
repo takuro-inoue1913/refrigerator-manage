@@ -7,6 +7,11 @@ export type SelectFilterOptions = {
   sort: (typeof FILTER_OPTIONS)['sort'][number];
 };
 
+export type UnitMater = {
+  id: number;
+  name: string;
+};
+
 export const selectFridgeCategoryState = atom<SelectFridgeCategory>({
   key: 'selectedCategoryState',
   default: '野菜類',
@@ -17,4 +22,9 @@ export const selectFilterOptionsState = atom<SelectFilterOptions>({
   default: {
     sort: '通常',
   },
+});
+
+export const unitMasterState = atom<UnitMater[]>({
+  key: 'unitMasterState',
+  default: [],
 });

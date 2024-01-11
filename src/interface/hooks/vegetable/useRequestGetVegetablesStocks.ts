@@ -26,7 +26,6 @@ export const useRequestGetVegetablesStocks = () => {
     queryFn: async () => {
       const data = await vegetableStockRepository.getAll({ idToken });
       const _vegetablesStocks = generateVegetablesStocks(data);
-      console.log(_vegetablesStocks);
       setVegetablesStocks({
         byId: _vegetablesStocks.byId,
         ids: filterVegetablesStock({

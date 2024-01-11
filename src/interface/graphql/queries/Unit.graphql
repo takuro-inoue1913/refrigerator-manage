@@ -1,0 +1,6 @@
+query GetUnitMaster {
+  unit_master {
+    unit_id
+    unit_name
+  }
+}

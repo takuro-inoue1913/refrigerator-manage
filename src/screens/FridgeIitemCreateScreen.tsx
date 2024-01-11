@@ -32,12 +32,15 @@ import { uploadUserImage } from '@src/interface/firebase/uploadUserImage';
 import { useRequestInsertCustomVegetableMaster } from '@src/interface/hooks/vegetable/useRequestInsertCustomVegetableMaster';
 import Toast from 'react-native-toast-message';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
+import { useRequestGetUnit } from '@src/interface/hooks/unit/useRequestGetUnit';
+import { UnitMater } from '@src/states/fridge';
 
 type Props = {
   route: RouteProp<RootStackParamList, '食材新規登録'>;
 };
 
 export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
+  const { unitMaster } = useRequestGetUnit();
   const [isSending, setIsSending] = useState(false);
   const user = useRecoilValue(userState);
   const navigation = useTypedNavigation();
@@ -55,7 +58,7 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
     nameKana: string;
     expiryPeriod: string;
     incrementUnit: string;
-    unit: { unit_id: number; unit_name: string };
+    unit: UnitMater;
   }>();
   const spinValue = useRef(new Animated.Value(0)).current;
 
@@ -70,49 +73,6 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
       }),
     ).start();
   }, [spinValue]);
-
-  const unitMasterData = [
-    {
-      unit_id: 3,
-      unit_name: '個',
-    },
-    {
-      unit_id: 4,
-      unit_name: '本',
-    },
-    {
-      unit_id: 5,
-      unit_name: 'g',
-    },
-    {
-      unit_id: 7,
-      unit_name: '束',
-    },
-    {
-      unit_id: 8,
-      unit_name: '袋',
-    },
-    {
-      unit_id: 6,
-      unit_name: '切',
-    },
-    {
-      unit_id: 9,
-      unit_name: '缶',
-    },
-    {
-      unit_id: 10,
-      unit_name: '枚',
-    },
-    {
-      unit_id: 11,
-      unit_name: '玉',
-    },
-    {
-      unit_id: 12,
-      unit_name: '丁',
-    },
-  ];
 
   /** 画像をリサイズする */
   const resizeImage = async (uri: string): Promise<string> => {
@@ -170,13 +130,13 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
   };
 
   const handleUnitChange = (
-    item: { unit_id: number; unit_name: string },
+    item: { id: number; name: string },
     // MEMO: react-hook-form の field.onChange の型に合わせるため。
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onChange: (...event: any[]) => void,
   ) => {
     setValue('unit', item);
-    setValue('incrementUnit', String(getIncrementalUnit(item.unit_name)));
+    setValue('incrementUnit', String(getIncrementalUnit(item.name)));
     onChange(item);
   };
 
@@ -195,7 +155,7 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
           vegetableName: getValues('nameKana'),
           imageUri,
           defaultExpirationPeriod: Number(getValues('expiryPeriod')),
-          unitId: getValues('unit.unit_id'),
+          unitId: getValues('unit.id'),
         });
         break;
       }
@@ -374,10 +334,10 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
                 placeholderStyle={styles.dropdownPlaceholderStyle}
                 selectedTextStyle={styles.dropdownSelectedTextStyle}
                 iconStyle={styles.dropdownIconStyle}
-                data={unitMasterData}
+                data={unitMaster}
                 maxHeight={150}
-                labelField="unit_name"
-                valueField="unit_id"
+                labelField="name"
+                valueField="id"
                 placeholder="単位名 *初期の増減単位が設定されます。"
                 searchPlaceholder="単位名を検索"
                 value={value}
@@ -385,9 +345,7 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
                 renderItem={(item) => {
                   return (
                     <View style={styles.dropdownItem}>
-                      <Text style={styles.dropdownTextItem}>
-                        {item.unit_name}
-                      </Text>
+                      <Text style={styles.dropdownTextItem}>{item.name}</Text>
                       {isEqual(item, value) && (
                         <Icon
                           name="check"
