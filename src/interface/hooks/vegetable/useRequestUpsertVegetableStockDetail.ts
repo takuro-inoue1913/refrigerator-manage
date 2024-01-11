@@ -6,7 +6,7 @@ import { vegetablesStocksState } from '@src/states/fridge/vegetables';
 import { useEffect, useRef } from 'react';
 
 type UpsertMeatStockDetail = {
-  id: number;
+  id: string;
   quantity: number;
   incrementalUnit: number;
   expirationDate: string;
@@ -32,16 +32,17 @@ export const useRequestUpsertVegetableStockDetail = () => {
     expirationDate,
     memo,
   }: UpsertMeatStockDetail) => {
+    const plainId = vegetablesStocksRef.current.byId[vegetableId].plainId;
     const existingStock = await vegetableStockRepository.getOne({
       idToken,
       userId: user!.uid,
-      vegetableId,
+      vegetableId: plainId,
     });
     if (existingStock.length === 0) {
       const data = await vegetableStockRepository.insert({
         idToken,
         userId: user!.uid,
-        vegetableId,
+        vegetableId: plainId,
         quantity,
         incrementalUnit,
         defaultExpirationPeriod:
@@ -52,7 +53,7 @@ export const useRequestUpsertVegetableStockDetail = () => {
       const data = await vegetableStockRepository.updateDetail({
         idToken,
         userId: user!.uid,
-        vegetableId,
+        vegetableId: plainId,
         quantity,
         incrementalUnit,
         expirationDate,

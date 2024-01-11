@@ -4,13 +4,13 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
 
 type Props = {
-  targetId: number;
+  targetId: string;
   /** お気に入り登録されているかどうか */
   isFavorite: boolean;
   /** 表示名 */
   displayName: string;
   /** 項目を押した時に実行される関数 */
-  onPress?: (targetId: number) => void;
+  onPress?: (targetId: string) => void;
 };
 
 /**

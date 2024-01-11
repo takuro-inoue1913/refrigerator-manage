@@ -37,7 +37,7 @@ export const MeatView: FC = () => {
   });
 
   const handleLongPress = useCallback(
-    (id: number) => {
+    (id: string) => {
       setModalProps({
         visible: true,
         id: meatStocks.byId[id].id,
@@ -70,7 +70,7 @@ export const MeatView: FC = () => {
     meatStockActions.filterMeatStocks();
   };
 
-  const handleItemDisplayContents = (targetId: number) => {
+  const handleItemDisplayContents = (targetId: string) => {
     meatStockActions.updateIsFavorite({
       id: targetId,
       isFavorite: !meatStocks.byId[targetId].isFavorite,

@@ -12,7 +12,7 @@ import {
  * @param vegetablesStocks 野菜在庫。
  * @param originalIds 絞り込み前の野菜在庫のIDの配列。
  * @param selectFilterOptions 絞り込みの選択肢。
- * @returns {number[]} 絞り込み後の野菜在庫のIDの配列。
+ * @returns {string[]} 絞り込み後の野菜在庫のIDの配列。
  */
 export const filterVegetablesStock = ({
   vegetablesStocks,
@@ -20,9 +20,9 @@ export const filterVegetablesStock = ({
   selectFilterOptions,
 }: {
   vegetablesStocks: VegetablesStocks;
-  originalIds: number[];
+  originalIds: string[];
   selectFilterOptions: SelectFilterOptions;
-}): number[] => {
+}): string[] => {
   let sortedIds = [...originalIds];
   switch (selectFilterOptions.sort) {
     case '通常':

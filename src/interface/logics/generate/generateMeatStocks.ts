@@ -2,6 +2,7 @@ import { GetMeatMasterAndUnitAndStocksQuery } from '@src/interface/__generated__
 import { MeatStocks } from '@src/states/fridge/meat';
 import { getIncrementalUnit } from '@src/utils/logics/getIncrementalUnit';
 import dayjs from 'dayjs';
+import { generateUniqueId } from '@src/interface/logics/generate/generateUniqueId';
 
 /**
  * 肉マスタと肉在庫から肉在庫のオブジェクトを生成する。
@@ -9,11 +10,13 @@ import dayjs from 'dayjs';
 export const generateMeatStocks = (
   data: GetMeatMasterAndUnitAndStocksQuery,
 ): MeatStocks => {
-  const ids: number[] = [];
+  const ids: string[] = [];
   const byId = data.meat_master.reduce(
     (acc, cur) => {
-      acc[cur.meat_id] = {
-        id: cur.meat_id,
+      const uniqueId = generateUniqueId(cur.meat_id, 'meat');
+      acc[uniqueId] = {
+        id: uniqueId,
+        plainId: cur.meat_id,
         name: cur.meat_name,
         displayName: cur.display_name,
         imageUri: cur.image_uri,
@@ -40,7 +43,7 @@ export const generateMeatStocks = (
         isFavorite: cur.meat_master_meat_stocks?.is_favorite ?? false,
         defaultExpirationPeriod: cur.default_expiration_period,
       };
-      ids.push(cur.meat_id);
+      ids.push(uniqueId);
       return acc;
     },
     {} as MeatStocks['byId'],

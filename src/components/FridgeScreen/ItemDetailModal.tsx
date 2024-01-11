@@ -23,7 +23,7 @@ const { height: windowHeight } = Dimensions.get('window');
 
 export type Props = {
   /** 対象データのID */
-  id: number;
+  id: string;
   /** モーダルを表示するかどうか */
   visible: boolean;
   /** 画像のURI */
@@ -47,7 +47,7 @@ export type Props = {
 };
 
 type FormValues = {
-  id: number;
+  id: string;
   quantity: number;
   incrementalUnit: number;
   expirationDate: string;
@@ -55,7 +55,7 @@ type FormValues = {
 };
 
 export type EditFormValues = {
-  id: number;
+  id: string;
   quantity: number | null;
   incrementalUnit: number | null;
   expirationDate: string;

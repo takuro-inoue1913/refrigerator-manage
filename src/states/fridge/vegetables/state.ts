@@ -5,9 +5,9 @@ import { FridgeStock } from '@src/types';
  * 野菜在庫の型
  */
 export type VegetablesStocks = {
-  ids: number[];
+  ids: string[];
   byId: {
-    [vegetableId: number]: FridgeStock;
+    [vegetableId: string]: FridgeStock;
   };
 };
 
@@ -25,13 +25,13 @@ export const vegetablesStocksState = atom({
  */
 export const vegetablesStocksIdsState = atom({
   key: 'vegetablesStocksIdsState',
-  default: [] as number[],
+  default: [] as string[],
 });
 
 export const vegetableStockById = selector({
   key: 'vegetableStockById',
   get: ({ get }) => {
     const vegetablesStocks = get(vegetablesStocksState);
-    return (vegetableId: number) => vegetablesStocks.byId[vegetableId];
+    return (vegetableId: string) => vegetablesStocks.byId[vegetableId];
   },
 });

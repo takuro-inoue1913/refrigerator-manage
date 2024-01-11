@@ -13,7 +13,7 @@ type VegetableStockActions = {
     quantity,
   }: {
     /** 増やす野菜のID */
-    id: number;
+    id: string;
     /** 増やす数を指定。 */
     quantity: number;
   }) => void;
@@ -22,7 +22,7 @@ type VegetableStockActions = {
     quantity,
   }: {
     /** 減らす野菜のID */
-    id: number;
+    id: string;
     /** 減らす数を指定。 */
     quantity: number;
   }) => void;
@@ -34,7 +34,7 @@ type VegetableStockActions = {
     memo,
   }: {
     /** 更新する野菜のID */
-    id: number;
+    id: string;
     /** 更新する数量を指定。 */
     quantity: number;
     /** 更新する単位を指定。 */
@@ -50,7 +50,7 @@ type VegetableStockActions = {
     isFavorite,
   }: {
     /** 更新する野菜のID */
-    id: number;
+    id: string;
     /** 更新するお気に入りの状態を指定。 */
     isFavorite: boolean;
   }) => void;
@@ -175,7 +175,7 @@ export const useVegetablesStockActions = () => {
           id: vegetableId,
           isFavorite,
         }: {
-          id: number;
+          id: string;
           isFavorite: boolean;
         }) => {
           set(vegetablesStocksState, (prev) => {

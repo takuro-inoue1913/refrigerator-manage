@@ -6,7 +6,7 @@ import { meatStocksState } from '@src/states/fridge/meat';
 import { meatStockRepository } from '@src/interface/repositories/meatStockRepository';
 
 type UpsertMeatStockArgs = {
-  id: number;
+  id: string;
   quantity: number;
 };
 
@@ -22,16 +22,17 @@ export const useRequestUpsertMeatStock = () => {
   }, [meatStocks]);
 
   return async ({ id: meatId, quantity }: UpsertMeatStockArgs) => {
+    const plainId = meatStocksRef.current.byId[meatId].plainId;
     const existingStock = await meatStockRepository.getOne({
       idToken,
       userId: user!.uid,
-      meatId,
+      meatId: plainId,
     });
     if (existingStock.length === 0) {
       const data = await meatStockRepository.insert({
         idToken,
         userId: user!.uid,
-        meatId,
+        meatId: plainId,
         quantity,
         incrementalUnit: meatStocksRef.current.byId[meatId].incrementalUnit,
         defaultExpirationPeriod:
@@ -46,7 +47,7 @@ export const useRequestUpsertMeatStock = () => {
       const data = await meatStockRepository.updateQuantity({
         idToken,
         userId: user!.uid,
-        meatId,
+        meatId: plainId,
         quantity,
         defaultExpirationPeriod:
           meatStocksRef.current.byId[meatId].defaultExpirationPeriod,

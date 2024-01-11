@@ -22,7 +22,7 @@ type Props = {
   /** 画像のキャッシュキー */
   cacheKey: string;
   /** 対象データのID */
-  targetId: number;
+  targetId: string;
   /** 在庫があるかどうか */
   hasStock: boolean;
   /** 在庫数 */
@@ -35,7 +35,7 @@ type Props = {
   onPressIncrease?: (args: OnPressImageArgs) => Promise<void>;
   /** 減らすボタンを押した時に実行される関数。 */
   onPressDecrease?: (args: OnPressImageArgs) => Promise<void>;
-  onLongPress?: (targetId: number) => void;
+  onLongPress?: (targetId: string) => void;
 };
 
 /**

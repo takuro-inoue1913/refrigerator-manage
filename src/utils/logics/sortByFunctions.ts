@@ -4,7 +4,7 @@ import { FridgeStock, NormalizedArray } from '@src/types';
 
 /** 所有食材ソート関数 */
 export const sortOwnedIngredients = (
-  sortedIds: number[],
+  sortedIds: string[],
   fridgeStocks: NormalizedArray<FridgeStock>,
 ) => {
   const sortedIdsWithStock = [...sortedIds].filter(
@@ -18,7 +18,7 @@ export const sortOwnedIngredients = (
 
 /** 賞味期限が近いものソート関数 */
 export const sortNearingExpirationDate = (
-  sortedIds: number[],
+  sortedIds: string[],
   fridgeStocks: NormalizedArray<FridgeStock>,
 ) => {
   const now = dayjs();
@@ -45,7 +45,7 @@ export const sortNearingExpirationDate = (
 
 /** あいうえお順ソート関数 */
 export const sortAiueo = (
-  sortedIds: number[],
+  sortedIds: string[],
   fridgeStocks: NormalizedArray<FridgeStock>,
 ) => {
   const sortedAiueo = [...sortedIds].sort((a, b) =>

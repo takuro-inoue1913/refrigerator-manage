@@ -13,7 +13,7 @@ type MeatStockActions = {
     quantity,
   }: {
     /** 増やす肉ID */
-    id: number;
+    id: string;
     /** 増やす数を指定。 */
     quantity: number;
   }) => void;
@@ -22,7 +22,7 @@ type MeatStockActions = {
     quantity,
   }: {
     /** 減らす肉ID */
-    id: number;
+    id: string;
     /** 減らす数を指定。 */
     quantity: number;
   }) => void;
@@ -34,7 +34,7 @@ type MeatStockActions = {
     memo,
   }: {
     /** 更新する肉ID */
-    id: number;
+    id: string;
     /** 更新する数量を指定。 */
     quantity: number;
     /** 更新する単位を指定。 */
@@ -50,7 +50,7 @@ type MeatStockActions = {
     isFavorite,
   }: {
     /** 更新する肉ID */
-    id: number;
+    id: string;
     /** 更新するお気に入りの状態を指定。 */
     isFavorite: boolean;
   }) => void;

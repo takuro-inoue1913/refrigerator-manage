@@ -6,7 +6,7 @@ import { vegetablesStocksState } from '@src/states/fridge/vegetables';
 import { useRef, useEffect } from 'react';
 
 type UpsertVegetableStockArgs = {
-  id: number;
+  id: string;
   isFavorite: boolean;
 };
 
@@ -22,16 +22,17 @@ export const useRequestUpsertVegetableIsFavorite = () => {
   }, [vegetablesStocks]);
 
   return async ({ id: vegetableId, isFavorite }: UpsertVegetableStockArgs) => {
+    const plainId = vegetablesStocksRef.current.byId[vegetableId].plainId;
     const existingStock = await vegetableStockRepository.getOne({
       idToken,
       userId: user!.uid,
-      vegetableId,
+      vegetableId: plainId,
     });
     if (existingStock.length === 0) {
       const data = await vegetableStockRepository.insert({
         idToken,
         userId: user!.uid,
-        vegetableId,
+        vegetableId: plainId,
         quantity: vegetablesStocksRef.current.byId[vegetableId].quantity,
         incrementalUnit:
           vegetablesStocksRef.current.byId[vegetableId].incrementalUnit,
@@ -44,7 +45,7 @@ export const useRequestUpsertVegetableIsFavorite = () => {
       const data = await vegetableStockRepository.updateIsFavorite({
         idToken,
         userId: user!.uid,
-        vegetableId,
+        vegetableId: plainId,
         isFavorite,
       });
       return data;

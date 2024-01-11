@@ -3,7 +3,7 @@ import { debounce } from 'lodash';
 import { useCallback, useRef } from 'react';
 
 type FnArgs = {
-  id: number;
+  id: string;
   quantity: number;
 };
 
@@ -24,17 +24,17 @@ export const useDebouncedUpsertStock = ({
   increaseStock,
   decreaseStock,
 }: UpsertVegetablesStockArgs) => {
-  const stockQuantities = useRef<{ [id: number]: number }>({});
+  const stockQuantities = useRef<{ [id: string]: number }>({});
 
   const debouncedUpsertStock = useRef(
     debounce(async () => {
       // MEMO: debounce 中に複数の項目が更新される可能性があるため、現在オブジェクトに入っている値を全て更新する。
       Object.entries(stockQuantities.current).forEach(([key, value]) => {
         debounceUpsertStock({
-          id: Number(key),
+          id: key,
           quantity: value,
         });
-        delete stockQuantities.current[Number(key)];
+        delete stockQuantities.current[key];
       });
     }, 1000),
   );

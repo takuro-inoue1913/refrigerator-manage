@@ -43,7 +43,7 @@ export const VegetablesView: FC = () => {
   });
 
   const handleLongPress = useCallback(
-    (id: number) => {
+    (id: string) => {
       setModalProps({
         visible: true,
         id: vegetablesStocks.byId[id].id,
@@ -80,7 +80,7 @@ export const VegetablesView: FC = () => {
     vegetablesStockActions.filterVegetableStocks();
   };
 
-  const handleItemDisplayContents = (targetId: number) => {
+  const handleItemDisplayContents = (targetId: string) => {
     vegetablesStockActions.updateIsFavorite({
       id: targetId,
       isFavorite: !vegetablesStocks.byId[targetId].isFavorite,

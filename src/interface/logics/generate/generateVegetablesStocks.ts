@@ -5,10 +5,9 @@ import {
 import { VegetablesStocks } from '@src/states/fridge/vegetables';
 import { getIncrementalUnit } from '@src/utils/logics/getIncrementalUnit';
 import dayjs from 'dayjs';
+import { generateUniqueId } from '@src/interface/logics/generate/generateUniqueId';
 
 type CommonVegetableMasterType = {
-  __typename?: 'vegetable_master' | 'custom_vegetable_master';
-} & {
   vegetable_id: number;
   vegetable_name: string;
   display_name: string;
@@ -36,15 +35,17 @@ export const generateVegetablesStocks = (data: {
   vegetableMasterData: GetVegetableMasterAndUnitAndStocksQuery;
   customVegetableMasterData: GetCustomVegetableMasterAndUnitAndStocksQuery;
 }): VegetablesStocks => {
-  const ids: number[] = [];
+  const ids: string[] = [];
   const vegetableMasterData = convertVegetableMasterData(
+    'vegetableMaster',
     data.vegetableMasterData.vegetable_master,
   );
   const customVegetableMasterData = convertVegetableMasterData(
+    'customVegetableMaster',
     data.customVegetableMasterData.custom_vegetable_master,
   );
-  ids.push(...Object.keys(vegetableMasterData).map((id) => Number(id)));
-  ids.push(...Object.keys(customVegetableMasterData).map((id) => Number(id)));
+  ids.push(...Object.keys(vegetableMasterData).map((id) => id));
+  ids.push(...Object.keys(customVegetableMasterData).map((id) => id));
 
   const byId = {
     ...vegetableMasterData,
@@ -58,6 +59,7 @@ export const generateVegetablesStocks = (data: {
 };
 
 const convertVegetableMasterData = (
+  __typename: 'vegetableMaster' | 'customVegetableMaster',
   masterData:
     | GetVegetableMasterAndUnitAndStocksQuery['vegetable_master']
     | GetCustomVegetableMasterAndUnitAndStocksQuery['custom_vegetable_master'],
@@ -69,8 +71,10 @@ const convertVegetableMasterData = (
   const commonData = [...masterData] as CommonVegetableMasterType[];
   return commonData.reduce(
     (acc, cur) => {
-      acc[cur.vegetable_id] = {
-        id: cur.vegetable_id,
+      const uniqueId = generateUniqueId(cur.vegetable_id, __typename);
+      acc[uniqueId] = {
+        id: uniqueId,
+        plainId: cur.vegetable_id,
         name: cur.vegetable_name,
         displayName: cur.display_name,
         imageUri: cur.image_uri,

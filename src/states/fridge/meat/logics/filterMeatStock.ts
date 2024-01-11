@@ -20,9 +20,9 @@ export const filterMeatStock = ({
   selectFilterOptions,
 }: {
   meatStocks: MeatStocks;
-  originalIds: number[];
+  originalIds: string[];
   selectFilterOptions: SelectFilterOptions;
-}): number[] => {
+}): string[] => {
   let sortedIds = [...originalIds];
   switch (selectFilterOptions.sort) {
     case '通常':

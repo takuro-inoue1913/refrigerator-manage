@@ -14,7 +14,7 @@ export type RootStackParamList = {
 /** 画像を押したときの引数の型。 */
 export type OnPressImageArgs = {
   /** 対象ID */
-  targetId: number;
+  targetId: string;
   /** 現在の在庫数 */
   currentQuantity: number;
   /** 増減単位 */
@@ -23,8 +23,10 @@ export type OnPressImageArgs = {
 
 /** 冷蔵庫の在庫の型 */
 export type FridgeStock = {
-  /** ID */
-  id: number;
+  /** ID。 */
+  id: string;
+  /** 元ID。サーバーにリクエストする際に使用する。 */
+  plainId: number;
   /** 名前（ひらがな） */
   name: string;
   /** 表示名 */
@@ -55,8 +57,8 @@ export type FridgeStock = {
 
 /** 正規化された配列の型 */
 export type NormalizedArray<T> = {
-  ids: number[];
+  ids: string[];
   byId: {
-    [key: number]: T;
+    [key: string]: T;
   };
 };
