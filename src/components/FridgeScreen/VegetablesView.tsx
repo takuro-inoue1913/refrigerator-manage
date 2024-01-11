@@ -91,6 +91,20 @@ export const VegetablesView: FC = () => {
     });
   };
 
+  const PlusImageView = () => {
+    return (
+      <View style={fridgeCommonStyles.box}>
+        <PlusImage
+          onPress={() =>
+            navigation.navigate('食材新規登録', {
+              fridgeCategory: '野菜類',
+            })
+          }
+        />
+      </View>
+    );
+  };
+
   if (isFetching) {
     return <SkeletonFridgeViews />;
   }
@@ -137,19 +151,18 @@ export const VegetablesView: FC = () => {
                   />
                 </View>
               ))}
-              {index === rows.length - 1 && (
-                <View style={fridgeCommonStyles.box}>
-                  <PlusImage
-                    onPress={() =>
-                      navigation.navigate('食材新規登録', {
-                        fridgeCategory: '野菜類',
-                      })
-                    }
-                  />
-                </View>
-              )}
+              {/* 項目の最後に PlusImage を表示。 */}
+              {index === rows.length - 1 && <PlusImageView />}
             </View>
           ))}
+          {
+            // もし最終行が3つのアイテムで埋まっている場合は新しい行を追加して PlusImage を表示。
+            rows.length > 0 && rows[rows.length - 1].length === 3 && (
+              <View style={fridgeCommonStyles.row}>
+                <PlusImageView />
+              </View>
+            )
+          }
         </ScrollView>
       </GestureHandlerView>
       {modalProps && <ItemDetailModal {...modalProps} />}
