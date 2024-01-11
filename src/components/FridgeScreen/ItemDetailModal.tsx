@@ -207,6 +207,7 @@ export const ItemDetailModal: FC<Props> = ({
                       }
                       keyboardType="numeric"
                       placeholder="100"
+                      returnKeyType="done"
                       onChange={(e) =>
                         handleEditForm(
                           'quantity',
@@ -228,6 +229,7 @@ export const ItemDetailModal: FC<Props> = ({
                       }
                       keyboardType="numeric"
                       placeholder="100"
+                      returnKeyType="done"
                       onChange={(e) =>
                         handleEditForm(
                           'incrementalUnit',

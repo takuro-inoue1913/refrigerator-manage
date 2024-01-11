@@ -255,6 +255,7 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
                 onChangeText={onChange}
                 accessibilityLabel="表示名"
                 value={value}
+                returnKeyType="done"
                 placeholder="表示名 (6文字以内) ※リストに表示されます。"
               />
             )}
@@ -283,6 +284,7 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
+                returnKeyType="done"
                 placeholder="名前 (ひらがな) ※絞込や検索に使用します。"
               />
             )}
@@ -313,6 +315,7 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
                 onChangeText={onChange}
                 value={value}
                 placeholder="賞味期限期間 (日数)"
+                returnKeyType="done"
                 keyboardType="numeric"
               />
             )}
@@ -387,6 +390,7 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
                 value={value}
                 placeholder="増減単位 ※ +- での在庫の増減量になります。"
                 keyboardType="numeric"
+                returnKeyType="done"
               />
             )}
           />
