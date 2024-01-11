@@ -1,4 +1,10 @@
-import React, { ComponentProps, FC, useCallback, useState } from 'react';
+import React, {
+  ComponentProps,
+  FC,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { ScrollView, View } from 'react-native';
 
 import { ItemImage } from '@src/components/FridgeScreen/ItemImage';
@@ -19,11 +25,13 @@ import { ItemDisplayContents } from './ItemDisplayContents';
 import { useRequestUpsertVegetableIsFavorite } from '@src/interface/hooks/vegetable/useRequestUpsertVegetableIsFavorite';
 import { PlusImage } from '@src/components/common/PlusImage';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
+import { useIsFocused } from '@react-navigation/native';
 
 /**
  * 冷蔵庫の野菜画面を表示するコンポーネント。
  */
 export const VegetablesView: FC = () => {
+  const isFocused = useIsFocused();
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
   const navigation = useTypedNavigation();
@@ -104,6 +112,12 @@ export const VegetablesView: FC = () => {
       </View>
     );
   };
+
+  useEffect(() => {
+    if (isFocused) {
+      refetch();
+    }
+  }, [isFocused, refetch]);
 
   if (isFetching) {
     return <SkeletonFridgeViews />;
