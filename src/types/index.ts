@@ -25,8 +25,6 @@ export type OnPressImageArgs = {
 export type FridgeStock = {
   /** ID。 */
   id: string;
-  /** 元ID。サーバーにリクエストする際に使用する。 */
-  plainId: number;
   /** 名前（ひらがな） */
   name: string;
   /** 表示名 */

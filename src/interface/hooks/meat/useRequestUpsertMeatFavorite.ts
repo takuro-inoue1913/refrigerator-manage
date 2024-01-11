@@ -22,17 +22,16 @@ export const useRequestUpsertMeatFavorite = () => {
   }, [meatStocks]);
 
   return async ({ id: meatId, isFavorite }: UpsertMeatStockArgs) => {
-    const plainId = meatStocksRef.current.byId[meatId].plainId;
     const existingStock = await meatStockRepository.getOne({
       idToken,
       userId: user!.uid,
-      meatId: plainId,
+      meatId,
     });
     if (existingStock.length === 0) {
       const data = await meatStockRepository.insert({
         idToken,
         userId: user!.uid,
-        meatId: plainId,
+        meatId,
         isFavorite,
         quantity: meatStocksRef.current.byId[meatId].quantity,
         incrementalUnit: meatStocksRef.current.byId[meatId].incrementalUnit,
@@ -44,7 +43,7 @@ export const useRequestUpsertMeatFavorite = () => {
       const data = await meatStockRepository.updateIsFavorite({
         idToken,
         userId: user!.uid,
-        meatId: plainId,
+        meatId,
         isFavorite,
       });
       return data;

@@ -22,7 +22,7 @@ query GetMeatMasterAndUnitAndStocks {
   }
 }
 
-query GetMeatStockByUserIdAndMeatId($userId: String!, $meatId: Int!) {
+query GetMeatStockByUserIdAndMeatId($userId: String!, $meatId: uuid!) {
   meat_stocks(where: { user_id: { _eq: $userId }, meat_id: { _eq: $meatId } }) {
     stock_id
     user_id
@@ -49,7 +49,7 @@ mutation InsertMeatStock($object: meat_stocks_insert_input!) {
 
 mutation UpdateMeatStockQuantity(
   $userId: String!
-  $meatId: Int!
+  $meatId: uuid!
   $quantity: Int!
   $expirationDate: date
 ) {
@@ -69,7 +69,7 @@ mutation UpdateMeatStockQuantity(
 
 mutation UpdateMeatStockIsFavorite(
   $userId: String!
-  $meatId: Int!
+  $meatId: uuid!
   $isFavorite: Boolean!
 ) {
   update_meat_stocks(
@@ -87,7 +87,7 @@ mutation UpdateMeatStockIsFavorite(
 
 mutation UpdateMeatStockDetail(
   $userId: String!
-  $meatId: Int!
+  $meatId: uuid!
   $quantity: Int!
   $incrementalUnit: Int!
   $expirationDate: date!

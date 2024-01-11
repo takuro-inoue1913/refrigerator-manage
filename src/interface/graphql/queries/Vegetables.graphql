@@ -52,7 +52,7 @@ query GetCustomVegetableMasterAndUnitAndStocks {
 
 query GetVegetableStockByUserIdAndVegetableId(
   $userId: String!
-  $vegetableId: Int!
+  $vegetableId: uuid!
 ) {
   vegetable_stocks(
     where: { user_id: { _eq: $userId }, vegetable_id: { _eq: $vegetableId } }
@@ -82,7 +82,7 @@ mutation InsertVegetableStock($object: vegetable_stocks_insert_input!) {
 
 mutation UpdateVegetableStockQuantity(
   $userId: String!
-  $vegetableId: Int!
+  $vegetableId: uuid!
   $quantity: Int!
   $expirationDate: date
 ) {
@@ -102,7 +102,7 @@ mutation UpdateVegetableStockQuantity(
 
 mutation UpdateVegetableStockIsFavorite(
   $userId: String!
-  $vegetableId: Int!
+  $vegetableId: uuid!
   $isFavorite: Boolean!
 ) {
   update_vegetable_stocks(
@@ -120,7 +120,7 @@ mutation UpdateVegetableStockIsFavorite(
 
 mutation UpdateVegetableStockDetail(
   $userId: String!
-  $vegetableId: Int!
+  $vegetableId: uuid!
   $quantity: Int!
   $incrementalUnit: Int!
   $expirationDate: date!

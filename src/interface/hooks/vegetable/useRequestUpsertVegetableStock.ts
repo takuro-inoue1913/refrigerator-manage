@@ -22,17 +22,16 @@ export const useRequestUpsertVegetableStock = () => {
   }, [vegetablesStocks]);
 
   return async ({ id: vegetableId, quantity }: UpsertVegetableStockArgs) => {
-    const plainId = vegetablesStocksRef.current.byId[vegetableId].plainId;
     const existingStock = await vegetableStockRepository.getOne({
       idToken,
       userId: user!.uid,
-      vegetableId: plainId,
+      vegetableId,
     });
     if (existingStock.length === 0) {
       const data = await vegetableStockRepository.insert({
         idToken,
         userId: user!.uid,
-        vegetableId: plainId,
+        vegetableId,
         quantity,
         incrementalUnit:
           vegetablesStocksRef.current.byId[vegetableId].incrementalUnit,
@@ -48,7 +47,7 @@ export const useRequestUpsertVegetableStock = () => {
       const data = await vegetableStockRepository.updateQuantity({
         idToken,
         userId: user!.uid,
-        vegetableId: plainId,
+        vegetableId,
         quantity,
         defaultExpirationPeriod:
           vegetablesStocksRef.current.byId[vegetableId].defaultExpirationPeriod,

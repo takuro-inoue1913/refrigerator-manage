@@ -32,17 +32,16 @@ export const useRequestUpsertVegetableStockDetail = () => {
     expirationDate,
     memo,
   }: UpsertMeatStockDetail) => {
-    const plainId = vegetablesStocksRef.current.byId[vegetableId].plainId;
     const existingStock = await vegetableStockRepository.getOne({
       idToken,
       userId: user!.uid,
-      vegetableId: plainId,
+      vegetableId,
     });
     if (existingStock.length === 0) {
       const data = await vegetableStockRepository.insert({
         idToken,
         userId: user!.uid,
-        vegetableId: plainId,
+        vegetableId,
         quantity,
         incrementalUnit,
         defaultExpirationPeriod:
@@ -53,7 +52,7 @@ export const useRequestUpsertVegetableStockDetail = () => {
       const data = await vegetableStockRepository.updateDetail({
         idToken,
         userId: user!.uid,
-        vegetableId: plainId,
+        vegetableId,
         quantity,
         incrementalUnit,
         expirationDate,

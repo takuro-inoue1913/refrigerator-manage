@@ -5,10 +5,9 @@ import {
 import { VegetablesStocks } from '@src/states/fridge/vegetables';
 import { getIncrementalUnit } from '@src/utils/logics/getIncrementalUnit';
 import dayjs from 'dayjs';
-import { generateUniqueId } from '@src/interface/logics/generate/generateUniqueId';
 
 type CommonVegetableMasterType = {
-  vegetable_id: number;
+  vegetable_id: string;
   vegetable_name: string;
   display_name: string;
   image_uri: string;
@@ -71,10 +70,8 @@ const convertVegetableMasterData = (
   const commonData = [...masterData] as CommonVegetableMasterType[];
   return commonData.reduce(
     (acc, cur) => {
-      const uniqueId = generateUniqueId(cur.vegetable_id, __typename);
-      acc[uniqueId] = {
-        id: uniqueId,
-        plainId: cur.vegetable_id,
+      acc[cur.vegetable_id] = {
+        id: cur.vegetable_id,
         name: cur.vegetable_name,
         displayName: cur.display_name,
         imageUri: cur.image_uri,

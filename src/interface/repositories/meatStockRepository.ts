@@ -12,13 +12,13 @@ import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient
 type GetOneMeatStockArgs = {
   idToken: string | null;
   userId: string;
-  meatId: number;
+  meatId: string;
 };
 
 type InsertMeatStockArgs = {
   idToken: string | null;
   userId: string;
-  meatId: number;
+  meatId: string;
   quantity: number;
   incrementalUnit: number;
   defaultExpirationPeriod: number;
@@ -28,7 +28,7 @@ type InsertMeatStockArgs = {
 type UpdateMeatStockArgs = {
   idToken: string | null;
   userId: string;
-  meatId: number;
+  meatId: string;
   quantity: number;
   defaultExpirationPeriod: number;
 };
@@ -36,7 +36,7 @@ type UpdateMeatStockArgs = {
 type UpdateDetailArgs = {
   idToken: string | null;
   userId: string;
-  meatId: number;
+  meatId: string;
   quantity: number;
   incrementalUnit: number;
   expirationDate: string;
@@ -46,7 +46,7 @@ type UpdateDetailArgs = {
 type UpdateIsFavoriteArgs = {
   idToken: string | null;
   userId: string;
-  meatId: number;
+  meatId: string;
   isFavorite: boolean;
 };
 
