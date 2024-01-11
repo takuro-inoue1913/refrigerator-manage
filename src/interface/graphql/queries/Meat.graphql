@@ -1,3 +1,50 @@
+query GetAllMeatMasterAndUnitAndStocks {
+  GetMeatMasterAndUnitAndStocks: meat_master(
+    order_by: { meat_master_meat_stocks: { is_favorite: desc_nulls_last } }
+  ) {
+    meat_id
+    display_name
+    meat_name
+    image_uri
+    default_expiration_period
+    meat_master_unit_master {
+      unit_id
+      unit_name
+    }
+    meat_master_meat_stocks {
+      stock_id
+      quantity
+      incremental_unit
+      expiration_date
+      memo
+      is_favorite
+    }
+  }
+  GetCustomMeatMasterAndUnitAndStocks: custom_meat_master(
+    order_by: {
+      custom_meat_master_meat_stocks: { is_favorite: desc_nulls_last }
+    }
+  ) {
+    meat_id: custom_meat_id
+    meat_name: custom_meat_name
+    display_name
+    image_uri
+    default_expiration_period
+    meat_master_unit_master: custom_meat_master_unit_master {
+      unit_id
+      unit_name
+    }
+    meat_master_meat_stocks: custom_meat_master_meat_stocks {
+      stock_id
+      quantity
+      incremental_unit
+      expiration_date
+      memo
+      is_favorite
+    }
+  }
+}
+
 query GetMeatMasterAndUnitAndStocks {
   meat_master(
     order_by: { meat_master_meat_stocks: { is_favorite: desc_nulls_last } }
@@ -12,6 +59,32 @@ query GetMeatMasterAndUnitAndStocks {
       unit_name
     }
     meat_master_meat_stocks {
+      stock_id
+      quantity
+      incremental_unit
+      expiration_date
+      memo
+      is_favorite
+    }
+  }
+}
+
+query GetCustomMeatMasterAndUnitAndStocks {
+  custom_meat_master(
+    order_by: {
+      custom_meat_master_meat_stocks: { is_favorite: desc_nulls_last }
+    }
+  ) {
+    meat_id: custom_meat_id
+    meat_name: custom_meat_name
+    display_name
+    image_uri
+    default_expiration_period
+    meat_master_unit_master: custom_meat_master_unit_master {
+      unit_id
+      unit_name
+    }
+    meat_master_meat_stocks: custom_meat_master_meat_stocks {
       stock_id
       quantity
       incremental_unit
@@ -111,5 +184,33 @@ mutation UpdateMeatStockDetail(
       expiration_date
       memo
     }
+  }
+}
+
+mutation InsertCustomMeatMaster(
+  $userId: String!
+  $meatName: String!
+  $displayName: String!
+  $imageUri: String!
+  $defaultExpirationPeriod: Int!
+  $unitId: Int!
+) {
+  insert_custom_meat_master_one(
+    object: {
+      user_id: $userId
+      custom_meat_name: $meatName
+      display_name: $displayName
+      image_uri: $imageUri
+      default_expiration_period: $defaultExpirationPeriod
+      unit_id: $unitId
+    }
+  ) {
+    custom_meat_id
+    user_id
+    custom_meat_name
+    display_name
+    image_uri
+    default_expiration_period
+    unit_id
   }
 }

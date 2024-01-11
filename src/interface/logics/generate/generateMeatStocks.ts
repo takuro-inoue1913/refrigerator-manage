@@ -1,16 +1,56 @@
-import { GetMeatMasterAndUnitAndStocksQuery } from '@src/interface/__generated__/graphql';
+import { GetAllMeatMasterAndUnitAndStocksQuery } from '@src/interface/__generated__/graphql';
 import { MeatStocks } from '@src/states/fridge/meat';
 import { getIncrementalUnit } from '@src/utils/logics/getIncrementalUnit';
 import dayjs from 'dayjs';
+
+type CommonMeatMasterType = Omit<
+  GetAllMeatMasterAndUnitAndStocksQuery['GetMeatMasterAndUnitAndStocks'][0],
+  '__typename'
+>;
 
 /**
  * 肉マスタと肉在庫から肉在庫のオブジェクトを生成する。
  */
 export const generateMeatStocks = (
-  data: GetMeatMasterAndUnitAndStocksQuery,
+  data: GetAllMeatMasterAndUnitAndStocksQuery,
 ): MeatStocks => {
   const ids: string[] = [];
-  const byId = data.meat_master.reduce(
+  const meatMasterData = convertMeatMasterData(
+    'meatMaster',
+    data.GetMeatMasterAndUnitAndStocks,
+  );
+
+  const customMeatMasterData = convertMeatMasterData(
+    'customMeatMaster',
+    data.GetCustomMeatMasterAndUnitAndStocks,
+  );
+
+  ids.push(...Object.keys(meatMasterData).map((id) => id));
+  ids.push(...Object.keys(customMeatMasterData).map((id) => id));
+
+  const byId = {
+    ...meatMasterData,
+    ...customMeatMasterData,
+  };
+
+  return {
+    ids,
+    byId,
+  };
+};
+
+const convertMeatMasterData = (
+  __typename: 'meatMaster' | 'customMeatMaster',
+  masterData:
+    | GetAllMeatMasterAndUnitAndStocksQuery['GetCustomMeatMasterAndUnitAndStocks']
+    | GetAllMeatMasterAndUnitAndStocksQuery['GetMeatMasterAndUnitAndStocks'],
+): MeatStocks['byId'] => {
+  if (masterData.length === 0) {
+    return {} as MeatStocks['byId'];
+  }
+
+  const commonData = [...masterData] as CommonMeatMasterType[];
+  return commonData.reduce(
     (acc, cur) => {
       acc[cur.meat_id] = {
         id: cur.meat_id,
@@ -40,14 +80,8 @@ export const generateMeatStocks = (
         isFavorite: cur.meat_master_meat_stocks?.is_favorite ?? false,
         defaultExpirationPeriod: cur.default_expiration_period,
       };
-      ids.push(cur.meat_id);
       return acc;
     },
     {} as MeatStocks['byId'],
   );
-
-  return {
-    ids,
-    byId,
-  };
 };

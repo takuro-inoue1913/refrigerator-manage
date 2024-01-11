@@ -36,6 +36,8 @@ import Toast from 'react-native-toast-message';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 import { useRequestGetUnit } from '@src/interface/hooks/unit/useRequestGetUnit';
 import { UnitMater } from '@src/states/fridge';
+import { useRequestInsertCustomMeatMaster } from '@src/interface/hooks/meat/useRequestInsertCustomMeatMaster';
+import { meatStocksState } from '@src/states/fridge/meat';
 
 type Props = {
   route: RouteProp<RootStackParamList, '食材新規登録'>;
@@ -46,9 +48,11 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
   const [isSending, setIsSending] = useState(false);
   const user = useRecoilValue(userState);
   const vegetablesStocks = useRecoilValue(vegetablesStocksState);
+  const meatStocks = useRecoilValue(meatStocksState);
   const navigation = useTypedNavigation();
   const requestInsertCustomVegetableMaster =
     useRequestInsertCustomVegetableMaster();
+  const requestInsertCustomMeatMaster = useRequestInsertCustomMeatMaster();
   const {
     control,
     setValue,
@@ -184,6 +188,24 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
         result = await requestInsertCustomVegetableMaster({
           displayName: getValues('displayName'),
           vegetableName: getValues('nameKana'),
+          imageUri,
+          defaultExpirationPeriod: Number(getValues('expiryPeriod')),
+          unitId: getValues('unit.id'),
+        });
+        break;
+      }
+      case '肉類': {
+        if (!checkFormValid(meatStocks)) {
+          setIsSending(false);
+          return;
+        }
+        const imageUri = await uploadUserImage(
+          getValues('image.uri'),
+          'user-custom-images/' + user?.uid,
+        );
+        result = await requestInsertCustomMeatMaster({
+          displayName: getValues('displayName'),
+          meatName: getValues('nameKana'),
           imageUri,
           defaultExpirationPeriod: Number(getValues('expiryPeriod')),
           unitId: getValues('unit.id'),

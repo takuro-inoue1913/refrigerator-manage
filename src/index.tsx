@@ -27,7 +27,7 @@ export const AppWrapper: FC = () => {
 
   return (
     <RecoilRoot>
-      <DebugObserver isDebug />
+      <DebugObserver />
       <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>

@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import {
-  GetMeatMasterAndUnitAndStocksDocument,
+  GetAllMeatMasterAndUnitAndStocksDocument,
   GetMeatStockByUserIdAndMeatIdDocument,
   InsertMeatStockDocument,
   UpdateMeatStockQuantityDocument,
@@ -64,7 +64,7 @@ export const meatStockRepository = {
   getAll: async ({ idToken }: { idToken: string | null }) => {
     const client = buildGraphQLUserClient(idToken);
 
-    const data = await client.request(GetMeatMasterAndUnitAndStocksDocument);
+    const data = await client.request(GetAllMeatMasterAndUnitAndStocksDocument);
 
     return data;
   },

@@ -1,4 +1,10 @@
-import React, { ComponentProps, FC, useCallback, useState } from 'react';
+import React, {
+  ComponentProps,
+  FC,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { ScrollView, View } from 'react-native';
 
 import { SkeletonFridgeViews } from '@src/components/FridgeScreen/SkeletonFridgeViews';
@@ -17,13 +23,18 @@ import { useRequestUpsertMeatStockDetail } from '@src/interface/hooks/meat/useRe
 import { GestureHandlerView } from './GestureHandlerView';
 import { ItemDisplayContents } from './ItemDisplayContents';
 import { useRequestUpsertMeatFavorite } from '@src/interface/hooks/meat/useRequestUpsertMeatFavorite';
+import { PlusImage } from '../common/PlusImage';
+import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
+import { useIsFocused } from '@react-navigation/native';
 
 /**
  * 冷蔵庫の肉画面を表示するコンポーネント。
  */
 export const MeatView: FC = () => {
+  const isFocused = useIsFocused();
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
+  const navigation = useTypedNavigation();
   const { meatStocks, isFetching, refetch } = useRequestGetMeatStocks();
   const meatStockActions = useMeatStockActions();
   const requestUpsertMeatFavorite = useRequestUpsertMeatFavorite();
@@ -81,6 +92,26 @@ export const MeatView: FC = () => {
     });
   };
 
+  const PlusImageView = () => {
+    return (
+      <View style={fridgeCommonStyles.box}>
+        <PlusImage
+          onPress={() =>
+            navigation.navigate('食材新規登録', {
+              fridgeCategory: '肉類',
+            })
+          }
+        />
+      </View>
+    );
+  };
+
+  useEffect(() => {
+    if (isFocused) {
+      refetch();
+    }
+  }, [isFocused, refetch]);
+
   if (isFetching) {
     return <SkeletonFridgeViews />;
   }
@@ -125,8 +156,18 @@ export const MeatView: FC = () => {
                   />
                 </View>
               ))}
+              {/* 項目の最後に PlusImage を表示。 */}
+              {index === rows.length - 1 && <PlusImageView />}
             </View>
           ))}
+          {
+            // もし最終行が3つのアイテムで埋まっている場合は新しい行を追加して PlusImage を表示。
+            rows.length > 0 && rows[rows.length - 1].length === 3 && (
+              <View style={fridgeCommonStyles.row}>
+                <PlusImageView />
+              </View>
+            )
+          }
         </ScrollView>
       </GestureHandlerView>
       {modalProps && <ItemDetailModal {...modalProps} />}
