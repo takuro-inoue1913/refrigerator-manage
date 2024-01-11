@@ -6,6 +6,28 @@ import { VegetablesStocks } from '@src/states/fridge/vegetables';
 import { getIncrementalUnit } from '@src/utils/logics/getIncrementalUnit';
 import dayjs from 'dayjs';
 
+type CommonVegetableMasterType = {
+  __typename?: 'vegetable_master' | 'custom_vegetable_master';
+} & {
+  vegetable_id: number;
+  vegetable_name: string;
+  display_name: string;
+  image_uri: string;
+  vegetable_master_unit_master?: {
+    unit_id: number;
+    unit_name: string;
+  };
+  vegetable_master_vegetable_stocks?: {
+    stock_id: number;
+    quantity: number;
+    incremental_unit: number;
+    expiration_date: string;
+    memo: string;
+    is_favorite: boolean;
+  };
+  default_expiration_period: number;
+};
+
 /**
  * 野菜マスタと野菜在庫から野菜在庫のオブジェクトを生成する。
  * @param {GetVegetableMasterAndUnitAndStocksQuery} data
@@ -43,7 +65,9 @@ const convertVegetableMasterData = (
   if (masterData.length === 0) {
     return {} as VegetablesStocks['byId'];
   }
-  return masterData.reduce(
+
+  const commonData = [...masterData] as CommonVegetableMasterType[];
+  return commonData.reduce(
     (acc, cur) => {
       acc[cur.vegetable_id] = {
         id: cur.vegetable_id,
