@@ -25,7 +25,7 @@ import { RouteProp } from '@react-navigation/native';
 import { COMMON_COLOR_GREEN } from '@src/utils/consts';
 import { getIncrementalUnit } from '@src/utils/logics/getIncrementalUnit';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
-import { RootStackParamList } from '@src/types';
+import { FridgeStock, NormalizedArray, RootStackParamList } from '@src/types';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@src/states/user';
 import { vegetablesStocksState } from '@src/states/fridge/vegetables';
@@ -144,34 +144,26 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
     onChange(item);
   };
 
-  const chackFormVaild = (): boolean => {
+  const checkFormValid = (
+    fridgeStocks: NormalizedArray<FridgeStock>,
+  ): boolean => {
     let isValid = true;
-    if (route.params.fridgeCategory === '野菜類') {
-      vegetablesStocks.ids.forEach((id) => {
-        if (vegetablesStocks.byId[id].name === getValues('nameKana')) {
-          setError('nameKana', {
-            type: 'manual',
-            message: '同じ名前の食材が既に登録されています。',
-          });
-          isValid = false;
-        }
-        if (
-          vegetablesStocks.byId[id].displayName === getValues('displayName')
-        ) {
-          setError('displayName', {
-            type: 'manual',
-            message: '同じ表示名の食材が既に登録されています。',
-          });
-          isValid = false;
-        }
-      });
-    } else if (route.params.fridgeCategory === '肉類') {
-      Toast.show({
-        type: 'error',
-        text1: '肉類の登録はまだ未実装です。',
-      });
-      isValid = false;
-    }
+    fridgeStocks.ids.forEach((id) => {
+      if (fridgeStocks.byId[id].name === getValues('nameKana')) {
+        setError('nameKana', {
+          type: 'manual',
+          message: '同じ名前の食材が既に登録されています。',
+        });
+        isValid = false;
+      }
+      if (fridgeStocks.byId[id].displayName === getValues('displayName')) {
+        setError('displayName', {
+          type: 'manual',
+          message: '同じ表示名の食材が既に登録されています。',
+        });
+        isValid = false;
+      }
+    });
     return isValid;
   };
 
@@ -179,17 +171,16 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
     setIsSending(true);
     let result = null;
 
-    if (!chackFormVaild()) {
-      setIsSending(false);
-      return;
-    }
-
-    const imageUri = await uploadUserImage(
-      getValues('image.uri'),
-      'user-custom-images/' + user?.uid,
-    );
     switch (route.params.fridgeCategory) {
       case '野菜類': {
+        if (!checkFormValid(vegetablesStocks)) {
+          setIsSending(false);
+          return;
+        }
+        const imageUri = await uploadUserImage(
+          getValues('image.uri'),
+          'user-custom-images/' + user?.uid,
+        );
         result = await requestInsertCustomVegetableMaster({
           displayName: getValues('displayName'),
           vegetableName: getValues('nameKana'),

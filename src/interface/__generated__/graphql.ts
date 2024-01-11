@@ -594,8 +594,6 @@ export type Custom_Vegetable_Master_Bool_Exp = {
 
 /** unique or primary key constraints on table "custom_vegetable_master" */
 export enum Custom_Vegetable_Master_Constraint {
-  /** unique or primary key constraint on columns "display_name" */
-  CustomVegetableMasterDisplayNameKey = 'custom_vegetable_master_display_name_key',
   /** unique or primary key constraint on columns "image_uri" */
   CustomVegetableMasterImageUriKey = 'custom_vegetable_master_image_uri_key',
   /** unique or primary key constraint on columns "custom_vegetable_id" */
