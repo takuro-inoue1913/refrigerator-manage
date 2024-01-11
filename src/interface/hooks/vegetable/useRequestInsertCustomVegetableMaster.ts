@@ -27,28 +27,12 @@ export const useRequestInsertCustomVegetableMaster = () => {
         ...args,
       });
       return data;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      if (
-        error.response &&
-        error.response.errors &&
-        error.response.errors.length > 0
-      ) {
-        const graphQLErrors = error.response.errors;
-        const constraintViolationError = graphQLErrors.find(
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (e: any) =>
-            e.extensions && e.extensions.code === 'constraint-violation',
-        );
-        if (constraintViolationError) {
-          Toast.show({
-            type: 'error',
-            text1: '同じ表示名が既に存在します',
-            visibilityTime: 2000,
-          });
-          return null;
-        }
-      }
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'サーバーエラーが発生しました',
+        text2: '時間をおいて再度お試しください',
+      });
       throw error;
     }
   };
