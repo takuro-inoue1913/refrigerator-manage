@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
 import {
-  GetVegetableMasterAndUnitAndStocksDocument,
-  GetCustomVegetableMasterAndUnitAndStocksDocument,
+  GetAllVegetableMasterAndUnitAndStocksDocument,
   GetVegetableStockByUserIdAndVegetableIdDocument,
   InsertVegetableStockDocument,
   UpdateVegetableStockDetailDocument,
@@ -72,18 +71,11 @@ export const vegetableStockRepository = {
   getAll: async ({ idToken }: { idToken: string | null }) => {
     const client = buildGraphQLUserClient(idToken);
 
-    const vegetableMasterData = await client.request(
-      GetVegetableMasterAndUnitAndStocksDocument,
+    const data = await client.request(
+      GetAllVegetableMasterAndUnitAndStocksDocument,
     );
 
-    const customVegetableMasterData = await client.request(
-      GetCustomVegetableMasterAndUnitAndStocksDocument,
-    );
-
-    return {
-      vegetableMasterData,
-      customVegetableMasterData,
-    };
+    return data;
   },
   insert: async ({
     idToken,
