@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { App } from '@src/App';
 
 import '@src/utils/dayjsConfig';
+import { LogBox } from 'react-native';
 
 const DebugObserver = ({ isDebug }: { isDebug?: boolean }) => {
   const snapshot = useRecoilSnapshot();
@@ -23,6 +24,9 @@ const DebugObserver = ({ isDebug }: { isDebug?: boolean }) => {
  * MEMO: App.tsx で useRecoilState を使用しているため、一階層上で RecoilRoot でラップする必要がある。
  */
 export const AppWrapper: FC = () => {
+  // MEMO: 最初のキャシュがない画像読み込みの時に出る警告を無視する。
+  LogBox.ignoreLogs([/Could not find image file./]);
+
   const queryClient = new QueryClient();
 
   return (
