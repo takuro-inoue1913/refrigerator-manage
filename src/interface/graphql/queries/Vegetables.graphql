@@ -174,6 +174,7 @@ mutation UpdateVegetableStockDetail(
   $incrementalUnit: Int!
   $expirationDate: date!
   $memo: String!
+  $isFavorite: Boolean!
 ) {
   update_vegetable_stocks(
     where: { user_id: { _eq: $userId }, vegetable_id: { _eq: $vegetableId } }
@@ -182,6 +183,7 @@ mutation UpdateVegetableStockDetail(
       incremental_unit: $incrementalUnit
       expiration_date: $expirationDate
       memo: $memo
+      is_favorite: $isFavorite
     }
   ) {
     returning {
@@ -192,6 +194,7 @@ mutation UpdateVegetableStockDetail(
       incremental_unit
       expiration_date
       memo
+      is_favorite
     }
   }
 }

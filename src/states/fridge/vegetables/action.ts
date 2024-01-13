@@ -32,6 +32,7 @@ type VegetableStockActions = {
     incrementalUnit,
     expirationDate,
     memo,
+    isFavorite,
   }: {
     /** 更新する野菜のID */
     id: string;
@@ -43,6 +44,8 @@ type VegetableStockActions = {
     expirationDate: string;
     /** 更新するメモを指定。 */
     memo: string;
+    /** 更新するお気に入りの状態を指定。 */
+    isFavorite: boolean;
   }) => void;
   filterVegetableStocks: () => void;
   updateIsFavorite: ({
@@ -118,6 +121,7 @@ export const useVegetablesStockActions = () => {
           incrementalUnit,
           expirationDate,
           memo,
+          isFavorite,
         }) => {
           set(vegetablesStocksState, (prev) => {
             const newStocks: VegetablesStocks = {
@@ -131,6 +135,7 @@ export const useVegetablesStockActions = () => {
                     acc[cur].expirationDate = expirationDate;
                     acc[cur].memo = memo;
                     acc[cur].hasStock = quantity > 0;
+                    acc[cur].isFavorite = isFavorite;
                   }
                   return acc;
                 },

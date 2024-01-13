@@ -10,6 +10,7 @@ import {
   TextInput,
   TouchableOpacity,
   Keyboard,
+  Pressable,
 } from 'react-native';
 import CachedImage from 'expo-cached-image';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -18,6 +19,10 @@ import dayjs from 'dayjs';
 
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { useIsShowKeyboard } from '@src/hooks/useIsShowKeyboard';
+import {
+  FavoriteBadge,
+  performLikeAnimation,
+} from '@src/components/FridgeScreen/FavoriteBadge';
 
 const { height: windowHeight } = Dimensions.get('window');
 
@@ -42,6 +47,8 @@ export type Props = {
   expirationDate: string;
   /** メモ */
   memo: string;
+  /** お気に入りかどうか */
+  isFavorite: boolean;
   /** モーダルを閉じる時に実行する関数 */
   onClose: (editForm: FormValues) => void;
 };
@@ -52,6 +59,7 @@ type FormValues = {
   incrementalUnit: number;
   expirationDate: string;
   memo: string;
+  isFavorite: boolean;
 };
 
 export type EditFormValues = {
@@ -60,6 +68,7 @@ export type EditFormValues = {
   incrementalUnit: number | null;
   expirationDate: string;
   memo: string;
+  isFavorite: boolean;
 };
 
 export const ItemDetailModal: FC<Props> = ({
@@ -73,10 +82,12 @@ export const ItemDetailModal: FC<Props> = ({
   incrementalUnit,
   expirationDate,
   memo,
+  isFavorite,
   onClose,
 }) => {
   // Y軸初期位置をウィンドウの外側に設定
   const animatedY = useRef(new Animated.Value(-windowHeight)).current;
+  const scale = useRef(new Animated.Value(1)).current;
   const isShowKeyboard = useIsShowKeyboard();
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
   const [editFormValues, setEditFormValues] = useState<EditFormValues>({
@@ -85,6 +96,7 @@ export const ItemDetailModal: FC<Props> = ({
     incrementalUnit,
     expirationDate,
     memo,
+    isFavorite,
   });
 
   const handleEditForm = useCallback(
@@ -93,6 +105,16 @@ export const ItemDetailModal: FC<Props> = ({
     },
     [],
   );
+
+  const handlePressFavoriteBadge = () => {
+    performLikeAnimation({
+      onPress: () => {
+        handleEditForm('isFavorite', !editFormValues.isFavorite);
+      },
+      targetId: id,
+      scale,
+    });
+  };
 
   const showDateTimePicker = () => {
     setIsDatePickerVisible(true);
@@ -189,11 +211,20 @@ export const ItemDetailModal: FC<Props> = ({
                 <Text style={styles.headerText}>{itemName}</Text>
               </View>
               <View style={styles.main}>
-                <CachedImage
-                  source={{ uri: sourceUri }}
-                  cacheKey={cacheKey}
-                  style={styles.image}
-                />
+                <Pressable onPress={handlePressFavoriteBadge}>
+                  <CachedImage
+                    source={{ uri: sourceUri }}
+                    cacheKey={cacheKey}
+                    style={styles.image}
+                  />
+                  <View style={styles.favoriteBadgeWrapper}>
+                    <FavoriteBadge
+                      isFavorite={editFormValues.isFavorite}
+                      scale={scale}
+                      size={40}
+                    />
+                  </View>
+                </Pressable>
                 <View style={styles.formContainer}>
                   <View style={styles.row}>
                     <Text style={styles.label}>{`数量（${unitName}）:`}</Text>
@@ -395,5 +426,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 16,
     color: 'gray',
+  },
+  favoriteBadgeWrapper: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
   },
 });

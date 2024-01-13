@@ -41,6 +41,7 @@ type UpdateDetailArgs = {
   incrementalUnit: number;
   expirationDate: string;
   memo: string;
+  isFavorite: boolean;
 };
 
 type UpdateIsFavoriteArgs = {
@@ -146,6 +147,7 @@ export const vegetableStockRepository = {
     incrementalUnit,
     expirationDate,
     memo,
+    isFavorite,
   }: UpdateDetailArgs) => {
     const client = buildGraphQLUserClient(idToken);
 
@@ -156,6 +158,7 @@ export const vegetableStockRepository = {
       expirationDate,
       incrementalUnit,
       memo,
+      isFavorite,
     });
     return data.update_vegetable_stocks?.returning[0];
   },

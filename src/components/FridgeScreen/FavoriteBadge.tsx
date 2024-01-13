@@ -7,6 +7,7 @@ type Props = {
   /** お気に入り登録されているかどうか */
   isFavorite: boolean;
   scale: Animated.Value;
+  size?: number;
 };
 
 /**
@@ -41,10 +42,14 @@ export const performLikeAnimation = ({
 /**
  * お気に入りバッジ。
  */
-export const FavoriteBadge: FC<Props> = ({ isFavorite, scale }) => {
+export const FavoriteBadge: FC<Props> = ({ isFavorite, scale, size = 30 }) => {
   return (
     <Animated.View style={{ transform: [{ scale }] }}>
-      <Icon name="star" size={30} color={isFavorite ? '#ffd700' : '#e1e4e8'} />
+      <Icon
+        name="star"
+        size={size}
+        color={isFavorite ? '#ffd700' : '#e1e4e8'}
+      />
     </Animated.View>
   );
 };

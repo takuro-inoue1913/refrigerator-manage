@@ -11,6 +11,7 @@ type UpsertMeatStockDetail = {
   incrementalUnit: number;
   expirationDate: string;
   memo: string;
+  isFavorite: boolean;
 };
 
 export const useRequestUpsertMeatStockDetail = () => {
@@ -30,6 +31,7 @@ export const useRequestUpsertMeatStockDetail = () => {
     incrementalUnit,
     expirationDate,
     memo,
+    isFavorite,
   }: UpsertMeatStockDetail) => {
     const existingStock = await meatStockRepository.getOne({
       idToken,
@@ -56,6 +58,7 @@ export const useRequestUpsertMeatStockDetail = () => {
         incrementalUnit,
         expirationDate,
         memo,
+        isFavorite,
       });
       return data;
     }

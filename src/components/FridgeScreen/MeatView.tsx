@@ -63,6 +63,7 @@ export const MeatView: FC = () => {
         unitName: meatStocks.byId[id].unitName,
         expirationDate: meatStocks.byId[id].expirationDate,
         memo: meatStocks.byId[id].memo,
+        isFavorite: meatStocks.byId[id].isFavorite,
         onClose: (formValues) => {
           setModalProps(undefined);
           requestUpsertMeatStockDetail(formValues);

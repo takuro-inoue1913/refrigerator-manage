@@ -66,6 +66,7 @@ export const VegetablesView: FC = () => {
         unitName: vegetablesStocks.byId[id].unitName,
         expirationDate: vegetablesStocks.byId[id].expirationDate,
         memo: vegetablesStocks.byId[id].memo,
+        isFavorite: vegetablesStocks.byId[id].isFavorite,
         onClose: (formValues) => {
           setModalProps(undefined);
           requestUpsertVegetableStockDetail(formValues);

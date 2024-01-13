@@ -11,6 +11,7 @@ type UpsertMeatStockDetail = {
   incrementalUnit: number;
   expirationDate: string;
   memo: string;
+  isFavorite: boolean;
 };
 
 export const useRequestUpsertVegetableStockDetail = () => {
@@ -31,6 +32,7 @@ export const useRequestUpsertVegetableStockDetail = () => {
     incrementalUnit,
     expirationDate,
     memo,
+    isFavorite,
   }: UpsertMeatStockDetail) => {
     const existingStock = await vegetableStockRepository.getOne({
       idToken,
@@ -46,6 +48,7 @@ export const useRequestUpsertVegetableStockDetail = () => {
         incrementalUnit,
         defaultExpirationPeriod:
           vegetablesStocksRef.current.byId[vegetableId].defaultExpirationPeriod,
+        isFavorite,
       });
       return data;
     } else {
@@ -57,6 +60,7 @@ export const useRequestUpsertVegetableStockDetail = () => {
         incrementalUnit,
         expirationDate,
         memo,
+        isFavorite,
       });
       return data;
     }

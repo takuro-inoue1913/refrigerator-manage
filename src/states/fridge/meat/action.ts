@@ -32,6 +32,7 @@ type MeatStockActions = {
     incrementalUnit,
     expirationDate,
     memo,
+    isFavorite,
   }: {
     /** 更新する肉ID */
     id: string;
@@ -43,6 +44,8 @@ type MeatStockActions = {
     expirationDate: string;
     /** 更新するメモを指定。 */
     memo: string;
+    /** 更新するお気に入りの状態を指定。 */
+    isFavorite: boolean;
   }) => void;
   filterVegetableStocks: () => void;
   updateIsFavorite: ({
@@ -112,7 +115,14 @@ export const useMeatStockActions = () => {
   const updateMeatStockDetail: MeatStockActions['updateMeatStockDetail'] =
     useRecoilCallback(
       ({ set }) =>
-        ({ id: meatId, quantity, incrementalUnit, expirationDate, memo }) => {
+        ({
+          id: meatId,
+          quantity,
+          incrementalUnit,
+          expirationDate,
+          memo,
+          isFavorite,
+        }) => {
           set(meatStocksState, (prev) => {
             const newStocks: MeatStocks = {
               ids: [...prev.ids],
@@ -125,6 +135,7 @@ export const useMeatStockActions = () => {
                     acc[cur].expirationDate = expirationDate;
                     acc[cur].memo = memo;
                     acc[cur].hasStock = quantity > 0;
+                    acc[cur].isFavorite = isFavorite;
                   }
                   return acc;
                 },
