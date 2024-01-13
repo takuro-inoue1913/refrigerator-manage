@@ -133,8 +133,10 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
       aspect: [1, 1],
       quality: 1,
     });
-    const uri = await resizeImage(result.assets?.[0].uri as string);
-    onChange({ uri });
+    if (result.assets?.[0].uri) {
+      const uri = await resizeImage(result.assets?.[0].uri as string);
+      onChange({ uri });
+    }
   };
 
   const handleUnitChange = (
