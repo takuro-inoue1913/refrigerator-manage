@@ -25,7 +25,7 @@ const DebugObserver = ({ isDebug }: { isDebug?: boolean }) => {
  */
 export const AppWrapper: FC = () => {
   // MEMO: 最初のキャシュがない画像読み込みの時に出る警告を無視する。
-  LogBox.ignoreLogs([/Could not find image file./]);
+  LogBox.ignoreLogs([/Could not find image file/]);
 
   const queryClient = new QueryClient();
 
