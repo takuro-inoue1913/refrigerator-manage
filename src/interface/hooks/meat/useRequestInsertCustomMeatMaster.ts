@@ -3,13 +3,16 @@ import { useRecoilValue } from 'recoil';
 import { idTokenState, userState } from '@src/states/user';
 import { customMeatMasterRepository } from '@src/interface/repositories/customMeatMasterRepository';
 import Toast from 'react-native-toast-message';
+import { meatStockRepository } from '@src/interface/repositories/meatStockRepository';
 
 type InsertCustomMeatMasterArgs = {
   meatName: string;
   displayName: string;
   imageUri: string;
+  incrementalUnit: number;
   defaultExpirationPeriod: number;
   unitId: number;
+  isFavorite: boolean;
 };
 
 export const useRequestInsertCustomMeatMaster = () => {
@@ -25,6 +28,16 @@ export const useRequestInsertCustomMeatMaster = () => {
         idToken,
         userId: user.uid,
         ...args,
+      });
+
+      await meatStockRepository.insert({
+        idToken,
+        userId: user!.uid,
+        meatId: data!.custom_meat_id,
+        quantity: 0,
+        incrementalUnit: args.incrementalUnit,
+        defaultExpirationPeriod: args.defaultExpirationPeriod,
+        isFavorite: args.isFavorite,
       });
       return data;
     } catch (error) {

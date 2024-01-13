@@ -14,6 +14,7 @@ import {
   Keyboard,
   Animated,
   Easing,
+  Switch,
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import * as ImagePicker from 'expo-image-picker';
@@ -67,6 +68,7 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
     expiryPeriod: string;
     incrementUnit: string;
     unit: UnitMater;
+    isFavorite: boolean;
   }>();
   const spinValue = useRef(new Animated.Value(0)).current;
 
@@ -193,6 +195,8 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
           imageUri,
           defaultExpirationPeriod: Number(getValues('expiryPeriod')),
           unitId: getValues('unit.id'),
+          isFavorite: getValues('isFavorite'),
+          incrementUnit: Number(getValues('incrementUnit')),
         });
         break;
       }
@@ -211,6 +215,8 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
           imageUri,
           defaultExpirationPeriod: Number(getValues('expiryPeriod')),
           unitId: getValues('unit.id'),
+          isFavorite: getValues('isFavorite'),
+          incrementalUnit: Number(getValues('incrementUnit')),
         });
         break;
       }
@@ -453,6 +459,23 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
             <Text style={styles.errorText}>{errors.incrementUnit.message}</Text>
           )}
         </View>
+        <Controller
+          control={control}
+          name="isFavorite"
+          render={({ field: { onChange, value } }) => (
+            <View style={styles.favoriteToggleContainer}>
+              <Text style={styles.favoriteToggleLabel}>
+                お気に入りに登録する
+              </Text>
+              <Switch
+                trackColor={{ false: '#ced4da', true: COMMON_COLOR_GREEN }}
+                ios_backgroundColor="#ced4da"
+                onValueChange={onChange}
+                value={value}
+              />
+            </View>
+          )}
+        />
         <View style={styles.submitButtonWrapper}>
           <LinearGradientButton
             width={250}
@@ -570,5 +593,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 1000,
+  },
+  favoriteToggleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingBottom: 8,
+    width: '60%',
+  },
+  favoriteToggleLabel: {
+    fontSize: 16,
+    marginRight: 10,
+    color: '#495057',
   },
 });
