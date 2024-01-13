@@ -2,8 +2,8 @@ import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { StyleSheet, View } from 'react-native';
 
-import { VegetablesView } from '@src/components/FridgeScreen/VegetablesView';
-import { MeatView } from '@src/components/FridgeScreen/MeatView';
+import { VegetablesView } from '@src/components/FridgeScreen/CategoryViews/VegetablesView';
+import { MeatView } from '@src/components/FridgeScreen/CategoryViews/MeatView';
 import { selectFridgeCategoryState } from '@src/states/fridge';
 
 export const FridgeScreen = () => {

@@ -20,10 +20,10 @@ import { useRequestUpsertMeatStock } from '@src/interface/hooks/meat/useRequestU
 import { useDebouncedUpsertStock } from '@src/hooks/useDebouncedUpsertStock';
 import { ItemDetailModal } from '@src/components/FridgeScreen/ItemDetailModal';
 import { useRequestUpsertMeatStockDetail } from '@src/interface/hooks/meat/useRequestUpsertMeatStockDetail';
-import { GestureHandlerView } from './GestureHandlerView';
-import { ItemDisplayContents } from './ItemDisplayContents';
+import { GestureHandlerView } from '../GestureHandlerView';
+import { ItemDisplayContents } from '../ItemDisplayContents';
 import { useRequestUpsertMeatFavorite } from '@src/interface/hooks/meat/useRequestUpsertMeatFavorite';
-import { PlusImage } from '../common/PlusImage';
+import { PlusImage } from '../../common/PlusImage';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 import { useIsFocused } from '@react-navigation/native';
 

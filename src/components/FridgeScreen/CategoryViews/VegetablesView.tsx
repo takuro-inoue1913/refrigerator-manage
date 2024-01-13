@@ -21,7 +21,7 @@ import { generateEncodeString } from '@src/utils/logics/createEncodeStrings';
 import { useDebouncedUpsertStock } from '@src/hooks/useDebouncedUpsertStock';
 import { useRequestUpsertVegetableStockDetail } from '@src/interface/hooks/vegetable/useRequestUpsertVegetableStockDetail';
 import { GestureHandlerView } from '@src/components/FridgeScreen/GestureHandlerView';
-import { ItemDisplayContents } from './ItemDisplayContents';
+import { ItemDisplayContents } from '../ItemDisplayContents';
 import { useRequestUpsertVegetableIsFavorite } from '@src/interface/hooks/vegetable/useRequestUpsertVegetableIsFavorite';
 import { PlusImage } from '@src/components/common/PlusImage';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
