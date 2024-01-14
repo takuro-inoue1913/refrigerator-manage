@@ -192,7 +192,7 @@ mutation UpdateFishStockDetail(
 
 mutation InsertCustomFishMaster(
   $userId: String!
-  $FishName: String!
+  $fishName: String!
   $displayName: String!
   $imageUri: String!
   $defaultExpirationPeriod: Int!
@@ -201,7 +201,7 @@ mutation InsertCustomFishMaster(
   insert_custom_fish_master_one(
     object: {
       user_id: $userId
-      custom_fish_name: $FishName
+      custom_fish_name: $fishName
       display_name: $displayName
       image_uri: $imageUri
       default_expiration_period: $defaultExpirationPeriod

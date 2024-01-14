@@ -201,7 +201,7 @@ mutation UpdateSeasoningStockDetail(
 
 mutation InsertCustomSeasoningMaster(
   $userId: String!
-  $SeasoningName: String!
+  $seasoningName: String!
   $displayName: String!
   $imageUri: String!
   $defaultExpirationPeriod: Int!
@@ -210,7 +210,7 @@ mutation InsertCustomSeasoningMaster(
   insert_custom_seasoning_master_one(
     object: {
       user_id: $userId
-      custom_seasoning_name: $SeasoningName
+      custom_seasoning_name: $seasoningName
       display_name: $displayName
       image_uri: $imageUri
       default_expiration_period: $defaultExpirationPeriod

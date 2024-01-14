@@ -194,7 +194,7 @@ mutation UpdateOtherStockDetail(
 
 mutation InsertCustomOtherMaster(
   $userId: String!
-  $OtherName: String!
+  $otherName: String!
   $displayName: String!
   $imageUri: String!
   $defaultExpirationPeriod: Int!
@@ -203,7 +203,7 @@ mutation InsertCustomOtherMaster(
   insert_custom_other_master_one(
     object: {
       user_id: $userId
-      custom_other_name: $OtherName
+      custom_other_name: $otherName
       display_name: $displayName
       image_uri: $imageUri
       default_expiration_period: $defaultExpirationPeriod

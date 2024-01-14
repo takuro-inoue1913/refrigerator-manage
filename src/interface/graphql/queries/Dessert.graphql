@@ -198,7 +198,7 @@ mutation UpdateDessertStockDetail(
 
 mutation InsertCustomDessertMaster(
   $userId: String!
-  $DessertName: String!
+  $dessertName: String!
   $displayName: String!
   $imageUri: String!
   $defaultExpirationPeriod: Int!
@@ -207,7 +207,7 @@ mutation InsertCustomDessertMaster(
   insert_custom_dessert_master_one(
     object: {
       user_id: $userId
-      custom_dessert_name: $DessertName
+      custom_dessert_name: $dessertName
       display_name: $displayName
       image_uri: $imageUri
       default_expiration_period: $defaultExpirationPeriod

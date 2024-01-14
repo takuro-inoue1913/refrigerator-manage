@@ -194,7 +194,7 @@ mutation UpdateSpiceStockDetail(
 
 mutation InsertCustomSpiceMaster(
   $userId: String!
-  $SpiceName: String!
+  $spiceName: String!
   $displayName: String!
   $imageUri: String!
   $defaultExpirationPeriod: Int!
@@ -203,7 +203,7 @@ mutation InsertCustomSpiceMaster(
   insert_custom_spice_master_one(
     object: {
       user_id: $userId
-      custom_spice_name: $SpiceName
+      custom_spice_name: $spiceName
       display_name: $displayName
       image_uri: $imageUri
       default_expiration_period: $defaultExpirationPeriod

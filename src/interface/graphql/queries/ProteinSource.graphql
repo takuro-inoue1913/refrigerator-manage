@@ -223,7 +223,7 @@ mutation UpdateProteinSourceStockDetail(
 
 mutation InsertCustomProteinSourceMaster(
   $userId: String!
-  $ProteinSourceName: String!
+  $proteinSourceName: String!
   $displayName: String!
   $imageUri: String!
   $defaultExpirationPeriod: Int!
@@ -232,7 +232,7 @@ mutation InsertCustomProteinSourceMaster(
   insert_custom_protein_source_master_one(
     object: {
       user_id: $userId
-      custom_protein_source_name: $ProteinSourceName
+      custom_protein_source_name: $proteinSourceName
       display_name: $displayName
       image_uri: $imageUri
       default_expiration_period: $defaultExpirationPeriod
