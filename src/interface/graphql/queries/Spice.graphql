@@ -95,9 +95,9 @@ query GetCustomSpiceMasterAndUnitAndStocks {
   }
 }
 
-query GetSpiceStockByUserIdAndSpiceId($userId: String!, $SpiceId: uuid!) {
+query GetSpiceStockByUserIdAndSpiceId($userId: String!, $spiceId: uuid!) {
   spice_stocks(
-    where: { user_id: { _eq: $userId }, spice_id: { _eq: $SpiceId } }
+    where: { user_id: { _eq: $userId }, spice_id: { _eq: $spiceId } }
   ) {
     stock_id
     user_id
@@ -124,12 +124,12 @@ mutation InsertSpiceStock($object: spice_stocks_insert_input!) {
 
 mutation UpdateSpiceStockQuantity(
   $userId: String!
-  $SpiceId: uuid!
+  $spiceId: uuid!
   $quantity: Int!
   $expirationDate: date
 ) {
   update_spice_stocks(
-    where: { user_id: { _eq: $userId }, spice_id: { _eq: $SpiceId } }
+    where: { user_id: { _eq: $userId }, spice_id: { _eq: $spiceId } }
     _set: { quantity: $quantity, expiration_date: $expirationDate }
   ) {
     returning {
@@ -144,11 +144,11 @@ mutation UpdateSpiceStockQuantity(
 
 mutation UpdateSpiceStockIsFavorite(
   $userId: String!
-  $SpiceId: uuid!
+  $spiceId: uuid!
   $isFavorite: Boolean!
 ) {
   update_spice_stocks(
-    where: { user_id: { _eq: $userId }, spice_id: { _eq: $SpiceId } }
+    where: { user_id: { _eq: $userId }, spice_id: { _eq: $spiceId } }
     _set: { is_favorite: $isFavorite }
   ) {
     returning {
@@ -162,7 +162,7 @@ mutation UpdateSpiceStockIsFavorite(
 
 mutation UpdateSpiceStockDetail(
   $userId: String!
-  $SpiceId: uuid!
+  $spiceId: uuid!
   $quantity: Int!
   $incrementalUnit: Int!
   $expirationDate: date!
@@ -170,7 +170,7 @@ mutation UpdateSpiceStockDetail(
   $isFavorite: Boolean!
 ) {
   update_spice_stocks(
-    where: { user_id: { _eq: $userId }, spice_id: { _eq: $SpiceId } }
+    where: { user_id: { _eq: $userId }, spice_id: { _eq: $spiceId } }
     _set: {
       quantity: $quantity
       incremental_unit: $incrementalUnit

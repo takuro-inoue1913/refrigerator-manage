@@ -109,12 +109,12 @@ query GetCustomProteinSourceMasterAndUnitAndStocks {
 
 query GetProteinSourceStockByUserIdAndProteinSourceId(
   $userId: String!
-  $ProteinSourceId: uuid!
+  $proteinSourceId: uuid!
 ) {
   protein_source_stocks(
     where: {
       user_id: { _eq: $userId }
-      protein_source_id: { _eq: $ProteinSourceId }
+      protein_source_id: { _eq: $proteinSourceId }
     }
   ) {
     stock_id
@@ -144,14 +144,14 @@ mutation InsertProteinSourceStock(
 
 mutation UpdateProteinSourceStockQuantity(
   $userId: String!
-  $ProteinSourceId: uuid!
+  $proteinSourceId: uuid!
   $quantity: Int!
   $expirationDate: date
 ) {
   update_protein_source_stocks(
     where: {
       user_id: { _eq: $userId }
-      protein_source_id: { _eq: $ProteinSourceId }
+      protein_source_id: { _eq: $proteinSourceId }
     }
     _set: { quantity: $quantity, expiration_date: $expirationDate }
   ) {
@@ -167,13 +167,13 @@ mutation UpdateProteinSourceStockQuantity(
 
 mutation UpdateProteinSourceStockIsFavorite(
   $userId: String!
-  $ProteinSourceId: uuid!
+  $proteinSourceId: uuid!
   $isFavorite: Boolean!
 ) {
   update_protein_source_stocks(
     where: {
       user_id: { _eq: $userId }
-      protein_source_id: { _eq: $ProteinSourceId }
+      protein_source_id: { _eq: $proteinSourceId }
     }
     _set: { is_favorite: $isFavorite }
   ) {
@@ -188,7 +188,7 @@ mutation UpdateProteinSourceStockIsFavorite(
 
 mutation UpdateProteinSourceStockDetail(
   $userId: String!
-  $ProteinSourceId: uuid!
+  $proteinSourceId: uuid!
   $quantity: Int!
   $incrementalUnit: Int!
   $expirationDate: date!
@@ -198,7 +198,7 @@ mutation UpdateProteinSourceStockDetail(
   update_protein_source_stocks(
     where: {
       user_id: { _eq: $userId }
-      protein_source_id: { _eq: $ProteinSourceId }
+      protein_source_id: { _eq: $proteinSourceId }
     }
     _set: {
       quantity: $quantity

@@ -99,9 +99,9 @@ query GetCustomDessertMasterAndUnitAndStocks {
   }
 }
 
-query GetDessertStockByUserIdAndDessertId($userId: String!, $DessertId: uuid!) {
+query GetDessertStockByUserIdAndDessertId($userId: String!, $dessertId: uuid!) {
   dessert_stocks(
-    where: { user_id: { _eq: $userId }, dessert_id: { _eq: $DessertId } }
+    where: { user_id: { _eq: $userId }, dessert_id: { _eq: $dessertId } }
   ) {
     stock_id
     user_id
@@ -128,12 +128,12 @@ mutation InsertDessertStock($object: dessert_stocks_insert_input!) {
 
 mutation UpdateDessertStockQuantity(
   $userId: String!
-  $DessertId: uuid!
+  $dessertId: uuid!
   $quantity: Int!
   $expirationDate: date
 ) {
   update_dessert_stocks(
-    where: { user_id: { _eq: $userId }, dessert_id: { _eq: $DessertId } }
+    where: { user_id: { _eq: $userId }, dessert_id: { _eq: $dessertId } }
     _set: { quantity: $quantity, expiration_date: $expirationDate }
   ) {
     returning {
@@ -148,11 +148,11 @@ mutation UpdateDessertStockQuantity(
 
 mutation UpdateDessertStockIsFavorite(
   $userId: String!
-  $DessertId: uuid!
+  $dessertId: uuid!
   $isFavorite: Boolean!
 ) {
   update_dessert_stocks(
-    where: { user_id: { _eq: $userId }, dessert_id: { _eq: $DessertId } }
+    where: { user_id: { _eq: $userId }, dessert_id: { _eq: $dessertId } }
     _set: { is_favorite: $isFavorite }
   ) {
     returning {
@@ -166,7 +166,7 @@ mutation UpdateDessertStockIsFavorite(
 
 mutation UpdateDessertStockDetail(
   $userId: String!
-  $DessertId: uuid!
+  $dessertId: uuid!
   $quantity: Int!
   $incrementalUnit: Int!
   $expirationDate: date!
@@ -174,7 +174,7 @@ mutation UpdateDessertStockDetail(
   $isFavorite: Boolean!
 ) {
   update_dessert_stocks(
-    where: { user_id: { _eq: $userId }, dessert_id: { _eq: $DessertId } }
+    where: { user_id: { _eq: $userId }, dessert_id: { _eq: $dessertId } }
     _set: {
       quantity: $quantity
       incremental_unit: $incrementalUnit

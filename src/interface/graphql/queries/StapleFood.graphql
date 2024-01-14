@@ -105,10 +105,10 @@ query GetCustomStapleFoodMasterAndUnitAndStocks {
 
 query GetStapleFoodStockByUserIdAndStapleFoodId(
   $userId: String!
-  $StapleFoodId: uuid!
+  $stapleFoodId: uuid!
 ) {
   staple_food_stocks(
-    where: { user_id: { _eq: $userId }, staple_food_id: { _eq: $StapleFoodId } }
+    where: { user_id: { _eq: $userId }, staple_food_id: { _eq: $stapleFoodId } }
   ) {
     stock_id
     user_id
@@ -135,12 +135,12 @@ mutation InsertStapleFoodStock($object: staple_food_stocks_insert_input!) {
 
 mutation UpdateStapleFoodStockQuantity(
   $userId: String!
-  $StapleFoodId: uuid!
+  $stapleFoodId: uuid!
   $quantity: Int!
   $expirationDate: date
 ) {
   update_staple_food_stocks(
-    where: { user_id: { _eq: $userId }, staple_food_id: { _eq: $StapleFoodId } }
+    where: { user_id: { _eq: $userId }, staple_food_id: { _eq: $stapleFoodId } }
     _set: { quantity: $quantity, expiration_date: $expirationDate }
   ) {
     returning {
@@ -155,11 +155,11 @@ mutation UpdateStapleFoodStockQuantity(
 
 mutation UpdateStapleFoodStockIsFavorite(
   $userId: String!
-  $StapleFoodId: uuid!
+  $stapleFoodId: uuid!
   $isFavorite: Boolean!
 ) {
   update_staple_food_stocks(
-    where: { user_id: { _eq: $userId }, staple_food_id: { _eq: $StapleFoodId } }
+    where: { user_id: { _eq: $userId }, staple_food_id: { _eq: $stapleFoodId } }
     _set: { is_favorite: $isFavorite }
   ) {
     returning {
@@ -173,7 +173,7 @@ mutation UpdateStapleFoodStockIsFavorite(
 
 mutation UpdateStapleFoodStockDetail(
   $userId: String!
-  $StapleFoodId: uuid!
+  $stapleFoodId: uuid!
   $quantity: Int!
   $incrementalUnit: Int!
   $expirationDate: date!
@@ -181,7 +181,7 @@ mutation UpdateStapleFoodStockDetail(
   $isFavorite: Boolean!
 ) {
   update_staple_food_stocks(
-    where: { user_id: { _eq: $userId }, staple_food_id: { _eq: $StapleFoodId } }
+    where: { user_id: { _eq: $userId }, staple_food_id: { _eq: $stapleFoodId } }
     _set: {
       quantity: $quantity
       incremental_unit: $incrementalUnit

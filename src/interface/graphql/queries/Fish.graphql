@@ -95,8 +95,8 @@ query GetCustomFishMasterAndUnitAndStocks {
   }
 }
 
-query GetFishStockByUserIdAndFishId($userId: String!, $FishId: uuid!) {
-  fish_stocks(where: { user_id: { _eq: $userId }, fish_id: { _eq: $FishId } }) {
+query GetFishStockByUserIdAndFishId($userId: String!, $fishId: uuid!) {
+  fish_stocks(where: { user_id: { _eq: $userId }, fish_id: { _eq: $fishId } }) {
     stock_id
     user_id
     fish_id
@@ -122,12 +122,12 @@ mutation InsertFishStock($object: fish_stocks_insert_input!) {
 
 mutation UpdateFishStockQuantity(
   $userId: String!
-  $FishId: uuid!
+  $fishId: uuid!
   $quantity: Int!
   $expirationDate: date
 ) {
   update_fish_stocks(
-    where: { user_id: { _eq: $userId }, fish_id: { _eq: $FishId } }
+    where: { user_id: { _eq: $userId }, fish_id: { _eq: $fishId } }
     _set: { quantity: $quantity, expiration_date: $expirationDate }
   ) {
     returning {
@@ -142,11 +142,11 @@ mutation UpdateFishStockQuantity(
 
 mutation UpdateFishStockIsFavorite(
   $userId: String!
-  $FishId: uuid!
+  $fishId: uuid!
   $isFavorite: Boolean!
 ) {
   update_fish_stocks(
-    where: { user_id: { _eq: $userId }, fish_id: { _eq: $FishId } }
+    where: { user_id: { _eq: $userId }, fish_id: { _eq: $fishId } }
     _set: { is_favorite: $isFavorite }
   ) {
     returning {
@@ -160,7 +160,7 @@ mutation UpdateFishStockIsFavorite(
 
 mutation UpdateFishStockDetail(
   $userId: String!
-  $FishId: uuid!
+  $fishId: uuid!
   $quantity: Int!
   $incrementalUnit: Int!
   $expirationDate: date!
@@ -168,7 +168,7 @@ mutation UpdateFishStockDetail(
   $isFavorite: Boolean!
 ) {
   update_fish_stocks(
-    where: { user_id: { _eq: $userId }, fish_id: { _eq: $FishId } }
+    where: { user_id: { _eq: $userId }, fish_id: { _eq: $fishId } }
     _set: {
       quantity: $quantity
       incremental_unit: $incrementalUnit

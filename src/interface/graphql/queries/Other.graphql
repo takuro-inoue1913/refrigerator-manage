@@ -95,9 +95,9 @@ query GetCustomOtherMasterAndUnitAndStocks {
   }
 }
 
-query GetOtherStockByUserIdAndOtherId($userId: String!, $OtherId: uuid!) {
+query GetOtherStockByUserIdAndOtherId($userId: String!, $otherId: uuid!) {
   other_stocks(
-    where: { user_id: { _eq: $userId }, other_id: { _eq: $OtherId } }
+    where: { user_id: { _eq: $userId }, other_id: { _eq: $otherId } }
   ) {
     stock_id
     user_id
@@ -124,12 +124,12 @@ mutation InsertOtherStock($object: other_stocks_insert_input!) {
 
 mutation UpdateOtherStockQuantity(
   $userId: String!
-  $OtherId: uuid!
+  $otherId: uuid!
   $quantity: Int!
   $expirationDate: date
 ) {
   update_other_stocks(
-    where: { user_id: { _eq: $userId }, other_id: { _eq: $OtherId } }
+    where: { user_id: { _eq: $userId }, other_id: { _eq: $otherId } }
     _set: { quantity: $quantity, expiration_date: $expirationDate }
   ) {
     returning {
@@ -144,11 +144,11 @@ mutation UpdateOtherStockQuantity(
 
 mutation UpdateOtherStockIsFavorite(
   $userId: String!
-  $OtherId: uuid!
+  $otherId: uuid!
   $isFavorite: Boolean!
 ) {
   update_other_stocks(
-    where: { user_id: { _eq: $userId }, other_id: { _eq: $OtherId } }
+    where: { user_id: { _eq: $userId }, other_id: { _eq: $otherId } }
     _set: { is_favorite: $isFavorite }
   ) {
     returning {
@@ -162,7 +162,7 @@ mutation UpdateOtherStockIsFavorite(
 
 mutation UpdateOtherStockDetail(
   $userId: String!
-  $OtherId: uuid!
+  $otherId: uuid!
   $quantity: Int!
   $incrementalUnit: Int!
   $expirationDate: date!
@@ -170,7 +170,7 @@ mutation UpdateOtherStockDetail(
   $isFavorite: Boolean!
 ) {
   update_other_stocks(
-    where: { user_id: { _eq: $userId }, other_id: { _eq: $OtherId } }
+    where: { user_id: { _eq: $userId }, other_id: { _eq: $otherId } }
     _set: {
       quantity: $quantity
       incremental_unit: $incrementalUnit

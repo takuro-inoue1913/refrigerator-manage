@@ -101,10 +101,10 @@ query GetCustomSeasoningMasterAndUnitAndStocks {
 
 query GetSeasoningStockByUserIdAndSeasoningId(
   $userId: String!
-  $SeasoningId: uuid!
+  $seasoningId: uuid!
 ) {
   seasoning_stocks(
-    where: { user_id: { _eq: $userId }, seasoning_id: { _eq: $SeasoningId } }
+    where: { user_id: { _eq: $userId }, seasoning_id: { _eq: $seasoningId } }
   ) {
     stock_id
     user_id
@@ -131,12 +131,12 @@ mutation InsertSeasoningStock($object: seasoning_stocks_insert_input!) {
 
 mutation UpdateSeasoningStockQuantity(
   $userId: String!
-  $SeasoningId: uuid!
+  $seasoningId: uuid!
   $quantity: Int!
   $expirationDate: date
 ) {
   update_seasoning_stocks(
-    where: { user_id: { _eq: $userId }, seasoning_id: { _eq: $SeasoningId } }
+    where: { user_id: { _eq: $userId }, seasoning_id: { _eq: $seasoningId } }
     _set: { quantity: $quantity, expiration_date: $expirationDate }
   ) {
     returning {
@@ -151,11 +151,11 @@ mutation UpdateSeasoningStockQuantity(
 
 mutation UpdateSeasoningStockIsFavorite(
   $userId: String!
-  $SeasoningId: uuid!
+  $seasoningId: uuid!
   $isFavorite: Boolean!
 ) {
   update_seasoning_stocks(
-    where: { user_id: { _eq: $userId }, seasoning_id: { _eq: $SeasoningId } }
+    where: { user_id: { _eq: $userId }, seasoning_id: { _eq: $seasoningId } }
     _set: { is_favorite: $isFavorite }
   ) {
     returning {
@@ -169,7 +169,7 @@ mutation UpdateSeasoningStockIsFavorite(
 
 mutation UpdateSeasoningStockDetail(
   $userId: String!
-  $SeasoningId: uuid!
+  $seasoningId: uuid!
   $quantity: Int!
   $incrementalUnit: Int!
   $expirationDate: date!
@@ -177,7 +177,7 @@ mutation UpdateSeasoningStockDetail(
   $isFavorite: Boolean!
 ) {
   update_seasoning_stocks(
-    where: { user_id: { _eq: $userId }, seasoning_id: { _eq: $SeasoningId } }
+    where: { user_id: { _eq: $userId }, seasoning_id: { _eq: $seasoningId } }
     _set: {
       quantity: $quantity
       incremental_unit: $incrementalUnit
