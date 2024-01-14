@@ -1,0 +1,225 @@
+query GetAllDessertMasterAndUnitAndStocks {
+  GetDessertMasterAndUnitAndStocks: dessert_master(
+    order_by: {
+      dessert_master_dessert_stocks: { is_favorite: desc_nulls_last }
+    }
+  ) {
+    dessert_id
+    display_name
+    dessert_name
+    image_uri
+    default_expiration_period
+    dessert_master_unit_master {
+      unit_id
+      unit_name
+    }
+    dessert_master_dessert_stocks {
+      stock_id
+      quantity
+      incremental_unit
+      expiration_date
+      memo
+      is_favorite
+    }
+  }
+  GetCustomDessertMasterAndUnitAndStocks: custom_dessert_master(
+    order_by: {
+      custom_dessert_master_dessert_stocks: { is_favorite: desc_nulls_last }
+    }
+  ) {
+    dessert_id: custom_dessert_id
+    dessert_name: custom_dessert_name
+    display_name
+    image_uri
+    default_expiration_period
+    dessert_master_unit_master: custom_dessert_master_unit_master {
+      unit_id
+      unit_name
+    }
+    dessert_master_dessert_stocks: custom_dessert_master_dessert_stocks {
+      stock_id
+      quantity
+      incremental_unit
+      expiration_date
+      memo
+      is_favorite
+    }
+  }
+}
+
+query GetDessertMasterAndUnitAndStocks {
+  dessert_master(
+    order_by: {
+      dessert_master_dessert_stocks: { is_favorite: desc_nulls_last }
+    }
+  ) {
+    dessert_id
+    display_name
+    dessert_name
+    image_uri
+    default_expiration_period
+    dessert_master_unit_master {
+      unit_id
+      unit_name
+    }
+    dessert_master_dessert_stocks {
+      stock_id
+      quantity
+      incremental_unit
+      expiration_date
+      memo
+      is_favorite
+    }
+  }
+}
+
+query GetCustomDessertMasterAndUnitAndStocks {
+  custom_dessert_master(
+    order_by: {
+      custom_dessert_master_dessert_stocks: { is_favorite: desc_nulls_last }
+    }
+  ) {
+    dessert_id: custom_dessert_id
+    dessert_name: custom_dessert_name
+    display_name
+    image_uri
+    default_expiration_period
+    dessert_master_unit_master: custom_dessert_master_unit_master {
+      unit_id
+      unit_name
+    }
+    dessert_master_dessert_stocks: custom_dessert_master_dessert_stocks {
+      stock_id
+      quantity
+      incremental_unit
+      expiration_date
+      memo
+      is_favorite
+    }
+  }
+}
+
+query GetDessertStockByUserIdAndDessertId($userId: String!, $DessertId: uuid!) {
+  dessert_stocks(
+    where: { user_id: { _eq: $userId }, dessert_id: { _eq: $DessertId } }
+  ) {
+    stock_id
+    user_id
+    dessert_id
+    quantity
+    expiration_date
+    memo
+    is_favorite
+  }
+}
+
+mutation InsertDessertStock($object: dessert_stocks_insert_input!) {
+  insert_dessert_stocks_one(object: $object) {
+    quantity
+    stock_id
+    user_id
+    dessert_id
+    incremental_unit
+    expiration_date
+    memo
+    is_favorite
+  }
+}
+
+mutation UpdateDessertStockQuantity(
+  $userId: String!
+  $DessertId: uuid!
+  $quantity: Int!
+  $expirationDate: date
+) {
+  update_dessert_stocks(
+    where: { user_id: { _eq: $userId }, dessert_id: { _eq: $DessertId } }
+    _set: { quantity: $quantity, expiration_date: $expirationDate }
+  ) {
+    returning {
+      stock_id
+      user_id
+      dessert_id
+      quantity
+      expiration_date
+    }
+  }
+}
+
+mutation UpdateDessertStockIsFavorite(
+  $userId: String!
+  $DessertId: uuid!
+  $isFavorite: Boolean!
+) {
+  update_dessert_stocks(
+    where: { user_id: { _eq: $userId }, dessert_id: { _eq: $DessertId } }
+    _set: { is_favorite: $isFavorite }
+  ) {
+    returning {
+      stock_id
+      user_id
+      dessert_id
+      is_favorite
+    }
+  }
+}
+
+mutation UpdateDessertStockDetail(
+  $userId: String!
+  $DessertId: uuid!
+  $quantity: Int!
+  $incrementalUnit: Int!
+  $expirationDate: date!
+  $memo: String!
+  $isFavorite: Boolean!
+) {
+  update_dessert_stocks(
+    where: { user_id: { _eq: $userId }, dessert_id: { _eq: $DessertId } }
+    _set: {
+      quantity: $quantity
+      incremental_unit: $incrementalUnit
+      expiration_date: $expirationDate
+      memo: $memo
+      is_favorite: $isFavorite
+    }
+  ) {
+    returning {
+      stock_id
+      user_id
+      dessert_id
+      quantity
+      incremental_unit
+      expiration_date
+      memo
+      is_favorite
+    }
+  }
+}
+
+mutation InsertCustomDessertMaster(
+  $userId: String!
+  $DessertName: String!
+  $displayName: String!
+  $imageUri: String!
+  $defaultExpirationPeriod: Int!
+  $unitId: Int!
+) {
+  insert_custom_dessert_master_one(
+    object: {
+      user_id: $userId
+      custom_dessert_name: $DessertName
+      display_name: $displayName
+      image_uri: $imageUri
+      default_expiration_period: $defaultExpirationPeriod
+      unit_id: $unitId
+    }
+  ) {
+    custom_dessert_id
+    user_id
+    custom_dessert_name
+    display_name
+    image_uri
+    default_expiration_period
+    unit_id
+  }
+}
