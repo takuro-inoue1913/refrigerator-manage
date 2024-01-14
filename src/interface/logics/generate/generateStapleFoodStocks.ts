@@ -1,36 +1,36 @@
-import { GetAllMeatMasterAndUnitAndStocksQuery } from '@src/interface/__generated__/graphql';
-import { MeatStocks } from '@src/states/fridge/meat';
+import { GetAllStapleFoodMasterAndUnitAndStocksQuery } from '@src/interface/__generated__/graphql';
+import { StapleFoodStocks } from '@src/states/fridge/stapleFood';
 import { getIncrementalUnit } from '@src/utils/logics/getIncrementalUnit';
 import dayjs from 'dayjs';
 
-type CommonMeatMasterType = Omit<
-  GetAllMeatMasterAndUnitAndStocksQuery['GetMeatMasterAndUnitAndStocks'][0],
+type CommonStapleFoodMasterType = Omit<
+  GetAllStapleFoodMasterAndUnitAndStocksQuery['GetStapleFoodMasterAndUnitAndStocks'][0],
   '__typename'
 >;
 
 /**
- * 肉マスタと肉在庫から肉在庫のオブジェクトを生成する。
+ * マスタデータと在庫から在庫のオブジェクトを生成する。
  */
-export const generateMeatStocks = (
-  data: GetAllMeatMasterAndUnitAndStocksQuery,
-): MeatStocks => {
+export const generateStapleFoodStocks = (
+  data: GetAllStapleFoodMasterAndUnitAndStocksQuery,
+): StapleFoodStocks => {
   const ids: string[] = [];
-  const meatMasterData = convertMeatMasterData(
-    'meatMaster',
-    data.GetMeatMasterAndUnitAndStocks,
+  const stapleFoodMasterData = convertStapleFoodMasterData(
+    'stapleFoodMaster',
+    data.GetStapleFoodMasterAndUnitAndStocks,
   );
 
-  const customMeatMasterData = convertMeatMasterData(
-    'customMeatMaster',
-    data.GetCustomMeatMasterAndUnitAndStocks,
+  const customStapleFoodMasterData = convertStapleFoodMasterData(
+    'customStapleFoodMaster',
+    data.GetCustomStapleFoodMasterAndUnitAndStocks,
   );
 
-  ids.push(...Object.keys(meatMasterData).map((id) => id));
-  ids.push(...Object.keys(customMeatMasterData).map((id) => id));
+  ids.push(...Object.keys(stapleFoodMasterData).map((id) => id));
+  ids.push(...Object.keys(customStapleFoodMasterData).map((id) => id));
 
   const byId = {
-    ...meatMasterData,
-    ...customMeatMasterData,
+    ...stapleFoodMasterData,
+    ...customStapleFoodMasterData,
   };
 
   return {
@@ -39,49 +39,52 @@ export const generateMeatStocks = (
   };
 };
 
-const convertMeatMasterData = (
-  __typename: 'meatMaster' | 'customMeatMaster',
+const convertStapleFoodMasterData = (
+  __typename: 'stapleFoodMaster' | 'customStapleFoodMaster',
   masterData:
-    | GetAllMeatMasterAndUnitAndStocksQuery['GetCustomMeatMasterAndUnitAndStocks']
-    | GetAllMeatMasterAndUnitAndStocksQuery['GetMeatMasterAndUnitAndStocks'],
-): MeatStocks['byId'] => {
+    | GetAllStapleFoodMasterAndUnitAndStocksQuery['GetCustomStapleFoodMasterAndUnitAndStocks']
+    | GetAllStapleFoodMasterAndUnitAndStocksQuery['GetStapleFoodMasterAndUnitAndStocks'],
+): StapleFoodStocks['byId'] => {
   if (masterData.length === 0) {
-    return {} as MeatStocks['byId'];
+    return {} as StapleFoodStocks['byId'];
   }
 
-  const commonData = [...masterData] as CommonMeatMasterType[];
+  const commonData = [...masterData] as CommonStapleFoodMasterType[];
   return commonData.reduce(
     (acc, cur) => {
-      acc[cur.meat_id] = {
-        id: cur.meat_id,
-        name: cur.meat_name,
+      acc[cur.staple_food_id] = {
+        id: cur.staple_food_id,
+        name: cur.staple_food_name,
         displayName: cur.display_name,
         imageUri: cur.image_uri,
         // MEMO: 単位は必ず存在するため、! をつけている
-        unitId: cur.meat_master_unit_master!.unit_id,
+        unitId: cur.staple_food_master_unit_master!.unit_id,
         // MEMO: 単位は必ず存在するため、! をつけている
-        unitName: cur.meat_master_unit_master!.unit_name,
+        unitName: cur.staple_food_master_unit_master!.unit_name,
         hasStock:
-          cur.meat_master_meat_stocks !== undefined &&
-          cur.meat_master_meat_stocks !== null &&
-          cur.meat_master_meat_stocks.expiration_date !== null &&
-          cur.meat_master_meat_stocks.quantity > 0,
-        stockId: cur.meat_master_meat_stocks?.stock_id ?? null,
-        quantity: cur.meat_master_meat_stocks?.quantity ?? 0,
+          cur.staple_food_master_staple_food_stocks !== undefined &&
+          cur.staple_food_master_staple_food_stocks !== null &&
+          cur.staple_food_master_staple_food_stocks.expiration_date !== null &&
+          cur.staple_food_master_staple_food_stocks.quantity > 0,
+        stockId: cur.staple_food_master_staple_food_stocks?.stock_id ?? null,
+        quantity: cur.staple_food_master_staple_food_stocks?.quantity ?? 0,
         incrementalUnit:
-          cur.meat_master_meat_stocks?.incremental_unit ??
-          getIncrementalUnit(cur.meat_master_unit_master?.unit_name ?? ''),
+          cur.staple_food_master_staple_food_stocks?.incremental_unit ??
+          getIncrementalUnit(
+            cur.staple_food_master_unit_master?.unit_name ?? '',
+          ),
         expirationDate:
-          cur.meat_master_meat_stocks?.expiration_date ??
+          cur.staple_food_master_staple_food_stocks?.expiration_date ??
           dayjs()
             .add(cur.default_expiration_period, 'day')
             .format('YYYY-MM-DD'),
-        memo: cur.meat_master_meat_stocks?.memo ?? '',
-        isFavorite: cur.meat_master_meat_stocks?.is_favorite ?? false,
+        memo: cur.staple_food_master_staple_food_stocks?.memo ?? '',
+        isFavorite:
+          cur.staple_food_master_staple_food_stocks?.is_favorite ?? false,
         defaultExpirationPeriod: cur.default_expiration_period,
       };
       return acc;
     },
-    {} as MeatStocks['byId'],
+    {} as StapleFoodStocks['byId'],
   );
 };
