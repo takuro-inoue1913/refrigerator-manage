@@ -1,36 +1,36 @@
-import { InsertCustomFishMasterDocument } from '@src/interface/__generated__/graphql';
+import { InsertCustomSeasoningMasterDocument } from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
 
-type InsertCustomFishMasterArgs = {
+type InsertCustomSeasoningMasterArgs = {
   idToken: string | null;
   userId: string;
-  fishName: string;
+  seasoningName: string;
   displayName: string;
   imageUri: string;
   defaultExpirationPeriod: number;
   unitId: number;
 };
 
-export const customFishRepository = {
+export const customSeasoningMasterRepository = {
   insert: async ({
     idToken,
     userId,
-    fishName,
+    seasoningName,
     displayName,
     imageUri,
     defaultExpirationPeriod,
     unitId,
-  }: InsertCustomFishMasterArgs) => {
+  }: InsertCustomSeasoningMasterArgs) => {
     const client = buildGraphQLUserClient(idToken);
 
-    const data = await client.request(InsertCustomFishMasterDocument, {
+    const data = await client.request(InsertCustomSeasoningMasterDocument, {
       userId,
-      fishName,
+      seasoningName,
       displayName,
       imageUri,
       defaultExpirationPeriod,
       unitId,
     });
-    return data.insert_custom_fish_master_one;
+    return data.insert_custom_seasoning_master_one;
   },
 };

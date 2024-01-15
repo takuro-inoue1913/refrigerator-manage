@@ -1,36 +1,36 @@
-import { InsertCustomOtherMasterDocument } from '@src/interface/__generated__/graphql';
+import { InsertCustomProteinSourceMasterDocument } from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
 
-type InsertCustomOtherMasterArgs = {
+type InsertCustomProteinSourceMasterArgs = {
   idToken: string | null;
   userId: string;
-  otherName: string;
+  proteinSourceName: string;
   displayName: string;
   imageUri: string;
   defaultExpirationPeriod: number;
   unitId: number;
 };
 
-export const customOtherRepository = {
+export const customProteinSourceMasterRepository = {
   insert: async ({
     idToken,
     userId,
-    otherName,
+    proteinSourceName,
     displayName,
     imageUri,
     defaultExpirationPeriod,
     unitId,
-  }: InsertCustomOtherMasterArgs) => {
+  }: InsertCustomProteinSourceMasterArgs) => {
     const client = buildGraphQLUserClient(idToken);
 
-    const data = await client.request(InsertCustomOtherMasterDocument, {
+    const data = await client.request(InsertCustomProteinSourceMasterDocument, {
       userId,
-      otherName,
+      proteinSourceName,
       displayName,
       imageUri,
       defaultExpirationPeriod,
       unitId,
     });
-    return data.insert_custom_other_master_one;
+    return data.insert_custom_protein_source_master_one;
   },
 };

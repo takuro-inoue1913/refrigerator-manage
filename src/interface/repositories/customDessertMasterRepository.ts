@@ -1,36 +1,36 @@
-import { InsertCustomSpiceMasterDocument } from '@src/interface/__generated__/graphql';
+import { InsertCustomDessertMasterDocument } from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
 
-type InsertCustomSpiceMasterArgs = {
+type InsertCustomDessertMasterArgs = {
   idToken: string | null;
   userId: string;
-  spiceName: string;
+  dessertName: string;
   displayName: string;
   imageUri: string;
   defaultExpirationPeriod: number;
   unitId: number;
 };
 
-export const customSpiceRepository = {
+export const customDessertMasterRepository = {
   insert: async ({
     idToken,
     userId,
-    spiceName,
+    dessertName,
     displayName,
     imageUri,
     defaultExpirationPeriod,
     unitId,
-  }: InsertCustomSpiceMasterArgs) => {
+  }: InsertCustomDessertMasterArgs) => {
     const client = buildGraphQLUserClient(idToken);
 
-    const data = await client.request(InsertCustomSpiceMasterDocument, {
+    const data = await client.request(InsertCustomDessertMasterDocument, {
       userId,
-      spiceName,
+      dessertName,
       displayName,
       imageUri,
       defaultExpirationPeriod,
       unitId,
     });
-    return data.insert_custom_spice_master_one;
+    return data.insert_custom_dessert_master_one;
   },
 };
