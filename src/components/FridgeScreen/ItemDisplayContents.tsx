@@ -34,7 +34,13 @@ export const ItemDisplayContents: FC<Props> = ({
     <Pressable onPress={handlePress}>
       <View style={styles.container}>
         <FavoriteBadge isFavorite={isFavorite} scale={scale} />
-        <Text style={styles.displayName}>{displayName}</Text>
+        <Text
+          style={
+            displayName.length > 6 ? styles.longDisplayName : styles.displayName
+          }
+        >
+          {displayName}
+        </Text>
       </View>
     </Pressable>
   );
@@ -48,6 +54,10 @@ const styles = StyleSheet.create({
   },
   displayName: {
     fontSize: 12,
+    marginTop: 3,
+  },
+  longDisplayName: {
+    fontSize: 9,
     marginTop: 3,
   },
 });
