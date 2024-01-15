@@ -40,6 +40,19 @@ import { UnitMater } from '@src/states/fridge';
 import { useRequestInsertCustomMeatMaster } from '@src/interface/hooks/meat/useRequestInsertCustomMeatMaster';
 import { meatStocksState } from '@src/states/fridge/meat';
 import { useRequestInsertCustomStapleFoodMaster } from '@src/interface/hooks/stapleFood/useRequestInsertCustomStapleFoodMaster';
+import { useRequestInsertCustomSpiceMaster } from '@src/interface/hooks/spice/useRequestInsertCustomSpiceMaster';
+import { useRequestInsertCustomSeasoningMaster } from '@src/interface/hooks/seasoning/useRequestInsertCustomSeasoningMaster';
+import { useRequestInsertCustomProteinSourceMaster } from '@src/interface/hooks/proteinSource/useRequestInsertCustomProteinSourceMaster';
+import { useRequestInsertCustomOtherMaster } from '@src/interface/hooks/other/useRequestInsertCustomOtherMaster';
+import { useRequestInsertCustomFishMaster } from '@src/interface/hooks/fish/useRequestInsertCustomFishMaster';
+import { useRequestInsertCustomDessertMaster } from '@src/interface/hooks/dessert/useRequestInsertCustomDessertMaster';
+import { stapleFoodStocksState } from '@src/states/fridge/stapleFood';
+import { spiceStocksState } from '@src/states/fridge/spice';
+import { seasoningStocksState } from '@src/states/fridge/seasoning';
+import { proteinSourceStocksState } from '@src/states/fridge/proteinSource';
+import { otherStocksState } from '@src/states/fridge/other';
+import { fishStocksState } from '@src/states/fridge/fish';
+import { dessertStocksState } from '@src/states/fridge/dessert';
 
 type Props = {
   route: RouteProp<RootStackParamList, '食材新規登録'>;
@@ -48,15 +61,33 @@ type Props = {
 export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
   const { unitMaster } = useRequestGetUnit();
   const [isSending, setIsSending] = useState(false);
+  const navigation = useTypedNavigation();
+
   const user = useRecoilValue(userState);
   const vegetablesStocks = useRecoilValue(vegetablesStocksState);
   const meatStocks = useRecoilValue(meatStocksState);
-  const navigation = useTypedNavigation();
+  const stapleFoodStocks = useRecoilValue(stapleFoodStocksState);
+  const spiceStocks = useRecoilValue(spiceStocksState);
+  const seasoningStocks = useRecoilValue(seasoningStocksState);
+  const proteinSourceStocks = useRecoilValue(proteinSourceStocksState);
+  const otherStocks = useRecoilValue(otherStocksState);
+  const fishStocks = useRecoilValue(fishStocksState);
+  const dessertStocks = useRecoilValue(dessertStocksState);
+
   const requestInsertCustomVegetableMaster =
     useRequestInsertCustomVegetableMaster();
   const requestInsertCustomMeatMaster = useRequestInsertCustomMeatMaster();
   const requestInsertCustomStapleFoodMaster =
     useRequestInsertCustomStapleFoodMaster();
+  const requestInsertCustomSpiceMaster = useRequestInsertCustomSpiceMaster();
+  const requestInsertCustomSeasoningMaster =
+    useRequestInsertCustomSeasoningMaster();
+  const requestInsertCustomProteinSourceMaster =
+    useRequestInsertCustomProteinSourceMaster();
+  const requestInsertCustomOtherMaster = useRequestInsertCustomOtherMaster();
+  const requestInsertCustomFishMaster = useRequestInsertCustomFishMaster();
+  const requestInsertCustomDessertMaster =
+    useRequestInsertCustomDessertMaster();
   const {
     control,
     setValue,
@@ -224,7 +255,7 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
         break;
       }
       case '主食・粉': {
-        if (!checkFormValid(meatStocks)) {
+        if (!checkFormValid(stapleFoodStocks)) {
           setIsSending(false);
           return;
         }
@@ -243,6 +274,129 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
         });
         break;
       }
+      case 'スパイス': {
+        if (!checkFormValid(spiceStocks)) {
+          setIsSending(false);
+          return;
+        }
+        const imageUri = await uploadUserImage(
+          getValues('image.uri'),
+          'user-custom-images/' + user?.uid,
+        );
+        result = await requestInsertCustomSpiceMaster({
+          displayName: getValues('displayName'),
+          spiceName: getValues('nameKana'),
+          imageUri,
+          defaultExpirationPeriod: Number(getValues('expiryPeriod')),
+          unitId: getValues('unit.id'),
+          isFavorite: getValues('isFavorite'),
+          incrementalUnit: Number(getValues('incrementUnit')),
+        });
+        break;
+      }
+      case '卵・乳・豆': {
+        if (!checkFormValid(proteinSourceStocks)) {
+          setIsSending(false);
+          return;
+        }
+        const imageUri = await uploadUserImage(
+          getValues('image.uri'),
+          'user-custom-images/' + user?.uid,
+        );
+        result = await requestInsertCustomProteinSourceMaster({
+          displayName: getValues('displayName'),
+          proteinSourceName: getValues('nameKana'),
+          imageUri,
+          defaultExpirationPeriod: Number(getValues('expiryPeriod')),
+          unitId: getValues('unit.id'),
+          isFavorite: getValues('isFavorite'),
+          incrementalUnit: Number(getValues('incrementUnit')),
+        });
+        break;
+      }
+      case '調味料': {
+        if (!checkFormValid(seasoningStocks)) {
+          setIsSending(false);
+          return;
+        }
+        const imageUri = await uploadUserImage(
+          getValues('image.uri'),
+          'user-custom-images/' + user?.uid,
+        );
+        result = await requestInsertCustomSeasoningMaster({
+          displayName: getValues('displayName'),
+          seasoningName: getValues('nameKana'),
+          imageUri,
+          defaultExpirationPeriod: Number(getValues('expiryPeriod')),
+          unitId: getValues('unit.id'),
+          isFavorite: getValues('isFavorite'),
+          incrementalUnit: Number(getValues('incrementUnit')),
+        });
+        break;
+      }
+      case '魚介類': {
+        if (!checkFormValid(fishStocks)) {
+          setIsSending(false);
+          return;
+        }
+        const imageUri = await uploadUserImage(
+          getValues('image.uri'),
+          'user-custom-images/' + user?.uid,
+        );
+        result = await requestInsertCustomFishMaster({
+          displayName: getValues('displayName'),
+          fishName: getValues('nameKana'),
+          imageUri,
+          defaultExpirationPeriod: Number(getValues('expiryPeriod')),
+          unitId: getValues('unit.id'),
+          isFavorite: getValues('isFavorite'),
+          incrementalUnit: Number(getValues('incrementUnit')),
+        });
+        break;
+      }
+      case 'デザート': {
+        if (!checkFormValid(dessertStocks)) {
+          setIsSending(false);
+          return;
+        }
+        const imageUri = await uploadUserImage(
+          getValues('image.uri'),
+          'user-custom-images/' + user?.uid,
+        );
+        result = await requestInsertCustomDessertMaster({
+          displayName: getValues('displayName'),
+          dessertName: getValues('nameKana'),
+          imageUri,
+          defaultExpirationPeriod: Number(getValues('expiryPeriod')),
+          unitId: getValues('unit.id'),
+          isFavorite: getValues('isFavorite'),
+          incrementalUnit: Number(getValues('incrementUnit')),
+        });
+        break;
+      }
+      case 'その他': {
+        if (!checkFormValid(otherStocks)) {
+          setIsSending(false);
+          return;
+        }
+        const imageUri = await uploadUserImage(
+          getValues('image.uri'),
+          'user-custom-images/' + user?.uid,
+        );
+
+        result = await requestInsertCustomOtherMaster({
+          displayName: getValues('displayName'),
+          otherName: getValues('nameKana'),
+          imageUri,
+          defaultExpirationPeriod: Number(getValues('expiryPeriod')),
+          unitId: getValues('unit.id'),
+          incrementalUnit: Number(getValues('incrementUnit')),
+          isFavorite: getValues('isFavorite'),
+        });
+        break;
+      }
+      default:
+        break;
     }
     if (!result) {
       setIsSending(false);

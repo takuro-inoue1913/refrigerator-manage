@@ -99,7 +99,7 @@ export const OtherView: FC = () => {
         <PlusImage
           onPress={() =>
             navigation.navigate('食材新規登録', {
-              fridgeCategory: '肉類',
+              fridgeCategory: 'その他',
             })
           }
         />
