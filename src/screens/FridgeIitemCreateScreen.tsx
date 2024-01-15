@@ -39,6 +39,7 @@ import { useRequestGetUnit } from '@src/interface/hooks/unit/useRequestGetUnit';
 import { UnitMater } from '@src/states/fridge';
 import { useRequestInsertCustomMeatMaster } from '@src/interface/hooks/meat/useRequestInsertCustomMeatMaster';
 import { meatStocksState } from '@src/states/fridge/meat';
+import { useRequestInsertCustomStapleFoodMaster } from '@src/interface/hooks/stapleFood/useRequestInsertCustomStapleFoodMaster';
 
 type Props = {
   route: RouteProp<RootStackParamList, '食材新規登録'>;
@@ -54,6 +55,8 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
   const requestInsertCustomVegetableMaster =
     useRequestInsertCustomVegetableMaster();
   const requestInsertCustomMeatMaster = useRequestInsertCustomMeatMaster();
+  const requestInsertCustomStapleFoodMaster =
+    useRequestInsertCustomStapleFoodMaster();
   const {
     control,
     setValue,
@@ -212,6 +215,26 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
         result = await requestInsertCustomMeatMaster({
           displayName: getValues('displayName'),
           meatName: getValues('nameKana'),
+          imageUri,
+          defaultExpirationPeriod: Number(getValues('expiryPeriod')),
+          unitId: getValues('unit.id'),
+          isFavorite: getValues('isFavorite'),
+          incrementalUnit: Number(getValues('incrementUnit')),
+        });
+        break;
+      }
+      case '主食・粉': {
+        if (!checkFormValid(meatStocks)) {
+          setIsSending(false);
+          return;
+        }
+        const imageUri = await uploadUserImage(
+          getValues('image.uri'),
+          'user-custom-images/' + user?.uid,
+        );
+        result = await requestInsertCustomStapleFoodMaster({
+          displayName: getValues('displayName'),
+          stapleFoodName: getValues('nameKana'),
           imageUri,
           defaultExpirationPeriod: Number(getValues('expiryPeriod')),
           unitId: getValues('unit.id'),

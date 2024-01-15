@@ -1,7 +1,17 @@
 import { SelectFridgeCategory } from '@src/states/fridge';
 
 /** FridgeScreen でのカテゴリー選択肢。 */
-export const selectItems: SelectFridgeCategory[] = ['野菜類', '肉類'];
+export const selectItems: SelectFridgeCategory[] = [
+  '野菜類',
+  '肉類',
+  '魚介類',
+  '主食・粉',
+  'スパイス',
+  '調味料',
+  '卵・乳・豆',
+  'デザート',
+  'その他',
+];
 
 /** 共通の青色。 */
 export const COMMON_COLOR_BLUE = '#3498db';

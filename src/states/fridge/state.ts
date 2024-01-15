@@ -1,7 +1,16 @@
 import { FILTER_OPTIONS } from '@src/utils/consts';
 import { atom } from 'recoil';
 
-export type SelectFridgeCategory = '野菜類' | '肉類';
+export type SelectFridgeCategory =
+  | '野菜類'
+  | '肉類'
+  | '魚介類'
+  | '主食・粉'
+  | 'スパイス'
+  | '調味料'
+  | '卵・乳・豆'
+  | 'デザート'
+  | 'その他';
 
 export type SelectFilterOptions = {
   sort: (typeof FILTER_OPTIONS)['sort'][number];
