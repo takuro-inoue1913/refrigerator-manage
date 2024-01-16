@@ -66,6 +66,7 @@ export const StapleFoodView: FC = () => {
         expirationDate: stapleFoodStocks.byId[id].expirationDate,
         memo: stapleFoodStocks.byId[id].memo,
         isFavorite: stapleFoodStocks.byId[id].isFavorite,
+        isCustomMaster: stapleFoodStocks.byId[id].isCustomMaster,
         onClose: (formValues) => {
           setModalProps(undefined);
           requestUpsertStapleFoodStockDetail(formValues);

@@ -64,6 +64,7 @@ export const OtherView: FC = () => {
         expirationDate: otherStocks.byId[id].expirationDate,
         memo: otherStocks.byId[id].memo,
         isFavorite: otherStocks.byId[id].isFavorite,
+        isCustomMaster: otherStocks.byId[id].isCustomMaster,
         onClose: (formValues) => {
           setModalProps(undefined);
           requestUpsertOtherStockDetail(formValues);

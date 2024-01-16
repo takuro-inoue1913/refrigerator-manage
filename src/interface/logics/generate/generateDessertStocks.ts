@@ -79,6 +79,7 @@ const convertDessertMasterData = (
         memo: cur.dessert_master_dessert_stocks?.memo ?? '',
         isFavorite: cur.dessert_master_dessert_stocks?.is_favorite ?? false,
         defaultExpirationPeriod: cur.default_expiration_period,
+        isCustomMaster: __typename === 'customDessertMaster',
       };
       return acc;
     },

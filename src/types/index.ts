@@ -51,6 +51,8 @@ export type FridgeStock = {
   isFavorite: boolean;
   /** 基本賞味期限期間 */
   defaultExpirationPeriod: number;
+  /** ユーザー独自の master かどうか */
+  isCustomMaster: boolean;
 };
 
 /** 正規化された配列の型 */

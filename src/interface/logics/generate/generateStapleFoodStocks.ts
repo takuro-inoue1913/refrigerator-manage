@@ -82,6 +82,7 @@ const convertStapleFoodMasterData = (
         isFavorite:
           cur.staple_food_master_staple_food_stocks?.is_favorite ?? false,
         defaultExpirationPeriod: cur.default_expiration_period,
+        isCustomMaster: __typename === 'customStapleFoodMaster',
       };
       return acc;
     },

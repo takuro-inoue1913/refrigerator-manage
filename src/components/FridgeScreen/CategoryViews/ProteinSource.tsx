@@ -67,6 +67,7 @@ export const ProteinSourceView: FC = () => {
         expirationDate: proteinSourceStocks.byId[id].expirationDate,
         memo: proteinSourceStocks.byId[id].memo,
         isFavorite: proteinSourceStocks.byId[id].isFavorite,
+        isCustomMaster: proteinSourceStocks.byId[id].isCustomMaster,
         onClose: (formValues) => {
           setModalProps(undefined);
           requestUpsertProteinSourceStockDetail(formValues);

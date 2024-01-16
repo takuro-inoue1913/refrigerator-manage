@@ -85,6 +85,7 @@ const convertProteinSourceMasterData = (
         isFavorite:
           cur.protein_source_master_protein_source_stocks?.is_favorite ?? false,
         defaultExpirationPeriod: cur.default_expiration_period,
+        isCustomMaster: __typename === 'customProteinSourceMaster',
       };
       return acc;
     },

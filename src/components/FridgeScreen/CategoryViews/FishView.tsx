@@ -64,6 +64,7 @@ export const FishView: FC = () => {
         expirationDate: fishStocks.byId[id].expirationDate,
         memo: fishStocks.byId[id].memo,
         isFavorite: fishStocks.byId[id].isFavorite,
+        isCustomMaster: fishStocks.byId[id].isCustomMaster,
         onClose: (formValues) => {
           setModalProps(undefined);
           requestUpsertFishStockDetail(formValues);

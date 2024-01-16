@@ -77,6 +77,7 @@ const convertVegetableMasterData = (
         memo: cur.vegetable_master_vegetable_stocks?.memo ?? '',
         isFavorite: cur.vegetable_master_vegetable_stocks?.is_favorite ?? false,
         defaultExpirationPeriod: cur.default_expiration_period,
+        isCustomMaster: __typename === 'customVegetableMaster',
       };
       return acc;
     },

@@ -79,6 +79,7 @@ const convertSpiceMasterData = (
         memo: cur.spice_master_spice_stocks?.memo ?? '',
         isFavorite: cur.spice_master_spice_stocks?.is_favorite ?? false,
         defaultExpirationPeriod: cur.default_expiration_period,
+        isCustomMaster: __typename === 'customSpiceMaster',
       };
       return acc;
     },

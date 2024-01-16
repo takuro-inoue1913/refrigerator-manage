@@ -64,6 +64,7 @@ export const DessertView: FC = () => {
         expirationDate: dessertStocks.byId[id].expirationDate,
         memo: dessertStocks.byId[id].memo,
         isFavorite: dessertStocks.byId[id].isFavorite,
+        isCustomMaster: dessertStocks.byId[id].isCustomMaster,
         onClose: (formValues) => {
           setModalProps(undefined);
           requestUpsertDessertStockDetail(formValues);

@@ -79,6 +79,7 @@ const convertFishMasterData = (
         memo: cur.fish_master_fish_stocks?.memo ?? '',
         isFavorite: cur.fish_master_fish_stocks?.is_favorite ?? false,
         defaultExpirationPeriod: cur.default_expiration_period,
+        isCustomMaster: __typename === 'customFishMaster',
       };
       return acc;
     },

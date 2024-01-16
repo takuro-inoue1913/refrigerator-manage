@@ -64,6 +64,7 @@ export const SpiceView: FC = () => {
         expirationDate: spiceStocks.byId[id].expirationDate,
         memo: spiceStocks.byId[id].memo,
         isFavorite: spiceStocks.byId[id].isFavorite,
+        isCustomMaster: spiceStocks.byId[id].isCustomMaster,
         onClose: (formValues) => {
           setModalProps(undefined);
           requestUpsertSpiceStockDetail(formValues);

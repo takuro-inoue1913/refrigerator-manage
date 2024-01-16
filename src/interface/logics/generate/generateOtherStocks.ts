@@ -79,6 +79,7 @@ const convertOtherMasterData = (
         memo: cur.other_master_other_stocks?.memo ?? '',
         isFavorite: cur.other_master_other_stocks?.is_favorite ?? false,
         defaultExpirationPeriod: cur.default_expiration_period,
+        isCustomMaster: __typename === 'customOtherMaster',
       };
       return acc;
     },

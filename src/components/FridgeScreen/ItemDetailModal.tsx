@@ -49,6 +49,8 @@ export type Props = {
   memo: string;
   /** お気に入りかどうか */
   isFavorite: boolean;
+  /** ユーザー独自の master かどうか */
+  isCustomMaster: boolean;
   /** モーダルを閉じる時に実行する関数 */
   onClose: (editForm: FormValues) => void;
 };
@@ -83,6 +85,7 @@ export const ItemDetailModal: FC<Props> = ({
   expirationDate,
   memo,
   isFavorite,
+  isCustomMaster,
   onClose,
 }) => {
   // Y軸初期位置をウィンドウの外側に設定
@@ -208,8 +211,20 @@ export const ItemDetailModal: FC<Props> = ({
               ]}
             >
               <View style={styles.header}>
-                <Text style={styles.headerText}>{itemName}</Text>
+                <View style={{ flex: 1, alignItems: 'center' }}>
+                  <Text style={styles.headerText}>{itemName}</Text>
+                </View>
+                {/* TODO: 本来は編集画面に遷移して、そこで削除も編集もできるようにしたい */}
+                {isCustomMaster && (
+                  <TouchableOpacity
+                    style={styles.trashIcon}
+                    onPress={() => console.log('ゴミ箱アイコンが押されました')}
+                  >
+                    <Icon name="trash-can-outline" size={24} color="#fff" />
+                  </TouchableOpacity>
+                )}
               </View>
+
               <View style={styles.main}>
                 <Pressable onPress={handlePressFavoriteBadge}>
                   <CachedImage
@@ -333,7 +348,7 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     width: '90%',
-    height: 500,
+    height: windowHeight * 0.6,
     backgroundColor: 'white',
     borderRadius: 5,
     padding: 15,
@@ -344,10 +359,11 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   header: {
-    padding: 10,
+    padding: 15,
     backgroundColor: '#f8f9fa',
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
+    flexDirection: 'row',
     alignItems: 'center',
   },
   headerText: {
@@ -431,5 +447,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
+  },
+  trashIcon: {
+    padding: 5,
+    borderRadius: 50,
+    backgroundColor: '#dc3545',
   },
 });

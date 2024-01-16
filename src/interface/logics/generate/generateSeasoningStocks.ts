@@ -79,6 +79,7 @@ const convertSeasoningMasterData = (
         memo: cur.seasoning_master_seasoning_stocks?.memo ?? '',
         isFavorite: cur.seasoning_master_seasoning_stocks?.is_favorite ?? false,
         defaultExpirationPeriod: cur.default_expiration_period,
+        isCustomMaster: __typename === 'customSeasoningMaster',
       };
       return acc;
     },

@@ -66,6 +66,7 @@ export const SeasoningView: FC = () => {
         expirationDate: seasoningStocks.byId[id].expirationDate,
         memo: seasoningStocks.byId[id].memo,
         isFavorite: seasoningStocks.byId[id].isFavorite,
+        isCustomMaster: seasoningStocks.byId[id].isCustomMaster,
         onClose: (formValues) => {
           setModalProps(undefined);
           requestUpsertSeasoningStockDetail(formValues);
