@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { isEqual } from 'lodash';
 import {
   View,
@@ -12,8 +12,6 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
-  Animated,
-  Easing,
   Switch,
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
@@ -53,6 +51,7 @@ import { proteinSourceStocksState } from '@src/states/fridge/proteinSource';
 import { otherStocksState } from '@src/states/fridge/other';
 import { fishStocksState } from '@src/states/fridge/fish';
 import { dessertStocksState } from '@src/states/fridge/dessert';
+import { LoadingMask } from '@src/components/common/LoadingMask';
 
 type Props = {
   route: RouteProp<RootStackParamList, '食材新規登録'>;
@@ -104,20 +103,6 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
     unit: UnitMater;
     isFavorite: boolean;
   }>();
-  const spinValue = useRef(new Animated.Value(0)).current;
-
-  const startSpinning = useCallback(() => {
-    spinValue.setValue(0);
-    Animated.loop(
-      Animated.timing(spinValue, {
-        toValue: 1,
-        duration: 800,
-        easing: Easing.linear,
-        useNativeDriver: true,
-      }),
-    ).start();
-  }, [spinValue]);
-
   /** 画像をリサイズする */
   const resizeImage = async (uri: string): Promise<string> => {
     const result = await ImageManipulator.manipulateAsync(
@@ -411,17 +396,6 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
     navigation.navigate('冷蔵庫管理');
   };
 
-  useEffect(() => {
-    if (isSending) {
-      startSpinning();
-    }
-  }, [isSending, startSpinning]);
-
-  const spin = spinValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0deg', '360deg'],
-  });
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
@@ -433,17 +407,7 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
         }}
         style={styles.container}
       >
-        {isSending && (
-          <View style={styles.loadingMask}>
-            <Animated.View
-              style={{
-                transform: [{ rotate: spin }],
-              }}
-            >
-              <Icon name="loading" size={80} color={COMMON_COLOR_GREEN} />
-            </Animated.View>
-          </View>
-        )}
+        {isSending && <LoadingMask />}
         <View style={errors.image ? styles.formItemHasError : styles.formItem}>
           <Controller
             control={control}
