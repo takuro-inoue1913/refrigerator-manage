@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   Keyboard,
   Pressable,
+  Alert,
 } from 'react-native';
 import CachedImage from 'expo-cached-image';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -53,6 +54,7 @@ export type Props = {
   isCustomMaster: boolean;
   /** モーダルを閉じる時に実行する関数 */
   onClose: (editForm: FormValues) => void;
+  onDelete: (id: string) => void;
 };
 
 type FormValues = {
@@ -87,6 +89,7 @@ export const ItemDetailModal: FC<Props> = ({
   isFavorite,
   isCustomMaster,
   onClose,
+  onDelete,
 }) => {
   // Y軸初期位置をウィンドウの外側に設定
   const animatedY = useRef(new Animated.Value(-windowHeight)).current;
@@ -174,6 +177,19 @@ export const ItemDetailModal: FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const onPressTrash = () => {
+    Alert.alert('削除しますか？', '項目や在庫が完全に削除されます。', [
+      {
+        text: 'キャンセル',
+        style: 'cancel',
+      },
+      {
+        text: '削除',
+        onPress: () => onDelete(id),
+      },
+    ]);
+  };
+
   useEffect(() => {
     if (isShowKeyboard) {
       moveTopAnimation();
@@ -218,7 +234,7 @@ export const ItemDetailModal: FC<Props> = ({
                 {isCustomMaster && (
                   <TouchableOpacity
                     style={styles.trashIcon}
-                    onPress={() => console.log('ゴミ箱アイコンが押されました')}
+                    onPress={onPressTrash}
                   >
                     <Icon name="trash-can-outline" size={24} color="#fff" />
                   </TouchableOpacity>
@@ -348,7 +364,7 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     width: '90%',
-    height: windowHeight * 0.6,
+    height: '65%',
     backgroundColor: 'white',
     borderRadius: 5,
     padding: 15,

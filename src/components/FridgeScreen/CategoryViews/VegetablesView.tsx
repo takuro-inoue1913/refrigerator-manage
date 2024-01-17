@@ -26,6 +26,9 @@ import { useRequestUpsertVegetableIsFavorite } from '@src/interface/hooks/vegeta
 import { PlusImage } from '@src/components/common/PlusImage';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 import { useIsFocused } from '@react-navigation/native';
+import { useRequestDeleteCustomVegetableMaster } from '@src/interface/hooks/vegetable/useRequestDeleteCustomVegetableMaster';
+import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
+import { LoadingMask } from '@src/components/common/LoadingMask';
 
 /**
  * 冷蔵庫の野菜画面を表示するコンポーネント。
@@ -34,6 +37,7 @@ export const VegetablesView: FC = () => {
   const isFocused = useIsFocused();
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
+  const [isLoding, setIsLoding] = useState(false);
   const navigation = useTypedNavigation();
   const { vegetablesStocks, isFetching, refetch } =
     useRequestGetVegetablesStocks();
@@ -44,6 +48,8 @@ export const VegetablesView: FC = () => {
     useRequestUpsertVegetableIsFavorite();
   const requestUpsertVegetableStockDetail =
     useRequestUpsertVegetableStockDetail();
+  const requestDeleteCustomVegetableMaster =
+    useRequestDeleteCustomVegetableMaster();
   const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
     debounceUpsertStock: requestUpsertVegetablesStock,
     increaseStock: vegetablesStockActions.increaseVegetableStock,
@@ -73,12 +79,21 @@ export const VegetablesView: FC = () => {
           requestUpsertVegetableStockDetail(formValues);
           vegetablesStockActions.updateVegetableStockDetail(formValues);
         },
+        onDelete: async (id) => {
+          setModalProps(undefined);
+          setIsLoding(true);
+          await requestDeleteCustomVegetableMaster(id);
+          await deleteUserImage(vegetablesStocks.byId[id].imageUri);
+          vegetablesStockActions.deleteVegetableStock(id);
+          setIsLoding(false);
+        },
       });
     },
     [
       vegetablesStocks.byId,
-      requestUpsertVegetableStockDetail,
       vegetablesStockActions,
+      requestUpsertVegetableStockDetail,
+      requestDeleteCustomVegetableMaster,
     ],
   );
 
@@ -127,6 +142,7 @@ export const VegetablesView: FC = () => {
 
   return (
     <>
+      {isLoding && <LoadingMask />}
       <StickyHeader
         selectItems={selectItems}
         isDisabled={isFetching}

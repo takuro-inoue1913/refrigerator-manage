@@ -226,3 +226,26 @@ mutation InsertCustomVegetableMaster(
     unit_id
   }
 }
+
+mutation DeleteCustomVegetableAndStocks($vegetableId: uuid!) {
+  delete_custom_vegetable_master(
+    where: { custom_vegetable_id: { _eq: $vegetableId } }
+  ) {
+    affected_rows
+    returning {
+      custom_vegetable_id
+      image_uri
+      custom_vegetable_name
+      default_expiration_period
+      display_name
+      unit_id
+    }
+  }
+  delete_vegetable_stocks(where: { vegetable_id: { _eq: $vegetableId } }) {
+    affected_rows
+    returning {
+      stock_id
+      vegetable_id
+    }
+  }
+}

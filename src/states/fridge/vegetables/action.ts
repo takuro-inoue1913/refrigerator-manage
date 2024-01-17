@@ -203,11 +203,35 @@ export const useVegetablesStockActions = () => {
       [],
     );
 
+  const deleteVegetableStock = useRecoilCallback(
+    ({ set }) =>
+      (vegetableId: string) => {
+        set(vegetablesStocksState, (prev) => {
+          const newStocks: VegetablesStocks = {
+            ids: prev.ids.filter((id) => id !== vegetableId),
+            byId: prev.ids.reduce(
+              (acc, cur) => {
+                if (cur === vegetableId) {
+                  return acc;
+                }
+                acc[cur] = { ...prev.byId[cur] };
+                return acc;
+              },
+              {} as VegetablesStocks['byId'],
+            ),
+          };
+          return newStocks;
+        });
+      },
+    [],
+  );
+
   return {
     increaseVegetableStock,
     decreaseVegetableStock,
     updateVegetableStockDetail,
     filterVegetableStocks,
     updateIsFavorite,
+    deleteVegetableStock,
   };
 };
