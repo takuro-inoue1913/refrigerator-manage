@@ -21,9 +21,9 @@ export const deleteUserImage = async (storagePath: string): Promise<void> => {
   // ファイルを削除
   try {
     await deleteObject(storageRef);
-    Promise.resolve();
+    return Promise.resolve();
   } catch (error) {
-    Promise.reject(error);
     console.error('There was an error deleting the image:', error);
+    return Promise.reject(error);
   }
 };
