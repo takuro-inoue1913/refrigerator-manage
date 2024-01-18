@@ -194,11 +194,35 @@ export const useOtherStockActions = () => {
         },
       [],
     );
+
+  const deleteOtherStock = useRecoilCallback(
+    ({ set }) =>
+      (otherId: string) => {
+        set(otherStocksState, (prev) => {
+          const newStocks: OtherStocks = {
+            ids: prev.ids.filter((id) => id !== otherId),
+            byId: prev.ids.reduce(
+              (acc, cur) => {
+                if (cur === otherId) {
+                  return acc;
+                }
+                acc[cur] = { ...prev.byId[cur] };
+                return acc;
+              },
+              {} as OtherStocks['byId'],
+            ),
+          };
+          return newStocks;
+        });
+      },
+    [],
+  );
   return {
     increaseOtherStock,
     decreaseOtherStock,
     updateOtherStockDetail,
     filterOtherStocks,
     updateIsFavorite,
+    deleteOtherStock,
   };
 };

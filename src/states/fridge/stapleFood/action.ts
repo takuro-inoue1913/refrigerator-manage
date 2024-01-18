@@ -196,11 +196,36 @@ export const useStapleFoodStockActions = () => {
         },
       [],
     );
+
+  const deleteStapleFoodStock = useRecoilCallback(
+    ({ set }) =>
+      (stapleFoodId: string) => {
+        set(stapleFoodStocksState, (prev) => {
+          const newStocks: StapleFoodStocks = {
+            ids: prev.ids.filter((id) => id !== stapleFoodId),
+            byId: prev.ids.reduce(
+              (acc, cur) => {
+                if (cur === stapleFoodId) {
+                  return acc;
+                }
+                acc[cur] = { ...prev.byId[cur] };
+                return acc;
+              },
+              {} as StapleFoodStocks['byId'],
+            ),
+          };
+          return newStocks;
+        });
+      },
+    [],
+  );
+
   return {
     increaseStapleFoodStock,
     decreaseStapleFoodStock,
     updateStapleFoodStockDetail,
     filterStapleFoodStocks,
     updateIsFavorite,
+    deleteStapleFoodStock,
   };
 };

@@ -197,11 +197,35 @@ export const useProteinSourceStockActions = () => {
         },
       [],
     );
+
+  const deleteProteinSourceStock = useRecoilCallback(
+    ({ set }) =>
+      (proteinSourceId: string) => {
+        set(proteinSourceStocksState, (prev) => {
+          const newStocks: ProteinSourceStocks = {
+            ids: prev.ids.filter((id) => id !== proteinSourceId),
+            byId: prev.ids.reduce(
+              (acc, cur) => {
+                if (cur === proteinSourceId) {
+                  return acc;
+                }
+                acc[cur] = { ...prev.byId[cur] };
+                return acc;
+              },
+              {} as ProteinSourceStocks['byId'],
+            ),
+          };
+          return newStocks;
+        });
+      },
+    [],
+  );
   return {
     increaseProteinSourceStock,
     decreaseProteinSourceStock,
     updateProteinSourceStockDetail,
     filterProteinSourceStocks,
     updateIsFavorite,
+    deleteProteinSourceStock,
   };
 };

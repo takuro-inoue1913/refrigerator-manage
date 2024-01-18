@@ -194,11 +194,36 @@ export const useSpiceStockActions = () => {
         },
       [],
     );
+
+  const deleteSpiceStock = useRecoilCallback(
+    ({ set }) =>
+      (spiceId: string) => {
+        set(spiceStocksState, (prev) => {
+          const newStocks: SpiceStocks = {
+            ids: prev.ids.filter((id) => id !== spiceId),
+            byId: prev.ids.reduce(
+              (acc, cur) => {
+                if (cur === spiceId) {
+                  return acc;
+                }
+                acc[cur] = { ...prev.byId[cur] };
+                return acc;
+              },
+              {} as SpiceStocks['byId'],
+            ),
+          };
+          return newStocks;
+        });
+      },
+    [],
+  );
+
   return {
     increaseSpiceStock,
     decreaseSpiceStock,
     updateSpiceStockDetail,
     filterSpiceStocks,
     updateIsFavorite,
+    deleteSpiceStock,
   };
 };

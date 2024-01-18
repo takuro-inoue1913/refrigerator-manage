@@ -194,11 +194,35 @@ export const useFishStockActions = () => {
         },
       [],
     );
+
+  const deleteFishStock = useRecoilCallback(
+    ({ set }) =>
+      (fishId: string) => {
+        set(fishStocksState, (prev) => {
+          const newStocks: FishStocks = {
+            ids: prev.ids.filter((id) => id !== fishId),
+            byId: prev.ids.reduce(
+              (acc, cur) => {
+                if (cur === fishId) {
+                  return acc;
+                }
+                acc[cur] = { ...prev.byId[cur] };
+                return acc;
+              },
+              {} as FishStocks['byId'],
+            ),
+          };
+          return newStocks;
+        });
+      },
+    [],
+  );
   return {
     increaseFishStock,
     decreaseFishStock,
     updateFishStockDetail,
     filterFishStocks,
     updateIsFavorite,
+    deleteFishStock,
   };
 };

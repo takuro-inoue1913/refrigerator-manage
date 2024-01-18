@@ -194,11 +194,35 @@ export const useMeatStockActions = () => {
         },
       [],
     );
+
+  const deleteMeatStock = useRecoilCallback(
+    ({ set }) =>
+      (meatId: string) => {
+        set(meatStocksState, (prev) => {
+          const newStocks: MeatStocks = {
+            ids: prev.ids.filter((id) => id !== meatId),
+            byId: prev.ids.reduce(
+              (acc, cur) => {
+                if (cur === meatId) {
+                  return acc;
+                }
+                acc[cur] = { ...prev.byId[cur] };
+                return acc;
+              },
+              {} as MeatStocks['byId'],
+            ),
+          };
+          return newStocks;
+        });
+      },
+    [],
+  );
   return {
     increaseMeatStock,
     decreaseMeatStock,
     updateMeatStockDetail,
     filterMeatStocks,
     updateIsFavorite,
+    deleteMeatStock,
   };
 };

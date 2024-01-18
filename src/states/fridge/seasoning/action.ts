@@ -196,11 +196,35 @@ export const useSeasoningStockActions = () => {
         },
       [],
     );
+
+  const deleteSeasoningStock = useRecoilCallback(
+    ({ set }) =>
+      (seasoningId: string) => {
+        set(seasoningStocksState, (prev) => {
+          const newStocks: SeasoningStocks = {
+            ids: prev.ids.filter((id) => id !== seasoningId),
+            byId: prev.ids.reduce(
+              (acc, cur) => {
+                if (cur === seasoningId) {
+                  return acc;
+                }
+                acc[cur] = { ...prev.byId[cur] };
+                return acc;
+              },
+              {} as SeasoningStocks['byId'],
+            ),
+          };
+          return newStocks;
+        });
+      },
+    [],
+  );
   return {
     increaseSeasoningStock,
     decreaseSeasoningStock,
     updateSeasoningStockDetail,
     filterSeasoningStocks,
     updateIsFavorite,
+    deleteSeasoningStock,
   };
 };

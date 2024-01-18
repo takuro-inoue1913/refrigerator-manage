@@ -196,11 +196,35 @@ export const useDessertStockActions = () => {
         },
       [],
     );
+
+  const deleteDessertStock = useRecoilCallback(
+    ({ set }) =>
+      (dessertId: string) => {
+        set(dessertStocksState, (prev) => {
+          const newStocks: DessertStocks = {
+            ids: prev.ids.filter((id) => id !== dessertId),
+            byId: prev.ids.reduce(
+              (acc, cur) => {
+                if (cur === dessertId) {
+                  return acc;
+                }
+                acc[cur] = { ...prev.byId[cur] };
+                return acc;
+              },
+              {} as DessertStocks['byId'],
+            ),
+          };
+          return newStocks;
+        });
+      },
+    [],
+  );
   return {
     increaseDessertStock,
     decreaseDessertStock,
     updateDessertStockDetail,
     filterDessertStocks,
     updateIsFavorite,
+    deleteDessertStock,
   };
 };
