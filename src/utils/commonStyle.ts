@@ -14,6 +14,7 @@ export const fridgeCommonStyles = StyleSheet.create({
   scrollContainer: {
     alignItems: 'center',
     paddingTop: 15,
+    paddingLeft: 10,
   },
   row: {
     flexDirection: 'row',
