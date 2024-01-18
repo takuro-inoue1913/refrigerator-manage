@@ -217,3 +217,24 @@ mutation InsertCustomFishMaster(
     unit_id
   }
 }
+
+mutation DeleteCustomFishAndStocks($fishId: uuid!) {
+  delete_custom_fish_master(where: { custom_fish_id: { _eq: $fishId } }) {
+    affected_rows
+    returning {
+      custom_fish_id
+      image_uri
+      custom_fish_name
+      default_expiration_period
+      display_name
+      unit_id
+    }
+  }
+  delete_fish_stocks(where: { fish_id: { _eq: $fishId } }) {
+    affected_rows
+    returning {
+      stock_id
+      fish_id
+    }
+  }
+}

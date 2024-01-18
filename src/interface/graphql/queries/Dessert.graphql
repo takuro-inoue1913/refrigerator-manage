@@ -223,3 +223,26 @@ mutation InsertCustomDessertMaster(
     unit_id
   }
 }
+
+mutation DeleteCustomDessertAndStocks($dessertId: uuid!) {
+  delete_custom_dessert_master(
+    where: { custom_dessert_id: { _eq: $dessertId } }
+  ) {
+    affected_rows
+    returning {
+      custom_dessert_id
+      image_uri
+      custom_dessert_name
+      default_expiration_period
+      display_name
+      unit_id
+    }
+  }
+  delete_dessert_stocks(where: { dessert_id: { _eq: $dessertId } }) {
+    affected_rows
+    returning {
+      stock_id
+      dessert_id
+    }
+  }
+}

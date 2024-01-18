@@ -1,4 +1,7 @@
-import { InsertCustomSeasoningMasterDocument } from '@src/interface/__generated__/graphql';
+import {
+  InsertCustomSeasoningMasterDocument,
+  DeleteCustomSeasoningAndStocksDocument,
+} from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
 
 type InsertCustomSeasoningMasterArgs = {
@@ -32,5 +35,19 @@ export const customSeasoningMasterRepository = {
       unitId,
     });
     return data.insert_custom_seasoning_master_one;
+  },
+  delete: async ({
+    idToken,
+    seasoningId,
+  }: {
+    idToken: string | null;
+    seasoningId: string;
+  }) => {
+    const client = buildGraphQLUserClient(idToken);
+
+    const data = await client.request(DeleteCustomSeasoningAndStocksDocument, {
+      seasoningId,
+    });
+    return data.delete_custom_seasoning_master;
   },
 };

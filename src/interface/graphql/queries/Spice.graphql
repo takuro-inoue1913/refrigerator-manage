@@ -219,3 +219,24 @@ mutation InsertCustomSpiceMaster(
     unit_id
   }
 }
+
+mutation DeleteCustomSpiceAndStocks($spiceId: uuid!) {
+  delete_custom_spice_master(where: { custom_spice_id: { _eq: $spiceId } }) {
+    affected_rows
+    returning {
+      custom_spice_id
+      image_uri
+      custom_spice_name
+      default_expiration_period
+      display_name
+      unit_id
+    }
+  }
+  delete_spice_stocks(where: { spice_id: { _eq: $spiceId } }) {
+    affected_rows
+    returning {
+      stock_id
+      spice_id
+    }
+  }
+}

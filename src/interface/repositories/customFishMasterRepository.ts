@@ -1,4 +1,7 @@
-import { InsertCustomFishMasterDocument } from '@src/interface/__generated__/graphql';
+import {
+  InsertCustomFishMasterDocument,
+  DeleteCustomFishAndStocksDocument,
+} from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
 
 type InsertCustomFishMasterArgs = {
@@ -32,5 +35,19 @@ export const customFishMasterRepository = {
       unitId,
     });
     return data.insert_custom_fish_master_one;
+  },
+  delete: async ({
+    idToken,
+    fishId,
+  }: {
+    idToken: string | null;
+    fishId: string;
+  }) => {
+    const client = buildGraphQLUserClient(idToken);
+
+    const data = await client.request(DeleteCustomFishAndStocksDocument, {
+      fishId,
+    });
+    return data.delete_custom_fish_master;
   },
 };

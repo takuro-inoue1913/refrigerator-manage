@@ -1,4 +1,7 @@
-import { InsertCustomStapleFoodMasterDocument } from '@src/interface/__generated__/graphql';
+import {
+  InsertCustomStapleFoodMasterDocument,
+  DeleteCustomStapleFoodAndStocksDocument,
+} from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
 
 type InsertCustomStapleFoodMasterArgs = {
@@ -32,5 +35,19 @@ export const customStapleFoodMasterRepository = {
       unitId,
     });
     return data.insert_custom_staple_food_master_one;
+  },
+  delete: async ({
+    idToken,
+    stapleFoodId,
+  }: {
+    idToken: string | null;
+    stapleFoodId: string;
+  }) => {
+    const client = buildGraphQLUserClient(idToken);
+
+    const data = await client.request(DeleteCustomStapleFoodAndStocksDocument, {
+      stapleFoodId,
+    });
+    return data.delete_custom_staple_food_master;
   },
 };

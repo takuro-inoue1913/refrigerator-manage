@@ -226,3 +226,26 @@ mutation InsertCustomSeasoningMaster(
     unit_id
   }
 }
+
+mutation DeleteCustomSeasoningAndStocks($seasoningId: uuid!) {
+  delete_custom_seasoning_master(
+    where: { custom_seasoning_id: { _eq: $seasoningId } }
+  ) {
+    affected_rows
+    returning {
+      custom_seasoning_id
+      image_uri
+      custom_seasoning_name
+      default_expiration_period
+      display_name
+      unit_id
+    }
+  }
+  delete_seasoning_stocks(where: { seasoning_id: { _eq: $seasoningId } }) {
+    affected_rows
+    returning {
+      stock_id
+      seasoning_id
+    }
+  }
+}

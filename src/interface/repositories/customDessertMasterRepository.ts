@@ -1,4 +1,7 @@
-import { InsertCustomDessertMasterDocument } from '@src/interface/__generated__/graphql';
+import {
+  InsertCustomDessertMasterDocument,
+  DeleteCustomDessertAndStocksDocument,
+} from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
 
 type InsertCustomDessertMasterArgs = {
@@ -32,5 +35,19 @@ export const customDessertMasterRepository = {
       unitId,
     });
     return data.insert_custom_dessert_master_one;
+  },
+  delete: async ({
+    idToken,
+    dessertId,
+  }: {
+    idToken: string | null;
+    dessertId: string;
+  }) => {
+    const client = buildGraphQLUserClient(idToken);
+
+    const data = await client.request(DeleteCustomDessertAndStocksDocument, {
+      dessertId,
+    });
+    return data.delete_custom_dessert_master;
   },
 };

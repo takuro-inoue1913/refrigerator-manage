@@ -1,4 +1,7 @@
-import { InsertCustomProteinSourceMasterDocument } from '@src/interface/__generated__/graphql';
+import {
+  InsertCustomProteinSourceMasterDocument,
+  DeleteCustomProteinSourceAndStocksDocument,
+} from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
 
 type InsertCustomProteinSourceMasterArgs = {
@@ -32,5 +35,22 @@ export const customProteinSourceMasterRepository = {
       unitId,
     });
     return data.insert_custom_protein_source_master_one;
+  },
+  delete: async ({
+    idToken,
+    proteinSourceId,
+  }: {
+    idToken: string | null;
+    proteinSourceId: string;
+  }) => {
+    const client = buildGraphQLUserClient(idToken);
+
+    const data = await client.request(
+      DeleteCustomProteinSourceAndStocksDocument,
+      {
+        proteinSourceId,
+      },
+    );
+    return data.delete_custom_protein_source_master;
   },
 };

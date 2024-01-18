@@ -1,4 +1,7 @@
-import { InsertCustomSpiceMasterDocument } from '@src/interface/__generated__/graphql';
+import {
+  InsertCustomSpiceMasterDocument,
+  DeleteCustomSpiceAndStocksDocument,
+} from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
 
 type InsertCustomSpiceMasterArgs = {
@@ -32,5 +35,19 @@ export const customSpiceMasterRepository = {
       unitId,
     });
     return data.insert_custom_spice_master_one;
+  },
+  delete: async ({
+    idToken,
+    spiceId,
+  }: {
+    idToken: string | null;
+    spiceId: string;
+  }) => {
+    const client = buildGraphQLUserClient(idToken);
+
+    const data = await client.request(DeleteCustomSpiceAndStocksDocument, {
+      spiceId,
+    });
+    return data.delete_custom_spice_master;
   },
 };

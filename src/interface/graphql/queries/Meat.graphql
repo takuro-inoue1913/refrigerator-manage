@@ -217,3 +217,24 @@ mutation InsertCustomMeatMaster(
     unit_id
   }
 }
+
+mutation DeleteCustomMeatAndStocks($meatId: uuid!) {
+  delete_custom_meat_master(where: { custom_meat_id: { _eq: $meatId } }) {
+    affected_rows
+    returning {
+      custom_meat_id
+      image_uri
+      custom_meat_name
+      default_expiration_period
+      display_name
+      unit_id
+    }
+  }
+  delete_meat_stocks(where: { meat_id: { _eq: $meatId } }) {
+    affected_rows
+    returning {
+      stock_id
+      meat_id
+    }
+  }
+}

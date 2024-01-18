@@ -219,3 +219,24 @@ mutation InsertCustomOtherMaster(
     unit_id
   }
 }
+
+mutation DeleteCustomOtherAndStocks($otherId: uuid!) {
+  delete_custom_other_master(where: { custom_other_id: { _eq: $otherId } }) {
+    affected_rows
+    returning {
+      custom_other_id
+      image_uri
+      custom_other_name
+      default_expiration_period
+      display_name
+      unit_id
+    }
+  }
+  delete_other_stocks(where: { other_id: { _eq: $otherId } }) {
+    affected_rows
+    returning {
+      stock_id
+      other_id
+    }
+  }
+}
