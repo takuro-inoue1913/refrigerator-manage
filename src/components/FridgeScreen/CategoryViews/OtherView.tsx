@@ -26,6 +26,9 @@ import { useRequestUpsertOtherFavorite } from '@src/interface/hooks/other/useReq
 import { PlusImage } from '../../common/PlusImage';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 import { useIsFocused } from '@react-navigation/native';
+import { useRequestDeleteCustomOtherMaster } from '@src/interface/hooks/other/useRequestDeleteCustomOtherMaster';
+import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
+import { LoadingMask } from '@src/components/common/LoadingMask';
 
 /**
  * 冷蔵庫のその他画面を表示するコンポーネント。
@@ -34,6 +37,7 @@ export const OtherView: FC = () => {
   const isFocused = useIsFocused();
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
+  const [isLoding, setIsLoding] = useState(false);
   const navigation = useTypedNavigation();
   const { otherStocks, isFetching, refetch } = useRequestGetOtherStocks();
   const otherStockActions = useOtherStockActions();
@@ -41,6 +45,7 @@ export const OtherView: FC = () => {
   const requestUpsertOtherStockDetail = useRequestUpsertOtherStockDetail();
   const rows = useChunkedArray(otherStocks.ids, 3);
   const requestUpsertOtherStock = useRequestUpsertOtherStock();
+  const requestDeleteCustomOtherMaster = useRequestDeleteCustomOtherMaster();
   const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
     debounceUpsertStock: requestUpsertOtherStock,
     increaseStock: otherStockActions.increaseOtherStock,
@@ -70,9 +75,22 @@ export const OtherView: FC = () => {
           requestUpsertOtherStockDetail(formValues);
           otherStockActions.updateOtherStockDetail(formValues);
         },
+        onDelete: async (id) => {
+          setIsLoding(true);
+          setModalProps(undefined);
+          await requestDeleteCustomOtherMaster(id);
+          await deleteUserImage(otherStocks.byId[id].imageUri);
+          otherStockActions.deleteOtherStock(id);
+          setIsLoding(false);
+        },
       });
     },
-    [otherStocks.byId, otherStockActions, requestUpsertOtherStockDetail],
+    [
+      otherStocks.byId,
+      otherStockActions,
+      requestUpsertOtherStockDetail,
+      requestDeleteCustomOtherMaster,
+    ],
   );
 
   const handlePressReload = async () => {
@@ -120,6 +138,7 @@ export const OtherView: FC = () => {
 
   return (
     <>
+      {isLoding && <LoadingMask />}
       <StickyHeader
         selectItems={selectItems}
         isDisabled={isFetching}

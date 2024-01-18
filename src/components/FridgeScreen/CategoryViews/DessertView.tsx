@@ -26,6 +26,9 @@ import { useRequestUpsertDessertFavorite } from '@src/interface/hooks/dessert/us
 import { PlusImage } from '../../common/PlusImage';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 import { useIsFocused } from '@react-navigation/native';
+import { useRequestDeleteCustomDessertMaster } from '@src/interface/hooks/dessert/useRequestDeleteCustomDessertMaster';
+import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
+import { LoadingMask } from '@src/components/common/LoadingMask';
 
 /**
  * 冷蔵庫のデザート画面を表示するコンポーネント。
@@ -34,6 +37,7 @@ export const DessertView: FC = () => {
   const isFocused = useIsFocused();
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
+  const [isLoding, setIsLoding] = useState(false);
   const navigation = useTypedNavigation();
   const { dessertStocks, isFetching, refetch } = useRequestGetDessertStocks();
   const dessertStockActions = useDessertStockActions();
@@ -41,6 +45,8 @@ export const DessertView: FC = () => {
   const requestUpsertDessertStockDetail = useRequestUpsertDessertStockDetail();
   const rows = useChunkedArray(dessertStocks.ids, 3);
   const requestUpsertDessertStock = useRequestUpsertDessertStock();
+  const requestDeleteCustomDessertMaster =
+    useRequestDeleteCustomDessertMaster();
   const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
     debounceUpsertStock: requestUpsertDessertStock,
     increaseStock: dessertStockActions.increaseDessertStock,
@@ -70,9 +76,22 @@ export const DessertView: FC = () => {
           requestUpsertDessertStockDetail(formValues);
           dessertStockActions.updateDessertStockDetail(formValues);
         },
+        onDelete: async (id) => {
+          setModalProps(undefined);
+          setIsLoding(true);
+          await requestDeleteCustomDessertMaster(id);
+          await deleteUserImage(dessertStocks.byId[id].imageUri);
+          dessertStockActions.deleteDessertStock(id);
+          setIsLoding(false);
+        },
       });
     },
-    [dessertStocks.byId, dessertStockActions, requestUpsertDessertStockDetail],
+    [
+      dessertStocks.byId,
+      dessertStockActions,
+      requestUpsertDessertStockDetail,
+      requestDeleteCustomDessertMaster,
+    ],
   );
 
   const handlePressReload = async () => {
@@ -120,6 +139,7 @@ export const DessertView: FC = () => {
 
   return (
     <>
+      {isLoding && <LoadingMask />}
       <StickyHeader
         selectItems={selectItems}
         isDisabled={isFetching}

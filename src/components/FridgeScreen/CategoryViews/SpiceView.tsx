@@ -26,6 +26,9 @@ import { useRequestUpsertSpiceFavorite } from '@src/interface/hooks/spice/useReq
 import { PlusImage } from '../../common/PlusImage';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 import { useIsFocused } from '@react-navigation/native';
+import { useRequestDeleteCustomSpiceMaster } from '@src/interface/hooks/spice/useRequestDeleteCustomSpiceMaster';
+import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
+import { LoadingMask } from '@src/components/common/LoadingMask';
 
 /**
  * 冷蔵庫のスパイス画面を表示するコンポーネント。
@@ -34,6 +37,7 @@ export const SpiceView: FC = () => {
   const isFocused = useIsFocused();
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
+  const [isLoding, setIsLoding] = useState(false);
   const navigation = useTypedNavigation();
   const { spiceStocks, isFetching, refetch } = useRequestGetSpiceStocks();
   const spiceStockActions = useSpiceStockActions();
@@ -41,6 +45,7 @@ export const SpiceView: FC = () => {
   const requestUpsertSpiceStockDetail = useRequestUpsertSpiceStockDetail();
   const rows = useChunkedArray(spiceStocks.ids, 3);
   const requestUpsertSpiceStock = useRequestUpsertSpiceStock();
+  const requestDeleteCustomSpiceMaster = useRequestDeleteCustomSpiceMaster();
   const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
     debounceUpsertStock: requestUpsertSpiceStock,
     increaseStock: spiceStockActions.increaseSpiceStock,
@@ -70,9 +75,22 @@ export const SpiceView: FC = () => {
           requestUpsertSpiceStockDetail(formValues);
           spiceStockActions.updateSpiceStockDetail(formValues);
         },
+        onDelete: async (id) => {
+          setIsLoding(true);
+          setModalProps(undefined);
+          await requestDeleteCustomSpiceMaster(id);
+          await deleteUserImage(spiceStocks.byId[id].imageUri);
+          spiceStockActions.deleteSpiceStock(id);
+          setIsLoding(false);
+        },
       });
     },
-    [spiceStocks.byId, spiceStockActions, requestUpsertSpiceStockDetail],
+    [
+      spiceStocks.byId,
+      spiceStockActions,
+      requestUpsertSpiceStockDetail,
+      requestDeleteCustomSpiceMaster,
+    ],
   );
 
   const handlePressReload = async () => {
@@ -120,6 +138,7 @@ export const SpiceView: FC = () => {
 
   return (
     <>
+      {isLoding && <LoadingMask />}
       <StickyHeader
         selectItems={selectItems}
         isDisabled={isFetching}

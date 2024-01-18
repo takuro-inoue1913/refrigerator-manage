@@ -26,6 +26,9 @@ import { useRequestUpsertStapleFoodFavorite } from '@src/interface/hooks/stapleF
 import { PlusImage } from '../../common/PlusImage';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 import { useIsFocused } from '@react-navigation/native';
+import { useRequestDeleteCustomStapleFoodMaster } from '@src/interface/hooks/stapleFood/useRequestDeleteCustomStapleFoodMaster';
+import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
+import { LoadingMask } from '@src/components/common/LoadingMask';
 
 /**
  * 冷蔵庫の主食・粉画面を表示するコンポーネント。
@@ -34,6 +37,7 @@ export const StapleFoodView: FC = () => {
   const isFocused = useIsFocused();
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
+  const [isLoding, setIsLoding] = useState(false);
   const navigation = useTypedNavigation();
   const { stapleFoodStocks, isFetching, refetch } =
     useRequestGetStapleFoodStocks();
@@ -43,6 +47,8 @@ export const StapleFoodView: FC = () => {
     useRequestUpsertStapleFoodStockDetail();
   const rows = useChunkedArray(stapleFoodStocks.ids, 3);
   const requestUpsertStapleFoodStock = useRequestUpsertStapleFoodStock();
+  const requestDeleteCustomStapleFoodMaster =
+    useRequestDeleteCustomStapleFoodMaster();
   const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
     debounceUpsertStock: requestUpsertStapleFoodStock,
     increaseStock: stapleFoodStockActions.increaseStapleFoodStock,
@@ -72,12 +78,21 @@ export const StapleFoodView: FC = () => {
           requestUpsertStapleFoodStockDetail(formValues);
           stapleFoodStockActions.updateStapleFoodStockDetail(formValues);
         },
+        onDelete: async (id) => {
+          setIsLoding(true);
+          setModalProps(undefined);
+          await requestDeleteCustomStapleFoodMaster(id);
+          await deleteUserImage(stapleFoodStocks.byId[id].imageUri);
+          stapleFoodStockActions.deleteStapleFoodStock(id);
+          setIsLoding(false);
+        },
       });
     },
     [
       stapleFoodStocks.byId,
       stapleFoodStockActions,
       requestUpsertStapleFoodStockDetail,
+      requestDeleteCustomStapleFoodMaster,
     ],
   );
 
@@ -126,6 +141,7 @@ export const StapleFoodView: FC = () => {
 
   return (
     <>
+      {isLoding && <LoadingMask />}
       <StickyHeader
         selectItems={selectItems}
         isDisabled={isFetching}

@@ -26,6 +26,9 @@ import { useRequestUpsertProteinSourceFavorite } from '@src/interface/hooks/prot
 import { PlusImage } from '../../common/PlusImage';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 import { useIsFocused } from '@react-navigation/native';
+import { useRequestDeleteCustomProteinSourceMaster } from '@src/interface/hooks/proteinSource/useRequestDeleteCustomProteinSourceMaster';
+import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
+import { LoadingMask } from '@src/components/common/LoadingMask';
 
 /**
  * 冷蔵庫の卵・乳・豆画面を表示するコンポーネント。
@@ -34,6 +37,7 @@ export const ProteinSourceView: FC = () => {
   const isFocused = useIsFocused();
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
+  const [isLoding, setIsLoding] = useState(false);
   const navigation = useTypedNavigation();
   const { proteinSourceStocks, isFetching, refetch } =
     useRequestGetProteinSourceStocks();
@@ -44,6 +48,8 @@ export const ProteinSourceView: FC = () => {
     useRequestUpsertProteinSourceStockDetail();
   const rows = useChunkedArray(proteinSourceStocks.ids, 3);
   const requestUpsertProteinSourceStock = useRequestUpsertProteinSourceStock();
+  const requestDeleteCustomProteinSourceMaster =
+    useRequestDeleteCustomProteinSourceMaster();
   const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
     debounceUpsertStock: requestUpsertProteinSourceStock,
     increaseStock: proteinSourceStockActions.increaseProteinSourceStock,
@@ -73,12 +79,23 @@ export const ProteinSourceView: FC = () => {
           requestUpsertProteinSourceStockDetail(formValues);
           proteinSourceStockActions.updateProteinSourceStockDetail(formValues);
         },
+        onDelete: async (id) => {
+          setIsLoding(true);
+          setModalProps(undefined);
+          if (proteinSourceStocks.byId[id].isCustomMaster) {
+            await requestDeleteCustomProteinSourceMaster(id);
+            await deleteUserImage(proteinSourceStocks.byId[id].imageUri);
+          }
+          proteinSourceStockActions.deleteProteinSourceStock(id);
+          setIsLoding(false);
+        },
       });
     },
     [
       proteinSourceStocks.byId,
       proteinSourceStockActions,
       requestUpsertProteinSourceStockDetail,
+      requestDeleteCustomProteinSourceMaster,
     ],
   );
 
@@ -127,6 +144,7 @@ export const ProteinSourceView: FC = () => {
 
   return (
     <>
+      {isLoding && <LoadingMask />}
       <StickyHeader
         selectItems={selectItems}
         isDisabled={isFetching}

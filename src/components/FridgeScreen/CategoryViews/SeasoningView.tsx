@@ -26,6 +26,9 @@ import { useRequestUpsertSeasoningFavorite } from '@src/interface/hooks/seasonin
 import { PlusImage } from '../../common/PlusImage';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 import { useIsFocused } from '@react-navigation/native';
+import { useRequestDeleteCustomSeasoningMaster } from '@src/interface/hooks/seasoning/useRequestDeleteCustomSeasoningMaster';
+import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
+import { LoadingMask } from '@src/components/common/LoadingMask';
 
 /**
  * 冷蔵庫の調味料画面を表示するコンポーネント。
@@ -34,6 +37,7 @@ export const SeasoningView: FC = () => {
   const isFocused = useIsFocused();
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
+  const [isLoding, setIsLoding] = useState(false);
   const navigation = useTypedNavigation();
   const { seasoningStocks, isFetching, refetch } =
     useRequestGetSeasoningStocks();
@@ -43,6 +47,8 @@ export const SeasoningView: FC = () => {
     useRequestUpsertSeasoningStockDetail();
   const rows = useChunkedArray(seasoningStocks.ids, 3);
   const requestUpsertSeasoningStock = useRequestUpsertSeasoningStock();
+  const requestDeleteCustomSeasoningMaster =
+    useRequestDeleteCustomSeasoningMaster();
   const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
     debounceUpsertStock: requestUpsertSeasoningStock,
     increaseStock: seasoningStockActions.increaseSeasoningStock,
@@ -72,12 +78,21 @@ export const SeasoningView: FC = () => {
           requestUpsertSeasoningStockDetail(formValues);
           seasoningStockActions.updateSeasoningStockDetail(formValues);
         },
+        onDelete: async (id) => {
+          setIsLoding(true);
+          setModalProps(undefined);
+          await requestDeleteCustomSeasoningMaster(id);
+          await deleteUserImage(seasoningStocks.byId[id].imageUri);
+          seasoningStockActions.deleteSeasoningStock(id);
+          setIsLoding(false);
+        },
       });
     },
     [
       seasoningStocks.byId,
       seasoningStockActions,
       requestUpsertSeasoningStockDetail,
+      requestDeleteCustomSeasoningMaster,
     ],
   );
 
@@ -126,6 +141,7 @@ export const SeasoningView: FC = () => {
 
   return (
     <>
+      {isLoding && <LoadingMask />}
       <StickyHeader
         selectItems={selectItems}
         isDisabled={isFetching}

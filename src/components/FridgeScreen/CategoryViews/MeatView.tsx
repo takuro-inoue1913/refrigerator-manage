@@ -26,6 +26,9 @@ import { useRequestUpsertMeatFavorite } from '@src/interface/hooks/meat/useReque
 import { PlusImage } from '../../common/PlusImage';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 import { useIsFocused } from '@react-navigation/native';
+import { useRequestDeleteCustomMeatMaster } from '@src/interface/hooks/meat/useRequestDeleteCustomMeatMaster';
+import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
+import { LoadingMask } from '@src/components/common/LoadingMask';
 
 /**
  * 冷蔵庫の肉画面を表示するコンポーネント。
@@ -34,6 +37,7 @@ export const MeatView: FC = () => {
   const isFocused = useIsFocused();
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
+  const [isLoding, setIsLoding] = useState(false);
   const navigation = useTypedNavigation();
   const { meatStocks, isFetching, refetch } = useRequestGetMeatStocks();
   const meatStockActions = useMeatStockActions();
@@ -41,6 +45,7 @@ export const MeatView: FC = () => {
   const requestUpsertMeatStockDetail = useRequestUpsertMeatStockDetail();
   const rows = useChunkedArray(meatStocks.ids, 3);
   const requestUpsertMeatStock = useRequestUpsertMeatStock();
+  const requestDeleteCustomMeatMaster = useRequestDeleteCustomMeatMaster();
   const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
     debounceUpsertStock: requestUpsertMeatStock,
     increaseStock: meatStockActions.increaseMeatStock,
@@ -70,9 +75,22 @@ export const MeatView: FC = () => {
           requestUpsertMeatStockDetail(formValues);
           meatStockActions.updateMeatStockDetail(formValues);
         },
+        onDelete: async (id) => {
+          setModalProps(undefined);
+          setIsLoding(true);
+          await requestDeleteCustomMeatMaster(id);
+          await deleteUserImage(meatStocks.byId[id].imageUri);
+          meatStockActions.deleteMeatStock(id);
+          setIsLoding(false);
+        },
       });
     },
-    [meatStocks.byId, meatStockActions, requestUpsertMeatStockDetail],
+    [
+      meatStocks.byId,
+      meatStockActions,
+      requestUpsertMeatStockDetail,
+      requestDeleteCustomMeatMaster,
+    ],
   );
 
   const handlePressReload = async () => {
@@ -120,6 +138,7 @@ export const MeatView: FC = () => {
 
   return (
     <>
+      {isLoding && <LoadingMask />}
       <StickyHeader
         selectItems={selectItems}
         isDisabled={isFetching}

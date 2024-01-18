@@ -26,6 +26,9 @@ import { useRequestUpsertFishFavorite } from '@src/interface/hooks/fish/useReque
 import { PlusImage } from '../../common/PlusImage';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 import { useIsFocused } from '@react-navigation/native';
+import { useRequestDeleteCustomFishMaster } from '@src/interface/hooks/fish/useRequestDeleteCustomFishMaster';
+import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
+import { LoadingMask } from '@src/components/common/LoadingMask';
 
 /**
  * 冷蔵庫の魚介類画面を表示するコンポーネント。
@@ -34,6 +37,7 @@ export const FishView: FC = () => {
   const isFocused = useIsFocused();
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
+  const [isLoding, setIsLoding] = useState(false);
   const navigation = useTypedNavigation();
   const { fishStocks, isFetching, refetch } = useRequestGetFishStocks();
   const fishStockActions = useFishStockActions();
@@ -41,6 +45,7 @@ export const FishView: FC = () => {
   const requestUpsertFishStockDetail = useRequestUpsertFishStockDetail();
   const rows = useChunkedArray(fishStocks.ids, 3);
   const requestUpsertFishStock = useRequestUpsertFishStock();
+  const requestDeleteCustomFishMaster = useRequestDeleteCustomFishMaster();
   const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
     debounceUpsertStock: requestUpsertFishStock,
     increaseStock: fishStockActions.increaseFishStock,
@@ -70,9 +75,22 @@ export const FishView: FC = () => {
           requestUpsertFishStockDetail(formValues);
           fishStockActions.updateFishStockDetail(formValues);
         },
+        onDelete: async (id) => {
+          setModalProps(undefined);
+          setIsLoding(true);
+          await requestDeleteCustomFishMaster(id);
+          await deleteUserImage(fishStocks.byId[id].imageUri);
+          fishStockActions.deleteFishStock(id);
+          setIsLoding(false);
+        },
       });
     },
-    [fishStocks.byId, fishStockActions, requestUpsertFishStockDetail],
+    [
+      fishStocks.byId,
+      fishStockActions,
+      requestUpsertFishStockDetail,
+      requestDeleteCustomFishMaster,
+    ],
   );
 
   const handlePressReload = async () => {
@@ -120,6 +138,7 @@ export const FishView: FC = () => {
 
   return (
     <>
+      {isLoding && <LoadingMask />}
       <StickyHeader
         selectItems={selectItems}
         isDisabled={isFetching}
