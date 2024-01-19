@@ -105,7 +105,11 @@ export const App: FC = () => {
               options={{ headerShown: false }}
               component={FridgeStack}
             />
-            <Tab.Screen name="読み取り" component={CameraScreen} />
+            <Tab.Screen
+              name="読み取り"
+              options={{ headerShown: false }}
+              component={CameraScreen}
+            />
           </>
         ) : (
           <>

@@ -1,12 +1,10 @@
 import React, { useEffect, useRef } from 'react';
-import { Linking, StyleSheet } from 'react-native';
+import { Linking, StyleSheet, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
 import { Button, Text, View } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+// import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { GOOGLE_CLOUD_VISION_API_KEY } from '@env';
-import { LinearGradientButton } from '@src/components/common/GradationButton';
-
 // import { LoadingScreen } from '@src/screens/LoadingScreen';
 
 export const CameraScreen = () => {
@@ -79,16 +77,14 @@ export const CameraScreen = () => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.topBar}></View>
       <Camera style={styles.camera} ref={cameraRef} />
-      <View style={styles.footerContainer}>
-        <LinearGradientButton
-          onPress={takePicture}
-          width={80}
-          height={80}
-          borderRadius={50}
-        >
-          <Icon name="camera" size={40} color={'white'} />
-        </LinearGradientButton>
+      <View style={styles.footerBar}>
+        <TouchableOpacity style={styles.captureButton} onPress={takePicture}>
+          <View style={styles.outerCircle}>
+            <View style={styles.innerCircle} />
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -104,14 +100,46 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   camera: {
-    flex: 9,
+    flex: 8,
   },
-  footerContainer: {
+  topBar: {
+    flex: 1,
+    backgroundColor: 'black',
+    justifyContent: 'flex-end',
+    padding: 15,
+  },
+  footerBar: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
+    backgroundColor: 'black',
     paddingBottom: 50,
     paddingTop: 20,
+  },
+  captureButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: 'white',
+  },
+  outerCircle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    width: 75,
+    height: 75,
+    borderRadius: 37.5,
+    borderWidth: 5,
+    borderColor: 'white',
+  },
+  innerCircle: {
+    backgroundColor: 'white',
+    width: 65,
+    height: 65,
+    borderRadius: 32.5,
+    borderWidth: 2,
   },
   text: {
     fontSize: 18,
