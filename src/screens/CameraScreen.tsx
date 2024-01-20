@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Linking, StyleSheet, TouchableOpacity } from 'react-native';
-import { Camera } from 'expo-camera';
+import { Camera, FlashMode } from 'expo-camera';
 import {
   PinchGestureHandler,
   State,
@@ -10,17 +10,18 @@ import {
   HandlerStateChangeEvent,
 } from 'react-native-gesture-handler';
 import { Button, Text, View } from 'react-native';
-// import Icon from 'react-native-vector-icons/FontAwesome';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { GOOGLE_CLOUD_VISION_API_KEY } from '@env';
 import { COMMON_COLOR_GREEN } from '@src/utils/consts';
-// import { LoadingScreen } from '@src/screens/LoadingScreen';
 
 const NOMAL_ZOOM = 0.001;
 const HALF_ZOOM = 0;
 const DOUBLE_ZOOM = 0.01;
 
 export const CameraScreen = () => {
+  const [flashMode, setFlashMode] = useState<FlashMode.on | FlashMode.off>(
+    FlashMode.off,
+  );
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [zoom, setZoom] = useState(NOMAL_ZOOM);
   const zoomRef = useRef(zoom);
@@ -68,6 +69,14 @@ export const CameraScreen = () => {
     });
     if (photo && photo.base64) {
       analyzeImageWithGoogleVision(photo.base64);
+    }
+  };
+
+  const toggleFlash = () => {
+    if (flashMode === FlashMode.off) {
+      setFlashMode(FlashMode.on);
+    } else {
+      setFlashMode(FlashMode.off);
     }
   };
 
@@ -126,8 +135,24 @@ export const CameraScreen = () => {
         onHandlerStateChange={onHandlerStateChange}
       >
         <View style={styles.container}>
-          <View style={styles.topBar} />
-          <Camera style={styles.camera} ref={cameraRef} zoom={zoom}>
+          <View style={styles.topBar}>
+            <TouchableOpacity
+              onPress={toggleFlash}
+              style={styles.flashIconContainer}
+            >
+              <Icon
+                name="flash"
+                size={24}
+                color={flashMode === FlashMode.off ? 'white' : 'yellow'}
+              />
+            </TouchableOpacity>
+          </View>
+          <Camera
+            style={styles.camera}
+            ref={cameraRef}
+            zoom={zoom}
+            flashMode={flashMode}
+          >
             <View style={styles.focusBoxContainer}>
               <View style={styles.focusBox} />
               <View style={styles.zoomButtonContainer}>
@@ -301,5 +326,12 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
     color: '#555',
+  },
+  flashIconContainer: {
+    alignSelf: 'flex-start',
+    marginLeft: 15,
+  },
+  flashIcon: {
+    color: 'white',
   },
 });
