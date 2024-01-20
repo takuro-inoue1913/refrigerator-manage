@@ -1,6 +1,7 @@
 import { CommonGradation } from '@src/components/common/CommonGradation';
 import { useRequestGetAllFridgeMaster } from '@src/interface/hooks/useRequestGetAllFridgeMaster';
 import React, { useState } from 'react';
+import { Dropdown } from 'react-native-element-dropdown';
 import {
   Text,
   View,
@@ -9,13 +10,14 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
+  TextInput,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'; // FontAwesome または他のアイコンパッケージを使用
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export const ShoppingMemoScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectValue, setSelectValue] = useState('');
   const { fridgeMaster } = useRequestGetAllFridgeMaster();
-  // console.log(fridgeMaster);
 
   return (
     <View style={styles.container}>
@@ -51,6 +53,41 @@ export const ShoppingMemoScreen = () => {
                     <View style={{ flex: 1, alignItems: 'center' }}>
                       <Text style={styles.headerText}>買い物メモの追加</Text>
                     </View>
+                  </View>
+                  <View style={styles.formItem}>
+                    <Dropdown
+                      data={fridgeMaster.map((item) => ({
+                        label: item.displayName,
+                        value: item.id,
+                        searchKey: `${item.displayName} ${item.name}`,
+                      }))}
+                      value={selectValue}
+                      onChange={(item) => setSelectValue(item.value)}
+                      labelField="label"
+                      valueField="value"
+                      searchField="searchKey"
+                      placeholder="食材を選択"
+                      search
+                      renderInputSearch={(onSearch) => (
+                        <TextInput
+                          placeholder="検索..."
+                          onChangeText={onSearch}
+                          returnKeyType="search"
+                          style={styles.input}
+                        />
+                      )}
+                      style={styles.dropdown}
+                      maxHeight={250}
+                      renderItem={(item) => {
+                        return (
+                          <View style={styles.dropdownItem}>
+                            <Text style={styles.dropdownTextItem}>
+                              {item.label}
+                            </Text>
+                          </View>
+                        );
+                      }}
+                    />
                   </View>
                   <TouchableOpacity onPress={() => setModalVisible(false)}>
                     <Text>閉じる</Text>
@@ -121,5 +158,39 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  formItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    paddingTop: 10,
+  },
+  dropdown: {
+    width: '100%',
+    height: 40,
+  },
+  input: {
+    borderBottomWidth: 0.5,
+    borderBottomColor: 'rgba(0,0,0,0.1)',
+    padding: 10,
+    fontSize: 16,
+  },
+  listItem: {
+    padding: 10,
+    marginTop: 2,
+    backgroundColor: '#f8f9fa',
+    borderColor: '#bbb',
+    borderWidth: 1,
+    borderRadius: 5,
+  },
+  dropdownItem: {
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  dropdownTextItem: {
+    flex: 1,
+    fontSize: 16,
   },
 });
