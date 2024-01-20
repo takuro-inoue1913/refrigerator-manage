@@ -1,14 +1,26 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Linking, StyleSheet, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
+import {
+  PinchGestureHandler,
+  State,
+  GestureHandlerRootView,
+  GestureEvent,
+  PinchGestureHandlerEventPayload,
+  HandlerStateChangeEvent,
+} from 'react-native-gesture-handler';
 import { Button, Text, View } from 'react-native';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { GOOGLE_CLOUD_VISION_API_KEY } from '@env';
+import { COMMON_COLOR_GREEN } from '@src/utils/consts';
 // import { LoadingScreen } from '@src/screens/LoadingScreen';
 
 export const CameraScreen = () => {
   const [permission, requestPermission] = Camera.useCameraPermissions();
+  const [zoom, setZoom] = useState(0);
+  const zoomRef = useRef(zoom);
+  const lastScale = useRef(1);
   const cameraRef = useRef<Camera>(null);
 
   const analyzeImageWithGoogleVision = async (base64: string) => {
@@ -55,6 +67,29 @@ export const CameraScreen = () => {
     }
   };
 
+  const onPinchGestureEvent = (
+    event: GestureEvent<PinchGestureHandlerEventPayload>,
+  ) => {
+    const { scale } = event.nativeEvent;
+
+    // 補正係数を適用して、デルタスケールを調整する（この値で感度を調整する）。
+    const sensitivity = 0.01;
+
+    let newZoom = (scale - 1) * sensitivity + zoomRef.current;
+    newZoom = Math.max(0, Math.min(newZoom, 1));
+
+    setZoom(newZoom);
+  };
+
+  const onHandlerStateChange = (
+    event: HandlerStateChangeEvent<PinchGestureHandlerEventPayload>,
+  ) => {
+    if (event.nativeEvent.oldState === State.ACTIVE) {
+      lastScale.current = 1;
+      zoomRef.current = zoom;
+    }
+  };
+
   useEffect(() => {
     if (permission?.granted) {
       return;
@@ -76,17 +111,31 @@ export const CameraScreen = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.topBar}></View>
-      <Camera style={styles.camera} ref={cameraRef} />
-      <View style={styles.footerBar}>
-        <TouchableOpacity style={styles.captureButton} onPress={takePicture}>
-          <View style={styles.outerCircle}>
-            <View style={styles.innerCircle} />
+    <GestureHandlerRootView style={styles.container}>
+      <PinchGestureHandler
+        onGestureEvent={onPinchGestureEvent}
+        onHandlerStateChange={onHandlerStateChange}
+      >
+        <View style={styles.container}>
+          <View style={styles.topBar} />
+          <Camera style={styles.camera} ref={cameraRef} zoom={zoom}>
+            <View style={styles.focusBoxContainer}>
+              <View style={styles.focusBox} />
+            </View>
+          </Camera>
+          <View style={styles.footerBar}>
+            <TouchableOpacity
+              style={styles.captureButton}
+              onPress={takePicture}
+            >
+              <View style={styles.outerCircle}>
+                <View style={styles.innerCircle} />
+              </View>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-      </View>
-    </View>
+        </View>
+      </PinchGestureHandler>
+    </GestureHandlerRootView>
   );
 };
 
@@ -115,6 +164,23 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     paddingBottom: 50,
     paddingTop: 20,
+  },
+  focusBoxContainer: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: [{ translateX: -150 }, { translateY: -150 }],
+    width: 300,
+    height: 300,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  focusBox: {
+    width: '100%',
+    height: '100%',
+    borderWidth: 2,
+    borderColor: COMMON_COLOR_GREEN,
+    backgroundColor: 'transparent',
   },
   captureButton: {
     justifyContent: 'center',
