@@ -12,13 +12,14 @@ import { RegisterScreen } from '@src/screens/RegisterScreen';
 import { LoginScreen } from '@src/screens/LoginScreen';
 import { auth } from '@src/utils/firebaseSettings';
 import { userState, idTokenState } from '@src/states/user';
-import { CameraScreen } from '@src/screens/CameraScreen';
+// import { CameraScreen } from '@src/screens/CameraScreen';
 import { LoadingScreen } from '@src/screens/LoadingScreen';
 import { PasswordResetScreen } from '@src/screens/PasswordResetScreen';
 import { FridgeScreen } from '@src/screens/FridgeScreen';
 import { COMMON_COLOR_BLUE, COMMON_COLOR_GREEN } from '@src/utils/consts';
 import { FridgeItemCreateScreen } from '@src/screens/FridgeIitemCreateScreen';
 import { RootStackParamList } from '@src/types';
+import { ShoppingMemoScreen } from './screens/ ShoppingMemoScreen';
 
 export const App: FC = () => {
   const setUser = useSetRecoilState(userState);
@@ -83,8 +84,9 @@ export const App: FC = () => {
               iconName = 'home';
             } else if (route.name === '読み取り') {
               iconName = 'camera';
-            }
-            if (route.name === 'FridgeStack') {
+            } else if (route.name === '買い物メモ') {
+              iconName = 'cart-outline';
+            } else if (route.name === 'FridgeStack') {
               iconName = 'fridge';
             } else if (route.name === 'LoginStack') {
               iconName = 'login';
@@ -104,11 +106,12 @@ export const App: FC = () => {
               options={{ headerShown: false }}
               component={FridgeStack}
             />
-            <Tab.Screen
+            {/* <Tab.Screen
               name="読み取り"
               options={{ headerShown: false }}
               component={CameraScreen}
-            />
+            /> */}
+            <Tab.Screen name="買い物メモ" component={ShoppingMemoScreen} />
             <Tab.Screen name="マイページ" component={HomeScreen} />
           </>
         ) : (
