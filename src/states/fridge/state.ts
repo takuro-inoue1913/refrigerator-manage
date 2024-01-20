@@ -32,7 +32,7 @@ export type TypeName =
   | GetAllFridgeMasterQuery['custom_spice_master'][number]['__typename'];
 
 export type FridgeMaster = {
-  id: number;
+  id: string;
   name: string;
   displayName: string;
   imageUri: string;
