@@ -99,7 +99,6 @@ export const App: FC = () => {
       >
         {idToken ? (
           <>
-            <Tab.Screen name="マイページ" component={HomeScreen} />
             <Tab.Screen
               name="FridgeStack"
               options={{ headerShown: false }}
@@ -110,6 +109,7 @@ export const App: FC = () => {
               options={{ headerShown: false }}
               component={CameraScreen}
             />
+            <Tab.Screen name="マイページ" component={HomeScreen} />
           </>
         ) : (
           <>
