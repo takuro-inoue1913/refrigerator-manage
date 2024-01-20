@@ -16,9 +16,13 @@ import { GOOGLE_CLOUD_VISION_API_KEY } from '@env';
 import { COMMON_COLOR_GREEN } from '@src/utils/consts';
 // import { LoadingScreen } from '@src/screens/LoadingScreen';
 
+const NOMAL_ZOOM = 0.001;
+const HALF_ZOOM = 0;
+const DOUBLE_ZOOM = 0.01;
+
 export const CameraScreen = () => {
   const [permission, requestPermission] = Camera.useCameraPermissions();
-  const [zoom, setZoom] = useState(0);
+  const [zoom, setZoom] = useState(NOMAL_ZOOM);
   const zoomRef = useRef(zoom);
   const lastScale = useRef(1);
   const cameraRef = useRef<Camera>(null);
@@ -90,6 +94,11 @@ export const CameraScreen = () => {
     }
   };
 
+  const changeZoom = (newZoom: number) => {
+    setZoom(newZoom);
+    zoomRef.current = newZoom;
+  };
+
   useEffect(() => {
     if (permission?.granted) {
       return;
@@ -121,6 +130,59 @@ export const CameraScreen = () => {
           <Camera style={styles.camera} ref={cameraRef} zoom={zoom}>
             <View style={styles.focusBoxContainer}>
               <View style={styles.focusBox} />
+              <View style={styles.zoomButtonContainer}>
+                <TouchableOpacity
+                  key={'2.0x'}
+                  style={[
+                    styles.button,
+                    zoom === DOUBLE_ZOOM && styles.selectedButton,
+                  ]}
+                  onPress={() => changeZoom(DOUBLE_ZOOM)}
+                >
+                  <Text
+                    style={[
+                      styles.buttonText,
+                      zoom === DOUBLE_ZOOM && styles.selectedText,
+                    ]}
+                  >
+                    2.0x
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  key={'1.0x'}
+                  style={[
+                    styles.button,
+                    zoom === NOMAL_ZOOM && styles.selectedButton,
+                  ]}
+                  onPress={() => changeZoom(NOMAL_ZOOM)}
+                >
+                  <Text
+                    style={[
+                      styles.buttonText,
+                      zoom === NOMAL_ZOOM && styles.selectedText,
+                    ]}
+                  >
+                    1.0x
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  key={'0.5x'}
+                  style={[
+                    styles.button,
+                    zoom === HALF_ZOOM && styles.selectedButton,
+                  ]}
+                  onPress={() => changeZoom(HALF_ZOOM)}
+                >
+                  <Text
+                    style={[
+                      styles.buttonText,
+                      zoom === HALF_ZOOM && styles.selectedText,
+                    ]}
+                  >
+                    0.5x
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </Camera>
           <View style={styles.footerBar}>
@@ -167,7 +229,7 @@ const styles = StyleSheet.create({
   },
   focusBoxContainer: {
     position: 'absolute',
-    top: '50%',
+    top: '55%',
     left: '50%',
     transform: [{ translateX: -150 }, { translateY: -150 }],
     width: 300,
@@ -210,5 +272,34 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     color: 'white',
+  },
+  zoomButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 20,
+    paddingVertical: 5,
+    borderRadius: 50,
+    width: 170,
+    opacity: 0.8,
+    backgroundColor: 'black',
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ddd',
+    width: 40,
+    height: 40,
+    borderRadius: 50,
+  },
+  selectedButton: {
+    backgroundColor: COMMON_COLOR_GREEN,
+  },
+  selectedText: {
+    color: '#fff',
+  },
+  buttonText: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#555',
   },
 });
