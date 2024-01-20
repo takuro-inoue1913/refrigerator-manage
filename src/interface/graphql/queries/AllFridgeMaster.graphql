@@ -1,0 +1,110 @@
+query GetAllFridgeMaster {
+  custom_dessert_master {
+    id: custom_dessert_id
+    name: custom_dessert_name
+    display_name
+    image_uri
+  }
+  custom_fish_master {
+    id: custom_fish_id
+    name: custom_fish_name
+    display_name
+    image_uri
+  }
+  custom_meat_master {
+    id: custom_meat_id
+    name: custom_meat_name
+    display_name
+    image_uri
+  }
+  custom_other_master {
+    id: custom_other_id
+    name: custom_other_name
+    display_name
+    image_uri
+  }
+  custom_protein_source_master {
+    id: custom_protein_source_id
+    name: custom_protein_source_name
+    display_name
+    image_uri
+  }
+  custom_seasoning_master {
+    id: custom_seasoning_id
+    name: custom_seasoning_name
+    display_name
+    image_uri
+  }
+  custom_spice_master {
+    id: custom_spice_id
+    name: custom_spice_name
+    display_name
+    image_uri
+  }
+  custom_staple_food_master {
+    id: custom_staple_food_id
+    name: custom_staple_food_name
+    display_name
+    image_uri
+  }
+  custom_vegetable_master {
+    id: custom_vegetable_id
+    name: custom_vegetable_name
+    display_name
+    image_uri
+  }
+  dessert_master {
+    id: dessert_id
+    name: dessert_name
+    display_name
+    image_uri
+  }
+  fish_master {
+    id: fish_id
+    name: fish_name
+    display_name
+    image_uri
+  }
+  meat_master {
+    id: meat_id
+    name: meat_name
+    display_name
+    image_uri
+  }
+  other_master {
+    id: other_id
+    name: other_name
+    display_name
+    image_uri
+  }
+  protein_source_master {
+    id: protein_source_id
+    name: protein_source_name
+    display_name
+    image_uri
+  }
+  seasoning_master {
+    id: seasoning_id
+    name: seasoning_name
+    display_name
+    image_uri
+  }
+  spice_master {
+    id: spice_id
+    name: spice_name
+    display_name
+    image_uri
+  }
+  staple_food_master {
+    id: staple_food_id
+    name: staple_food_name
+    display_name
+    image_uri
+  }
+  vegetable_master {
+    id: vegetable_id
+    name: vegetable_name
+    display_name
+    image_uri
+  }
+}

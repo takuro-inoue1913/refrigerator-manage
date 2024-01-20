@@ -1,4 +1,5 @@
 import { CommonGradation } from '@src/components/common/CommonGradation';
+import { useRequestGetAllFridgeMaster } from '@src/interface/hooks/useRequestGetAllFridgeMaster';
 import React, { useState } from 'react';
 import {
   Text,
@@ -13,6 +14,8 @@ import Icon from 'react-native-vector-icons/FontAwesome'; // FontAwesome また�
 
 export const ShoppingMemoScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const { fridgeMaster } = useRequestGetAllFridgeMaster();
+  // console.log(fridgeMaster);
 
   return (
     <View style={styles.container}>
@@ -78,9 +81,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 20,
     bottom: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.4,
   },
   commonGradation: {
     width: 60,
