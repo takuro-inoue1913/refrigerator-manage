@@ -37,7 +37,9 @@ export type FridgeMaster = {
   displayName: string;
   imageUri: string;
   fridgeType: TypeName;
+  /** 単位名 */
   unitName: string;
+  /** 増減単位 */
   incrementalUnit: number;
 };
 

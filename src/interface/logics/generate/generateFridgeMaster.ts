@@ -1,5 +1,6 @@
 import { GetAllFridgeMasterQuery } from '@src/interface/__generated__/graphql';
 import { FridgeMaster, TypeName } from '@src/states/fridge';
+import { getIncrementalUnit } from '@src/utils/logics/getIncrementalUnit';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type DeepOmit<T, K extends keyof any> = T extends object
@@ -106,7 +107,9 @@ const convertMasterData = (
     imageUri: data.image_uri,
     fridgeType: __typeName,
     unitName: data.unit_master?.unit_name ?? '',
-    incrementalUnit: data.stack?.incremental_unit ?? 1,
+    incrementalUnit:
+      data.stack?.incremental_unit ??
+      getIncrementalUnit(data.unit_master?.unit_name ?? ''),
   }));
 
   return _masterData;
