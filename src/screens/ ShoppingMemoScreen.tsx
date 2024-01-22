@@ -14,9 +14,10 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FridgeMaster } from '@src/states/fridge';
 import {
+  ShoppingMemo,
   shoppingMemosState,
   useShoppingMemoActions,
 } from '@src/states/shoppingMemo';
@@ -87,11 +88,14 @@ export const ShoppingMemoScreen = () => {
       setErrorMessage('すでに追加されている食材です。');
       return;
     }
-    shoppingMemoActions.addShoppingMemo(selectFridgeMaster);
+    shoppingMemoActions.addShoppingMemo({
+      ...selectFridgeMaster,
+      quantity,
+    });
     handleCloseModal();
   };
 
-  const ShoppingMemoItem = ({ item }: { item: FridgeMaster }) => {
+  const ShoppingMemoItem = ({ item }: { item: ShoppingMemo }) => {
     const handlePressDeleteButton = () => {
       shoppingMemoActions.deleteShoppingMemo({
         id: item.id,
@@ -115,16 +119,15 @@ export const ShoppingMemoScreen = () => {
             isChecked={checkedShoppingMemoIds.includes(item.id)}
             onCheck={handlePressCheckbox}
           />
-          <View style={{ flex: 1 }}>
+          <View>
             <Text>{item.displayName}</Text>
           </View>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 12, color: 'gray' }}>{item.unitName}</Text>
-          </View>
+          <Text>{item.quantity}</Text>
+          <Text style={{ fontSize: 12, color: 'gray' }}>{item.unitName}</Text>
           <TouchableOpacity onPress={handlePressDeleteButton}>
-            <Icon name="trash" size={20} color="gray" />
+            <Icon name="trash-can-outline" size={20} color="gray" />
           </TouchableOpacity>
         </View>
       </View>

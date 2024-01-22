@@ -15,6 +15,7 @@ export const useShoppingMemoActions = () => {
         fridgeType,
         unitName,
         incrementalUnit,
+        quantity,
       }: ShoppingMemo) => {
         set(shoppingMemosState, (prev) => [
           ...prev,
@@ -26,6 +27,7 @@ export const useShoppingMemoActions = () => {
             fridgeType,
             unitName,
             incrementalUnit,
+            quantity,
           },
         ]);
       },

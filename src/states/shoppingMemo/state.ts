@@ -11,6 +11,8 @@ export type ShoppingMemo = {
   unitName: string;
   /** 増減単位 */
   incrementalUnit: number;
+  /** 数量 */
+  quantity: number;
 };
 
 export const shoppingMemosState = atom<ShoppingMemo[]>({
