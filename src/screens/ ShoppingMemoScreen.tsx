@@ -19,6 +19,11 @@ export const ShoppingMemoScreen = () => {
   const [selectValue, setSelectValue] = useState('');
   const { fridgeMaster } = useRequestGetAllFridgeMaster();
 
+  const handleCloseModal = () => {
+    setModalVisible(false);
+    setSelectValue('');
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -33,13 +38,9 @@ export const ShoppingMemoScreen = () => {
         animationType="slide"
         transparent
         visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
+        onRequestClose={handleCloseModal}
       >
-        <TouchableWithoutFeedback
-          onPress={() => {
-            setModalVisible(false);
-          }}
-        >
+        <TouchableWithoutFeedback onPress={handleCloseModal}>
           <View style={styles.overlay}>
             <View style={styles.centeredView}>
               <TouchableWithoutFeedback
@@ -89,7 +90,16 @@ export const ShoppingMemoScreen = () => {
                       }}
                     />
                   </View>
-                  <TouchableOpacity onPress={() => setModalVisible(false)}>
+                  {selectValue && (
+                    <View style={styles.formItem}>
+                      <TextInput
+                        placeholder="数量"
+                        keyboardType="numeric"
+                        style={styles.input}
+                      />
+                    </View>
+                  )}
+                  <TouchableOpacity onPress={handleCloseModal}>
                     <Text>閉じる</Text>
                   </TouchableOpacity>
                 </View>
