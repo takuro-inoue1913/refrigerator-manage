@@ -1,6 +1,6 @@
 import { CommonGradation } from '@src/components/common/CommonGradation';
 import { useRequestGetAllFridgeMaster } from '@src/interface/hooks/useRequestGetAllFridgeMaster';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Dropdown } from 'react-native-element-dropdown';
 import {
   Text,
@@ -26,6 +26,14 @@ export const ShoppingMemoScreen = () => {
   const [selectFridgeMaster, setSelectFridgeMaster] =
     useState<FridgeMaster | null>(null);
   const [quantity, setQuantity] = useState(0);
+
+  const modalData = useMemo(() => {
+    return fridgeMaster.map((item) => ({
+      label: item.displayName,
+      value: item.id,
+      searchKey: `${item.displayName} ${item.name}`,
+    }));
+  }, [fridgeMaster]);
 
   const handleCloseModal = () => {
     setModalVisible(false);
@@ -92,11 +100,7 @@ export const ShoppingMemoScreen = () => {
                   </View>
                   <View style={styles.formItem}>
                     <Dropdown
-                      data={fridgeMaster.map((item) => ({
-                        label: item.displayName,
-                        value: item.id,
-                        searchKey: `${item.displayName} ${item.name}`,
-                      }))}
+                      data={modalData}
                       value={selectValue}
                       onChange={(item) => handleChangeSelectValue(item.value)}
                       labelField="label"
