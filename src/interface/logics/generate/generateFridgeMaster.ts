@@ -1,7 +1,12 @@
 import { GetAllFridgeMasterQuery } from '@src/interface/__generated__/graphql';
 import { FridgeMaster, TypeName } from '@src/states/fridge';
 
-type CommonMasterType = Omit<
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type DeepOmit<T, K extends keyof any> = T extends object
+  ? { [P in keyof T as P extends K ? never : P]: DeepOmit<T[P], K> }
+  : T;
+
+type CommonMasterType = DeepOmit<
   GetAllFridgeMasterQuery['vegetable_master'][number],
   '__typename'
 >;
@@ -100,6 +105,8 @@ const convertMasterData = (
     displayName: data.display_name,
     imageUri: data.image_uri,
     fridgeType: __typeName,
+    unitName: data.unit_master?.unit_name ?? '',
+    incrementalUnit: data.stack?.incremental_unit ?? 1,
   }));
 
   return _masterData;

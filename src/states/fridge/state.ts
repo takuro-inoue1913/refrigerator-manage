@@ -37,6 +37,8 @@ export type FridgeMaster = {
   displayName: string;
   imageUri: string;
   fridgeType: TypeName;
+  unitName: string;
+  incrementalUnit: number;
 };
 
 export type SelectFilterOptions = {
