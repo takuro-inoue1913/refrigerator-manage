@@ -12,20 +12,29 @@ import {
   Keyboard,
   TextInput,
   Image,
+  FlatList,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { FridgeMaster } from '@src/states/fridge';
+import {
+  shoppingMemosState,
+  useShoppingMemoActions,
+} from '@src/states/shoppingMemo';
 import { commonStyles } from '@src/utils/commonStyle';
 import * as Haptics from 'expo-haptics';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
+import { useRecoilValue } from 'recoil';
 
 export const ShoppingMemoScreen = () => {
   const { fridgeMaster } = useRequestGetAllFridgeMaster();
+  const shoppingMemo = useRecoilValue(shoppingMemosState);
+  const shoppingMemoActions = useShoppingMemoActions();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectValue, setSelectValue] = useState('');
   const [selectFridgeMaster, setSelectFridgeMaster] =
     useState<FridgeMaster | null>(null);
   const [quantity, setQuantity] = useState(0);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const modalData = useMemo(() => {
     return fridgeMaster.map((item) => ({
@@ -40,6 +49,7 @@ export const ShoppingMemoScreen = () => {
     setSelectValue('');
     setQuantity(0);
     setSelectFridgeMaster(null);
+    setErrorMessage(null);
   };
 
   const handleChangeSelectValue = (value: string) => {
@@ -65,10 +75,32 @@ export const ShoppingMemoScreen = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
   };
 
-  const handlePressAddButton = () => {};
+  const handlePressAddButton = () => {
+    if (!selectFridgeMaster) {
+      return;
+    }
+    if (shoppingMemo.some((item) => item.id === selectFridgeMaster.id)) {
+      setErrorMessage('すでに追加されている食材です。');
+      return;
+    }
+    shoppingMemoActions.addShoppingMemo(selectFridgeMaster);
+    handleCloseModal();
+  };
+
+  const ShoppingMemoItem = ({ item }: { item: FridgeMaster }) => (
+    <View style={styles.listItem}>
+      <Text>{item.name}</Text>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
+      <FlatList
+        data={shoppingMemo}
+        renderItem={ShoppingMemoItem}
+        keyExtractor={(item) => `${item.displayName}-${item.id}`}
+        contentContainerStyle={{ paddingBottom: 20 }} // 必要に応じてスタイルを調整
+      />
       <TouchableOpacity
         style={styles.addButton}
         onPress={() => setModalVisible(true)}
@@ -192,6 +224,11 @@ export const ShoppingMemoScreen = () => {
                         >
                           <Text style={styles.buttonText}>追加</Text>
                         </LinearGradientButton>
+                        {errorMessage && (
+                          <Text style={styles.errorMessage}>
+                            {errorMessage}
+                          </Text>
+                        )}
                       </View>
                     </View>
                   )}
@@ -348,5 +385,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     paddingVertical: 20,
+  },
+  errorMessage: {
+    color: '#dc3545',
+    marginTop: 10,
   },
 });
