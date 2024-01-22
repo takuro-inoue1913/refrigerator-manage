@@ -31,7 +31,17 @@ export const useShoppingMemoActions = () => {
       },
   );
 
+  const deleteShoppingMemo = useRecoilCallback(
+    ({ set }) =>
+      ({ id }: { id: string }) => {
+        set(shoppingMemosState, (prev) =>
+          prev.filter((shoppingMemo) => shoppingMemo.id !== id),
+        );
+      },
+  );
+
   return {
     addShoppingMemo,
+    deleteShoppingMemo,
   };
 };

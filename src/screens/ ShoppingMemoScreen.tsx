@@ -24,6 +24,7 @@ import { commonStyles } from '@src/utils/commonStyle';
 import * as Haptics from 'expo-haptics';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { useRecoilValue } from 'recoil';
+import AnimatedCheckbox from '@src/components/common/AnimatedCheckbox';
 
 export const ShoppingMemoScreen = () => {
   const { fridgeMaster } = useRequestGetAllFridgeMaster();
@@ -35,6 +36,9 @@ export const ShoppingMemoScreen = () => {
     useState<FridgeMaster | null>(null);
   const [quantity, setQuantity] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [checkedShoppingMemoIds, setCheckedShoppingMemoIds] = useState<
+    string[]
+  >([]);
 
   const modalData = useMemo(() => {
     return fridgeMaster.map((item) => ({
@@ -87,11 +91,45 @@ export const ShoppingMemoScreen = () => {
     handleCloseModal();
   };
 
-  const ShoppingMemoItem = ({ item }: { item: FridgeMaster }) => (
-    <View style={styles.listItem}>
-      <Text>{item.name}</Text>
-    </View>
-  );
+  const ShoppingMemoItem = ({ item }: { item: FridgeMaster }) => {
+    const handlePressDeleteButton = () => {
+      shoppingMemoActions.deleteShoppingMemo({
+        id: item.id,
+      });
+    };
+
+    const handlePressCheckbox = (isChecked: boolean) => {
+      if (isChecked) {
+        setCheckedShoppingMemoIds((prev) => [...prev, item.id]);
+      } else {
+        setCheckedShoppingMemoIds((prev) =>
+          prev.filter((id) => id !== item.id),
+        );
+      }
+    };
+
+    return (
+      <View style={styles.listItem}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <AnimatedCheckbox
+            isChecked={checkedShoppingMemoIds.includes(item.id)}
+            onCheck={handlePressCheckbox}
+          />
+          <View style={{ flex: 1 }}>
+            <Text>{item.displayName}</Text>
+          </View>
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{ flex: 1 }}>
+            <Text style={{ fontSize: 12, color: 'gray' }}>{item.unitName}</Text>
+          </View>
+          <TouchableOpacity onPress={handlePressDeleteButton}>
+            <Icon name="trash" size={20} color="gray" />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -319,14 +357,6 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 16,
   },
-  listItem: {
-    padding: 10,
-    marginTop: 2,
-    backgroundColor: '#f8f9fa',
-    borderColor: '#bbb',
-    borderWidth: 1,
-    borderRadius: 5,
-  },
   dropdownItem: {
     padding: 10,
     flexDirection: 'row',
@@ -389,5 +419,15 @@ const styles = StyleSheet.create({
   errorMessage: {
     color: '#dc3545',
     marginTop: 10,
+  },
+  listItem: {
+    padding: 20,
+    marginTop: 2,
+    backgroundColor: '#f8f9fa',
+    borderColor: '#e1e4e8',
+    borderWidth: 1,
+    borderRadius: 5,
+    alignItems: 'center',
+    flexDirection: 'row',
   },
 });
