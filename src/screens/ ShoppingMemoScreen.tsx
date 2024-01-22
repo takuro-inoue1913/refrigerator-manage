@@ -13,6 +13,7 @@ import {
   TextInput,
   Image,
   FlatList,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FridgeMaster } from '@src/states/fridge';
@@ -26,6 +27,8 @@ import * as Haptics from 'expo-haptics';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { useRecoilValue } from 'recoil';
 import AnimatedCheckbox from '@src/components/common/AnimatedCheckbox';
+import { generateEncodeString } from '@src/utils/logics/createEncodeStrings';
+import CachedImage from 'expo-cached-image';
 
 export const ShoppingMemoScreen = () => {
   const { fridgeMaster } = useRequestGetAllFridgeMaster();
@@ -97,9 +100,20 @@ export const ShoppingMemoScreen = () => {
 
   const ShoppingMemoItem = ({ item }: { item: ShoppingMemo }) => {
     const handlePressDeleteButton = () => {
-      shoppingMemoActions.deleteShoppingMemo({
-        id: item.id,
-      });
+      Alert.alert('削除しますか？', '', [
+        {
+          text: 'キャンセル',
+          style: 'cancel',
+        },
+        {
+          text: '削除',
+          onPress: () => {
+            shoppingMemoActions.deleteShoppingMemo({
+              id: item.id,
+            });
+          },
+        },
+      ]);
     };
 
     const handlePressCheckbox = (isChecked: boolean) => {
@@ -114,20 +128,29 @@ export const ShoppingMemoScreen = () => {
 
     return (
       <View style={styles.listItem}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={styles.listItemContent}>
           <AnimatedCheckbox
             isChecked={checkedShoppingMemoIds.includes(item.id)}
             onCheck={handlePressCheckbox}
           />
-          <View>
-            <Text>{item.displayName}</Text>
-          </View>
+          <CachedImage
+            source={{ uri: item.imageUri }}
+            cacheKey={generateEncodeString([item.name, item.id.toString()])}
+            style={{
+              width: 40,
+              height: 40,
+            }}
+          />
+          <Text>{item.displayName}</Text>
         </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={styles.listItemContent}>
           <Text>{item.quantity}</Text>
-          <Text style={{ fontSize: 12, color: 'gray' }}>{item.unitName}</Text>
-          <TouchableOpacity onPress={handlePressDeleteButton}>
-            <Icon name="trash-can-outline" size={20} color="gray" />
+          <Text style={{ fontSize: 13, color: 'gray' }}>{item.unitName}</Text>
+          <TouchableOpacity
+            style={styles.trashIcon}
+            onPress={handlePressDeleteButton}
+          >
+            <Icon name="trash-can-outline" size={25} color="#fff" />
           </TouchableOpacity>
         </View>
       </View>
@@ -432,5 +455,16 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  listItemContent: {
+    gap: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  trashIcon: {
+    padding: 5,
+    borderRadius: 50,
+    backgroundColor: '#dc3545',
   },
 });
