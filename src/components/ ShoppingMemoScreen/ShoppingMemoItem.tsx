@@ -71,6 +71,7 @@ export const ShoppingMemoItem: FC<Props> = ({
             {
               width: 40,
               height: 40,
+              borderRadius: 5,
             },
             isChecked ? { opacity: 0.5 } : {},
           ]}

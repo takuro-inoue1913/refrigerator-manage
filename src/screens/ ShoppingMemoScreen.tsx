@@ -1,6 +1,6 @@
 import { CommonGradation } from '@src/components/common/CommonGradation';
 import { useRequestGetAllFridgeMaster } from '@src/interface/hooks/useRequestGetAllFridgeMaster';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FridgeMaster } from '@src/states/fridge';
@@ -16,9 +16,11 @@ import {
   ModalMode,
   ShoppingMemoModal,
 } from '@src/components/ ShoppingMemoScreen/ShoppingMemoModal';
+import { useIsFocused } from '@react-navigation/native';
 
 export const ShoppingMemoScreen = () => {
-  const { fridgeMaster } = useRequestGetAllFridgeMaster();
+  const isFocused = useIsFocused();
+  const { fridgeMaster, refetch } = useRequestGetAllFridgeMaster();
   const shoppingMemo = useRecoilValue(shoppingMemosState);
   const shoppingMemoActions = useShoppingMemoActions();
   const [modalVisible, setModalVisible] = useState(false);
@@ -117,6 +119,12 @@ export const ShoppingMemoScreen = () => {
       }
     />
   );
+
+  useEffect(() => {
+    if (isFocused) {
+      refetch();
+    }
+  }, [isFocused, refetch]);
 
   return (
     <View style={styles.container}>
