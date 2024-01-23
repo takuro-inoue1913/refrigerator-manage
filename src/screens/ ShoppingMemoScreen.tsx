@@ -13,7 +13,6 @@ import {
   TextInput,
   Image,
   FlatList,
-  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FridgeMaster } from '@src/states/fridge';
@@ -26,9 +25,7 @@ import { commonStyles } from '@src/utils/commonStyle';
 import * as Haptics from 'expo-haptics';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { useRecoilValue } from 'recoil';
-import AnimatedCheckbox from '@src/components/common/AnimatedCheckbox';
-import { generateEncodeString } from '@src/utils/logics/createEncodeStrings';
-import CachedImage from 'expo-cached-image';
+import { ShoppingMemoItem } from '@src/components/ ShoppingMemoScreen/ShoppingMemoItem';
 
 export const ShoppingMemoScreen = () => {
   const { fridgeMaster } = useRequestGetAllFridgeMaster();
@@ -98,88 +95,22 @@ export const ShoppingMemoScreen = () => {
     handleCloseModal();
   };
 
-  const ShoppingMemoItem = ({ item }: { item: ShoppingMemo }) => {
-    const isChecked = checkedShoppingMemoIds.includes(item.id);
-    const handlePressDeleteButton = () => {
-      Alert.alert('削除しますか？', '', [
-        {
-          text: 'キャンセル',
-          style: 'cancel',
-        },
-        {
-          text: '削除',
-          onPress: () => {
-            shoppingMemoActions.deleteShoppingMemo({
-              id: item.id,
-            });
-          },
-        },
-      ]);
-    };
-
-    const handlePressCheckbox = (isChecked: boolean) => {
-      if (isChecked) {
-        setCheckedShoppingMemoIds((prev) => [...prev, item.id]);
-      } else {
-        setCheckedShoppingMemoIds((prev) =>
-          prev.filter((id) => id !== item.id),
-        );
+  const FlatItem = ({ item }: { item: ShoppingMemo }) => (
+    <ShoppingMemoItem
+      item={item}
+      checkedIds={checkedShoppingMemoIds}
+      addCheckedId={(id) => setCheckedShoppingMemoIds((prev) => [...prev, id])}
+      removeCheckedId={(id) =>
+        setCheckedShoppingMemoIds((prev) => prev.filter((item) => item !== id))
       }
-    };
-
-    return (
-      <View style={styles.listItem}>
-        <View style={styles.listItemContent}>
-          <AnimatedCheckbox
-            isChecked={isChecked}
-            onCheck={handlePressCheckbox}
-          />
-          <CachedImage
-            source={{ uri: item.imageUri }}
-            cacheKey={generateEncodeString([item.name, item.id.toString()])}
-            style={[
-              {
-                width: 40,
-                height: 40,
-              },
-              isChecked ? { opacity: 0.5 } : {},
-            ]}
-          />
-          <Text
-            style={
-              isChecked
-                ? {
-                    fontSize: 16,
-                    textDecorationLine: 'line-through',
-                    color: 'gray',
-                  }
-                : {
-                    fontSize: 16,
-                  }
-            }
-          >
-            {item.displayName}
-          </Text>
-        </View>
-        <View style={styles.listItemContent}>
-          <Text>{item.quantity}</Text>
-          <Text style={{ fontSize: 13, color: 'gray' }}>{item.unitName}</Text>
-          <TouchableOpacity
-            style={styles.trashIcon}
-            onPress={handlePressDeleteButton}
-          >
-            <Icon name="trash-can-outline" size={20} color="#fff" />
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  };
+    />
+  );
 
   return (
     <View style={styles.container}>
       <FlatList
         data={shoppingMemo}
-        renderItem={ShoppingMemoItem}
+        renderItem={FlatItem}
         keyExtractor={(item) => `${item.displayName}-${item.id}`}
         contentContainerStyle={{ paddingBottom: 20 }} // 必要に応じてスタイルを調整
       />
@@ -463,26 +394,5 @@ const styles = StyleSheet.create({
   errorMessage: {
     color: '#dc3545',
     marginTop: 10,
-  },
-  listItem: {
-    padding: 20,
-    marginTop: 2,
-    backgroundColor: '#f8f9fa',
-    borderColor: '#e1e4e8',
-    borderWidth: 1,
-    borderRadius: 5,
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  listItemContent: {
-    gap: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  trashIcon: {
-    padding: 5,
-    borderRadius: 50,
-    backgroundColor: '#dc3545',
   },
 });
