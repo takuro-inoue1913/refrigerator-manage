@@ -1,19 +1,7 @@
 import { CommonGradation } from '@src/components/common/CommonGradation';
 import { useRequestGetAllFridgeMaster } from '@src/interface/hooks/useRequestGetAllFridgeMaster';
 import React, { useMemo, useState } from 'react';
-import { Dropdown } from 'react-native-element-dropdown';
-import {
-  Text,
-  View,
-  Modal,
-  TouchableOpacity,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  Keyboard,
-  TextInput,
-  Image,
-  FlatList,
-} from 'react-native';
+import { View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FridgeMaster } from '@src/states/fridge';
 import {
@@ -21,18 +9,18 @@ import {
   shoppingMemosState,
   useShoppingMemoActions,
 } from '@src/states/shoppingMemo';
-import { commonStyles } from '@src/utils/commonStyle';
-import * as Haptics from 'expo-haptics';
-import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { useRecoilValue } from 'recoil';
 import { ShoppingMemoItem } from '@src/components/ ShoppingMemoScreen/ShoppingMemoItem';
+import {
+  DropdownData,
+  ShoppingMemoModal,
+} from '@src/components/ ShoppingMemoScreen/ShoppingMemoModal';
 
 export const ShoppingMemoScreen = () => {
   const { fridgeMaster } = useRequestGetAllFridgeMaster();
   const shoppingMemo = useRecoilValue(shoppingMemosState);
   const shoppingMemoActions = useShoppingMemoActions();
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectValue, setSelectValue] = useState('');
   const [selectFridgeMaster, setSelectFridgeMaster] =
     useState<FridgeMaster | null>(null);
   const [quantity, setQuantity] = useState(0);
@@ -41,7 +29,7 @@ export const ShoppingMemoScreen = () => {
     string[]
   >([]);
 
-  const modalData = useMemo(() => {
+  const modalData = useMemo<DropdownData[]>(() => {
     return fridgeMaster.map((item) => ({
       label: item.displayName,
       value: item.id,
@@ -51,33 +39,19 @@ export const ShoppingMemoScreen = () => {
 
   const handleCloseModal = () => {
     setModalVisible(false);
-    setSelectValue('');
     setQuantity(0);
     setSelectFridgeMaster(null);
     setErrorMessage(null);
   };
 
-  const handleChangeSelectValue = (value: string) => {
-    const findFridgeMaster = fridgeMaster.find((item) => item.id === value);
+  const handleChangeDropdownValue = (data: DropdownData) => {
+    const findFridgeMaster = fridgeMaster.find(
+      (item) => item.id === data.value,
+    );
     if (findFridgeMaster) {
       setSelectFridgeMaster(findFridgeMaster);
-      setSelectValue(value);
       setQuantity(findFridgeMaster.incrementalUnit);
     }
-  };
-
-  const handlePressIncreaseButton = () => {
-    setQuantity((prev) => prev + selectFridgeMaster!.incrementalUnit);
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-  };
-
-  const handlePressDecreaseButton = () => {
-    if (quantity <= selectFridgeMaster!.incrementalUnit) {
-      setQuantity(0);
-      return;
-    }
-    setQuantity((prev) => prev - selectFridgeMaster!.incrementalUnit);
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
   };
 
   const handlePressAddButton = () => {
@@ -122,135 +96,17 @@ export const ShoppingMemoScreen = () => {
           <Icon name="plus" size={30} color="white" />
         </CommonGradation>
       </TouchableOpacity>
-      <Modal
-        animationType="slide"
-        transparent
+      <ShoppingMemoModal
         visible={modalVisible}
-        onRequestClose={handleCloseModal}
-      >
-        <TouchableWithoutFeedback onPress={handleCloseModal}>
-          <View style={styles.overlay}>
-            <View style={styles.centeredView}>
-              <TouchableWithoutFeedback
-                onPress={(e) => {
-                  e.stopPropagation();
-                  Keyboard.dismiss();
-                }}
-              >
-                <View style={styles.modalView}>
-                  <View style={styles.header}>
-                    <View style={{ flex: 1, alignItems: 'center' }}>
-                      <Text style={styles.headerText}>買い物メモの追加</Text>
-                    </View>
-                  </View>
-                  <View style={styles.formItem}>
-                    <Dropdown
-                      data={modalData}
-                      value={selectValue}
-                      onChange={(item) => handleChangeSelectValue(item.value)}
-                      labelField="label"
-                      valueField="value"
-                      searchField="searchKey"
-                      placeholder="食材を選択"
-                      search
-                      renderInputSearch={(onSearch) => (
-                        <TextInput
-                          placeholder="検索..."
-                          onChangeText={onSearch}
-                          returnKeyType="search"
-                          style={styles.input}
-                        />
-                      )}
-                      style={styles.dropdown}
-                      maxHeight={250}
-                      renderItem={(item) => {
-                        return (
-                          <View
-                            key={item.searchKey}
-                            style={styles.dropdownItem}
-                          >
-                            <Text style={styles.dropdownTextItem}>
-                              {item.label}
-                            </Text>
-                          </View>
-                        );
-                      }}
-                    />
-                  </View>
-                  {selectFridgeMaster && (
-                    <View style={styles.itemContentsWrapper}>
-                      <Image
-                        source={{ uri: selectFridgeMaster.imageUri }}
-                        style={[commonStyles.image, { padding: 10 }]}
-                      />
-                      <View style={styles.incrementalUnitContainer}>
-                        {quantity <= 0 ? (
-                          <View
-                            style={[
-                              styles.incrementalButtonGradation,
-                              {
-                                backgroundColor: 'rgba(0,0,0,0.1)',
-                                opacity: 0.5,
-                              },
-                            ]}
-                          >
-                            <Icon name="minus" size={26} color="white" />
-                          </View>
-                        ) : (
-                          <CommonGradation
-                            style={styles.incrementalButtonGradation}
-                          >
-                            <TouchableOpacity
-                              onPress={handlePressDecreaseButton}
-                              disabled={quantity === 0}
-                            >
-                              <Icon name="minus" size={26} color="white" />
-                            </TouchableOpacity>
-                          </CommonGradation>
-                        )}
-                        <View style={styles.incrementalUnitInputContainer}>
-                          <TextInput
-                            style={styles.incrementalUnitInput}
-                            keyboardType="numeric"
-                            value={quantity.toString()}
-                            returnKeyType="done"
-                            onChangeText={(text) => setQuantity(+text)}
-                          />
-                          <Text style={{ textAlign: 'center' }}>
-                            {selectFridgeMaster.unitName}
-                          </Text>
-                        </View>
-                        <CommonGradation
-                          style={styles.incrementalButtonGradation}
-                        >
-                          <TouchableOpacity onPress={handlePressIncreaseButton}>
-                            <Icon name="plus" size={26} color="white" />
-                          </TouchableOpacity>
-                        </CommonGradation>
-                      </View>
-                      <View style={styles.modalFooter}>
-                        <LinearGradientButton
-                          width={100}
-                          height={40}
-                          onPress={handlePressAddButton}
-                          disabled={quantity === 0}
-                        >
-                          <Text style={styles.buttonText}>追加</Text>
-                        </LinearGradientButton>
-                        {errorMessage && (
-                          <Text style={styles.errorMessage}>
-                            {errorMessage}
-                          </Text>
-                        )}
-                      </View>
-                    </View>
-                  )}
-                </View>
-              </TouchableWithoutFeedback>
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
+        dropdownData={modalData}
+        selectFridgeMaster={selectFridgeMaster}
+        quantity={quantity}
+        errorMessage={errorMessage}
+        onChangeDropdownValue={handleChangeDropdownValue}
+        onChangeQuantity={setQuantity}
+        onClose={handleCloseModal}
+        onSubmit={handlePressAddButton}
+      />
     </View>
   );
 };
@@ -258,14 +114,6 @@ export const ShoppingMemoScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.2)',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    width: '100%',
-    height: '100%',
   },
   addButton: {
     position: 'absolute',
@@ -278,121 +126,5 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 5,
-    padding: 10,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-    height: 400,
-    width: '100%',
-  },
-  header: {
-    padding: 15,
-    backgroundColor: '#f8f9fa',
-    borderRadius: 5,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  headerText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  formItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%',
-    paddingTop: 10,
-  },
-  dropdown: {
-    width: '100%',
-    height: 40,
-    borderRadius: 4,
-    borderWidth: 0.5,
-    padding: 10,
-    borderColor: 'rgba(0,0,0,0.1)',
-  },
-  input: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'rgba(0,0,0,0.1)',
-    padding: 10,
-    fontSize: 16,
-  },
-  dropdownItem: {
-    padding: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  dropdownTextItem: {
-    flex: 1,
-    fontSize: 16,
-  },
-  itemContentsWrapper: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    padding: 20,
-  },
-  incrementalUnitContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 20,
-    paddingVertical: 20,
-  },
-  incrementalUnitInputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 150,
-    gap: 5,
-    paddingLeft: 20,
-  },
-  incrementalUnitInput: {
-    width: 50,
-    flex: 1,
-    textAlign: 'center',
-    fontSize: 16,
-    borderWidth: 0.5,
-    borderColor: 'rgba(0,0,0,0.1)',
-    borderRadius: 5,
-    padding: 10,
-  },
-  incrementalButtonGradation: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  modalFooter: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    paddingVertical: 20,
-  },
-  errorMessage: {
-    color: '#dc3545',
-    marginTop: 10,
   },
 });
