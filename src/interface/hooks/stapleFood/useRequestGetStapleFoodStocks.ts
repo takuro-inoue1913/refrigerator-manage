@@ -36,6 +36,8 @@ export const useRequestGetStapleFoodStocks = () => {
 
       return data;
     },
+    // キャッシュ時間を延長
+    staleTime: 1000 * 60 * 60 * 24 * 7,
   });
 
   return {
