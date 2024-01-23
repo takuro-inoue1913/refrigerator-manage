@@ -99,6 +99,7 @@ export const ShoppingMemoScreen = () => {
   };
 
   const ShoppingMemoItem = ({ item }: { item: ShoppingMemo }) => {
+    const isChecked = checkedShoppingMemoIds.includes(item.id);
     const handlePressDeleteButton = () => {
       Alert.alert('削除しますか？', '', [
         {
@@ -130,18 +131,35 @@ export const ShoppingMemoScreen = () => {
       <View style={styles.listItem}>
         <View style={styles.listItemContent}>
           <AnimatedCheckbox
-            isChecked={checkedShoppingMemoIds.includes(item.id)}
+            isChecked={isChecked}
             onCheck={handlePressCheckbox}
           />
           <CachedImage
             source={{ uri: item.imageUri }}
             cacheKey={generateEncodeString([item.name, item.id.toString()])}
-            style={{
-              width: 40,
-              height: 40,
-            }}
+            style={[
+              {
+                width: 40,
+                height: 40,
+              },
+              isChecked ? { opacity: 0.5 } : {},
+            ]}
           />
-          <Text>{item.displayName}</Text>
+          <Text
+            style={
+              isChecked
+                ? {
+                    fontSize: 16,
+                    textDecorationLine: 'line-through',
+                    color: 'gray',
+                  }
+                : {
+                    fontSize: 16,
+                  }
+            }
+          >
+            {item.displayName}
+          </Text>
         </View>
         <View style={styles.listItemContent}>
           <Text>{item.quantity}</Text>
@@ -150,7 +168,7 @@ export const ShoppingMemoScreen = () => {
             style={styles.trashIcon}
             onPress={handlePressDeleteButton}
           >
-            <Icon name="trash-can-outline" size={25} color="#fff" />
+            <Icon name="trash-can-outline" size={20} color="#fff" />
           </TouchableOpacity>
         </View>
       </View>
@@ -170,7 +188,7 @@ export const ShoppingMemoScreen = () => {
         onPress={() => setModalVisible(true)}
       >
         <CommonGradation style={styles.commonGradation}>
-          <Icon name="plus" size={26} color="white" />
+          <Icon name="plus" size={30} color="white" />
         </CommonGradation>
       </TouchableOpacity>
       <Modal
