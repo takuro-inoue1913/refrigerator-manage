@@ -33,6 +33,41 @@ export const useShoppingMemoActions = () => {
       },
   );
 
+  const upsertShoppingMemo = useRecoilCallback(
+    ({ set }) =>
+      ({
+        id,
+        prevId,
+        name,
+        displayName,
+        imageUri,
+        fridgeType,
+        unitName,
+        incrementalUnit,
+        quantity,
+      }: ShoppingMemo & {
+        prevId: string | null;
+      }) => {
+        set(shoppingMemosState, (prev) =>
+          prev.map((shoppingMemo) => {
+            if (shoppingMemo.id === prevId) {
+              return {
+                id,
+                name,
+                displayName,
+                imageUri,
+                fridgeType,
+                unitName,
+                incrementalUnit,
+                quantity,
+              };
+            }
+            return shoppingMemo;
+          }),
+        );
+      },
+  );
+
   const deleteShoppingMemo = useRecoilCallback(
     ({ set }) =>
       ({ id }: { id: string }) => {
@@ -44,6 +79,7 @@ export const useShoppingMemoActions = () => {
 
   return {
     addShoppingMemo,
+    upsertShoppingMemo,
     deleteShoppingMemo,
   };
 };

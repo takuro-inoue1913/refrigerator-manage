@@ -18,7 +18,7 @@ const AnimatedCheckbox: FC<Props> = ({ isChecked, onCheck }) => {
 
   useEffect(() => {
     Animated.timing(scale, {
-      toValue: isChecked ? 1.2 : 1,
+      toValue: isChecked ? 1.1 : 1,
       duration: 300,
       useNativeDriver: true,
     }).start();
@@ -30,7 +30,7 @@ const AnimatedCheckbox: FC<Props> = ({ isChecked, onCheck }) => {
       <Animated.View style={[styles.checkbox, { transform: [{ scale }] }]}>
         <Icon
           name="checkbox-marked-circle"
-          size={24}
+          size={28}
           color={isChecked ? '#4CAF50' : '#e1e4e8'}
         />
       </Animated.View>

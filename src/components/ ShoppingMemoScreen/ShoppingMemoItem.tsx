@@ -1,6 +1,13 @@
 import React, { FC } from 'react';
 import { ShoppingMemo, useShoppingMemoActions } from '@src/states/shoppingMemo';
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Alert,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import AnimatedCheckbox from '@src/components/common/AnimatedCheckbox';
 import { generateEncodeString } from '@src/utils/logics/createEncodeStrings';
 import CachedImage from 'expo-cached-image';
@@ -11,6 +18,7 @@ type Props = {
   item: ShoppingMemo;
   addCheckedId: (id: string) => void;
   removeCheckedId: (id: string) => void;
+  onLongPress: (id: string) => void;
 };
 
 export const ShoppingMemoItem: FC<Props> = ({
@@ -18,6 +26,7 @@ export const ShoppingMemoItem: FC<Props> = ({
   checkedIds,
   addCheckedId,
   removeCheckedId,
+  onLongPress,
 }) => {
   const isChecked = checkedIds.includes(item.id);
   const shoppingMemoActions = useShoppingMemoActions();
@@ -47,8 +56,12 @@ export const ShoppingMemoItem: FC<Props> = ({
     }
   };
 
+  const handleLongPress = () => {
+    onLongPress(item.id);
+  };
+
   return (
-    <View style={styles.listItem}>
+    <Pressable style={styles.listItem} onLongPress={handleLongPress}>
       <View style={styles.listItemContent}>
         <AnimatedCheckbox isChecked={isChecked} onCheck={handlePressCheckbox} />
         <CachedImage
@@ -88,7 +101,7 @@ export const ShoppingMemoItem: FC<Props> = ({
           <Icon name="trash-can-outline" size={20} color="#fff" />
         </TouchableOpacity>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

@@ -24,11 +24,14 @@ export type DropdownData = {
   searchKey: string;
 };
 
+export type ModalMode = 'add' | 'edit';
+
 type Props = {
   visible: boolean;
   dropdownData: DropdownData[];
   selectFridgeMaster: FridgeMaster | null;
   quantity: number;
+  mode: ModalMode;
   errorMessage: string | null;
   onChangeDropdownValue: (data: DropdownData) => void;
   onChangeQuantity: (quantity: number) => void;
@@ -41,6 +44,7 @@ export const ShoppingMemoModal: FC<Props> = ({
   dropdownData,
   selectFridgeMaster,
   quantity,
+  mode,
   errorMessage,
   onChangeDropdownValue,
   onChangeQuantity,
@@ -84,7 +88,9 @@ export const ShoppingMemoModal: FC<Props> = ({
               <View style={styles.modalView}>
                 <View style={styles.header}>
                   <View style={{ flex: 1, alignItems: 'center' }}>
-                    <Text style={styles.headerText}>買い物メモの追加</Text>
+                    <Text style={styles.headerText}>
+                      買い物メモの{mode === 'add' ? '追加' : '編集'}
+                    </Text>
                   </View>
                 </View>
                 <View style={styles.formItem}>
@@ -176,7 +182,9 @@ export const ShoppingMemoModal: FC<Props> = ({
                         onPress={onSubmit}
                         disabled={quantity === 0}
                       >
-                        <Text style={styles.buttonText}>追加</Text>
+                        <Text style={styles.buttonText}>
+                          {mode === 'add' ? '追加' : '編集'}
+                        </Text>
                       </LinearGradientButton>
                       {errorMessage && (
                         <Text style={styles.errorMessage}>{errorMessage}</Text>

@@ -13,6 +13,7 @@ import { useRecoilValue } from 'recoil';
 import { ShoppingMemoItem } from '@src/components/ ShoppingMemoScreen/ShoppingMemoItem';
 import {
   DropdownData,
+  ModalMode,
   ShoppingMemoModal,
 } from '@src/components/ ShoppingMemoScreen/ShoppingMemoModal';
 
@@ -28,6 +29,8 @@ export const ShoppingMemoScreen = () => {
   const [checkedShoppingMemoIds, setCheckedShoppingMemoIds] = useState<
     string[]
   >([]);
+  const [modalMode, setModalMode] = useState<ModalMode>('add');
+  const [editTargetId, setEditTargetId] = useState<string | null>(null);
 
   const modalData = useMemo<DropdownData[]>(() => {
     return fridgeMaster.map((item) => ({
@@ -58,20 +61,55 @@ export const ShoppingMemoScreen = () => {
     if (!selectFridgeMaster) {
       return;
     }
-    if (shoppingMemo.some((item) => item.id === selectFridgeMaster.id)) {
-      setErrorMessage('すでに追加されている食材です。');
-      return;
+
+    switch (modalMode) {
+      case 'add':
+        {
+          if (shoppingMemo.some((item) => item.id === selectFridgeMaster.id)) {
+            setErrorMessage('すでに追加されている食材です。');
+            return;
+          }
+          shoppingMemoActions.addShoppingMemo({
+            ...selectFridgeMaster,
+            quantity,
+          });
+        }
+        break;
+      case 'edit':
+        {
+          // editTargetId が selectFridgeMaster.id と変更されており、
+          // かつ、すでに同じ id の食材が shoppingMemo に存在する場合はエラー
+          if (
+            editTargetId !== selectFridgeMaster.id &&
+            shoppingMemo.some((item) => item.id === selectFridgeMaster.id)
+          ) {
+            setErrorMessage('すでに追加されている食材です。');
+            return;
+          }
+          shoppingMemoActions.upsertShoppingMemo({
+            ...selectFridgeMaster,
+            prevId: editTargetId,
+            quantity,
+          });
+          setEditTargetId(null);
+        }
+        break;
     }
-    shoppingMemoActions.addShoppingMemo({
-      ...selectFridgeMaster,
-      quantity,
-    });
     handleCloseModal();
+  };
+
+  const handleLongPressItem = (id: string) => {
+    setSelectFridgeMaster(fridgeMaster.find((item) => item.id === id) ?? null);
+    setQuantity(shoppingMemo.find((item) => item.id === id)?.quantity ?? 0);
+    setModalMode('edit');
+    setEditTargetId(id);
+    setModalVisible(true);
   };
 
   const FlatItem = ({ item }: { item: ShoppingMemo }) => (
     <ShoppingMemoItem
       item={item}
+      onLongPress={handleLongPressItem}
       checkedIds={checkedShoppingMemoIds}
       addCheckedId={(id) => setCheckedShoppingMemoIds((prev) => [...prev, id])}
       removeCheckedId={(id) =>
@@ -90,7 +128,10 @@ export const ShoppingMemoScreen = () => {
       />
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => setModalVisible(true)}
+        onPress={() => {
+          setModalMode('add');
+          setModalVisible(true);
+        }}
       >
         <CommonGradation style={styles.commonGradation}>
           <Icon name="plus" size={30} color="white" />
@@ -98,6 +139,7 @@ export const ShoppingMemoScreen = () => {
       </TouchableOpacity>
       <ShoppingMemoModal
         visible={modalVisible}
+        mode={modalMode}
         dropdownData={modalData}
         selectFridgeMaster={selectFridgeMaster}
         quantity={quantity}
