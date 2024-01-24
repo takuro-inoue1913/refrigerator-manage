@@ -1,15 +1,10 @@
 import { atom, selector } from 'recoil';
-import { FridgeStock } from '@src/types';
+import { FridgeStock, NormalizedArray } from '@src/types';
 
 /**
  * 在庫の型
  */
-export type OtherStocks = {
-  ids: string[];
-  byId: {
-    [otherId: string]: FridgeStock;
-  };
-};
+export type OtherStocks = NormalizedArray<FridgeStock>;
 
 export const otherStocksState = atom({
   key: 'otherStocksState',

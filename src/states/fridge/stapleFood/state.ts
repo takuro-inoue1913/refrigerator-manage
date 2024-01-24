@@ -1,15 +1,10 @@
 import { atom, selector } from 'recoil';
-import { FridgeStock } from '@src/types';
+import { FridgeStock, NormalizedArray } from '@src/types';
 
 /**
  * 在庫の型
  */
-export type StapleFoodStocks = {
-  ids: string[];
-  byId: {
-    [stapleFoodId: string]: FridgeStock;
-  };
-};
+export type StapleFoodStocks = NormalizedArray<FridgeStock>;
 
 export const stapleFoodStocksState = atom({
   key: 'stapleFoodStocksState',
