@@ -1,0 +1,8 @@
+query GetShoppingMemos {
+  shopping_memo {
+    shopping_memo_id
+    user_id
+    master_id
+    quantity
+  }
+}

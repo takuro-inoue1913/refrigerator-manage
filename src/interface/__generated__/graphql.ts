@@ -5337,6 +5337,10 @@ export type Mutation_Root = {
   delete_seasoning_stocks?: Maybe<Seasoning_Stocks_Mutation_Response>;
   /** delete single row from the table: "seasoning_stocks" */
   delete_seasoning_stocks_by_pk?: Maybe<Seasoning_Stocks>;
+  /** delete data from the table: "shopping_memo" */
+  delete_shopping_memo?: Maybe<Shopping_Memo_Mutation_Response>;
+  /** delete single row from the table: "shopping_memo" */
+  delete_shopping_memo_by_pk?: Maybe<Shopping_Memo>;
   /** delete data from the table: "spice_master" */
   delete_spice_master?: Maybe<Spice_Master_Mutation_Response>;
   /** delete single row from the table: "spice_master" */
@@ -5453,6 +5457,10 @@ export type Mutation_Root = {
   insert_seasoning_stocks?: Maybe<Seasoning_Stocks_Mutation_Response>;
   /** insert a single row into the table: "seasoning_stocks" */
   insert_seasoning_stocks_one?: Maybe<Seasoning_Stocks>;
+  /** insert data into the table: "shopping_memo" */
+  insert_shopping_memo?: Maybe<Shopping_Memo_Mutation_Response>;
+  /** insert a single row into the table: "shopping_memo" */
+  insert_shopping_memo_one?: Maybe<Shopping_Memo>;
   /** insert data into the table: "spice_master" */
   insert_spice_master?: Maybe<Spice_Master_Mutation_Response>;
   /** insert a single row into the table: "spice_master" */
@@ -5611,6 +5619,12 @@ export type Mutation_Root = {
   update_seasoning_stocks_by_pk?: Maybe<Seasoning_Stocks>;
   /** update multiples rows of table: "seasoning_stocks" */
   update_seasoning_stocks_many?: Maybe<Array<Maybe<Seasoning_Stocks_Mutation_Response>>>;
+  /** update data of the table: "shopping_memo" */
+  update_shopping_memo?: Maybe<Shopping_Memo_Mutation_Response>;
+  /** update single row of the table: "shopping_memo" */
+  update_shopping_memo_by_pk?: Maybe<Shopping_Memo>;
+  /** update multiples rows of table: "shopping_memo" */
+  update_shopping_memo_many?: Maybe<Array<Maybe<Shopping_Memo_Mutation_Response>>>;
   /** update data of the table: "spice_master" */
   update_spice_master?: Maybe<Spice_Master_Mutation_Response>;
   /** update single row of the table: "spice_master" */
@@ -5911,6 +5925,18 @@ export type Mutation_RootDelete_Seasoning_StocksArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Seasoning_Stocks_By_PkArgs = {
   stock_id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Shopping_MemoArgs = {
+  where: Shopping_Memo_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Shopping_Memo_By_PkArgs = {
+  shopping_memo_id: Scalars['uuid']['input'];
 };
 
 
@@ -6301,6 +6327,20 @@ export type Mutation_RootInsert_Seasoning_StocksArgs = {
 export type Mutation_RootInsert_Seasoning_Stocks_OneArgs = {
   object: Seasoning_Stocks_Insert_Input;
   on_conflict?: InputMaybe<Seasoning_Stocks_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Shopping_MemoArgs = {
+  objects: Array<Shopping_Memo_Insert_Input>;
+  on_conflict?: InputMaybe<Shopping_Memo_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Shopping_Memo_OneArgs = {
+  object: Shopping_Memo_Insert_Input;
+  on_conflict?: InputMaybe<Shopping_Memo_On_Conflict>;
 };
 
 
@@ -6875,6 +6915,28 @@ export type Mutation_RootUpdate_Seasoning_Stocks_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Seasoning_Stocks_ManyArgs = {
   updates: Array<Seasoning_Stocks_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Shopping_MemoArgs = {
+  _inc?: InputMaybe<Shopping_Memo_Inc_Input>;
+  _set?: InputMaybe<Shopping_Memo_Set_Input>;
+  where: Shopping_Memo_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Shopping_Memo_By_PkArgs = {
+  _inc?: InputMaybe<Shopping_Memo_Inc_Input>;
+  _set?: InputMaybe<Shopping_Memo_Set_Input>;
+  pk_columns: Shopping_Memo_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Shopping_Memo_ManyArgs = {
+  updates: Array<Shopping_Memo_Updates>;
 };
 
 
@@ -8703,6 +8765,12 @@ export type Query_Root = {
   seasoning_stocks_aggregate: Seasoning_Stocks_Aggregate;
   /** fetch data from the table: "seasoning_stocks" using primary key columns */
   seasoning_stocks_by_pk?: Maybe<Seasoning_Stocks>;
+  /** fetch data from the table: "shopping_memo" */
+  shopping_memo: Array<Shopping_Memo>;
+  /** fetch aggregated fields from the table: "shopping_memo" */
+  shopping_memo_aggregate: Shopping_Memo_Aggregate;
+  /** fetch data from the table: "shopping_memo" using primary key columns */
+  shopping_memo_by_pk?: Maybe<Shopping_Memo>;
   /** fetch data from the table: "spice_master" */
   spice_master: Array<Spice_Master>;
   /** fetch aggregated fields from the table: "spice_master" */
@@ -9234,6 +9302,29 @@ export type Query_RootSeasoning_Stocks_AggregateArgs = {
 
 export type Query_RootSeasoning_Stocks_By_PkArgs = {
   stock_id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootShopping_MemoArgs = {
+  distinct_on?: InputMaybe<Array<Shopping_Memo_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Shopping_Memo_Order_By>>;
+  where?: InputMaybe<Shopping_Memo_Bool_Exp>;
+};
+
+
+export type Query_RootShopping_Memo_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Shopping_Memo_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Shopping_Memo_Order_By>>;
+  where?: InputMaybe<Shopping_Memo_Bool_Exp>;
+};
+
+
+export type Query_RootShopping_Memo_By_PkArgs = {
+  shopping_memo_id: Scalars['uuid']['input'];
 };
 
 
@@ -10123,6 +10214,321 @@ export type Seasoning_Stocks_Variance_Fields = {
 /** order by variance() on columns of table "seasoning_stocks" */
 export type Seasoning_Stocks_Variance_Order_By = {
   incremental_unit?: InputMaybe<Order_By>;
+  quantity?: InputMaybe<Order_By>;
+};
+
+/** ユーザーごとのショッピングメモ */
+export type Shopping_Memo = {
+  __typename?: 'shopping_memo';
+  master_id: Scalars['uuid']['output'];
+  quantity: Scalars['Int']['output'];
+  shopping_memo_id: Scalars['uuid']['output'];
+  /** An object relationship */
+  shopping_memo_users?: Maybe<Users>;
+  user_id: Scalars['String']['output'];
+};
+
+/** aggregated selection of "shopping_memo" */
+export type Shopping_Memo_Aggregate = {
+  __typename?: 'shopping_memo_aggregate';
+  aggregate?: Maybe<Shopping_Memo_Aggregate_Fields>;
+  nodes: Array<Shopping_Memo>;
+};
+
+export type Shopping_Memo_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Shopping_Memo_Aggregate_Bool_Exp_Count>;
+};
+
+export type Shopping_Memo_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Shopping_Memo_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Shopping_Memo_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "shopping_memo" */
+export type Shopping_Memo_Aggregate_Fields = {
+  __typename?: 'shopping_memo_aggregate_fields';
+  avg?: Maybe<Shopping_Memo_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Shopping_Memo_Max_Fields>;
+  min?: Maybe<Shopping_Memo_Min_Fields>;
+  stddev?: Maybe<Shopping_Memo_Stddev_Fields>;
+  stddev_pop?: Maybe<Shopping_Memo_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Shopping_Memo_Stddev_Samp_Fields>;
+  sum?: Maybe<Shopping_Memo_Sum_Fields>;
+  var_pop?: Maybe<Shopping_Memo_Var_Pop_Fields>;
+  var_samp?: Maybe<Shopping_Memo_Var_Samp_Fields>;
+  variance?: Maybe<Shopping_Memo_Variance_Fields>;
+};
+
+
+/** aggregate fields of "shopping_memo" */
+export type Shopping_Memo_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Shopping_Memo_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "shopping_memo" */
+export type Shopping_Memo_Aggregate_Order_By = {
+  avg?: InputMaybe<Shopping_Memo_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Shopping_Memo_Max_Order_By>;
+  min?: InputMaybe<Shopping_Memo_Min_Order_By>;
+  stddev?: InputMaybe<Shopping_Memo_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Shopping_Memo_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Shopping_Memo_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Shopping_Memo_Sum_Order_By>;
+  var_pop?: InputMaybe<Shopping_Memo_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Shopping_Memo_Var_Samp_Order_By>;
+  variance?: InputMaybe<Shopping_Memo_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "shopping_memo" */
+export type Shopping_Memo_Arr_Rel_Insert_Input = {
+  data: Array<Shopping_Memo_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Shopping_Memo_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Shopping_Memo_Avg_Fields = {
+  __typename?: 'shopping_memo_avg_fields';
+  quantity?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "shopping_memo" */
+export type Shopping_Memo_Avg_Order_By = {
+  quantity?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "shopping_memo". All fields are combined with a logical 'AND'. */
+export type Shopping_Memo_Bool_Exp = {
+  _and?: InputMaybe<Array<Shopping_Memo_Bool_Exp>>;
+  _not?: InputMaybe<Shopping_Memo_Bool_Exp>;
+  _or?: InputMaybe<Array<Shopping_Memo_Bool_Exp>>;
+  master_id?: InputMaybe<Uuid_Comparison_Exp>;
+  quantity?: InputMaybe<Int_Comparison_Exp>;
+  shopping_memo_id?: InputMaybe<Uuid_Comparison_Exp>;
+  shopping_memo_users?: InputMaybe<Users_Bool_Exp>;
+  user_id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "shopping_memo" */
+export enum Shopping_Memo_Constraint {
+  /** unique or primary key constraint on columns "shopping_memo_id" */
+  ShoppingMemoPkey = 'shopping_memo_pkey'
+}
+
+/** input type for incrementing numeric columns in table "shopping_memo" */
+export type Shopping_Memo_Inc_Input = {
+  quantity?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** input type for inserting data into table "shopping_memo" */
+export type Shopping_Memo_Insert_Input = {
+  master_id?: InputMaybe<Scalars['uuid']['input']>;
+  quantity?: InputMaybe<Scalars['Int']['input']>;
+  shopping_memo_id?: InputMaybe<Scalars['uuid']['input']>;
+  shopping_memo_users?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Shopping_Memo_Max_Fields = {
+  __typename?: 'shopping_memo_max_fields';
+  master_id?: Maybe<Scalars['uuid']['output']>;
+  quantity?: Maybe<Scalars['Int']['output']>;
+  shopping_memo_id?: Maybe<Scalars['uuid']['output']>;
+  user_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by max() on columns of table "shopping_memo" */
+export type Shopping_Memo_Max_Order_By = {
+  master_id?: InputMaybe<Order_By>;
+  quantity?: InputMaybe<Order_By>;
+  shopping_memo_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Shopping_Memo_Min_Fields = {
+  __typename?: 'shopping_memo_min_fields';
+  master_id?: Maybe<Scalars['uuid']['output']>;
+  quantity?: Maybe<Scalars['Int']['output']>;
+  shopping_memo_id?: Maybe<Scalars['uuid']['output']>;
+  user_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by min() on columns of table "shopping_memo" */
+export type Shopping_Memo_Min_Order_By = {
+  master_id?: InputMaybe<Order_By>;
+  quantity?: InputMaybe<Order_By>;
+  shopping_memo_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "shopping_memo" */
+export type Shopping_Memo_Mutation_Response = {
+  __typename?: 'shopping_memo_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Shopping_Memo>;
+};
+
+/** on_conflict condition type for table "shopping_memo" */
+export type Shopping_Memo_On_Conflict = {
+  constraint: Shopping_Memo_Constraint;
+  update_columns?: Array<Shopping_Memo_Update_Column>;
+  where?: InputMaybe<Shopping_Memo_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "shopping_memo". */
+export type Shopping_Memo_Order_By = {
+  master_id?: InputMaybe<Order_By>;
+  quantity?: InputMaybe<Order_By>;
+  shopping_memo_id?: InputMaybe<Order_By>;
+  shopping_memo_users?: InputMaybe<Users_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: shopping_memo */
+export type Shopping_Memo_Pk_Columns_Input = {
+  shopping_memo_id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "shopping_memo" */
+export enum Shopping_Memo_Select_Column {
+  /** column name */
+  MasterId = 'master_id',
+  /** column name */
+  Quantity = 'quantity',
+  /** column name */
+  ShoppingMemoId = 'shopping_memo_id',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "shopping_memo" */
+export type Shopping_Memo_Set_Input = {
+  master_id?: InputMaybe<Scalars['uuid']['input']>;
+  quantity?: InputMaybe<Scalars['Int']['input']>;
+  shopping_memo_id?: InputMaybe<Scalars['uuid']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Shopping_Memo_Stddev_Fields = {
+  __typename?: 'shopping_memo_stddev_fields';
+  quantity?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev() on columns of table "shopping_memo" */
+export type Shopping_Memo_Stddev_Order_By = {
+  quantity?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Shopping_Memo_Stddev_Pop_Fields = {
+  __typename?: 'shopping_memo_stddev_pop_fields';
+  quantity?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_pop() on columns of table "shopping_memo" */
+export type Shopping_Memo_Stddev_Pop_Order_By = {
+  quantity?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Shopping_Memo_Stddev_Samp_Fields = {
+  __typename?: 'shopping_memo_stddev_samp_fields';
+  quantity?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "shopping_memo" */
+export type Shopping_Memo_Stddev_Samp_Order_By = {
+  quantity?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "shopping_memo" */
+export type Shopping_Memo_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Shopping_Memo_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Shopping_Memo_Stream_Cursor_Value_Input = {
+  master_id?: InputMaybe<Scalars['uuid']['input']>;
+  quantity?: InputMaybe<Scalars['Int']['input']>;
+  shopping_memo_id?: InputMaybe<Scalars['uuid']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Shopping_Memo_Sum_Fields = {
+  __typename?: 'shopping_memo_sum_fields';
+  quantity?: Maybe<Scalars['Int']['output']>;
+};
+
+/** order by sum() on columns of table "shopping_memo" */
+export type Shopping_Memo_Sum_Order_By = {
+  quantity?: InputMaybe<Order_By>;
+};
+
+/** update columns of table "shopping_memo" */
+export enum Shopping_Memo_Update_Column {
+  /** column name */
+  MasterId = 'master_id',
+  /** column name */
+  Quantity = 'quantity',
+  /** column name */
+  ShoppingMemoId = 'shopping_memo_id',
+  /** column name */
+  UserId = 'user_id'
+}
+
+export type Shopping_Memo_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Shopping_Memo_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Shopping_Memo_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Shopping_Memo_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Shopping_Memo_Var_Pop_Fields = {
+  __typename?: 'shopping_memo_var_pop_fields';
+  quantity?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_pop() on columns of table "shopping_memo" */
+export type Shopping_Memo_Var_Pop_Order_By = {
+  quantity?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Shopping_Memo_Var_Samp_Fields = {
+  __typename?: 'shopping_memo_var_samp_fields';
+  quantity?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_samp() on columns of table "shopping_memo" */
+export type Shopping_Memo_Var_Samp_Order_By = {
+  quantity?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Shopping_Memo_Variance_Fields = {
+  __typename?: 'shopping_memo_variance_fields';
+  quantity?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "shopping_memo" */
+export type Shopping_Memo_Variance_Order_By = {
   quantity?: InputMaybe<Order_By>;
 };
 
@@ -11756,6 +12162,14 @@ export type Subscription_Root = {
   seasoning_stocks_by_pk?: Maybe<Seasoning_Stocks>;
   /** fetch data from the table in a streaming manner: "seasoning_stocks" */
   seasoning_stocks_stream: Array<Seasoning_Stocks>;
+  /** fetch data from the table: "shopping_memo" */
+  shopping_memo: Array<Shopping_Memo>;
+  /** fetch aggregated fields from the table: "shopping_memo" */
+  shopping_memo_aggregate: Shopping_Memo_Aggregate;
+  /** fetch data from the table: "shopping_memo" using primary key columns */
+  shopping_memo_by_pk?: Maybe<Shopping_Memo>;
+  /** fetch data from the table in a streaming manner: "shopping_memo" */
+  shopping_memo_stream: Array<Shopping_Memo>;
   /** fetch data from the table: "spice_master" */
   spice_master: Array<Spice_Master>;
   /** fetch aggregated fields from the table: "spice_master" */
@@ -12453,6 +12867,36 @@ export type Subscription_RootSeasoning_Stocks_StreamArgs = {
 };
 
 
+export type Subscription_RootShopping_MemoArgs = {
+  distinct_on?: InputMaybe<Array<Shopping_Memo_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Shopping_Memo_Order_By>>;
+  where?: InputMaybe<Shopping_Memo_Bool_Exp>;
+};
+
+
+export type Subscription_RootShopping_Memo_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Shopping_Memo_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Shopping_Memo_Order_By>>;
+  where?: InputMaybe<Shopping_Memo_Bool_Exp>;
+};
+
+
+export type Subscription_RootShopping_Memo_By_PkArgs = {
+  shopping_memo_id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootShopping_Memo_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Shopping_Memo_Stream_Cursor_Input>>;
+  where?: InputMaybe<Shopping_Memo_Bool_Exp>;
+};
+
+
 export type Subscription_RootSpice_MasterArgs = {
   distinct_on?: InputMaybe<Array<Spice_Master_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -12993,6 +13437,10 @@ export type Users = {
   /** An aggregate relationship */
   users_seasoning_stocks_aggregate: Seasoning_Stocks_Aggregate;
   /** An array relationship */
+  users_shopping_memo: Array<Shopping_Memo>;
+  /** An aggregate relationship */
+  users_shopping_memo_aggregate: Shopping_Memo_Aggregate;
+  /** An array relationship */
   users_spice_stocks: Array<Spice_Stocks>;
   /** An aggregate relationship */
   users_spice_stocks_aggregate: Spice_Stocks_Aggregate;
@@ -13168,6 +13616,26 @@ export type UsersUsers_Seasoning_Stocks_AggregateArgs = {
 
 
 /** frimane ユーザー */
+export type UsersUsers_Shopping_MemoArgs = {
+  distinct_on?: InputMaybe<Array<Shopping_Memo_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Shopping_Memo_Order_By>>;
+  where?: InputMaybe<Shopping_Memo_Bool_Exp>;
+};
+
+
+/** frimane ユーザー */
+export type UsersUsers_Shopping_Memo_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Shopping_Memo_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Shopping_Memo_Order_By>>;
+  where?: InputMaybe<Shopping_Memo_Bool_Exp>;
+};
+
+
+/** frimane ユーザー */
 export type UsersUsers_Spice_StocksArgs = {
   distinct_on?: InputMaybe<Array<Spice_Stocks_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -13272,6 +13740,8 @@ export type Users_Bool_Exp = {
   users_protein_source_stocks_aggregate?: InputMaybe<Protein_Source_Stocks_Aggregate_Bool_Exp>;
   users_seasoning_stocks?: InputMaybe<Seasoning_Stocks_Bool_Exp>;
   users_seasoning_stocks_aggregate?: InputMaybe<Seasoning_Stocks_Aggregate_Bool_Exp>;
+  users_shopping_memo?: InputMaybe<Shopping_Memo_Bool_Exp>;
+  users_shopping_memo_aggregate?: InputMaybe<Shopping_Memo_Aggregate_Bool_Exp>;
   users_spice_stocks?: InputMaybe<Spice_Stocks_Bool_Exp>;
   users_spice_stocks_aggregate?: InputMaybe<Spice_Stocks_Aggregate_Bool_Exp>;
   users_staple_food_stocks?: InputMaybe<Staple_Food_Stocks_Bool_Exp>;
@@ -13302,6 +13772,7 @@ export type Users_Insert_Input = {
   users_other_stocks?: InputMaybe<Other_Stocks_Arr_Rel_Insert_Input>;
   users_protein_source_stocks?: InputMaybe<Protein_Source_Stocks_Arr_Rel_Insert_Input>;
   users_seasoning_stocks?: InputMaybe<Seasoning_Stocks_Arr_Rel_Insert_Input>;
+  users_shopping_memo?: InputMaybe<Shopping_Memo_Arr_Rel_Insert_Input>;
   users_spice_stocks?: InputMaybe<Spice_Stocks_Arr_Rel_Insert_Input>;
   users_staple_food_stocks?: InputMaybe<Staple_Food_Stocks_Arr_Rel_Insert_Input>;
   users_vegetable_stocks?: InputMaybe<Vegetable_Stocks_Arr_Rel_Insert_Input>;
@@ -13365,6 +13836,7 @@ export type Users_Order_By = {
   users_other_stocks_aggregate?: InputMaybe<Other_Stocks_Aggregate_Order_By>;
   users_protein_source_stocks_aggregate?: InputMaybe<Protein_Source_Stocks_Aggregate_Order_By>;
   users_seasoning_stocks_aggregate?: InputMaybe<Seasoning_Stocks_Aggregate_Order_By>;
+  users_shopping_memo_aggregate?: InputMaybe<Shopping_Memo_Aggregate_Order_By>;
   users_spice_stocks_aggregate?: InputMaybe<Spice_Stocks_Aggregate_Order_By>;
   users_staple_food_stocks_aggregate?: InputMaybe<Staple_Food_Stocks_Aggregate_Order_By>;
   users_vegetable_stocks_aggregate?: InputMaybe<Vegetable_Stocks_Aggregate_Order_By>;
@@ -14810,6 +15282,11 @@ export type DeleteCustomSeasoningAndStocksMutationVariables = Exact<{
 
 export type DeleteCustomSeasoningAndStocksMutation = { __typename?: 'mutation_root', delete_custom_seasoning_master?: { __typename?: 'custom_seasoning_master_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'custom_seasoning_master', custom_seasoning_id: any, image_uri: string, custom_seasoning_name: string, default_expiration_period: number, display_name: string, unit_id: number }> } | null, delete_seasoning_stocks?: { __typename?: 'seasoning_stocks_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'seasoning_stocks', stock_id: any, seasoning_id: any }> } | null };
 
+export type GetShoppingMemosQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetShoppingMemosQuery = { __typename?: 'query_root', shopping_memo: Array<{ __typename?: 'shopping_memo', shopping_memo_id: any, user_id: string, master_id: any, quantity: number }> };
+
 export type GetAllSpiceMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -15125,6 +15602,7 @@ export const UpdateSeasoningStockIsFavoriteDocument = {"kind":"Document","defini
 export const UpdateSeasoningStockDetailDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateSeasoningStockDetail"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"seasoningId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"incrementalUnit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"expirationDate"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"date"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"memo"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"isFavorite"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_seasoning_stocks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"seasoning_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"seasoningId"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"quantity"},"value":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"incremental_unit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"incrementalUnit"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"expiration_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"expirationDate"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"memo"},"value":{"kind":"Variable","name":{"kind":"Name","value":"memo"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"is_favorite"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isFavorite"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"seasoning_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateSeasoningStockDetailMutation, UpdateSeasoningStockDetailMutationVariables>;
 export const InsertCustomSeasoningMasterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InsertCustomSeasoningMaster"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"seasoningName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"displayName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"imageUri"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"defaultExpirationPeriod"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"unitId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_custom_seasoning_master_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"custom_seasoning_name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"seasoningName"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"display_name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"displayName"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"image_uri"},"value":{"kind":"Variable","name":{"kind":"Name","value":"imageUri"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"default_expiration_period"},"value":{"kind":"Variable","name":{"kind":"Name","value":"defaultExpirationPeriod"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"unit_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"unitId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"custom_seasoning_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"custom_seasoning_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","name":{"kind":"Name","value":"unit_id"}}]}}]}}]} as unknown as DocumentNode<InsertCustomSeasoningMasterMutation, InsertCustomSeasoningMasterMutationVariables>;
 export const DeleteCustomSeasoningAndStocksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteCustomSeasoningAndStocks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"seasoningId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_custom_seasoning_master"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"custom_seasoning_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"seasoningId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}},{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"custom_seasoning_id"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"custom_seasoning_name"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"unit_id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_seasoning_stocks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"seasoning_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"seasoningId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}},{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"seasoning_id"}}]}}]}}]}}]} as unknown as DocumentNode<DeleteCustomSeasoningAndStocksMutation, DeleteCustomSeasoningAndStocksMutationVariables>;
+export const GetShoppingMemosDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetShoppingMemos"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shopping_memo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shopping_memo_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"master_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}}]}}]}}]} as unknown as DocumentNode<GetShoppingMemosQuery, GetShoppingMemosQueryVariables>;
 export const GetAllSpiceMasterAndUnitAndStocksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllSpiceMasterAndUnitAndStocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"GetSpiceMasterAndUnitAndStocks"},"name":{"kind":"Name","value":"spice_master"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"spice_master_spice_stocks"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_favorite"},"value":{"kind":"EnumValue","value":"desc_nulls_last"}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"spice_id"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"spice_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","name":{"kind":"Name","value":"spice_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"spice_master_spice_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"GetCustomSpiceMasterAndUnitAndStocks"},"name":{"kind":"Name","value":"custom_spice_master"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"custom_spice_master_spice_stocks"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_favorite"},"value":{"kind":"EnumValue","value":"desc_nulls_last"}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"spice_id"},"name":{"kind":"Name","value":"custom_spice_id"}},{"kind":"Field","alias":{"kind":"Name","value":"spice_name"},"name":{"kind":"Name","value":"custom_spice_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"spice_master_unit_master"},"name":{"kind":"Name","value":"custom_spice_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"spice_master_spice_stocks"},"name":{"kind":"Name","value":"custom_spice_master_spice_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllSpiceMasterAndUnitAndStocksQuery, GetAllSpiceMasterAndUnitAndStocksQueryVariables>;
 export const GetSpiceMasterAndUnitAndStocksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSpiceMasterAndUnitAndStocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"spice_master"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"spice_master_spice_stocks"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_favorite"},"value":{"kind":"EnumValue","value":"desc_nulls_last"}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"spice_id"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"spice_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","name":{"kind":"Name","value":"spice_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"spice_master_spice_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}}]}}]}}]}}]} as unknown as DocumentNode<GetSpiceMasterAndUnitAndStocksQuery, GetSpiceMasterAndUnitAndStocksQueryVariables>;
 export const GetCustomSpiceMasterAndUnitAndStocksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCustomSpiceMasterAndUnitAndStocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"custom_spice_master"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"custom_spice_master_spice_stocks"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_favorite"},"value":{"kind":"EnumValue","value":"desc_nulls_last"}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"spice_id"},"name":{"kind":"Name","value":"custom_spice_id"}},{"kind":"Field","alias":{"kind":"Name","value":"spice_name"},"name":{"kind":"Name","value":"custom_spice_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"spice_master_unit_master"},"name":{"kind":"Name","value":"custom_spice_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"spice_master_spice_stocks"},"name":{"kind":"Name","value":"custom_spice_master_spice_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}}]}}]}}]}}]} as unknown as DocumentNode<GetCustomSpiceMasterAndUnitAndStocksQuery, GetCustomSpiceMasterAndUnitAndStocksQueryVariables>;
