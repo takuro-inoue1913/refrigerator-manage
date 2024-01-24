@@ -4,12 +4,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FridgeMaster } from '@src/states/fridge';
-import {
-  ShoppingMemo,
-  shoppingMemosState,
-  useShoppingMemoActions,
-} from '@src/states/shoppingMemo';
-import { useRecoilValue } from 'recoil';
+import { ShoppingMemo, useShoppingMemoActions } from '@src/states/shoppingMemo';
 import { ShoppingMemoItem } from '@src/components/ ShoppingMemoScreen/ShoppingMemoItem';
 import {
   DropdownData,
@@ -17,11 +12,12 @@ import {
   ShoppingMemoModal,
 } from '@src/components/ ShoppingMemoScreen/ShoppingMemoModal';
 import { useIsFocused } from '@react-navigation/native';
+import { useRequestGetAllShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestGetAllShoppingMemo';
 
 export const ShoppingMemoScreen = () => {
   const isFocused = useIsFocused();
   const { fridgeMaster, refetch } = useRequestGetAllFridgeMaster();
-  const shoppingMemo = useRecoilValue(shoppingMemosState);
+  const { shoppingMemo } = useRequestGetAllShoppingMemo();
   const shoppingMemoActions = useShoppingMemoActions();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectFridgeMaster, setSelectFridgeMaster] =
