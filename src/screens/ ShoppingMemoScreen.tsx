@@ -34,6 +34,11 @@ export const ShoppingMemoScreen = () => {
   const [modalMode, setModalMode] = useState<ModalMode>('add');
   const [editTargetId, setEditTargetId] = useState<string | null>(null);
 
+  const listData = useMemo<ShoppingMemo['byId'][number][]>(
+    () => shoppingMemo.ids.map((id) => shoppingMemo.byId[id]),
+    [shoppingMemo],
+  );
+
   const modalData = useMemo<DropdownData[]>(() => {
     return fridgeMaster.map((item) => ({
       label: item.displayName,
@@ -67,7 +72,7 @@ export const ShoppingMemoScreen = () => {
     switch (modalMode) {
       case 'add':
         {
-          if (shoppingMemo.some((item) => item.id === selectFridgeMaster.id)) {
+          if (shoppingMemo.ids.some((id) => id === selectFridgeMaster.id)) {
             setErrorMessage('すでに追加されている食材です。');
             return;
           }
@@ -83,10 +88,14 @@ export const ShoppingMemoScreen = () => {
           // かつ、すでに同じ id の食材が shoppingMemo に存在する場合はエラー
           if (
             editTargetId !== selectFridgeMaster.id &&
-            shoppingMemo.some((item) => item.id === selectFridgeMaster.id)
+            shoppingMemo.ids.some((id) => id === selectFridgeMaster.id)
           ) {
             setErrorMessage('すでに追加されている食材です。');
             return;
+          }
+          // MEMO: ここで editTargetId が null になることはないはず
+          if (editTargetId === null) {
+            throw new Error('editTargetId is null');
           }
           shoppingMemoActions.upsertShoppingMemo({
             ...selectFridgeMaster,
@@ -102,13 +111,13 @@ export const ShoppingMemoScreen = () => {
 
   const handleLongPressItem = (id: string) => {
     setSelectFridgeMaster(fridgeMaster.find((item) => item.id === id) ?? null);
-    setQuantity(shoppingMemo.find((item) => item.id === id)?.quantity ?? 0);
+    setQuantity(shoppingMemo.byId[id].quantity ?? 0);
     setModalMode('edit');
     setEditTargetId(id);
     setModalVisible(true);
   };
 
-  const FlatItem = ({ item }: { item: ShoppingMemo }) => (
+  const FlatItem = ({ item }: { item: ShoppingMemo['byId'][number] }) => (
     <ShoppingMemoItem
       item={item}
       onLongPress={handleLongPressItem}
@@ -129,7 +138,7 @@ export const ShoppingMemoScreen = () => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={shoppingMemo}
+        data={listData}
         renderItem={FlatItem}
         keyExtractor={(item) => `${item.displayName}-${item.id}`}
         contentContainerStyle={{ paddingBottom: 20 }} // 必要に応じてスタイルを調整

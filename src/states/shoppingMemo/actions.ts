@@ -16,20 +16,23 @@ export const useShoppingMemoActions = () => {
         unitName,
         incrementalUnit,
         quantity,
-      }: ShoppingMemo) => {
-        set(shoppingMemosState, (prev) => [
-          ...prev,
-          {
-            id,
-            name,
-            displayName,
-            imageUri,
-            fridgeType,
-            unitName,
-            incrementalUnit,
-            quantity,
+      }: ShoppingMemo['byId'][number]) => {
+        set(shoppingMemosState, (prev) => ({
+          ids: [...prev.ids, id],
+          byId: {
+            ...prev.byId,
+            [id]: {
+              id,
+              name,
+              displayName,
+              imageUri,
+              fridgeType,
+              unitName,
+              incrementalUnit,
+              quantity,
+            },
           },
-        ]);
+        }));
       },
   );
 
@@ -45,13 +48,20 @@ export const useShoppingMemoActions = () => {
         unitName,
         incrementalUnit,
         quantity,
-      }: ShoppingMemo & {
-        prevId: string | null;
+      }: ShoppingMemo['byId'][number] & {
+        prevId: string;
       }) => {
-        set(shoppingMemosState, (prev) =>
-          prev.map((shoppingMemo) => {
-            if (shoppingMemo.id === prevId) {
-              return {
+        set(shoppingMemosState, (prev) => {
+          // prevId と id が同じ場合は更新。そうでない場合は削除して追加。
+          // 順番は変えない。
+          const ids = prev.ids.map((_id) => (_id === prevId ? id : _id));
+          const byId = { ...prev.byId };
+          delete byId[prevId];
+          return {
+            ids,
+            byId: {
+              ...byId,
+              [id]: {
                 id,
                 name,
                 displayName,
@@ -60,20 +70,25 @@ export const useShoppingMemoActions = () => {
                 unitName,
                 incrementalUnit,
                 quantity,
-              };
-            }
-            return shoppingMemo;
-          }),
-        );
+              },
+            },
+          };
+        });
       },
   );
 
   const deleteShoppingMemo = useRecoilCallback(
     ({ set }) =>
       ({ id }: { id: string }) => {
-        set(shoppingMemosState, (prev) =>
-          prev.filter((shoppingMemo) => shoppingMemo.id !== id),
-        );
+        set(shoppingMemosState, (prev) => {
+          const ids = prev.ids.filter((_id) => _id !== id);
+          const byId = { ...prev.byId };
+          delete byId[id];
+          return {
+            ids,
+            byId,
+          };
+        });
       },
   );
 

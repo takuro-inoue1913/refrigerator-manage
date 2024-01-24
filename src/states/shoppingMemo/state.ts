@@ -1,7 +1,8 @@
 import { atom } from 'recoil';
 import { TypeName } from '@src/states/fridge';
+import { NormalizedArray } from '@src/types';
 
-export type ShoppingMemo = {
+export type ShoppingMemo = NormalizedArray<{
   id: string;
   name: string;
   displayName: string;
@@ -13,9 +14,12 @@ export type ShoppingMemo = {
   incrementalUnit: number;
   /** 数量 */
   quantity: number;
-};
+}>;
 
-export const shoppingMemosState = atom<ShoppingMemo[]>({
+export const shoppingMemosState = atom<ShoppingMemo>({
   key: 'shoppingMemosState',
-  default: [],
+  default: {
+    ids: [],
+    byId: {},
+  },
 });

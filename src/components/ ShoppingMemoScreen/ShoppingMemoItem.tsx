@@ -15,7 +15,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type Props = {
   checkedIds: string[];
-  item: ShoppingMemo;
+  item: ShoppingMemo['byId'][number];
   addCheckedId: (id: string) => void;
   removeCheckedId: (id: string) => void;
   onLongPress: (id: string) => void;
