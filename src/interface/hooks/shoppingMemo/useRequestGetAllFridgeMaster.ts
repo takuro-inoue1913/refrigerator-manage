@@ -3,7 +3,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { idTokenState } from '@src/states/user';
 import { allFridgeMasterRepository } from '@src/interface/repositories/allFridgeMasterRepository';
 import { useQuery } from '@tanstack/react-query';
-import { generateFridgeMaster } from '../logics/generate/generateFridgeMaster';
+import { generateFridgeMaster } from '../../logics/generate/generateFridgeMaster';
 import { fridgeMasterState } from '@src/states/fridge';
 
 export const useRequestGetAllFridgeMaster = () => {
