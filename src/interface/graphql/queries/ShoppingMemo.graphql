@@ -6,3 +6,43 @@ query GetShoppingMemos {
     quantity
   }
 }
+
+mutation InsertShoppingMemo(
+  $masterId: uuid!
+  $userId: String!
+  $quantity: Int!
+) {
+  insert_shopping_memo_one(
+    object: { master_id: $masterId, user_id: $userId, quantity: $quantity }
+  ) {
+    shopping_memo_id
+    master_id
+    user_id
+    quantity
+  }
+}
+
+mutation UpdateShoppingMemo(
+  $shoppingMemoId: uuid!
+  $masterId: uuid!
+  $quantity: Int!
+) {
+  update_shopping_memo_by_pk(
+    pk_columns: { shopping_memo_id: $shoppingMemoId }
+    _set: { master_id: $masterId, quantity: $quantity }
+  ) {
+    shopping_memo_id
+    master_id
+    user_id
+    quantity
+  }
+}
+
+mutation DeleteShoppingMemo($shoppingMemoId: uuid!) {
+  delete_shopping_memo_by_pk(shopping_memo_id: $shoppingMemoId) {
+    shopping_memo_id
+    master_id
+    user_id
+    quantity
+  }
+}
