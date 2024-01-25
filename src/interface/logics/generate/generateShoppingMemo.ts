@@ -21,6 +21,7 @@ export const generateShoppingMemo = (
 
     _shoppingMemo[i.shopping_memo_id] = {
       id: i.shopping_memo_id,
+      masterId: i.master_id,
       name: _fridgeMaster.name,
       displayName: _fridgeMaster.displayName,
       imageUri: _fridgeMaster.imageUri,

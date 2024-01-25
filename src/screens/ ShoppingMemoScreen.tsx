@@ -13,11 +13,15 @@ import {
 } from '@src/components/ ShoppingMemoScreen/ShoppingMemoModal';
 import { useIsFocused } from '@react-navigation/native';
 import { useRequestGetAllShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestGetAllShoppingMemo';
+import { useRequestInsertShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestInsertShoppingMemo';
+import { useRequestUpdateShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestUpdateShoppingMemo';
 
 export const ShoppingMemoScreen = () => {
   const isFocused = useIsFocused();
   const { fridgeMaster, refetch } = useRequestGetAllFridgeMaster();
   const { shoppingMemo } = useRequestGetAllShoppingMemo();
+  const requestInsertShoppingMemo = useRequestInsertShoppingMemo();
+  const requestUpdateShoppingMemo = useRequestUpdateShoppingMemo();
   const shoppingMemoActions = useShoppingMemoActions();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectFridgeMaster, setSelectFridgeMaster] =
@@ -29,6 +33,9 @@ export const ShoppingMemoScreen = () => {
   >([]);
   const [modalMode, setModalMode] = useState<ModalMode>('add');
   const [editTargetId, setEditTargetId] = useState<string | null>(null);
+  const [prevFridgeMasterId, setPrevFridgeMasterId] = useState<string | null>(
+    null,
+  );
 
   const listData = useMemo<ShoppingMemo['byId'][number][]>(
     () => shoppingMemo.ids.map((id) => shoppingMemo.byId[id]),
@@ -48,6 +55,7 @@ export const ShoppingMemoScreen = () => {
     setQuantity(0);
     setSelectFridgeMaster(null);
     setErrorMessage(null);
+    setPrevFridgeMasterId(null);
   };
 
   const handleChangeDropdownValue = (data: DropdownData) => {
@@ -68,23 +76,38 @@ export const ShoppingMemoScreen = () => {
     switch (modalMode) {
       case 'add':
         {
-          if (shoppingMemo.ids.some((id) => id === selectFridgeMaster.id)) {
+          if (
+            shoppingMemo.ids.some(
+              (id) => shoppingMemo.byId[id].masterId === selectFridgeMaster.id,
+            )
+          ) {
             setErrorMessage('すでに追加されている食材です。');
             return;
           }
-          shoppingMemoActions.addShoppingMemo({
-            ...selectFridgeMaster,
+          requestInsertShoppingMemo({
+            masterId: selectFridgeMaster.id,
             quantity,
+          }).then((res) => {
+            if (res) {
+              shoppingMemoActions.addShoppingMemo({
+                ...selectFridgeMaster,
+                id: res.shopping_memo_id,
+                masterId: selectFridgeMaster.id,
+                quantity,
+              });
+            }
           });
         }
         break;
       case 'edit':
         {
-          // editTargetId が selectFridgeMaster.id と変更されており、
-          // かつ、すでに同じ id の食材が shoppingMemo に存在する場合はエラー
+          // prevFridgeMasterId が selectFridgeMaster.id と変更されており、
+          // かつ、すでに同じ masterId の食材が shoppingMemo に存在する場合はエラー
           if (
-            editTargetId !== selectFridgeMaster.id &&
-            shoppingMemo.ids.some((id) => id === selectFridgeMaster.id)
+            prevFridgeMasterId !== selectFridgeMaster.id &&
+            shoppingMemo.ids.some(
+              (id) => shoppingMemo.byId[id].masterId === selectFridgeMaster.id,
+            )
           ) {
             setErrorMessage('すでに追加されている食材です。');
             return;
@@ -93,11 +116,38 @@ export const ShoppingMemoScreen = () => {
           if (editTargetId === null) {
             throw new Error('editTargetId is null');
           }
-          shoppingMemoActions.upsertShoppingMemo({
-            ...selectFridgeMaster,
-            prevId: editTargetId,
-            quantity,
-          });
+
+          if (shoppingMemo.ids.some((id) => id === editTargetId)) {
+            requestUpdateShoppingMemo({
+              shoppingMemoId: editTargetId,
+              masterId: selectFridgeMaster.id,
+              quantity,
+            }).then(() => {
+              shoppingMemoActions.upsertShoppingMemo({
+                ...selectFridgeMaster,
+                id: editTargetId,
+                masterId: selectFridgeMaster.id,
+                prevId: editTargetId,
+                quantity,
+              });
+              refetch();
+            });
+          } else {
+            requestInsertShoppingMemo({
+              masterId: selectFridgeMaster.id,
+              quantity,
+            }).then((res) => {
+              if (res) {
+                shoppingMemoActions.addShoppingMemo({
+                  ...selectFridgeMaster,
+                  id: res.shopping_memo_id,
+                  masterId: selectFridgeMaster.id,
+                  quantity,
+                });
+                refetch();
+              }
+            });
+          }
           setEditTargetId(null);
         }
         break;
@@ -106,10 +156,14 @@ export const ShoppingMemoScreen = () => {
   };
 
   const handleLongPressItem = (id: string) => {
-    setSelectFridgeMaster(fridgeMaster.find((item) => item.id === id) ?? null);
+    setSelectFridgeMaster(
+      fridgeMaster.find((item) => item.id === shoppingMemo.byId[id].masterId) ??
+        null,
+    );
     setQuantity(shoppingMemo.byId[id].quantity ?? 0);
     setModalMode('edit');
     setEditTargetId(id);
+    setPrevFridgeMasterId(shoppingMemo.byId[id].masterId);
     setModalVisible(true);
   };
 

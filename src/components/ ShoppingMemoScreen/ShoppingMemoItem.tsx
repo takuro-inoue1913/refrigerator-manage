@@ -12,6 +12,7 @@ import AnimatedCheckbox from '@src/components/common/AnimatedCheckbox';
 import { generateEncodeString } from '@src/utils/logics/createEncodeStrings';
 import CachedImage from 'expo-cached-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useRequestDeleteShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestDeleteShoppingMemo';
 
 type Props = {
   checkedIds: string[];
@@ -30,6 +31,7 @@ export const ShoppingMemoItem: FC<Props> = ({
 }) => {
   const isChecked = checkedIds.includes(item.id);
   const shoppingMemoActions = useShoppingMemoActions();
+  const requestDeleteShoppingMemo = useRequestDeleteShoppingMemo();
 
   const handlePressDeleteButton = () => {
     Alert.alert('削除しますか？', '', [
@@ -42,6 +44,9 @@ export const ShoppingMemoItem: FC<Props> = ({
         onPress: () => {
           shoppingMemoActions.deleteShoppingMemo({
             id: item.id,
+          });
+          requestDeleteShoppingMemo({
+            shoppingMemoId: item.id,
           });
         },
       },

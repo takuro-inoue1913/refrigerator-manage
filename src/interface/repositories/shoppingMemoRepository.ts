@@ -31,7 +31,7 @@ export const shoppingMemoRepository = {
       userId,
       quantity,
     });
-    return data;
+    return data.insert_shopping_memo_one;
   },
   update: async ({
     idToken,
@@ -51,7 +51,7 @@ export const shoppingMemoRepository = {
       masterId,
       quantity,
     });
-    return data;
+    return data.update_shopping_memo_by_pk;
   },
   delete: async ({
     idToken,
@@ -65,6 +65,6 @@ export const shoppingMemoRepository = {
     const data = await client.request(DeleteShoppingMemoDocument, {
       shoppingMemoId,
     });
-    return data;
+    return data.delete_shopping_memo_by_pk;
   },
 };

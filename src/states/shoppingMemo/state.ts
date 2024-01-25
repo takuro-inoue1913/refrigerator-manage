@@ -4,6 +4,8 @@ import { NormalizedArray } from '@src/types';
 
 export type ShoppingMemo = NormalizedArray<{
   id: string;
+  /** マスターID */
+  masterId: string;
   name: string;
   displayName: string;
   imageUri: string;

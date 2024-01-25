@@ -9,6 +9,7 @@ export const useShoppingMemoActions = () => {
     ({ set }) =>
       ({
         id,
+        masterId,
         name,
         displayName,
         imageUri,
@@ -23,6 +24,7 @@ export const useShoppingMemoActions = () => {
             ...prev.byId,
             [id]: {
               id,
+              masterId,
               name,
               displayName,
               imageUri,
@@ -41,6 +43,7 @@ export const useShoppingMemoActions = () => {
       ({
         id,
         prevId,
+        masterId,
         name,
         displayName,
         imageUri,
@@ -63,6 +66,7 @@ export const useShoppingMemoActions = () => {
               ...byId,
               [id]: {
                 id,
+                masterId,
                 name,
                 displayName,
                 imageUri,

@@ -1,22 +1,26 @@
 import { useRecoilValue } from 'recoil';
 
-import { idTokenState } from '@src/states/user';
+import { idTokenState, userState } from '@src/states/user';
 import { shoppingMemoRepository } from '@src/interface/repositories/shoppingMemoRepository';
 import Toast from 'react-native-toast-message';
 
 type InsertShoppingMemoArgs = {
   masterId: string;
-  userId: string;
   quantity: number;
 };
 
 export const useRequestInsertShoppingMemo = () => {
   const idToken = useRecoilValue(idTokenState);
+  const user = useRecoilValue(userState);
 
   return async (args: InsertShoppingMemoArgs) => {
+    if (!user) {
+      return Promise.reject(new Error('user is not defined'));
+    }
     try {
       const data = await shoppingMemoRepository.insert({
         idToken,
+        userId: user.uid,
         ...args,
       });
       return Promise.resolve(data);
