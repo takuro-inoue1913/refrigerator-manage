@@ -198,7 +198,7 @@ export const ShoppingMemoScreen = () => {
         data={listData}
         renderItem={FlatItem}
         keyExtractor={(item) => `${item.displayName}-${item.id}`}
-        contentContainerStyle={{ paddingBottom: 20 }} // 必要に応じてスタイルを調整
+        contentContainerStyle={{ paddingBottom: 100 }} // 必要に応じてスタイルを調整
       />
       <TouchableOpacity
         style={styles.addButton}
