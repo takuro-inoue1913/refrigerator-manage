@@ -20,7 +20,7 @@ import { LoadingMask } from '@src/components/common/LoadingMask';
 export const ShoppingMemoScreen = () => {
   const isFocused = useIsFocused();
   const [isLoding, setIsLoding] = useState(false);
-  const { fridgeMaster, refetch } = useRequestGetAllFridgeMaster();
+  const { fridgeMaster, isFetching, refetch } = useRequestGetAllFridgeMaster();
   const { shoppingMemo } = useRequestGetAllShoppingMemo();
   const requestInsertShoppingMemo = useRequestInsertShoppingMemo();
   const requestUpdateShoppingMemo = useRequestUpdateShoppingMemo();
@@ -193,7 +193,7 @@ export const ShoppingMemoScreen = () => {
 
   return (
     <View style={styles.container}>
-      {isLoding && <LoadingMask />}
+      {(isLoding || isFetching) && <LoadingMask />}
       <FlatList
         data={listData}
         renderItem={FlatItem}
@@ -208,7 +208,7 @@ export const ShoppingMemoScreen = () => {
         }}
       >
         <CommonGradation style={styles.commonGradation}>
-          <Icon name="plus" size={30} color="white" />
+          <Icon name="basket-plus" size={30} color="white" />
         </CommonGradation>
       </TouchableOpacity>
       <ShoppingMemoModal
