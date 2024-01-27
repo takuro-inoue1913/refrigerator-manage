@@ -20,8 +20,8 @@ import { LoadingMask } from '@src/components/common/LoadingMask';
 export const ShoppingMemoScreen = () => {
   const isFocused = useIsFocused();
   const [isLoding, setIsLoding] = useState(false);
-  const { fridgeMaster, isFetching, refetch } = useRequestGetAllFridgeMaster();
-  const { shoppingMemo } = useRequestGetAllShoppingMemo();
+  const { fridgeMaster, refetch } = useRequestGetAllFridgeMaster();
+  const { shoppingMemo, isFetching } = useRequestGetAllShoppingMemo();
   const requestInsertShoppingMemo = useRequestInsertShoppingMemo();
   const requestUpdateShoppingMemo = useRequestUpdateShoppingMemo();
   const shoppingMemoActions = useShoppingMemoActions();
