@@ -29,6 +29,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { useRequestDeleteCustomProteinSourceMaster } from '@src/interface/hooks/fridge/proteinSource/useRequestDeleteCustomProteinSourceMaster';
 import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
 import { LoadingMask } from '@src/components/common/LoadingMask';
+import { useRequestDeleteShoppingMemoByMasterId } from '@src/interface/hooks/shoppingMemo/useRequestDeleteShoppingMemoByMasterId';
 
 /**
  * 冷蔵庫の卵・乳・豆画面を表示するコンポーネント。
@@ -50,6 +51,8 @@ export const ProteinSourceView: FC = () => {
   const requestUpsertProteinSourceStock = useRequestUpsertProteinSourceStock();
   const requestDeleteCustomProteinSourceMaster =
     useRequestDeleteCustomProteinSourceMaster();
+  const requestDeleteShoppingMemoByMasterId =
+    useRequestDeleteShoppingMemoByMasterId();
   const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
     debounceUpsertStock: requestUpsertProteinSourceStock,
     increaseStock: proteinSourceStockActions.increaseProteinSourceStock,
@@ -85,6 +88,7 @@ export const ProteinSourceView: FC = () => {
           if (proteinSourceStocks.byId[id].isCustomMaster) {
             await requestDeleteCustomProteinSourceMaster(id);
             await deleteUserImage(proteinSourceStocks.byId[id].imageUri);
+            await requestDeleteShoppingMemoByMasterId({ masterId: id });
           }
           proteinSourceStockActions.deleteProteinSourceStock(id);
           setIsLoding(false);
@@ -96,6 +100,7 @@ export const ProteinSourceView: FC = () => {
       proteinSourceStockActions,
       requestUpsertProteinSourceStockDetail,
       requestDeleteCustomProteinSourceMaster,
+      requestDeleteShoppingMemoByMasterId,
     ],
   );
 

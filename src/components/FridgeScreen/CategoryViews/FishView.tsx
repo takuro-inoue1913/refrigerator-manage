@@ -29,6 +29,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { useRequestDeleteCustomFishMaster } from '@src/interface/hooks/fridge/fish/useRequestDeleteCustomFishMaster';
 import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
 import { LoadingMask } from '@src/components/common/LoadingMask';
+import { useRequestDeleteShoppingMemoByMasterId } from '@src/interface/hooks/shoppingMemo/useRequestDeleteShoppingMemoByMasterId';
 
 /**
  * 冷蔵庫の魚介類画面を表示するコンポーネント。
@@ -46,6 +47,8 @@ export const FishView: FC = () => {
   const rows = useChunkedArray(fishStocks.ids, 3);
   const requestUpsertFishStock = useRequestUpsertFishStock();
   const requestDeleteCustomFishMaster = useRequestDeleteCustomFishMaster();
+  const requestDeleteShoppingMemoByMasterId =
+    useRequestDeleteShoppingMemoByMasterId();
   const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
     debounceUpsertStock: requestUpsertFishStock,
     increaseStock: fishStockActions.increaseFishStock,
@@ -80,6 +83,7 @@ export const FishView: FC = () => {
           setIsLoding(true);
           await requestDeleteCustomFishMaster(id);
           await deleteUserImage(fishStocks.byId[id].imageUri);
+          await requestDeleteShoppingMemoByMasterId({ masterId: id });
           fishStockActions.deleteFishStock(id);
           setIsLoding(false);
         },
@@ -90,6 +94,7 @@ export const FishView: FC = () => {
       fishStockActions,
       requestUpsertFishStockDetail,
       requestDeleteCustomFishMaster,
+      requestDeleteShoppingMemoByMasterId,
     ],
   );
 

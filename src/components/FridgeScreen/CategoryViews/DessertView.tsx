@@ -29,6 +29,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { useRequestDeleteCustomDessertMaster } from '@src/interface/hooks/fridge/dessert/useRequestDeleteCustomDessertMaster';
 import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
 import { LoadingMask } from '@src/components/common/LoadingMask';
+import { useRequestDeleteShoppingMemoByMasterId } from '@src/interface/hooks/shoppingMemo/useRequestDeleteShoppingMemoByMasterId';
 
 /**
  * 冷蔵庫のデザート画面を表示するコンポーネント。
@@ -47,6 +48,8 @@ export const DessertView: FC = () => {
   const requestUpsertDessertStock = useRequestUpsertDessertStock();
   const requestDeleteCustomDessertMaster =
     useRequestDeleteCustomDessertMaster();
+  const requestDeleteShoppingMemoByMasterId =
+    useRequestDeleteShoppingMemoByMasterId();
   const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
     debounceUpsertStock: requestUpsertDessertStock,
     increaseStock: dessertStockActions.increaseDessertStock,
@@ -81,6 +84,7 @@ export const DessertView: FC = () => {
           setIsLoding(true);
           await requestDeleteCustomDessertMaster(id);
           await deleteUserImage(dessertStocks.byId[id].imageUri);
+          await requestDeleteShoppingMemoByMasterId({ masterId: id });
           dessertStockActions.deleteDessertStock(id);
           setIsLoding(false);
         },
@@ -91,6 +95,7 @@ export const DessertView: FC = () => {
       dessertStockActions,
       requestUpsertDessertStockDetail,
       requestDeleteCustomDessertMaster,
+      requestDeleteShoppingMemoByMasterId,
     ],
   );
 

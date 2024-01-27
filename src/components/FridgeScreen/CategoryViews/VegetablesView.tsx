@@ -29,6 +29,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { useRequestDeleteCustomVegetableMaster } from '@src/interface/hooks/fridge/vegetable/useRequestDeleteCustomVegetableMaster';
 import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
 import { LoadingMask } from '@src/components/common/LoadingMask';
+import { useRequestDeleteShoppingMemoByMasterId } from '@src/interface/hooks/shoppingMemo/useRequestDeleteShoppingMemoByMasterId';
 
 /**
  * 冷蔵庫の野菜画面を表示するコンポーネント。
@@ -50,6 +51,8 @@ export const VegetablesView: FC = () => {
     useRequestUpsertVegetableStockDetail();
   const requestDeleteCustomVegetableMaster =
     useRequestDeleteCustomVegetableMaster();
+  const requestDeleteShoppingMemoByMasterId =
+    useRequestDeleteShoppingMemoByMasterId();
   const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
     debounceUpsertStock: requestUpsertVegetablesStock,
     increaseStock: vegetablesStockActions.increaseVegetableStock,
@@ -84,6 +87,7 @@ export const VegetablesView: FC = () => {
           setIsLoding(true);
           await requestDeleteCustomVegetableMaster(id);
           await deleteUserImage(vegetablesStocks.byId[id].imageUri);
+          await requestDeleteShoppingMemoByMasterId({ masterId: id });
           vegetablesStockActions.deleteVegetableStock(id);
           setIsLoding(false);
         },
@@ -94,6 +98,7 @@ export const VegetablesView: FC = () => {
       vegetablesStockActions,
       requestUpsertVegetableStockDetail,
       requestDeleteCustomVegetableMaster,
+      requestDeleteShoppingMemoByMasterId,
     ],
   );
 

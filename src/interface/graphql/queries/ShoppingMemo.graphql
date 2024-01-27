@@ -46,3 +46,11 @@ mutation DeleteShoppingMemo($shoppingMemoId: uuid!) {
     quantity
   }
 }
+
+mutation DeleteShoppingMemoByMasterId($userId: String!, $masterId: uuid!) {
+  delete_shopping_memo(
+    where: { user_id: { _eq: $userId }, master_id: { _eq: $masterId } }
+  ) {
+    affected_rows
+  }
+}

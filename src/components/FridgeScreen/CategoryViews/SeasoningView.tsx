@@ -29,6 +29,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { useRequestDeleteCustomSeasoningMaster } from '@src/interface/hooks/fridge/seasoning/useRequestDeleteCustomSeasoningMaster';
 import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
 import { LoadingMask } from '@src/components/common/LoadingMask';
+import { useRequestDeleteShoppingMemoByMasterId } from '@src/interface/hooks/shoppingMemo/useRequestDeleteShoppingMemoByMasterId';
 
 /**
  * 冷蔵庫の調味料画面を表示するコンポーネント。
@@ -49,6 +50,8 @@ export const SeasoningView: FC = () => {
   const requestUpsertSeasoningStock = useRequestUpsertSeasoningStock();
   const requestDeleteCustomSeasoningMaster =
     useRequestDeleteCustomSeasoningMaster();
+  const requestDeleteShoppingMemoByMasterId =
+    useRequestDeleteShoppingMemoByMasterId();
   const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
     debounceUpsertStock: requestUpsertSeasoningStock,
     increaseStock: seasoningStockActions.increaseSeasoningStock,
@@ -83,6 +86,7 @@ export const SeasoningView: FC = () => {
           setModalProps(undefined);
           await requestDeleteCustomSeasoningMaster(id);
           await deleteUserImage(seasoningStocks.byId[id].imageUri);
+          await requestDeleteShoppingMemoByMasterId({ masterId: id });
           seasoningStockActions.deleteSeasoningStock(id);
           setIsLoding(false);
         },
@@ -93,6 +97,7 @@ export const SeasoningView: FC = () => {
       seasoningStockActions,
       requestUpsertSeasoningStockDetail,
       requestDeleteCustomSeasoningMaster,
+      requestDeleteShoppingMemoByMasterId,
     ],
   );
 

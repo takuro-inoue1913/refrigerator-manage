@@ -29,6 +29,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { useRequestDeleteCustomOtherMaster } from '@src/interface/hooks/fridge/other/useRequestDeleteCustomOtherMaster';
 import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
 import { LoadingMask } from '@src/components/common/LoadingMask';
+import { useRequestDeleteShoppingMemoByMasterId } from '@src/interface/hooks/shoppingMemo/useRequestDeleteShoppingMemoByMasterId';
 
 /**
  * 冷蔵庫のその他画面を表示するコンポーネント。
@@ -46,6 +47,8 @@ export const OtherView: FC = () => {
   const rows = useChunkedArray(otherStocks.ids, 3);
   const requestUpsertOtherStock = useRequestUpsertOtherStock();
   const requestDeleteCustomOtherMaster = useRequestDeleteCustomOtherMaster();
+  const requestDeleteShoppingMemoByMasterId =
+    useRequestDeleteShoppingMemoByMasterId();
   const { onIncreaseStock, onDecreaseStock } = useDebouncedUpsertStock({
     debounceUpsertStock: requestUpsertOtherStock,
     increaseStock: otherStockActions.increaseOtherStock,
@@ -80,6 +83,7 @@ export const OtherView: FC = () => {
           setModalProps(undefined);
           await requestDeleteCustomOtherMaster(id);
           await deleteUserImage(otherStocks.byId[id].imageUri);
+          await requestDeleteShoppingMemoByMasterId({ masterId: id });
           otherStockActions.deleteOtherStock(id);
           setIsLoding(false);
         },
@@ -90,6 +94,7 @@ export const OtherView: FC = () => {
       otherStockActions,
       requestUpsertOtherStockDetail,
       requestDeleteCustomOtherMaster,
+      requestDeleteShoppingMemoByMasterId,
     ],
   );
 
