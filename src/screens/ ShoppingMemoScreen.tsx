@@ -15,9 +15,11 @@ import { useIsFocused } from '@react-navigation/native';
 import { useRequestGetAllShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestGetAllShoppingMemo';
 import { useRequestInsertShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestInsertShoppingMemo';
 import { useRequestUpdateShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestUpdateShoppingMemo';
+import { LoadingMask } from '@src/components/common/LoadingMask';
 
 export const ShoppingMemoScreen = () => {
   const isFocused = useIsFocused();
+  const [isLoding, setIsLoding] = useState(false);
   const { fridgeMaster, refetch } = useRequestGetAllFridgeMaster();
   const { shoppingMemo } = useRequestGetAllShoppingMemo();
   const requestInsertShoppingMemo = useRequestInsertShoppingMemo();
@@ -84,6 +86,7 @@ export const ShoppingMemoScreen = () => {
             setErrorMessage('すでに追加されている食材です。');
             return;
           }
+          setIsLoding(true);
           requestInsertShoppingMemo({
             masterId: selectFridgeMaster.id,
             quantity,
@@ -95,6 +98,7 @@ export const ShoppingMemoScreen = () => {
                 masterId: selectFridgeMaster.id,
                 quantity,
               });
+              setIsLoding(false);
             }
           });
         }
@@ -116,7 +120,7 @@ export const ShoppingMemoScreen = () => {
           if (editTargetId === null) {
             throw new Error('editTargetId is null');
           }
-
+          setIsLoding(true);
           if (shoppingMemo.ids.some((id) => id === editTargetId)) {
             requestUpdateShoppingMemo({
               shoppingMemoId: editTargetId,
@@ -130,6 +134,7 @@ export const ShoppingMemoScreen = () => {
                 prevId: editTargetId,
                 quantity,
               });
+              setIsLoding(false);
               refetch();
             });
           } else {
@@ -144,6 +149,7 @@ export const ShoppingMemoScreen = () => {
                   masterId: selectFridgeMaster.id,
                   quantity,
                 });
+                setIsLoding(false);
                 refetch();
               }
             });
@@ -187,6 +193,7 @@ export const ShoppingMemoScreen = () => {
 
   return (
     <View style={styles.container}>
+      {isLoding && <LoadingMask />}
       <FlatList
         data={listData}
         renderItem={FlatItem}
