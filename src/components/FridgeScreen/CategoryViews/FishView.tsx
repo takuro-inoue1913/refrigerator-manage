@@ -30,6 +30,7 @@ import { useRequestDeleteCustomFishMaster } from '@src/interface/hooks/fridge/fi
 import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
 import { LoadingMask } from '@src/components/common/LoadingMask';
 import { useRequestDeleteShoppingMemoByMasterId } from '@src/interface/hooks/shoppingMemo/useRequestDeleteShoppingMemoByMasterId';
+import { useShoppingMemoActions } from '@src/states/shoppingMemo';
 
 /**
  * 冷蔵庫の魚介類画面を表示するコンポーネント。
@@ -42,6 +43,7 @@ export const FishView: FC = () => {
   const navigation = useTypedNavigation();
   const { fishStocks, isFetching, refetch } = useRequestGetFishStocks();
   const fishStockActions = useFishStockActions();
+  const shoppingMemoActions = useShoppingMemoActions();
   const requestUpsertFishFavorite = useRequestUpsertFishFavorite();
   const requestUpsertFishStockDetail = useRequestUpsertFishStockDetail();
   const rows = useChunkedArray(fishStocks.ids, 3);
@@ -83,7 +85,13 @@ export const FishView: FC = () => {
           setIsLoding(true);
           await requestDeleteCustomFishMaster(id);
           await deleteUserImage(fishStocks.byId[id].imageUri);
-          await requestDeleteShoppingMemoByMasterId({ masterId: id });
+          await requestDeleteShoppingMemoByMasterId({ masterId: id }).then(
+            (data) => {
+              shoppingMemoActions.deleteShoppingMemo({
+                id: data?.shopping_memo_id,
+              });
+            },
+          );
           fishStockActions.deleteFishStock(id);
           setIsLoding(false);
         },
@@ -92,6 +100,7 @@ export const FishView: FC = () => {
     [
       fishStocks.byId,
       fishStockActions,
+      shoppingMemoActions,
       requestUpsertFishStockDetail,
       requestDeleteCustomFishMaster,
       requestDeleteShoppingMemoByMasterId,

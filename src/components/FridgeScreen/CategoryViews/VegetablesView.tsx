@@ -30,6 +30,7 @@ import { useRequestDeleteCustomVegetableMaster } from '@src/interface/hooks/frid
 import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
 import { LoadingMask } from '@src/components/common/LoadingMask';
 import { useRequestDeleteShoppingMemoByMasterId } from '@src/interface/hooks/shoppingMemo/useRequestDeleteShoppingMemoByMasterId';
+import { useShoppingMemoActions } from '@src/states/shoppingMemo';
 
 /**
  * 冷蔵庫の野菜画面を表示するコンポーネント。
@@ -43,6 +44,7 @@ export const VegetablesView: FC = () => {
   const { vegetablesStocks, isFetching, refetch } =
     useRequestGetVegetablesStocks();
   const vegetablesStockActions = useVegetablesStockActions();
+  const shoppingMemoActions = useShoppingMemoActions();
   const rows = useChunkedArray(vegetablesStocks.ids, 3);
   const requestUpsertVegetablesStock = useRequestUpsertVegetableStock();
   const requestUpsertVegetableIsFavorite =
@@ -87,7 +89,13 @@ export const VegetablesView: FC = () => {
           setIsLoding(true);
           await requestDeleteCustomVegetableMaster(id);
           await deleteUserImage(vegetablesStocks.byId[id].imageUri);
-          await requestDeleteShoppingMemoByMasterId({ masterId: id });
+          await requestDeleteShoppingMemoByMasterId({ masterId: id }).then(
+            (data) => {
+              shoppingMemoActions.deleteShoppingMemo({
+                id: data?.shopping_memo_id,
+              });
+            },
+          );
           vegetablesStockActions.deleteVegetableStock(id);
           setIsLoding(false);
         },
@@ -96,6 +104,7 @@ export const VegetablesView: FC = () => {
     [
       vegetablesStocks.byId,
       vegetablesStockActions,
+      shoppingMemoActions,
       requestUpsertVegetableStockDetail,
       requestDeleteCustomVegetableMaster,
       requestDeleteShoppingMemoByMasterId,

@@ -30,6 +30,7 @@ import { useRequestDeleteCustomStapleFoodMaster } from '@src/interface/hooks/fri
 import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
 import { LoadingMask } from '@src/components/common/LoadingMask';
 import { useRequestDeleteShoppingMemoByMasterId } from '@src/interface/hooks/shoppingMemo/useRequestDeleteShoppingMemoByMasterId';
+import { useShoppingMemoActions } from '@src/states/shoppingMemo';
 
 /**
  * 冷蔵庫の主食・粉画面を表示するコンポーネント。
@@ -43,6 +44,7 @@ export const StapleFoodView: FC = () => {
   const { stapleFoodStocks, isFetching, refetch } =
     useRequestGetStapleFoodStocks();
   const stapleFoodStockActions = useStapleFoodStockActions();
+  const shoppingMemoActions = useShoppingMemoActions();
   const requestUpsertStapleFoodFavorite = useRequestUpsertStapleFoodFavorite();
   const requestUpsertStapleFoodStockDetail =
     useRequestUpsertStapleFoodStockDetail();
@@ -86,7 +88,13 @@ export const StapleFoodView: FC = () => {
           setModalProps(undefined);
           await requestDeleteCustomStapleFoodMaster(id);
           await deleteUserImage(stapleFoodStocks.byId[id].imageUri);
-          await requestDeleteShoppingMemoByMasterId({ masterId: id });
+          await requestDeleteShoppingMemoByMasterId({ masterId: id }).then(
+            (data) => {
+              shoppingMemoActions.deleteShoppingMemo({
+                id: data?.shopping_memo_id,
+              });
+            },
+          );
           stapleFoodStockActions.deleteStapleFoodStock(id);
           setIsLoding(false);
         },
@@ -95,6 +103,7 @@ export const StapleFoodView: FC = () => {
     [
       stapleFoodStocks.byId,
       stapleFoodStockActions,
+      shoppingMemoActions,
       requestUpsertStapleFoodStockDetail,
       requestDeleteCustomStapleFoodMaster,
       requestDeleteShoppingMemoByMasterId,

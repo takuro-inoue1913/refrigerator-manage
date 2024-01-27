@@ -30,6 +30,7 @@ import { useRequestDeleteCustomMeatMaster } from '@src/interface/hooks/fridge/me
 import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
 import { LoadingMask } from '@src/components/common/LoadingMask';
 import { useRequestDeleteShoppingMemoByMasterId } from '@src/interface/hooks/shoppingMemo/useRequestDeleteShoppingMemoByMasterId';
+import { useShoppingMemoActions } from '@src/states/shoppingMemo';
 
 /**
  * 冷蔵庫の肉画面を表示するコンポーネント。
@@ -42,6 +43,7 @@ export const MeatView: FC = () => {
   const navigation = useTypedNavigation();
   const { meatStocks, isFetching, refetch } = useRequestGetMeatStocks();
   const meatStockActions = useMeatStockActions();
+  const shoppingMemoActions = useShoppingMemoActions();
   const requestUpsertMeatFavorite = useRequestUpsertMeatFavorite();
   const requestUpsertMeatStockDetail = useRequestUpsertMeatStockDetail();
   const rows = useChunkedArray(meatStocks.ids, 3);
@@ -83,7 +85,13 @@ export const MeatView: FC = () => {
           setIsLoding(true);
           await requestDeleteCustomMeatMaster(id);
           await deleteUserImage(meatStocks.byId[id].imageUri);
-          await requestDeleteShoppingMemoByMasterId({ masterId: id });
+          await requestDeleteShoppingMemoByMasterId({ masterId: id }).then(
+            (data) => {
+              shoppingMemoActions.deleteShoppingMemo({
+                id: data?.shopping_memo_id,
+              });
+            },
+          );
           meatStockActions.deleteMeatStock(id);
           setIsLoding(false);
         },
@@ -92,6 +100,7 @@ export const MeatView: FC = () => {
     [
       meatStocks.byId,
       meatStockActions,
+      shoppingMemoActions,
       requestUpsertMeatStockDetail,
       requestDeleteCustomMeatMaster,
       requestDeleteShoppingMemoByMasterId,

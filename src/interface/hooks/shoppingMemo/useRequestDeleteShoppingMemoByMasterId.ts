@@ -19,7 +19,7 @@ export const useRequestDeleteShoppingMemoByMasterId = () => {
         userId: user!.uid,
         ...args,
       });
-      return Promise.resolve(data);
+      return Promise.resolve(data?.returning[0]);
     } catch (error) {
       Toast.show({
         type: 'error',

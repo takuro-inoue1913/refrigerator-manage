@@ -30,6 +30,7 @@ import { useRequestDeleteCustomProteinSourceMaster } from '@src/interface/hooks/
 import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
 import { LoadingMask } from '@src/components/common/LoadingMask';
 import { useRequestDeleteShoppingMemoByMasterId } from '@src/interface/hooks/shoppingMemo/useRequestDeleteShoppingMemoByMasterId';
+import { useShoppingMemoActions } from '@src/states/shoppingMemo';
 
 /**
  * 冷蔵庫の卵・乳・豆画面を表示するコンポーネント。
@@ -43,6 +44,7 @@ export const ProteinSourceView: FC = () => {
   const { proteinSourceStocks, isFetching, refetch } =
     useRequestGetProteinSourceStocks();
   const proteinSourceStockActions = useProteinSourceStockActions();
+  const shoppingMemoActions = useShoppingMemoActions();
   const requestUpsertProteinSourceFavorite =
     useRequestUpsertProteinSourceFavorite();
   const requestUpsertProteinSourceStockDetail =
@@ -88,7 +90,13 @@ export const ProteinSourceView: FC = () => {
           if (proteinSourceStocks.byId[id].isCustomMaster) {
             await requestDeleteCustomProteinSourceMaster(id);
             await deleteUserImage(proteinSourceStocks.byId[id].imageUri);
-            await requestDeleteShoppingMemoByMasterId({ masterId: id });
+            await requestDeleteShoppingMemoByMasterId({ masterId: id }).then(
+              (data) => {
+                shoppingMemoActions.deleteShoppingMemo({
+                  id: data?.shopping_memo_id,
+                });
+              },
+            );
           }
           proteinSourceStockActions.deleteProteinSourceStock(id);
           setIsLoding(false);
@@ -98,6 +106,7 @@ export const ProteinSourceView: FC = () => {
     [
       proteinSourceStocks.byId,
       proteinSourceStockActions,
+      shoppingMemoActions,
       requestUpsertProteinSourceStockDetail,
       requestDeleteCustomProteinSourceMaster,
       requestDeleteShoppingMemoByMasterId,

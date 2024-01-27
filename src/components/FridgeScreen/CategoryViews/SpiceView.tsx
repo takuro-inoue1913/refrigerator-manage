@@ -30,6 +30,7 @@ import { useRequestDeleteCustomSpiceMaster } from '@src/interface/hooks/fridge/s
 import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
 import { LoadingMask } from '@src/components/common/LoadingMask';
 import { useRequestDeleteShoppingMemoByMasterId } from '@src/interface/hooks/shoppingMemo/useRequestDeleteShoppingMemoByMasterId';
+import { useShoppingMemoActions } from '@src/states/shoppingMemo';
 
 /**
  * 冷蔵庫のスパイス画面を表示するコンポーネント。
@@ -42,6 +43,7 @@ export const SpiceView: FC = () => {
   const navigation = useTypedNavigation();
   const { spiceStocks, isFetching, refetch } = useRequestGetSpiceStocks();
   const spiceStockActions = useSpiceStockActions();
+  const shoppingMemoActions = useShoppingMemoActions();
   const requestUpsertSpiceFavorite = useRequestUpsertSpiceFavorite();
   const requestUpsertSpiceStockDetail = useRequestUpsertSpiceStockDetail();
   const rows = useChunkedArray(spiceStocks.ids, 3);
@@ -83,7 +85,13 @@ export const SpiceView: FC = () => {
           setModalProps(undefined);
           await requestDeleteCustomSpiceMaster(id);
           await deleteUserImage(spiceStocks.byId[id].imageUri);
-          await requestDeleteShoppingMemoByMasterId({ masterId: id });
+          await requestDeleteShoppingMemoByMasterId({ masterId: id }).then(
+            (data) => {
+              shoppingMemoActions.deleteShoppingMemo({
+                id: data?.shopping_memo_id,
+              });
+            },
+          );
           spiceStockActions.deleteSpiceStock(id);
           setIsLoding(false);
         },
@@ -92,6 +100,7 @@ export const SpiceView: FC = () => {
     [
       spiceStocks.byId,
       spiceStockActions,
+      shoppingMemoActions,
       requestUpsertSpiceStockDetail,
       requestDeleteCustomSpiceMaster,
       requestDeleteShoppingMemoByMasterId,

@@ -30,6 +30,7 @@ import { useRequestDeleteCustomDessertMaster } from '@src/interface/hooks/fridge
 import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
 import { LoadingMask } from '@src/components/common/LoadingMask';
 import { useRequestDeleteShoppingMemoByMasterId } from '@src/interface/hooks/shoppingMemo/useRequestDeleteShoppingMemoByMasterId';
+import { useShoppingMemoActions } from '@src/states/shoppingMemo';
 
 /**
  * 冷蔵庫のデザート画面を表示するコンポーネント。
@@ -42,6 +43,7 @@ export const DessertView: FC = () => {
   const navigation = useTypedNavigation();
   const { dessertStocks, isFetching, refetch } = useRequestGetDessertStocks();
   const dessertStockActions = useDessertStockActions();
+  const shoppingMemoActions = useShoppingMemoActions();
   const requestUpsertDessertFavorite = useRequestUpsertDessertFavorite();
   const requestUpsertDessertStockDetail = useRequestUpsertDessertStockDetail();
   const rows = useChunkedArray(dessertStocks.ids, 3);
@@ -84,7 +86,13 @@ export const DessertView: FC = () => {
           setIsLoding(true);
           await requestDeleteCustomDessertMaster(id);
           await deleteUserImage(dessertStocks.byId[id].imageUri);
-          await requestDeleteShoppingMemoByMasterId({ masterId: id });
+          await requestDeleteShoppingMemoByMasterId({ masterId: id }).then(
+            (data) => {
+              shoppingMemoActions.deleteShoppingMemo({
+                id: data?.shopping_memo_id,
+              });
+            },
+          );
           dessertStockActions.deleteDessertStock(id);
           setIsLoding(false);
         },
@@ -93,6 +101,7 @@ export const DessertView: FC = () => {
     [
       dessertStocks.byId,
       dessertStockActions,
+      shoppingMemoActions,
       requestUpsertDessertStockDetail,
       requestDeleteCustomDessertMaster,
       requestDeleteShoppingMemoByMasterId,
