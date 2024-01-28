@@ -27,6 +27,7 @@ import { LoadingMask } from '@src/components/common/LoadingMask';
 import { useRequestUpdateIsCheckedShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestUpdateIsCheckedShoppingMemo';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { useRequestBulkDeleteShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestBulkDeleteShoppingMemo';
+import { useRequestAddFridgeMasterStock } from '@src/interface/hooks/shoppingMemo/useRequestAddFridgeMasterStock';
 
 export const ShoppingMemoScreen = () => {
   const isFocused = useIsFocused();
@@ -38,6 +39,7 @@ export const ShoppingMemoScreen = () => {
   const requestUpdateIsCheckedShoppingMemo =
     useRequestUpdateIsCheckedShoppingMemo();
   const requestBulkDeleteShoppingMemo = useRequestBulkDeleteShoppingMemo();
+  const requestAddFridgeMasterStock = useRequestAddFridgeMasterStock();
   const shoppingMemoActions = useShoppingMemoActions();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectFridgeMaster, setSelectFridgeMaster] =
@@ -181,19 +183,47 @@ export const ShoppingMemoScreen = () => {
     });
   };
 
+  const bulkRequestAddFridgeMasterStock = async (ids: string[]) => {
+    ids.forEach((id) => {
+      requestAddFridgeMasterStock({
+        masterId: shoppingMemo.byId[id].masterId,
+        quantity: shoppingMemo.byId[id].quantity,
+      });
+    });
+  };
+
   const handlePressAddFridge = () => {
     ActionSheetIOS.showActionSheetWithOptions(
       {
         options: ['キャンセル', '全て', 'チェック済みのみ'],
         cancelButtonIndex: 0,
       },
-      (buttonIndex) => {
+      async (buttonIndex) => {
         if (buttonIndex === 0) {
           return;
         } else if (buttonIndex === 1) {
-          // Option 1 action
+          setIsLoding(true);
+          await bulkRequestAddFridgeMasterStock(shoppingMemo.ids);
+          await requestBulkDeleteShoppingMemo({
+            shoppingMemoIds: shoppingMemo.ids,
+          });
+          shoppingMemoActions.bulkDeleteShoppingMemo({
+            ids: shoppingMemo.ids,
+          });
+          setIsLoding(false);
         } else if (buttonIndex === 2) {
-          // Option 2 action
+          setIsLoding(true);
+          const checkedIds = shoppingMemo.ids.filter(
+            (id) => shoppingMemo.byId[id].isChecked,
+          );
+          await bulkRequestAddFridgeMasterStock(checkedIds);
+          await requestBulkDeleteShoppingMemo({
+            shoppingMemoIds: checkedIds,
+          });
+          shoppingMemoActions.bulkDeleteShoppingMemo({
+            ids: checkedIds,
+          });
+          setIsLoding(false);
         }
       },
     );
