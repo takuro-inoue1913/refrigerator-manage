@@ -446,8 +446,8 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
             rules={{
               required: '表示名は必須です。',
               maxLength: {
-                value: 6,
-                message: '表示名は6文字以内で入力してください。',
+                value: 8,
+                message: '表示名は8文字以内で入力してください。',
               },
             }}
             render={({ field: { onChange, onBlur, value } }) => (
@@ -458,7 +458,7 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
                 accessibilityLabel="表示名"
                 value={value}
                 returnKeyType="done"
-                placeholder="表示名 (6文字以内) ※リストに表示されます。"
+                placeholder="表示名 ※ リストに表示されます"
               />
             )}
           />
@@ -473,12 +473,7 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
             control={control}
             name="nameKana"
             rules={{
-              required: '名前（ひらがな）は必須です。',
-              pattern: {
-                // eslint-disable-next-line no-irregular-whitespace
-                value: /^[あ-んー　]*$/,
-                message: '名前（ひらがな）はひらがなのみで入力してください。',
-              },
+              required: '名前は必須です。',
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
@@ -487,7 +482,7 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
                 onChangeText={onChange}
                 value={value}
                 returnKeyType="done"
-                placeholder="名前 (ひらがな) ※絞込や検索に使用します。"
+                placeholder="名前 ※ 絞込や検索に使用します"
               />
             )}
           />
@@ -543,7 +538,7 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
                 maxHeight={150}
                 labelField="name"
                 valueField="id"
-                placeholder="単位名 *初期の増減単位が設定されます。"
+                placeholder="単位名 ※ 自動で増減単位が設定されます"
                 searchPlaceholder="単位名を検索"
                 value={value}
                 onChange={(item) => handleUnitChange(item, onChange)}
@@ -590,7 +585,7 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                placeholder="増減単位 ※ +- での在庫の増減量になります。"
+                placeholder="増減単位 ※ 在庫の増減量になります"
                 keyboardType="numeric"
                 returnKeyType="done"
               />
