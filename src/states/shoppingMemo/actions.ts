@@ -116,10 +116,29 @@ export const useShoppingMemoActions = () => {
       },
   );
 
+  const bulkDeleteShoppingMemo = useRecoilCallback(
+    ({ set }) =>
+      ({ ids }: { ids: string[] }) => {
+        set(shoppingMemosState, (prev) => {
+          const idsSet = new Set(ids);
+          const _ids = prev.ids.filter((_id) => !idsSet.has(_id));
+          const byId = { ...prev.byId };
+          ids.forEach((id) => {
+            delete byId[id];
+          });
+          return {
+            ids: _ids,
+            byId,
+          };
+        });
+      },
+  );
+
   return {
     addShoppingMemo,
     upsertShoppingMemo,
     updateShoppingMemoIsChecked,
     deleteShoppingMemo,
+    bulkDeleteShoppingMemo,
   };
 };

@@ -7,6 +7,7 @@ import {
   StyleSheet,
   FlatList,
   Text,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FridgeMaster } from '@src/states/fridge';
@@ -24,6 +25,7 @@ import { useRequestUpdateShoppingMemo } from '@src/interface/hooks/shoppingMemo/
 import { LoadingMask } from '@src/components/common/LoadingMask';
 import { useRequestUpdateIsCheckedShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestUpdateIsCheckedShoppingMemo';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
+import { useRequestBulkDeleteShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestBulkDeleteShoppingMemo';
 
 export const ShoppingMemoScreen = () => {
   const isFocused = useIsFocused();
@@ -34,6 +36,7 @@ export const ShoppingMemoScreen = () => {
   const requestUpdateShoppingMemo = useRequestUpdateShoppingMemo();
   const requestUpdateIsCheckedShoppingMemo =
     useRequestUpdateIsCheckedShoppingMemo();
+  const requestBulkDeleteShoppingMemo = useRequestBulkDeleteShoppingMemo();
   const shoppingMemoActions = useShoppingMemoActions();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectFridgeMaster, setSelectFridgeMaster] =
@@ -175,6 +178,28 @@ export const ShoppingMemoScreen = () => {
     });
   };
 
+  const handlePressBulkDeleteButton = () => {
+    Alert.alert('本当にすべて削除しますか？', '', [
+      {
+        text: 'キャンセル',
+        style: 'cancel',
+      },
+      {
+        text: '削除',
+        onPress: async () => {
+          setIsLoding(true);
+          await requestBulkDeleteShoppingMemo({
+            shoppingMemoIds: shoppingMemo.ids,
+          });
+          shoppingMemoActions.bulkDeleteShoppingMemo({
+            ids: shoppingMemo.ids,
+          });
+          setIsLoding(false);
+        },
+      },
+    ]);
+  };
+
   const FlatItem = ({ item }: { item: ShoppingMemo['byId'][number] }) => (
     <ShoppingMemoItem
       item={item}
@@ -199,7 +224,10 @@ export const ShoppingMemoScreen = () => {
             冷蔵庫に追加する
           </Text>
         </LinearGradientButton>
-        <TouchableOpacity style={styles.allDeleteButton} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.allDeleteButton}
+          onPress={handlePressBulkDeleteButton}
+        >
           <Text style={styles.allDeleteButtonText}>すべて削除</Text>
         </TouchableOpacity>
       </View>

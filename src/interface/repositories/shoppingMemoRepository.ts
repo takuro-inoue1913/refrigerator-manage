@@ -4,6 +4,7 @@ import {
   UpdateShoppingMemoDocument,
   UpdateShoppingMemoIsCheckedDocument,
   DeleteShoppingMemoDocument,
+  BulkDeleteShoppingMemoDocument,
   DeleteShoppingMemoByMasterIdDocument,
 } from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
@@ -100,6 +101,20 @@ export const shoppingMemoRepository = {
     const data = await client.request(DeleteShoppingMemoByMasterIdDocument, {
       userId,
       masterId,
+    });
+    return data.delete_shopping_memo;
+  },
+  bulkDelete: async ({
+    idToken,
+    shoppingMemoIds,
+  }: {
+    idToken: string | null;
+    shoppingMemoIds: string[];
+  }) => {
+    const client = buildGraphQLUserClient(idToken);
+
+    const data = await client.request(BulkDeleteShoppingMemoDocument, {
+      shoppingMemoIds,
     });
     return data.delete_shopping_memo;
   },

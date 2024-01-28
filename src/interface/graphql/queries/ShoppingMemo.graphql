@@ -80,3 +80,15 @@ mutation DeleteShoppingMemoByMasterId($userId: String!, $masterId: uuid!) {
     }
   }
 }
+
+mutation BulkDeleteShoppingMemo($shoppingMemoIds: [uuid!]!) {
+  delete_shopping_memo(where: { shopping_memo_id: { _in: $shoppingMemoIds } }) {
+    returning {
+      shopping_memo_id
+      master_id
+      user_id
+      quantity
+      is_checked
+    }
+  }
+}
