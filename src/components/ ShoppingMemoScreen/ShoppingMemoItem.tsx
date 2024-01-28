@@ -15,21 +15,16 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useRequestDeleteShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestDeleteShoppingMemo';
 
 type Props = {
-  checkedIds: string[];
   item: ShoppingMemo['byId'][number];
-  addCheckedId: (id: string) => void;
-  removeCheckedId: (id: string) => void;
+  onChangeChecked: (id: string, isChecked: boolean) => void;
   onLongPress: (id: string) => void;
 };
 
 export const ShoppingMemoItem: FC<Props> = ({
   item,
-  checkedIds,
-  addCheckedId,
-  removeCheckedId,
+  onChangeChecked,
   onLongPress,
 }) => {
-  const isChecked = checkedIds.includes(item.id);
   const shoppingMemoActions = useShoppingMemoActions();
   const requestDeleteShoppingMemo = useRequestDeleteShoppingMemo();
 
@@ -54,11 +49,7 @@ export const ShoppingMemoItem: FC<Props> = ({
   };
 
   const handlePressCheckbox = (isChecked: boolean) => {
-    if (isChecked) {
-      addCheckedId(item.id);
-    } else {
-      removeCheckedId(item.id);
-    }
+    onChangeChecked(item.id, isChecked);
   };
 
   const handleLongPress = () => {
@@ -68,7 +59,10 @@ export const ShoppingMemoItem: FC<Props> = ({
   return (
     <Pressable style={styles.listItem} onLongPress={handleLongPress}>
       <View style={styles.listItemContent}>
-        <AnimatedCheckbox isChecked={isChecked} onCheck={handlePressCheckbox} />
+        <AnimatedCheckbox
+          isChecked={item.isChecked}
+          onCheck={handlePressCheckbox}
+        />
         <CachedImage
           source={{ uri: item.imageUri }}
           cacheKey={generateEncodeString([item.name, item.id.toString()])}
@@ -78,12 +72,12 @@ export const ShoppingMemoItem: FC<Props> = ({
               height: 40,
               borderRadius: 5,
             },
-            isChecked ? { opacity: 0.5 } : {},
+            item.isChecked ? { opacity: 0.5 } : {},
           ]}
         />
         <Text
           style={
-            isChecked
+            item.isChecked
               ? {
                   fontSize: 16,
                   textDecorationLine: 'line-through',

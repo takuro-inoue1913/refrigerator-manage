@@ -85,6 +85,22 @@ export const useShoppingMemoActions = () => {
       },
   );
 
+  const updateShoppingMemoIsChecked = useRecoilCallback(
+    ({ set }) =>
+      ({ id, isChecked }: { id: string; isChecked: boolean }) => {
+        set(shoppingMemosState, (prev) => ({
+          ...prev,
+          byId: {
+            ...prev.byId,
+            [id]: {
+              ...prev.byId[id],
+              isChecked,
+            },
+          },
+        }));
+      },
+  );
+
   const deleteShoppingMemo = useRecoilCallback(
     ({ set }) =>
       ({ id }: { id: string }) => {
@@ -103,6 +119,7 @@ export const useShoppingMemoActions = () => {
   return {
     addShoppingMemo,
     upsertShoppingMemo,
+    updateShoppingMemoIsChecked,
     deleteShoppingMemo,
   };
 };

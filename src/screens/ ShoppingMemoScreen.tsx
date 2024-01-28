@@ -16,6 +16,7 @@ import { useRequestGetAllShoppingMemo } from '@src/interface/hooks/shoppingMemo/
 import { useRequestInsertShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestInsertShoppingMemo';
 import { useRequestUpdateShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestUpdateShoppingMemo';
 import { LoadingMask } from '@src/components/common/LoadingMask';
+import { useRequestUpdateIsCheckedShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestUpdateIsCheckedShoppingMemo';
 
 export const ShoppingMemoScreen = () => {
   const isFocused = useIsFocused();
@@ -24,15 +25,14 @@ export const ShoppingMemoScreen = () => {
   const { shoppingMemo, isFetching } = useRequestGetAllShoppingMemo();
   const requestInsertShoppingMemo = useRequestInsertShoppingMemo();
   const requestUpdateShoppingMemo = useRequestUpdateShoppingMemo();
+  const requestUpdateIsCheckedShoppingMemo =
+    useRequestUpdateIsCheckedShoppingMemo();
   const shoppingMemoActions = useShoppingMemoActions();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectFridgeMaster, setSelectFridgeMaster] =
     useState<FridgeMaster | null>(null);
   const [quantity, setQuantity] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [checkedShoppingMemoIds, setCheckedShoppingMemoIds] = useState<
-    string[]
-  >([]);
   const [modalMode, setModalMode] = useState<ModalMode>('add');
   const [editTargetId, setEditTargetId] = useState<string | null>(null);
   const [prevFridgeMasterId, setPrevFridgeMasterId] = useState<string | null>(
@@ -157,15 +157,22 @@ export const ShoppingMemoScreen = () => {
     setModalVisible(true);
   };
 
+  const handleChangeChecked = (id: string, isChecked: boolean) => {
+    shoppingMemoActions.updateShoppingMemoIsChecked({
+      id,
+      isChecked,
+    });
+    requestUpdateIsCheckedShoppingMemo({
+      shoppingMemoId: id,
+      isChecked,
+    });
+  };
+
   const FlatItem = ({ item }: { item: ShoppingMemo['byId'][number] }) => (
     <ShoppingMemoItem
       item={item}
       onLongPress={handleLongPressItem}
-      checkedIds={checkedShoppingMemoIds}
-      addCheckedId={(id) => setCheckedShoppingMemoIds((prev) => [...prev, id])}
-      removeCheckedId={(id) =>
-        setCheckedShoppingMemoIds((prev) => prev.filter((item) => item !== id))
-      }
+      onChangeChecked={handleChangeChecked}
     />
   );
 
