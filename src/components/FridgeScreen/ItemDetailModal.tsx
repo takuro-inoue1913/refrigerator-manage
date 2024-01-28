@@ -69,7 +69,7 @@ type FormValues = {
 export type EditFormValues = {
   id: string;
   quantity: number | null;
-  incrementalUnit: number | null;
+  incrementalUnit: number | string | null;
   expirationDate: string;
   memo: string;
   isFavorite: boolean;
@@ -139,7 +139,9 @@ export const ItemDetailModal: FC<Props> = ({
     onClose({
       ...editFormValues,
       quantity: editFormValues.quantity ?? 0,
-      incrementalUnit: editFormValues.incrementalUnit ?? 1,
+      incrementalUnit: editFormValues.incrementalUnit
+        ? Number(editFormValues.incrementalUnit)
+        : 0,
       // MEMO: 期限が空の場合は今日の日付を入れる。
       expirationDate:
         editFormValues.expirationDate !== ''
@@ -289,15 +291,20 @@ export const ItemDetailModal: FC<Props> = ({
                           ? editFormValues.incrementalUnit.toString()
                           : ''
                       }
-                      keyboardType="numeric"
+                      keyboardType="decimal-pad"
                       placeholder="100"
                       returnKeyType="done"
-                      onChange={(e) =>
+                      onEndEditing={(e) => {
                         handleEditForm(
                           'incrementalUnit',
-                          Number(e.nativeEvent.text),
-                        )
-                      }
+                          e.nativeEvent.text !== ''
+                            ? Number(e.nativeEvent.text)
+                            : null,
+                        );
+                      }}
+                      onChange={(e) => {
+                        handleEditForm('incrementalUnit', e.nativeEvent.text);
+                      }}
                     />
                   </View>
                   <View style={styles.row}>

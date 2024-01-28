@@ -145,7 +145,7 @@ mutation InsertProteinSourceStock(
 mutation UpdateProteinSourceStockQuantity(
   $userId: String!
   $proteinSourceId: uuid!
-  $quantity: Int!
+  $quantity: numeric!
   $expirationDate: date
 ) {
   update_protein_source_stocks(
@@ -189,8 +189,8 @@ mutation UpdateProteinSourceStockIsFavorite(
 mutation UpdateProteinSourceStockDetail(
   $userId: String!
   $proteinSourceId: uuid!
-  $quantity: Int!
-  $incrementalUnit: Int!
+  $quantity: numeric!
+  $incrementalUnit: numeric!
   $expirationDate: date!
   $memo: String!
   $isFavorite: Boolean!

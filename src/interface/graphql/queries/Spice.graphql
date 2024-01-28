@@ -125,7 +125,7 @@ mutation InsertSpiceStock($object: spice_stocks_insert_input!) {
 mutation UpdateSpiceStockQuantity(
   $userId: String!
   $spiceId: uuid!
-  $quantity: Int!
+  $quantity: numeric!
   $expirationDate: date
 ) {
   update_spice_stocks(
@@ -163,8 +163,8 @@ mutation UpdateSpiceStockIsFavorite(
 mutation UpdateSpiceStockDetail(
   $userId: String!
   $spiceId: uuid!
-  $quantity: Int!
-  $incrementalUnit: Int!
+  $quantity: numeric!
+  $incrementalUnit: numeric!
   $expirationDate: date!
   $memo: String!
   $isFavorite: Boolean!

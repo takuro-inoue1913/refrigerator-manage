@@ -136,7 +136,7 @@ mutation InsertStapleFoodStock($object: staple_food_stocks_insert_input!) {
 mutation UpdateStapleFoodStockQuantity(
   $userId: String!
   $stapleFoodId: uuid!
-  $quantity: Int!
+  $quantity: numeric!
   $expirationDate: date
 ) {
   update_staple_food_stocks(
@@ -174,8 +174,8 @@ mutation UpdateStapleFoodStockIsFavorite(
 mutation UpdateStapleFoodStockDetail(
   $userId: String!
   $stapleFoodId: uuid!
-  $quantity: Int!
-  $incrementalUnit: Int!
+  $quantity: numeric!
+  $incrementalUnit: numeric!
   $expirationDate: date!
   $memo: String!
   $isFavorite: Boolean!

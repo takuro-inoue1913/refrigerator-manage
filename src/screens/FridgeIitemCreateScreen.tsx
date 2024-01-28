@@ -580,7 +580,7 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
             rules={{
               required: '増減単位は必須です。',
               pattern: {
-                value: /^\d+$/,
+                value: /^\d+(\.\d+)?$/,
                 message: '増減単位は数値のみで入力してください。',
               },
             }}

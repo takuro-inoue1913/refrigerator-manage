@@ -123,7 +123,7 @@ mutation InsertMeatStock($object: meat_stocks_insert_input!) {
 mutation UpdateMeatStockQuantity(
   $userId: String!
   $meatId: uuid!
-  $quantity: Int!
+  $quantity: numeric!
   $expirationDate: date
 ) {
   update_meat_stocks(
@@ -161,8 +161,8 @@ mutation UpdateMeatStockIsFavorite(
 mutation UpdateMeatStockDetail(
   $userId: String!
   $meatId: uuid!
-  $quantity: Int!
-  $incrementalUnit: Int!
+  $quantity: numeric!
+  $incrementalUnit: numeric!
   $expirationDate: date!
   $memo: String!
   $isFavorite: Boolean!

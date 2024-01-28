@@ -12,3 +12,4 @@ generates:
       scalars:
         uuid: string
         date: string
+        numeric: number

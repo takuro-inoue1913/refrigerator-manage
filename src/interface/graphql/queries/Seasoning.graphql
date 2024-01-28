@@ -132,7 +132,7 @@ mutation InsertSeasoningStock($object: seasoning_stocks_insert_input!) {
 mutation UpdateSeasoningStockQuantity(
   $userId: String!
   $seasoningId: uuid!
-  $quantity: Int!
+  $quantity: numeric!
   $expirationDate: date
 ) {
   update_seasoning_stocks(
@@ -170,8 +170,8 @@ mutation UpdateSeasoningStockIsFavorite(
 mutation UpdateSeasoningStockDetail(
   $userId: String!
   $seasoningId: uuid!
-  $quantity: Int!
-  $incrementalUnit: Int!
+  $quantity: numeric!
+  $incrementalUnit: numeric!
   $expirationDate: date!
   $memo: String!
   $isFavorite: Boolean!
