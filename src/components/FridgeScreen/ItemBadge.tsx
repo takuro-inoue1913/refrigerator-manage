@@ -14,7 +14,7 @@ export const ItemBadge: FC<Props> = ({ quantity, unitName }) => {
   const quantityValue = isKquantity ? quantity / 1000 : quantity;
 
   const getBadgeSize = () => {
-    if (quantity >= 100) {
+    if (quantity >= 100 || `${quantity}${unitName}`.length > 3) {
       return 50;
     } else {
       return 40;
