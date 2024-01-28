@@ -49,6 +49,8 @@ export const ShoppingMemoScreen = () => {
     null,
   );
 
+  const isDisabled = shoppingMemo.ids.length === 0;
+
   const listData = useMemo<ShoppingMemo['byId'][number][]>(
     () => shoppingMemo.ids.map((id) => shoppingMemo.byId[id]),
     [shoppingMemo],
@@ -218,15 +220,23 @@ export const ShoppingMemoScreen = () => {
     <View style={styles.container}>
       {(isLoding || isFetching) && <LoadingMask />}
       <View style={styles.header}>
-        <LinearGradientButton width={200} onPress={() => {}}>
+        <LinearGradientButton
+          width={200}
+          disabled={isDisabled}
+          onPress={() => {}}
+        >
           <Text style={styles.addFridgeButtonText}>
             <Icon name="fridge" size={20} color="white" />
             冷蔵庫に追加する
           </Text>
         </LinearGradientButton>
         <TouchableOpacity
-          style={styles.allDeleteButton}
+          style={[
+            styles.allDeleteButton,
+            isDisabled ? styles.disabled : undefined,
+          ]}
           onPress={handlePressBulkDeleteButton}
+          disabled={isDisabled}
         >
           <Text style={styles.allDeleteButtonText}>すべて削除</Text>
         </TouchableOpacity>
@@ -276,6 +286,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     zIndex: 100,
+  },
+  disabled: {
+    backgroundColor: '#e1e4e8',
   },
   addFridgeButton: {
     width: '70%',
