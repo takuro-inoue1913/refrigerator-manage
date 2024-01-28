@@ -3,7 +3,7 @@ import { FridgeMaster } from '@src/states/fridge';
 import { ShoppingMemo } from '@src/states/shoppingMemo';
 
 /**
- * 野菜マスタと野菜在庫から野菜在庫のオブジェクトを生成する。
+ * shoppingMemo の生成
  * @param {GetShoppingMemosQuery} data
  */
 export const generateShoppingMemo = (

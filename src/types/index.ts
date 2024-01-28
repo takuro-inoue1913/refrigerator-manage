@@ -38,7 +38,7 @@ export type FridgeStock = {
   /** 在庫があるかどうか */
   hasStock: boolean;
   /** 在庫ID */
-  stockId: number | null;
+  stockId: string | null;
   /** 在庫数 */
   quantity: number;
   /** 増減単位 */

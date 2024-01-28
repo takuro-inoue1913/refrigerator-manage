@@ -4,6 +4,7 @@ query GetShoppingMemos {
     user_id
     master_id
     quantity
+    is_checked
   }
 }
 
@@ -19,6 +20,7 @@ mutation InsertShoppingMemo(
     master_id
     user_id
     quantity
+    is_checked
   }
 }
 
@@ -35,6 +37,23 @@ mutation UpdateShoppingMemo(
     master_id
     user_id
     quantity
+    is_checked
+  }
+}
+
+mutation UpdateShoppingMemoIsChecked(
+  $shoppingMemoId: uuid!
+  $isChecked: Boolean!
+) {
+  update_shopping_memo_by_pk(
+    pk_columns: { shopping_memo_id: $shoppingMemoId }
+    _set: { is_checked: $isChecked }
+  ) {
+    shopping_memo_id
+    master_id
+    user_id
+    quantity
+    is_checked
   }
 }
 
@@ -44,6 +63,7 @@ mutation DeleteShoppingMemo($shoppingMemoId: uuid!) {
     master_id
     user_id
     quantity
+    is_checked
   }
 }
 
@@ -56,6 +76,7 @@ mutation DeleteShoppingMemoByMasterId($userId: String!, $masterId: uuid!) {
       master_id
       user_id
       quantity
+      is_checked
     }
   }
 }
