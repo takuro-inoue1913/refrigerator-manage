@@ -29,7 +29,9 @@ export type TypeName =
   | GetAllFridgeMasterQuery['custom_seasoning_master'][number]['__typename']
   | GetAllFridgeMasterQuery['seasoning_master'][number]['__typename']
   | GetAllFridgeMasterQuery['spice_master'][number]['__typename']
-  | GetAllFridgeMasterQuery['custom_spice_master'][number]['__typename'];
+  | GetAllFridgeMasterQuery['custom_spice_master'][number]['__typename']
+  | GetAllFridgeMasterQuery['custom_staple_food_master'][number]['__typename']
+  | GetAllFridgeMasterQuery['staple_food_master'][number]['__typename'];
 
 export type FridgeMaster = {
   id: string;
@@ -41,6 +43,12 @@ export type FridgeMaster = {
   unitName: string;
   /** 増減単位 */
   incrementalUnit: number;
+  /** 在庫数。在庫がない場合は 0 になる。  */
+  quantity: number;
+  /** 在庫があるかどうか */
+  hasStock: boolean;
+  /** 基本賞味期限期間 */
+  defaultExpirationPeriod: number;
 };
 
 export type SelectFilterOptions = {

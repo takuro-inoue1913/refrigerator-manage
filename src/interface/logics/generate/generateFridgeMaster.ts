@@ -71,6 +71,10 @@ export const generateFridgeMaster = (
     'custom_spice_master',
     data.custom_spice_master,
   );
+  const stapleFoodMasterData = convertMasterData(
+    'staple_food_master',
+    data.staple_food_master,
+  );
 
   return [
     ...vegetableMasterData,
@@ -89,6 +93,7 @@ export const generateFridgeMaster = (
     ...customSeasoningMasterData,
     ...spiceMasterData,
     ...customSpiceMasterData,
+    ...stapleFoodMasterData,
   ];
 };
 
@@ -110,6 +115,9 @@ const convertMasterData = (
     incrementalUnit:
       data.stack?.incremental_unit ??
       getIncrementalUnit(data.unit_master?.unit_name ?? ''),
+    quantity: data.stack?.quantity ?? 0,
+    hasStock: data.stack !== null,
+    defaultExpirationPeriod: data.default_expiration_period,
   }));
 
   return _masterData;
