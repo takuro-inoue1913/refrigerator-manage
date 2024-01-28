@@ -1,9 +1,14 @@
 import React, { FC, ReactNode } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  DimensionValue,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { CommonGradation } from '@src/components/common/CommonGradation';
 
 type Props = {
-  width?: number;
+  width?: DimensionValue;
   height?: number;
   borderRadius?: number;
   disabled?: boolean;

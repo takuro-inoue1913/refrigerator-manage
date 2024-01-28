@@ -1,7 +1,13 @@
 import { CommonGradation } from '@src/components/common/CommonGradation';
 import { useRequestGetAllFridgeMaster } from '@src/interface/hooks/shoppingMemo/useRequestGetAllFridgeMaster';
 import React, { useEffect, useMemo, useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  FlatList,
+  Text,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FridgeMaster } from '@src/states/fridge';
 import { ShoppingMemo, useShoppingMemoActions } from '@src/states/shoppingMemo';
@@ -17,6 +23,7 @@ import { useRequestInsertShoppingMemo } from '@src/interface/hooks/shoppingMemo/
 import { useRequestUpdateShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestUpdateShoppingMemo';
 import { LoadingMask } from '@src/components/common/LoadingMask';
 import { useRequestUpdateIsCheckedShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestUpdateIsCheckedShoppingMemo';
+import { LinearGradientButton } from '@src/components/common/GradationButton';
 
 export const ShoppingMemoScreen = () => {
   const isFocused = useIsFocused();
@@ -185,6 +192,17 @@ export const ShoppingMemoScreen = () => {
   return (
     <View style={styles.container}>
       {(isLoding || isFetching) && <LoadingMask />}
+      <View style={styles.header}>
+        <LinearGradientButton width={300} onPress={() => {}}>
+          <Text style={styles.addFridgeButtonText}>
+            <Icon name="fridge" size={20} color="white" />
+            冷蔵庫に追加する
+          </Text>
+        </LinearGradientButton>
+        <TouchableOpacity style={styles.allDeleteButton} onPress={() => {}}>
+          <Text style={styles.allDeleteButtonText}>すべて削除</Text>
+        </TouchableOpacity>
+      </View>
       <FlatList
         data={listData}
         renderItem={FlatItem}
@@ -219,6 +237,39 @@ export const ShoppingMemoScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    padding: 20,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    zIndex: 100,
+  },
+  addFridgeButton: {
+    width: '70%',
+    height: 50,
+  },
+  addFridgeButtonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign: 'center',
+  },
+  allDeleteButton: {
+    backgroundColor: '#dc3545',
+    padding: 10,
+    borderRadius: 50,
+  },
+  allDeleteButtonText: {
+    color: 'white',
+    fontSize: 13,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   container: {
     flex: 1,
   },
