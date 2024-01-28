@@ -88,7 +88,7 @@ export const MeatView: FC = () => {
           await requestDeleteShoppingMemoByMasterId({ masterId: id }).then(
             (data) => {
               shoppingMemoActions.deleteShoppingMemo({
-                id: data?.shopping_memo_id,
+                id: data!.shopping_memo_id,
               });
             },
           );
