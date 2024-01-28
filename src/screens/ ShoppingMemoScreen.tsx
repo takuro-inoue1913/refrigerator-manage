@@ -28,10 +28,12 @@ import { useRequestUpdateIsCheckedShoppingMemo } from '@src/interface/hooks/shop
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { useRequestBulkDeleteShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestBulkDeleteShoppingMemo';
 import { useRequestAddFridgeMasterStock } from '@src/interface/hooks/shoppingMemo/useRequestAddFridgeMasterStock';
+import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
+import Toast from 'react-native-toast-message';
 
 export const ShoppingMemoScreen = () => {
   const isFocused = useIsFocused();
-  const [isLoding, setIsLoding] = useState(false);
+  const navigation = useTypedNavigation();
   const { fridgeMaster, refetch } = useRequestGetAllFridgeMaster();
   const { shoppingMemo, isFetching } = useRequestGetAllShoppingMemo();
   const requestInsertShoppingMemo = useRequestInsertShoppingMemo();
@@ -41,6 +43,7 @@ export const ShoppingMemoScreen = () => {
   const requestBulkDeleteShoppingMemo = useRequestBulkDeleteShoppingMemo();
   const requestAddFridgeMasterStock = useRequestAddFridgeMasterStock();
   const shoppingMemoActions = useShoppingMemoActions();
+  const [isLoding, setIsLoding] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectFridgeMaster, setSelectFridgeMaster] =
     useState<FridgeMaster | null>(null);
@@ -211,6 +214,12 @@ export const ShoppingMemoScreen = () => {
             ids: shoppingMemo.ids,
           });
           setIsLoding(false);
+          Toast.show({
+            text1: '冷蔵庫に追加しました',
+            type: 'success',
+            position: 'top',
+          });
+          navigation.navigate('冷蔵庫管理');
         } else if (buttonIndex === 2) {
           setIsLoding(true);
           const checkedIds = shoppingMemo.ids.filter(
@@ -224,6 +233,12 @@ export const ShoppingMemoScreen = () => {
             ids: checkedIds,
           });
           setIsLoding(false);
+          Toast.show({
+            text1: '冷蔵庫に追加しました',
+            type: 'success',
+            position: 'top',
+          });
+          navigation.navigate('冷蔵庫管理');
         }
       },
     );
