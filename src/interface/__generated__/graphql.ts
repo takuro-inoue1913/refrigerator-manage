@@ -14,9 +14,9 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  date: { input: any; output: any; }
+  date: { input: string; output: string; }
   timestamptz: { input: any; output: any; }
-  uuid: { input: any; output: any; }
+  uuid: { input: string; output: string; }
 };
 
 /** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
@@ -10220,6 +10220,7 @@ export type Seasoning_Stocks_Variance_Order_By = {
 /** ユーザーごとのショッピングメモ */
 export type Shopping_Memo = {
   __typename?: 'shopping_memo';
+  is_checked: Scalars['Boolean']['output'];
   master_id: Scalars['uuid']['output'];
   quantity: Scalars['Int']['output'];
   shopping_memo_id: Scalars['uuid']['output'];
@@ -10236,7 +10237,23 @@ export type Shopping_Memo_Aggregate = {
 };
 
 export type Shopping_Memo_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<Shopping_Memo_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<Shopping_Memo_Aggregate_Bool_Exp_Bool_Or>;
   count?: InputMaybe<Shopping_Memo_Aggregate_Bool_Exp_Count>;
+};
+
+export type Shopping_Memo_Aggregate_Bool_Exp_Bool_And = {
+  arguments: Shopping_Memo_Select_Column_Shopping_Memo_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Shopping_Memo_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Shopping_Memo_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: Shopping_Memo_Select_Column_Shopping_Memo_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Shopping_Memo_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
 };
 
 export type Shopping_Memo_Aggregate_Bool_Exp_Count = {
@@ -10307,6 +10324,7 @@ export type Shopping_Memo_Bool_Exp = {
   _and?: InputMaybe<Array<Shopping_Memo_Bool_Exp>>;
   _not?: InputMaybe<Shopping_Memo_Bool_Exp>;
   _or?: InputMaybe<Array<Shopping_Memo_Bool_Exp>>;
+  is_checked?: InputMaybe<Boolean_Comparison_Exp>;
   master_id?: InputMaybe<Uuid_Comparison_Exp>;
   quantity?: InputMaybe<Int_Comparison_Exp>;
   shopping_memo_id?: InputMaybe<Uuid_Comparison_Exp>;
@@ -10327,6 +10345,7 @@ export type Shopping_Memo_Inc_Input = {
 
 /** input type for inserting data into table "shopping_memo" */
 export type Shopping_Memo_Insert_Input = {
+  is_checked?: InputMaybe<Scalars['Boolean']['input']>;
   master_id?: InputMaybe<Scalars['uuid']['input']>;
   quantity?: InputMaybe<Scalars['Int']['input']>;
   shopping_memo_id?: InputMaybe<Scalars['uuid']['input']>;
@@ -10386,6 +10405,7 @@ export type Shopping_Memo_On_Conflict = {
 
 /** Ordering options when selecting data from "shopping_memo". */
 export type Shopping_Memo_Order_By = {
+  is_checked?: InputMaybe<Order_By>;
   master_id?: InputMaybe<Order_By>;
   quantity?: InputMaybe<Order_By>;
   shopping_memo_id?: InputMaybe<Order_By>;
@@ -10401,6 +10421,8 @@ export type Shopping_Memo_Pk_Columns_Input = {
 /** select columns of table "shopping_memo" */
 export enum Shopping_Memo_Select_Column {
   /** column name */
+  IsChecked = 'is_checked',
+  /** column name */
   MasterId = 'master_id',
   /** column name */
   Quantity = 'quantity',
@@ -10410,8 +10432,21 @@ export enum Shopping_Memo_Select_Column {
   UserId = 'user_id'
 }
 
+/** select "shopping_memo_aggregate_bool_exp_bool_and_arguments_columns" columns of table "shopping_memo" */
+export enum Shopping_Memo_Select_Column_Shopping_Memo_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  IsChecked = 'is_checked'
+}
+
+/** select "shopping_memo_aggregate_bool_exp_bool_or_arguments_columns" columns of table "shopping_memo" */
+export enum Shopping_Memo_Select_Column_Shopping_Memo_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  IsChecked = 'is_checked'
+}
+
 /** input type for updating data in table "shopping_memo" */
 export type Shopping_Memo_Set_Input = {
+  is_checked?: InputMaybe<Scalars['Boolean']['input']>;
   master_id?: InputMaybe<Scalars['uuid']['input']>;
   quantity?: InputMaybe<Scalars['Int']['input']>;
   shopping_memo_id?: InputMaybe<Scalars['uuid']['input']>;
@@ -10461,6 +10496,7 @@ export type Shopping_Memo_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Shopping_Memo_Stream_Cursor_Value_Input = {
+  is_checked?: InputMaybe<Scalars['Boolean']['input']>;
   master_id?: InputMaybe<Scalars['uuid']['input']>;
   quantity?: InputMaybe<Scalars['Int']['input']>;
   shopping_memo_id?: InputMaybe<Scalars['uuid']['input']>;
@@ -10480,6 +10516,8 @@ export type Shopping_Memo_Sum_Order_By = {
 
 /** update columns of table "shopping_memo" */
 export enum Shopping_Memo_Update_Column {
+  /** column name */
+  IsChecked = 'is_checked',
   /** column name */
   MasterId = 'master_id',
   /** column name */
@@ -14794,22 +14832,22 @@ export type Vegetable_Stocks_Variance_Order_By = {
 export type GetAllFridgeMasterQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllFridgeMasterQuery = { __typename?: 'query_root', custom_dessert_master: Array<{ __typename?: 'custom_dessert_master', display_name: string, image_uri: string, default_expiration_period: number, id: any, name: string, stack?: { __typename?: 'dessert_stocks', stock_id: any, quantity: number, expiration_date: any, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, custom_fish_master: Array<{ __typename?: 'custom_fish_master', display_name: string, image_uri: string, default_expiration_period: number, id: any, name: string, stack?: { __typename?: 'fish_stocks', stock_id: any, quantity: number, expiration_date: any, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, custom_meat_master: Array<{ __typename?: 'custom_meat_master', display_name: string, image_uri: string, default_expiration_period: number, id: any, name: string }>, custom_other_master: Array<{ __typename?: 'custom_other_master', display_name: string, image_uri: string, default_expiration_period: number, id: any, name: string, stack?: { __typename?: 'other_stocks', stock_id: any, quantity: number, expiration_date: any, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, custom_protein_source_master: Array<{ __typename?: 'custom_protein_source_master', display_name: string, image_uri: string, default_expiration_period: number, id: any, name: string, stack?: { __typename?: 'protein_source_stocks', stock_id: any, quantity: number, expiration_date: any, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, custom_seasoning_master: Array<{ __typename?: 'custom_seasoning_master', display_name: string, image_uri: string, default_expiration_period: number, id: any, name: string, stack?: { __typename?: 'seasoning_stocks', stock_id: any, quantity: number, expiration_date: any, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, custom_spice_master: Array<{ __typename?: 'custom_spice_master', display_name: string, image_uri: string, default_expiration_period: number, id: any, name: string, stack?: { __typename?: 'spice_stocks', stock_id: any, quantity: number, expiration_date: any, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, custom_staple_food_master: Array<{ __typename?: 'custom_staple_food_master', display_name: string, image_uri: string, default_expiration_period: number, id: any, name: string, stack?: { __typename?: 'staple_food_stocks', stock_id: any, quantity: number, expiration_date: any, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, custom_vegetable_master: Array<{ __typename?: 'custom_vegetable_master', display_name: string, image_uri: string, default_expiration_period: number, id: any, name: string, stack?: { __typename?: 'vegetable_stocks', stock_id: number, quantity: number, expiration_date: any, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, dessert_master: Array<{ __typename?: 'dessert_master', display_name: string, image_uri: string, default_expiration_period: number, id: any, name: string, stack?: { __typename?: 'dessert_stocks', stock_id: any, quantity: number, expiration_date: any, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, fish_master: Array<{ __typename?: 'fish_master', display_name: string, image_uri: string, default_expiration_period: number, id: any, name: string, stack?: { __typename?: 'fish_stocks', stock_id: any, quantity: number, expiration_date: any, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, meat_master: Array<{ __typename?: 'meat_master', display_name: string, image_uri: string, default_expiration_period: number, id: any, name: string, stack?: { __typename?: 'meat_stocks', stock_id: number, quantity: number, expiration_date: any, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, other_master: Array<{ __typename?: 'other_master', display_name: string, image_uri: string, default_expiration_period: number, id: any, name: string, stack?: { __typename?: 'other_stocks', stock_id: any, quantity: number, expiration_date: any, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, protein_source_master: Array<{ __typename?: 'protein_source_master', display_name: string, image_uri: string, default_expiration_period: number, id: any, name: string, stack?: { __typename?: 'protein_source_stocks', stock_id: any, quantity: number, expiration_date: any, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, seasoning_master: Array<{ __typename?: 'seasoning_master', display_name: string, image_uri: string, default_expiration_period: number, id: any, name: string, stack?: { __typename?: 'seasoning_stocks', stock_id: any, quantity: number, expiration_date: any, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, spice_master: Array<{ __typename?: 'spice_master', display_name: string, image_uri: string, default_expiration_period: number, id: any, name: string, stack?: { __typename?: 'spice_stocks', stock_id: any, quantity: number, expiration_date: any, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, staple_food_master: Array<{ __typename?: 'staple_food_master', display_name: string, image_uri: string, default_expiration_period: number, id: any, name: string, stack?: { __typename?: 'staple_food_stocks', stock_id: any, quantity: number, expiration_date: any, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, vegetable_master: Array<{ __typename?: 'vegetable_master', display_name: string, image_uri: string, default_expiration_period: number, id: any, name: string, stack?: { __typename?: 'vegetable_stocks', stock_id: number, quantity: number, expiration_date: any, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }> };
+export type GetAllFridgeMasterQuery = { __typename?: 'query_root', custom_dessert_master: Array<{ __typename?: 'custom_dessert_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'dessert_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, custom_fish_master: Array<{ __typename?: 'custom_fish_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'fish_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, custom_meat_master: Array<{ __typename?: 'custom_meat_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string }>, custom_other_master: Array<{ __typename?: 'custom_other_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'other_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, custom_protein_source_master: Array<{ __typename?: 'custom_protein_source_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'protein_source_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, custom_seasoning_master: Array<{ __typename?: 'custom_seasoning_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'seasoning_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, custom_spice_master: Array<{ __typename?: 'custom_spice_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'spice_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, custom_staple_food_master: Array<{ __typename?: 'custom_staple_food_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'staple_food_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, custom_vegetable_master: Array<{ __typename?: 'custom_vegetable_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'vegetable_stocks', stock_id: number, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, dessert_master: Array<{ __typename?: 'dessert_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'dessert_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, fish_master: Array<{ __typename?: 'fish_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'fish_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, meat_master: Array<{ __typename?: 'meat_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'meat_stocks', stock_id: number, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, other_master: Array<{ __typename?: 'other_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'other_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, protein_source_master: Array<{ __typename?: 'protein_source_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'protein_source_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, seasoning_master: Array<{ __typename?: 'seasoning_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'seasoning_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, spice_master: Array<{ __typename?: 'spice_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'spice_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, staple_food_master: Array<{ __typename?: 'staple_food_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'staple_food_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, vegetable_master: Array<{ __typename?: 'vegetable_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'vegetable_stocks', stock_id: number, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }> };
 
 export type GetAllDessertMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllDessertMasterAndUnitAndStocksQuery = { __typename?: 'query_root', GetDessertMasterAndUnitAndStocks: Array<{ __typename?: 'dessert_master', dessert_id: any, display_name: string, dessert_name: string, image_uri: string, default_expiration_period: number, dessert_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, dessert_master_dessert_stocks?: { __typename?: 'dessert_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }>, GetCustomDessertMasterAndUnitAndStocks: Array<{ __typename?: 'custom_dessert_master', display_name: string, image_uri: string, default_expiration_period: number, dessert_id: any, dessert_name: string, dessert_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, dessert_master_dessert_stocks?: { __typename?: 'dessert_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetAllDessertMasterAndUnitAndStocksQuery = { __typename?: 'query_root', GetDessertMasterAndUnitAndStocks: Array<{ __typename?: 'dessert_master', dessert_id: string, display_name: string, dessert_name: string, image_uri: string, default_expiration_period: number, dessert_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, dessert_master_dessert_stocks?: { __typename?: 'dessert_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }>, GetCustomDessertMasterAndUnitAndStocks: Array<{ __typename?: 'custom_dessert_master', display_name: string, image_uri: string, default_expiration_period: number, dessert_id: string, dessert_name: string, dessert_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, dessert_master_dessert_stocks?: { __typename?: 'dessert_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetDessertMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetDessertMasterAndUnitAndStocksQuery = { __typename?: 'query_root', dessert_master: Array<{ __typename?: 'dessert_master', dessert_id: any, display_name: string, dessert_name: string, image_uri: string, default_expiration_period: number, dessert_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, dessert_master_dessert_stocks?: { __typename?: 'dessert_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetDessertMasterAndUnitAndStocksQuery = { __typename?: 'query_root', dessert_master: Array<{ __typename?: 'dessert_master', dessert_id: string, display_name: string, dessert_name: string, image_uri: string, default_expiration_period: number, dessert_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, dessert_master_dessert_stocks?: { __typename?: 'dessert_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetCustomDessertMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCustomDessertMasterAndUnitAndStocksQuery = { __typename?: 'query_root', custom_dessert_master: Array<{ __typename?: 'custom_dessert_master', display_name: string, image_uri: string, default_expiration_period: number, dessert_id: any, dessert_name: string, dessert_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, dessert_master_dessert_stocks?: { __typename?: 'dessert_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetCustomDessertMasterAndUnitAndStocksQuery = { __typename?: 'query_root', custom_dessert_master: Array<{ __typename?: 'custom_dessert_master', display_name: string, image_uri: string, default_expiration_period: number, dessert_id: string, dessert_name: string, dessert_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, dessert_master_dessert_stocks?: { __typename?: 'dessert_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetDessertStockByUserIdAndDessertIdQueryVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -14817,14 +14855,14 @@ export type GetDessertStockByUserIdAndDessertIdQueryVariables = Exact<{
 }>;
 
 
-export type GetDessertStockByUserIdAndDessertIdQuery = { __typename?: 'query_root', dessert_stocks: Array<{ __typename?: 'dessert_stocks', stock_id: any, user_id: string, dessert_id: any, quantity: number, expiration_date: any, memo: string, is_favorite: boolean }> };
+export type GetDessertStockByUserIdAndDessertIdQuery = { __typename?: 'query_root', dessert_stocks: Array<{ __typename?: 'dessert_stocks', stock_id: string, user_id: string, dessert_id: string, quantity: number, expiration_date: string, memo: string, is_favorite: boolean }> };
 
 export type InsertDessertStockMutationVariables = Exact<{
   object: Dessert_Stocks_Insert_Input;
 }>;
 
 
-export type InsertDessertStockMutation = { __typename?: 'mutation_root', insert_dessert_stocks_one?: { __typename?: 'dessert_stocks', quantity: number, stock_id: any, user_id: string, dessert_id: any, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null };
+export type InsertDessertStockMutation = { __typename?: 'mutation_root', insert_dessert_stocks_one?: { __typename?: 'dessert_stocks', quantity: number, stock_id: string, user_id: string, dessert_id: string, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null };
 
 export type UpdateDessertStockQuantityMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -14834,7 +14872,7 @@ export type UpdateDessertStockQuantityMutationVariables = Exact<{
 }>;
 
 
-export type UpdateDessertStockQuantityMutation = { __typename?: 'mutation_root', update_dessert_stocks?: { __typename?: 'dessert_stocks_mutation_response', returning: Array<{ __typename?: 'dessert_stocks', stock_id: any, user_id: string, dessert_id: any, quantity: number, expiration_date: any }> } | null };
+export type UpdateDessertStockQuantityMutation = { __typename?: 'mutation_root', update_dessert_stocks?: { __typename?: 'dessert_stocks_mutation_response', returning: Array<{ __typename?: 'dessert_stocks', stock_id: string, user_id: string, dessert_id: string, quantity: number, expiration_date: string }> } | null };
 
 export type UpdateDessertStockIsFavoriteMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -14843,7 +14881,7 @@ export type UpdateDessertStockIsFavoriteMutationVariables = Exact<{
 }>;
 
 
-export type UpdateDessertStockIsFavoriteMutation = { __typename?: 'mutation_root', update_dessert_stocks?: { __typename?: 'dessert_stocks_mutation_response', returning: Array<{ __typename?: 'dessert_stocks', stock_id: any, user_id: string, dessert_id: any, is_favorite: boolean }> } | null };
+export type UpdateDessertStockIsFavoriteMutation = { __typename?: 'mutation_root', update_dessert_stocks?: { __typename?: 'dessert_stocks_mutation_response', returning: Array<{ __typename?: 'dessert_stocks', stock_id: string, user_id: string, dessert_id: string, is_favorite: boolean }> } | null };
 
 export type UpdateDessertStockDetailMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -14856,7 +14894,7 @@ export type UpdateDessertStockDetailMutationVariables = Exact<{
 }>;
 
 
-export type UpdateDessertStockDetailMutation = { __typename?: 'mutation_root', update_dessert_stocks?: { __typename?: 'dessert_stocks_mutation_response', returning: Array<{ __typename?: 'dessert_stocks', stock_id: any, user_id: string, dessert_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean }> } | null };
+export type UpdateDessertStockDetailMutation = { __typename?: 'mutation_root', update_dessert_stocks?: { __typename?: 'dessert_stocks_mutation_response', returning: Array<{ __typename?: 'dessert_stocks', stock_id: string, user_id: string, dessert_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean }> } | null };
 
 export type InsertCustomDessertMasterMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -14868,29 +14906,29 @@ export type InsertCustomDessertMasterMutationVariables = Exact<{
 }>;
 
 
-export type InsertCustomDessertMasterMutation = { __typename?: 'mutation_root', insert_custom_dessert_master_one?: { __typename?: 'custom_dessert_master', custom_dessert_id: any, user_id: string, custom_dessert_name: string, display_name: string, image_uri: string, default_expiration_period: number, unit_id: number } | null };
+export type InsertCustomDessertMasterMutation = { __typename?: 'mutation_root', insert_custom_dessert_master_one?: { __typename?: 'custom_dessert_master', custom_dessert_id: string, user_id: string, custom_dessert_name: string, display_name: string, image_uri: string, default_expiration_period: number, unit_id: number } | null };
 
 export type DeleteCustomDessertAndStocksMutationVariables = Exact<{
   dessertId: Scalars['uuid']['input'];
 }>;
 
 
-export type DeleteCustomDessertAndStocksMutation = { __typename?: 'mutation_root', delete_custom_dessert_master?: { __typename?: 'custom_dessert_master_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'custom_dessert_master', custom_dessert_id: any, image_uri: string, custom_dessert_name: string, default_expiration_period: number, display_name: string, unit_id: number }> } | null, delete_dessert_stocks?: { __typename?: 'dessert_stocks_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'dessert_stocks', stock_id: any, dessert_id: any }> } | null };
+export type DeleteCustomDessertAndStocksMutation = { __typename?: 'mutation_root', delete_custom_dessert_master?: { __typename?: 'custom_dessert_master_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'custom_dessert_master', custom_dessert_id: string, image_uri: string, custom_dessert_name: string, default_expiration_period: number, display_name: string, unit_id: number }> } | null, delete_dessert_stocks?: { __typename?: 'dessert_stocks_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'dessert_stocks', stock_id: string, dessert_id: string }> } | null };
 
 export type GetAllFishMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllFishMasterAndUnitAndStocksQuery = { __typename?: 'query_root', GetFishMasterAndUnitAndStocks: Array<{ __typename?: 'fish_master', fish_id: any, display_name: string, fish_name: string, image_uri: string, default_expiration_period: number, fish_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, fish_master_fish_stocks?: { __typename?: 'fish_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }>, GetCustomFishMasterAndUnitAndStocks: Array<{ __typename?: 'custom_fish_master', display_name: string, image_uri: string, default_expiration_period: number, fish_id: any, fish_name: string, fish_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, fish_master_fish_stocks?: { __typename?: 'fish_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetAllFishMasterAndUnitAndStocksQuery = { __typename?: 'query_root', GetFishMasterAndUnitAndStocks: Array<{ __typename?: 'fish_master', fish_id: string, display_name: string, fish_name: string, image_uri: string, default_expiration_period: number, fish_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, fish_master_fish_stocks?: { __typename?: 'fish_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }>, GetCustomFishMasterAndUnitAndStocks: Array<{ __typename?: 'custom_fish_master', display_name: string, image_uri: string, default_expiration_period: number, fish_id: string, fish_name: string, fish_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, fish_master_fish_stocks?: { __typename?: 'fish_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetFishMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetFishMasterAndUnitAndStocksQuery = { __typename?: 'query_root', fish_master: Array<{ __typename?: 'fish_master', fish_id: any, display_name: string, fish_name: string, image_uri: string, default_expiration_period: number, fish_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, fish_master_fish_stocks?: { __typename?: 'fish_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetFishMasterAndUnitAndStocksQuery = { __typename?: 'query_root', fish_master: Array<{ __typename?: 'fish_master', fish_id: string, display_name: string, fish_name: string, image_uri: string, default_expiration_period: number, fish_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, fish_master_fish_stocks?: { __typename?: 'fish_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetCustomFishMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCustomFishMasterAndUnitAndStocksQuery = { __typename?: 'query_root', custom_fish_master: Array<{ __typename?: 'custom_fish_master', display_name: string, image_uri: string, default_expiration_period: number, fish_id: any, fish_name: string, fish_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, fish_master_fish_stocks?: { __typename?: 'fish_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetCustomFishMasterAndUnitAndStocksQuery = { __typename?: 'query_root', custom_fish_master: Array<{ __typename?: 'custom_fish_master', display_name: string, image_uri: string, default_expiration_period: number, fish_id: string, fish_name: string, fish_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, fish_master_fish_stocks?: { __typename?: 'fish_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetFishStockByUserIdAndFishIdQueryVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -14898,14 +14936,14 @@ export type GetFishStockByUserIdAndFishIdQueryVariables = Exact<{
 }>;
 
 
-export type GetFishStockByUserIdAndFishIdQuery = { __typename?: 'query_root', fish_stocks: Array<{ __typename?: 'fish_stocks', stock_id: any, user_id: string, fish_id: any, quantity: number, expiration_date: any, memo: string, is_favorite: boolean }> };
+export type GetFishStockByUserIdAndFishIdQuery = { __typename?: 'query_root', fish_stocks: Array<{ __typename?: 'fish_stocks', stock_id: string, user_id: string, fish_id: string, quantity: number, expiration_date: string, memo: string, is_favorite: boolean }> };
 
 export type InsertFishStockMutationVariables = Exact<{
   object: Fish_Stocks_Insert_Input;
 }>;
 
 
-export type InsertFishStockMutation = { __typename?: 'mutation_root', insert_fish_stocks_one?: { __typename?: 'fish_stocks', quantity: number, stock_id: any, user_id: string, fish_id: any, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null };
+export type InsertFishStockMutation = { __typename?: 'mutation_root', insert_fish_stocks_one?: { __typename?: 'fish_stocks', quantity: number, stock_id: string, user_id: string, fish_id: string, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null };
 
 export type UpdateFishStockQuantityMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -14915,7 +14953,7 @@ export type UpdateFishStockQuantityMutationVariables = Exact<{
 }>;
 
 
-export type UpdateFishStockQuantityMutation = { __typename?: 'mutation_root', update_fish_stocks?: { __typename?: 'fish_stocks_mutation_response', returning: Array<{ __typename?: 'fish_stocks', stock_id: any, user_id: string, fish_id: any, quantity: number, expiration_date: any }> } | null };
+export type UpdateFishStockQuantityMutation = { __typename?: 'mutation_root', update_fish_stocks?: { __typename?: 'fish_stocks_mutation_response', returning: Array<{ __typename?: 'fish_stocks', stock_id: string, user_id: string, fish_id: string, quantity: number, expiration_date: string }> } | null };
 
 export type UpdateFishStockIsFavoriteMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -14924,7 +14962,7 @@ export type UpdateFishStockIsFavoriteMutationVariables = Exact<{
 }>;
 
 
-export type UpdateFishStockIsFavoriteMutation = { __typename?: 'mutation_root', update_fish_stocks?: { __typename?: 'fish_stocks_mutation_response', returning: Array<{ __typename?: 'fish_stocks', stock_id: any, user_id: string, fish_id: any, is_favorite: boolean }> } | null };
+export type UpdateFishStockIsFavoriteMutation = { __typename?: 'mutation_root', update_fish_stocks?: { __typename?: 'fish_stocks_mutation_response', returning: Array<{ __typename?: 'fish_stocks', stock_id: string, user_id: string, fish_id: string, is_favorite: boolean }> } | null };
 
 export type UpdateFishStockDetailMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -14937,7 +14975,7 @@ export type UpdateFishStockDetailMutationVariables = Exact<{
 }>;
 
 
-export type UpdateFishStockDetailMutation = { __typename?: 'mutation_root', update_fish_stocks?: { __typename?: 'fish_stocks_mutation_response', returning: Array<{ __typename?: 'fish_stocks', stock_id: any, user_id: string, fish_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean }> } | null };
+export type UpdateFishStockDetailMutation = { __typename?: 'mutation_root', update_fish_stocks?: { __typename?: 'fish_stocks_mutation_response', returning: Array<{ __typename?: 'fish_stocks', stock_id: string, user_id: string, fish_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean }> } | null };
 
 export type InsertCustomFishMasterMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -14949,29 +14987,29 @@ export type InsertCustomFishMasterMutationVariables = Exact<{
 }>;
 
 
-export type InsertCustomFishMasterMutation = { __typename?: 'mutation_root', insert_custom_fish_master_one?: { __typename?: 'custom_fish_master', custom_fish_id: any, user_id: string, custom_fish_name: string, display_name: string, image_uri: string, default_expiration_period: number, unit_id: number } | null };
+export type InsertCustomFishMasterMutation = { __typename?: 'mutation_root', insert_custom_fish_master_one?: { __typename?: 'custom_fish_master', custom_fish_id: string, user_id: string, custom_fish_name: string, display_name: string, image_uri: string, default_expiration_period: number, unit_id: number } | null };
 
 export type DeleteCustomFishAndStocksMutationVariables = Exact<{
   fishId: Scalars['uuid']['input'];
 }>;
 
 
-export type DeleteCustomFishAndStocksMutation = { __typename?: 'mutation_root', delete_custom_fish_master?: { __typename?: 'custom_fish_master_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'custom_fish_master', custom_fish_id: any, image_uri: string, custom_fish_name: string, default_expiration_period: number, display_name: string, unit_id: number }> } | null, delete_fish_stocks?: { __typename?: 'fish_stocks_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'fish_stocks', stock_id: any, fish_id: any }> } | null };
+export type DeleteCustomFishAndStocksMutation = { __typename?: 'mutation_root', delete_custom_fish_master?: { __typename?: 'custom_fish_master_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'custom_fish_master', custom_fish_id: string, image_uri: string, custom_fish_name: string, default_expiration_period: number, display_name: string, unit_id: number }> } | null, delete_fish_stocks?: { __typename?: 'fish_stocks_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'fish_stocks', stock_id: string, fish_id: string }> } | null };
 
 export type GetAllMeatMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllMeatMasterAndUnitAndStocksQuery = { __typename?: 'query_root', GetMeatMasterAndUnitAndStocks: Array<{ __typename?: 'meat_master', meat_id: any, display_name: string, meat_name: string, image_uri: string, default_expiration_period: number, meat_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, meat_master_meat_stocks?: { __typename?: 'meat_stocks', stock_id: number, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }>, GetCustomMeatMasterAndUnitAndStocks: Array<{ __typename?: 'custom_meat_master', display_name: string, image_uri: string, default_expiration_period: number, meat_id: any, meat_name: string, meat_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, meat_master_meat_stocks?: { __typename?: 'meat_stocks', stock_id: number, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetAllMeatMasterAndUnitAndStocksQuery = { __typename?: 'query_root', GetMeatMasterAndUnitAndStocks: Array<{ __typename?: 'meat_master', meat_id: string, display_name: string, meat_name: string, image_uri: string, default_expiration_period: number, meat_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, meat_master_meat_stocks?: { __typename?: 'meat_stocks', stock_id: number, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }>, GetCustomMeatMasterAndUnitAndStocks: Array<{ __typename?: 'custom_meat_master', display_name: string, image_uri: string, default_expiration_period: number, meat_id: string, meat_name: string, meat_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, meat_master_meat_stocks?: { __typename?: 'meat_stocks', stock_id: number, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetMeatMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMeatMasterAndUnitAndStocksQuery = { __typename?: 'query_root', meat_master: Array<{ __typename?: 'meat_master', meat_id: any, display_name: string, meat_name: string, image_uri: string, default_expiration_period: number, meat_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, meat_master_meat_stocks?: { __typename?: 'meat_stocks', stock_id: number, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetMeatMasterAndUnitAndStocksQuery = { __typename?: 'query_root', meat_master: Array<{ __typename?: 'meat_master', meat_id: string, display_name: string, meat_name: string, image_uri: string, default_expiration_period: number, meat_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, meat_master_meat_stocks?: { __typename?: 'meat_stocks', stock_id: number, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetCustomMeatMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCustomMeatMasterAndUnitAndStocksQuery = { __typename?: 'query_root', custom_meat_master: Array<{ __typename?: 'custom_meat_master', display_name: string, image_uri: string, default_expiration_period: number, meat_id: any, meat_name: string, meat_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, meat_master_meat_stocks?: { __typename?: 'meat_stocks', stock_id: number, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetCustomMeatMasterAndUnitAndStocksQuery = { __typename?: 'query_root', custom_meat_master: Array<{ __typename?: 'custom_meat_master', display_name: string, image_uri: string, default_expiration_period: number, meat_id: string, meat_name: string, meat_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, meat_master_meat_stocks?: { __typename?: 'meat_stocks', stock_id: number, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetMeatStockByUserIdAndMeatIdQueryVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -14979,14 +15017,14 @@ export type GetMeatStockByUserIdAndMeatIdQueryVariables = Exact<{
 }>;
 
 
-export type GetMeatStockByUserIdAndMeatIdQuery = { __typename?: 'query_root', meat_stocks: Array<{ __typename?: 'meat_stocks', stock_id: number, user_id: string, meat_id: any, quantity: number, expiration_date: any, memo: string, is_favorite: boolean }> };
+export type GetMeatStockByUserIdAndMeatIdQuery = { __typename?: 'query_root', meat_stocks: Array<{ __typename?: 'meat_stocks', stock_id: number, user_id: string, meat_id: string, quantity: number, expiration_date: string, memo: string, is_favorite: boolean }> };
 
 export type InsertMeatStockMutationVariables = Exact<{
   object: Meat_Stocks_Insert_Input;
 }>;
 
 
-export type InsertMeatStockMutation = { __typename?: 'mutation_root', insert_meat_stocks_one?: { __typename?: 'meat_stocks', quantity: number, stock_id: number, user_id: string, meat_id: any, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null };
+export type InsertMeatStockMutation = { __typename?: 'mutation_root', insert_meat_stocks_one?: { __typename?: 'meat_stocks', quantity: number, stock_id: number, user_id: string, meat_id: string, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null };
 
 export type UpdateMeatStockQuantityMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -14996,7 +15034,7 @@ export type UpdateMeatStockQuantityMutationVariables = Exact<{
 }>;
 
 
-export type UpdateMeatStockQuantityMutation = { __typename?: 'mutation_root', update_meat_stocks?: { __typename?: 'meat_stocks_mutation_response', returning: Array<{ __typename?: 'meat_stocks', stock_id: number, user_id: string, meat_id: any, quantity: number, expiration_date: any }> } | null };
+export type UpdateMeatStockQuantityMutation = { __typename?: 'mutation_root', update_meat_stocks?: { __typename?: 'meat_stocks_mutation_response', returning: Array<{ __typename?: 'meat_stocks', stock_id: number, user_id: string, meat_id: string, quantity: number, expiration_date: string }> } | null };
 
 export type UpdateMeatStockIsFavoriteMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15005,7 +15043,7 @@ export type UpdateMeatStockIsFavoriteMutationVariables = Exact<{
 }>;
 
 
-export type UpdateMeatStockIsFavoriteMutation = { __typename?: 'mutation_root', update_meat_stocks?: { __typename?: 'meat_stocks_mutation_response', returning: Array<{ __typename?: 'meat_stocks', stock_id: number, user_id: string, meat_id: any, is_favorite: boolean }> } | null };
+export type UpdateMeatStockIsFavoriteMutation = { __typename?: 'mutation_root', update_meat_stocks?: { __typename?: 'meat_stocks_mutation_response', returning: Array<{ __typename?: 'meat_stocks', stock_id: number, user_id: string, meat_id: string, is_favorite: boolean }> } | null };
 
 export type UpdateMeatStockDetailMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15018,7 +15056,7 @@ export type UpdateMeatStockDetailMutationVariables = Exact<{
 }>;
 
 
-export type UpdateMeatStockDetailMutation = { __typename?: 'mutation_root', update_meat_stocks?: { __typename?: 'meat_stocks_mutation_response', returning: Array<{ __typename?: 'meat_stocks', stock_id: number, user_id: string, meat_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean }> } | null };
+export type UpdateMeatStockDetailMutation = { __typename?: 'mutation_root', update_meat_stocks?: { __typename?: 'meat_stocks_mutation_response', returning: Array<{ __typename?: 'meat_stocks', stock_id: number, user_id: string, meat_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean }> } | null };
 
 export type InsertCustomMeatMasterMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15030,29 +15068,29 @@ export type InsertCustomMeatMasterMutationVariables = Exact<{
 }>;
 
 
-export type InsertCustomMeatMasterMutation = { __typename?: 'mutation_root', insert_custom_meat_master_one?: { __typename?: 'custom_meat_master', custom_meat_id: any, user_id: string, custom_meat_name: string, display_name: string, image_uri: string, default_expiration_period: number, unit_id: number } | null };
+export type InsertCustomMeatMasterMutation = { __typename?: 'mutation_root', insert_custom_meat_master_one?: { __typename?: 'custom_meat_master', custom_meat_id: string, user_id: string, custom_meat_name: string, display_name: string, image_uri: string, default_expiration_period: number, unit_id: number } | null };
 
 export type DeleteCustomMeatAndStocksMutationVariables = Exact<{
   meatId: Scalars['uuid']['input'];
 }>;
 
 
-export type DeleteCustomMeatAndStocksMutation = { __typename?: 'mutation_root', delete_custom_meat_master?: { __typename?: 'custom_meat_master_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'custom_meat_master', custom_meat_id: any, image_uri: string, custom_meat_name: string, default_expiration_period: number, display_name: string, unit_id: number }> } | null, delete_meat_stocks?: { __typename?: 'meat_stocks_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'meat_stocks', stock_id: number, meat_id: any }> } | null };
+export type DeleteCustomMeatAndStocksMutation = { __typename?: 'mutation_root', delete_custom_meat_master?: { __typename?: 'custom_meat_master_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'custom_meat_master', custom_meat_id: string, image_uri: string, custom_meat_name: string, default_expiration_period: number, display_name: string, unit_id: number }> } | null, delete_meat_stocks?: { __typename?: 'meat_stocks_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'meat_stocks', stock_id: number, meat_id: string }> } | null };
 
 export type GetAllOtherMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllOtherMasterAndUnitAndStocksQuery = { __typename?: 'query_root', GetOtherMasterAndUnitAndStocks: Array<{ __typename?: 'other_master', other_id: any, display_name: string, other_name: string, image_uri: string, default_expiration_period: number, other_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, other_master_other_stocks?: { __typename?: 'other_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }>, GetCustomOtherMasterAndUnitAndStocks: Array<{ __typename?: 'custom_other_master', display_name: string, image_uri: string, default_expiration_period: number, other_id: any, other_name: string, other_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, other_master_other_stocks?: { __typename?: 'other_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetAllOtherMasterAndUnitAndStocksQuery = { __typename?: 'query_root', GetOtherMasterAndUnitAndStocks: Array<{ __typename?: 'other_master', other_id: string, display_name: string, other_name: string, image_uri: string, default_expiration_period: number, other_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, other_master_other_stocks?: { __typename?: 'other_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }>, GetCustomOtherMasterAndUnitAndStocks: Array<{ __typename?: 'custom_other_master', display_name: string, image_uri: string, default_expiration_period: number, other_id: string, other_name: string, other_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, other_master_other_stocks?: { __typename?: 'other_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetOtherMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetOtherMasterAndUnitAndStocksQuery = { __typename?: 'query_root', other_master: Array<{ __typename?: 'other_master', other_id: any, display_name: string, other_name: string, image_uri: string, default_expiration_period: number, other_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, other_master_other_stocks?: { __typename?: 'other_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetOtherMasterAndUnitAndStocksQuery = { __typename?: 'query_root', other_master: Array<{ __typename?: 'other_master', other_id: string, display_name: string, other_name: string, image_uri: string, default_expiration_period: number, other_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, other_master_other_stocks?: { __typename?: 'other_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetCustomOtherMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCustomOtherMasterAndUnitAndStocksQuery = { __typename?: 'query_root', custom_other_master: Array<{ __typename?: 'custom_other_master', display_name: string, image_uri: string, default_expiration_period: number, other_id: any, other_name: string, other_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, other_master_other_stocks?: { __typename?: 'other_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetCustomOtherMasterAndUnitAndStocksQuery = { __typename?: 'query_root', custom_other_master: Array<{ __typename?: 'custom_other_master', display_name: string, image_uri: string, default_expiration_period: number, other_id: string, other_name: string, other_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, other_master_other_stocks?: { __typename?: 'other_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetOtherStockByUserIdAndOtherIdQueryVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15060,14 +15098,14 @@ export type GetOtherStockByUserIdAndOtherIdQueryVariables = Exact<{
 }>;
 
 
-export type GetOtherStockByUserIdAndOtherIdQuery = { __typename?: 'query_root', other_stocks: Array<{ __typename?: 'other_stocks', stock_id: any, user_id: string, other_id: any, quantity: number, expiration_date: any, memo: string, is_favorite: boolean }> };
+export type GetOtherStockByUserIdAndOtherIdQuery = { __typename?: 'query_root', other_stocks: Array<{ __typename?: 'other_stocks', stock_id: string, user_id: string, other_id: string, quantity: number, expiration_date: string, memo: string, is_favorite: boolean }> };
 
 export type InsertOtherStockMutationVariables = Exact<{
   object: Other_Stocks_Insert_Input;
 }>;
 
 
-export type InsertOtherStockMutation = { __typename?: 'mutation_root', insert_other_stocks_one?: { __typename?: 'other_stocks', quantity: number, stock_id: any, user_id: string, other_id: any, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null };
+export type InsertOtherStockMutation = { __typename?: 'mutation_root', insert_other_stocks_one?: { __typename?: 'other_stocks', quantity: number, stock_id: string, user_id: string, other_id: string, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null };
 
 export type UpdateOtherStockQuantityMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15077,7 +15115,7 @@ export type UpdateOtherStockQuantityMutationVariables = Exact<{
 }>;
 
 
-export type UpdateOtherStockQuantityMutation = { __typename?: 'mutation_root', update_other_stocks?: { __typename?: 'other_stocks_mutation_response', returning: Array<{ __typename?: 'other_stocks', stock_id: any, user_id: string, other_id: any, quantity: number, expiration_date: any }> } | null };
+export type UpdateOtherStockQuantityMutation = { __typename?: 'mutation_root', update_other_stocks?: { __typename?: 'other_stocks_mutation_response', returning: Array<{ __typename?: 'other_stocks', stock_id: string, user_id: string, other_id: string, quantity: number, expiration_date: string }> } | null };
 
 export type UpdateOtherStockIsFavoriteMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15086,7 +15124,7 @@ export type UpdateOtherStockIsFavoriteMutationVariables = Exact<{
 }>;
 
 
-export type UpdateOtherStockIsFavoriteMutation = { __typename?: 'mutation_root', update_other_stocks?: { __typename?: 'other_stocks_mutation_response', returning: Array<{ __typename?: 'other_stocks', stock_id: any, user_id: string, other_id: any, is_favorite: boolean }> } | null };
+export type UpdateOtherStockIsFavoriteMutation = { __typename?: 'mutation_root', update_other_stocks?: { __typename?: 'other_stocks_mutation_response', returning: Array<{ __typename?: 'other_stocks', stock_id: string, user_id: string, other_id: string, is_favorite: boolean }> } | null };
 
 export type UpdateOtherStockDetailMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15099,7 +15137,7 @@ export type UpdateOtherStockDetailMutationVariables = Exact<{
 }>;
 
 
-export type UpdateOtherStockDetailMutation = { __typename?: 'mutation_root', update_other_stocks?: { __typename?: 'other_stocks_mutation_response', returning: Array<{ __typename?: 'other_stocks', stock_id: any, user_id: string, other_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean }> } | null };
+export type UpdateOtherStockDetailMutation = { __typename?: 'mutation_root', update_other_stocks?: { __typename?: 'other_stocks_mutation_response', returning: Array<{ __typename?: 'other_stocks', stock_id: string, user_id: string, other_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean }> } | null };
 
 export type InsertCustomOtherMasterMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15111,29 +15149,29 @@ export type InsertCustomOtherMasterMutationVariables = Exact<{
 }>;
 
 
-export type InsertCustomOtherMasterMutation = { __typename?: 'mutation_root', insert_custom_other_master_one?: { __typename?: 'custom_other_master', custom_other_id: any, user_id: string, custom_other_name: string, display_name: string, image_uri: string, default_expiration_period: number, unit_id: number } | null };
+export type InsertCustomOtherMasterMutation = { __typename?: 'mutation_root', insert_custom_other_master_one?: { __typename?: 'custom_other_master', custom_other_id: string, user_id: string, custom_other_name: string, display_name: string, image_uri: string, default_expiration_period: number, unit_id: number } | null };
 
 export type DeleteCustomOtherAndStocksMutationVariables = Exact<{
   otherId: Scalars['uuid']['input'];
 }>;
 
 
-export type DeleteCustomOtherAndStocksMutation = { __typename?: 'mutation_root', delete_custom_other_master?: { __typename?: 'custom_other_master_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'custom_other_master', custom_other_id: any, image_uri: string, custom_other_name: string, default_expiration_period: number, display_name: string, unit_id: number }> } | null, delete_other_stocks?: { __typename?: 'other_stocks_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'other_stocks', stock_id: any, other_id: any }> } | null };
+export type DeleteCustomOtherAndStocksMutation = { __typename?: 'mutation_root', delete_custom_other_master?: { __typename?: 'custom_other_master_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'custom_other_master', custom_other_id: string, image_uri: string, custom_other_name: string, default_expiration_period: number, display_name: string, unit_id: number }> } | null, delete_other_stocks?: { __typename?: 'other_stocks_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'other_stocks', stock_id: string, other_id: string }> } | null };
 
 export type GetAllProteinSourceMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllProteinSourceMasterAndUnitAndStocksQuery = { __typename?: 'query_root', GetProteinSourceMasterAndUnitAndStocks: Array<{ __typename?: 'protein_source_master', protein_source_id: any, display_name: string, protein_source_name: string, image_uri: string, default_expiration_period: number, protein_source_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, protein_source_master_protein_source_stocks?: { __typename?: 'protein_source_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }>, GetCustomProteinSourceMasterAndUnitAndStocks: Array<{ __typename?: 'custom_protein_source_master', display_name: string, image_uri: string, default_expiration_period: number, protein_source_id: any, protein_source_name: string, protein_source_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, protein_source_master_protein_source_stocks?: { __typename?: 'protein_source_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetAllProteinSourceMasterAndUnitAndStocksQuery = { __typename?: 'query_root', GetProteinSourceMasterAndUnitAndStocks: Array<{ __typename?: 'protein_source_master', protein_source_id: string, display_name: string, protein_source_name: string, image_uri: string, default_expiration_period: number, protein_source_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, protein_source_master_protein_source_stocks?: { __typename?: 'protein_source_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }>, GetCustomProteinSourceMasterAndUnitAndStocks: Array<{ __typename?: 'custom_protein_source_master', display_name: string, image_uri: string, default_expiration_period: number, protein_source_id: string, protein_source_name: string, protein_source_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, protein_source_master_protein_source_stocks?: { __typename?: 'protein_source_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetProteinSourceMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetProteinSourceMasterAndUnitAndStocksQuery = { __typename?: 'query_root', protein_source_master: Array<{ __typename?: 'protein_source_master', protein_source_id: any, display_name: string, protein_source_name: string, image_uri: string, default_expiration_period: number, protein_source_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, protein_source_master_protein_source_stocks?: { __typename?: 'protein_source_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetProteinSourceMasterAndUnitAndStocksQuery = { __typename?: 'query_root', protein_source_master: Array<{ __typename?: 'protein_source_master', protein_source_id: string, display_name: string, protein_source_name: string, image_uri: string, default_expiration_period: number, protein_source_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, protein_source_master_protein_source_stocks?: { __typename?: 'protein_source_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetCustomProteinSourceMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCustomProteinSourceMasterAndUnitAndStocksQuery = { __typename?: 'query_root', custom_protein_source_master: Array<{ __typename?: 'custom_protein_source_master', display_name: string, image_uri: string, default_expiration_period: number, protein_source_id: any, protein_source_name: string, protein_source_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, protein_source_master_protein_source_stocks?: { __typename?: 'protein_source_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetCustomProteinSourceMasterAndUnitAndStocksQuery = { __typename?: 'query_root', custom_protein_source_master: Array<{ __typename?: 'custom_protein_source_master', display_name: string, image_uri: string, default_expiration_period: number, protein_source_id: string, protein_source_name: string, protein_source_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, protein_source_master_protein_source_stocks?: { __typename?: 'protein_source_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetProteinSourceStockByUserIdAndProteinSourceIdQueryVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15141,14 +15179,14 @@ export type GetProteinSourceStockByUserIdAndProteinSourceIdQueryVariables = Exac
 }>;
 
 
-export type GetProteinSourceStockByUserIdAndProteinSourceIdQuery = { __typename?: 'query_root', protein_source_stocks: Array<{ __typename?: 'protein_source_stocks', stock_id: any, user_id: string, protein_source_id: any, quantity: number, expiration_date: any, memo: string, is_favorite: boolean }> };
+export type GetProteinSourceStockByUserIdAndProteinSourceIdQuery = { __typename?: 'query_root', protein_source_stocks: Array<{ __typename?: 'protein_source_stocks', stock_id: string, user_id: string, protein_source_id: string, quantity: number, expiration_date: string, memo: string, is_favorite: boolean }> };
 
 export type InsertProteinSourceStockMutationVariables = Exact<{
   object: Protein_Source_Stocks_Insert_Input;
 }>;
 
 
-export type InsertProteinSourceStockMutation = { __typename?: 'mutation_root', insert_protein_source_stocks_one?: { __typename?: 'protein_source_stocks', quantity: number, stock_id: any, user_id: string, protein_source_id: any, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null };
+export type InsertProteinSourceStockMutation = { __typename?: 'mutation_root', insert_protein_source_stocks_one?: { __typename?: 'protein_source_stocks', quantity: number, stock_id: string, user_id: string, protein_source_id: string, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null };
 
 export type UpdateProteinSourceStockQuantityMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15158,7 +15196,7 @@ export type UpdateProteinSourceStockQuantityMutationVariables = Exact<{
 }>;
 
 
-export type UpdateProteinSourceStockQuantityMutation = { __typename?: 'mutation_root', update_protein_source_stocks?: { __typename?: 'protein_source_stocks_mutation_response', returning: Array<{ __typename?: 'protein_source_stocks', stock_id: any, user_id: string, protein_source_id: any, quantity: number, expiration_date: any }> } | null };
+export type UpdateProteinSourceStockQuantityMutation = { __typename?: 'mutation_root', update_protein_source_stocks?: { __typename?: 'protein_source_stocks_mutation_response', returning: Array<{ __typename?: 'protein_source_stocks', stock_id: string, user_id: string, protein_source_id: string, quantity: number, expiration_date: string }> } | null };
 
 export type UpdateProteinSourceStockIsFavoriteMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15167,7 +15205,7 @@ export type UpdateProteinSourceStockIsFavoriteMutationVariables = Exact<{
 }>;
 
 
-export type UpdateProteinSourceStockIsFavoriteMutation = { __typename?: 'mutation_root', update_protein_source_stocks?: { __typename?: 'protein_source_stocks_mutation_response', returning: Array<{ __typename?: 'protein_source_stocks', stock_id: any, user_id: string, protein_source_id: any, is_favorite: boolean }> } | null };
+export type UpdateProteinSourceStockIsFavoriteMutation = { __typename?: 'mutation_root', update_protein_source_stocks?: { __typename?: 'protein_source_stocks_mutation_response', returning: Array<{ __typename?: 'protein_source_stocks', stock_id: string, user_id: string, protein_source_id: string, is_favorite: boolean }> } | null };
 
 export type UpdateProteinSourceStockDetailMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15180,7 +15218,7 @@ export type UpdateProteinSourceStockDetailMutationVariables = Exact<{
 }>;
 
 
-export type UpdateProteinSourceStockDetailMutation = { __typename?: 'mutation_root', update_protein_source_stocks?: { __typename?: 'protein_source_stocks_mutation_response', returning: Array<{ __typename?: 'protein_source_stocks', stock_id: any, user_id: string, protein_source_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean }> } | null };
+export type UpdateProteinSourceStockDetailMutation = { __typename?: 'mutation_root', update_protein_source_stocks?: { __typename?: 'protein_source_stocks_mutation_response', returning: Array<{ __typename?: 'protein_source_stocks', stock_id: string, user_id: string, protein_source_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean }> } | null };
 
 export type InsertCustomProteinSourceMasterMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15192,29 +15230,29 @@ export type InsertCustomProteinSourceMasterMutationVariables = Exact<{
 }>;
 
 
-export type InsertCustomProteinSourceMasterMutation = { __typename?: 'mutation_root', insert_custom_protein_source_master_one?: { __typename?: 'custom_protein_source_master', custom_protein_source_id: any, user_id: string, custom_protein_source_name: string, display_name: string, image_uri: string, default_expiration_period: number, unit_id: number } | null };
+export type InsertCustomProteinSourceMasterMutation = { __typename?: 'mutation_root', insert_custom_protein_source_master_one?: { __typename?: 'custom_protein_source_master', custom_protein_source_id: string, user_id: string, custom_protein_source_name: string, display_name: string, image_uri: string, default_expiration_period: number, unit_id: number } | null };
 
 export type DeleteCustomProteinSourceAndStocksMutationVariables = Exact<{
   proteinSourceId: Scalars['uuid']['input'];
 }>;
 
 
-export type DeleteCustomProteinSourceAndStocksMutation = { __typename?: 'mutation_root', delete_custom_protein_source_master?: { __typename?: 'custom_protein_source_master_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'custom_protein_source_master', custom_protein_source_id: any, image_uri: string, custom_protein_source_name: string, default_expiration_period: number, display_name: string, unit_id: number }> } | null, delete_protein_source_stocks?: { __typename?: 'protein_source_stocks_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'protein_source_stocks', stock_id: any, protein_source_id: any }> } | null };
+export type DeleteCustomProteinSourceAndStocksMutation = { __typename?: 'mutation_root', delete_custom_protein_source_master?: { __typename?: 'custom_protein_source_master_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'custom_protein_source_master', custom_protein_source_id: string, image_uri: string, custom_protein_source_name: string, default_expiration_period: number, display_name: string, unit_id: number }> } | null, delete_protein_source_stocks?: { __typename?: 'protein_source_stocks_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'protein_source_stocks', stock_id: string, protein_source_id: string }> } | null };
 
 export type GetAllSeasoningMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllSeasoningMasterAndUnitAndStocksQuery = { __typename?: 'query_root', GetSeasoningMasterAndUnitAndStocks: Array<{ __typename?: 'seasoning_master', seasoning_id: any, display_name: string, seasoning_name: string, image_uri: string, default_expiration_period: number, seasoning_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, seasoning_master_seasoning_stocks?: { __typename?: 'seasoning_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }>, GetCustomSeasoningMasterAndUnitAndStocks: Array<{ __typename?: 'custom_seasoning_master', display_name: string, image_uri: string, default_expiration_period: number, seasoning_id: any, seasoning_name: string, seasoning_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, seasoning_master_seasoning_stocks?: { __typename?: 'seasoning_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetAllSeasoningMasterAndUnitAndStocksQuery = { __typename?: 'query_root', GetSeasoningMasterAndUnitAndStocks: Array<{ __typename?: 'seasoning_master', seasoning_id: string, display_name: string, seasoning_name: string, image_uri: string, default_expiration_period: number, seasoning_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, seasoning_master_seasoning_stocks?: { __typename?: 'seasoning_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }>, GetCustomSeasoningMasterAndUnitAndStocks: Array<{ __typename?: 'custom_seasoning_master', display_name: string, image_uri: string, default_expiration_period: number, seasoning_id: string, seasoning_name: string, seasoning_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, seasoning_master_seasoning_stocks?: { __typename?: 'seasoning_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetSeasoningMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetSeasoningMasterAndUnitAndStocksQuery = { __typename?: 'query_root', seasoning_master: Array<{ __typename?: 'seasoning_master', seasoning_id: any, display_name: string, seasoning_name: string, image_uri: string, default_expiration_period: number, seasoning_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, seasoning_master_seasoning_stocks?: { __typename?: 'seasoning_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetSeasoningMasterAndUnitAndStocksQuery = { __typename?: 'query_root', seasoning_master: Array<{ __typename?: 'seasoning_master', seasoning_id: string, display_name: string, seasoning_name: string, image_uri: string, default_expiration_period: number, seasoning_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, seasoning_master_seasoning_stocks?: { __typename?: 'seasoning_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetCustomSeasoningMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCustomSeasoningMasterAndUnitAndStocksQuery = { __typename?: 'query_root', custom_seasoning_master: Array<{ __typename?: 'custom_seasoning_master', display_name: string, image_uri: string, default_expiration_period: number, seasoning_id: any, seasoning_name: string, seasoning_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, seasoning_master_seasoning_stocks?: { __typename?: 'seasoning_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetCustomSeasoningMasterAndUnitAndStocksQuery = { __typename?: 'query_root', custom_seasoning_master: Array<{ __typename?: 'custom_seasoning_master', display_name: string, image_uri: string, default_expiration_period: number, seasoning_id: string, seasoning_name: string, seasoning_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, seasoning_master_seasoning_stocks?: { __typename?: 'seasoning_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetSeasoningStockByUserIdAndSeasoningIdQueryVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15222,14 +15260,14 @@ export type GetSeasoningStockByUserIdAndSeasoningIdQueryVariables = Exact<{
 }>;
 
 
-export type GetSeasoningStockByUserIdAndSeasoningIdQuery = { __typename?: 'query_root', seasoning_stocks: Array<{ __typename?: 'seasoning_stocks', stock_id: any, user_id: string, seasoning_id: any, quantity: number, expiration_date: any, memo: string, is_favorite: boolean }> };
+export type GetSeasoningStockByUserIdAndSeasoningIdQuery = { __typename?: 'query_root', seasoning_stocks: Array<{ __typename?: 'seasoning_stocks', stock_id: string, user_id: string, seasoning_id: string, quantity: number, expiration_date: string, memo: string, is_favorite: boolean }> };
 
 export type InsertSeasoningStockMutationVariables = Exact<{
   object: Seasoning_Stocks_Insert_Input;
 }>;
 
 
-export type InsertSeasoningStockMutation = { __typename?: 'mutation_root', insert_seasoning_stocks_one?: { __typename?: 'seasoning_stocks', quantity: number, stock_id: any, user_id: string, seasoning_id: any, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null };
+export type InsertSeasoningStockMutation = { __typename?: 'mutation_root', insert_seasoning_stocks_one?: { __typename?: 'seasoning_stocks', quantity: number, stock_id: string, user_id: string, seasoning_id: string, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null };
 
 export type UpdateSeasoningStockQuantityMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15239,7 +15277,7 @@ export type UpdateSeasoningStockQuantityMutationVariables = Exact<{
 }>;
 
 
-export type UpdateSeasoningStockQuantityMutation = { __typename?: 'mutation_root', update_seasoning_stocks?: { __typename?: 'seasoning_stocks_mutation_response', returning: Array<{ __typename?: 'seasoning_stocks', stock_id: any, user_id: string, seasoning_id: any, quantity: number, expiration_date: any }> } | null };
+export type UpdateSeasoningStockQuantityMutation = { __typename?: 'mutation_root', update_seasoning_stocks?: { __typename?: 'seasoning_stocks_mutation_response', returning: Array<{ __typename?: 'seasoning_stocks', stock_id: string, user_id: string, seasoning_id: string, quantity: number, expiration_date: string }> } | null };
 
 export type UpdateSeasoningStockIsFavoriteMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15248,7 +15286,7 @@ export type UpdateSeasoningStockIsFavoriteMutationVariables = Exact<{
 }>;
 
 
-export type UpdateSeasoningStockIsFavoriteMutation = { __typename?: 'mutation_root', update_seasoning_stocks?: { __typename?: 'seasoning_stocks_mutation_response', returning: Array<{ __typename?: 'seasoning_stocks', stock_id: any, user_id: string, seasoning_id: any, is_favorite: boolean }> } | null };
+export type UpdateSeasoningStockIsFavoriteMutation = { __typename?: 'mutation_root', update_seasoning_stocks?: { __typename?: 'seasoning_stocks_mutation_response', returning: Array<{ __typename?: 'seasoning_stocks', stock_id: string, user_id: string, seasoning_id: string, is_favorite: boolean }> } | null };
 
 export type UpdateSeasoningStockDetailMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15261,7 +15299,7 @@ export type UpdateSeasoningStockDetailMutationVariables = Exact<{
 }>;
 
 
-export type UpdateSeasoningStockDetailMutation = { __typename?: 'mutation_root', update_seasoning_stocks?: { __typename?: 'seasoning_stocks_mutation_response', returning: Array<{ __typename?: 'seasoning_stocks', stock_id: any, user_id: string, seasoning_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean }> } | null };
+export type UpdateSeasoningStockDetailMutation = { __typename?: 'mutation_root', update_seasoning_stocks?: { __typename?: 'seasoning_stocks_mutation_response', returning: Array<{ __typename?: 'seasoning_stocks', stock_id: string, user_id: string, seasoning_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean }> } | null };
 
 export type InsertCustomSeasoningMasterMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15273,19 +15311,19 @@ export type InsertCustomSeasoningMasterMutationVariables = Exact<{
 }>;
 
 
-export type InsertCustomSeasoningMasterMutation = { __typename?: 'mutation_root', insert_custom_seasoning_master_one?: { __typename?: 'custom_seasoning_master', custom_seasoning_id: any, user_id: string, custom_seasoning_name: string, display_name: string, image_uri: string, default_expiration_period: number, unit_id: number } | null };
+export type InsertCustomSeasoningMasterMutation = { __typename?: 'mutation_root', insert_custom_seasoning_master_one?: { __typename?: 'custom_seasoning_master', custom_seasoning_id: string, user_id: string, custom_seasoning_name: string, display_name: string, image_uri: string, default_expiration_period: number, unit_id: number } | null };
 
 export type DeleteCustomSeasoningAndStocksMutationVariables = Exact<{
   seasoningId: Scalars['uuid']['input'];
 }>;
 
 
-export type DeleteCustomSeasoningAndStocksMutation = { __typename?: 'mutation_root', delete_custom_seasoning_master?: { __typename?: 'custom_seasoning_master_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'custom_seasoning_master', custom_seasoning_id: any, image_uri: string, custom_seasoning_name: string, default_expiration_period: number, display_name: string, unit_id: number }> } | null, delete_seasoning_stocks?: { __typename?: 'seasoning_stocks_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'seasoning_stocks', stock_id: any, seasoning_id: any }> } | null };
+export type DeleteCustomSeasoningAndStocksMutation = { __typename?: 'mutation_root', delete_custom_seasoning_master?: { __typename?: 'custom_seasoning_master_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'custom_seasoning_master', custom_seasoning_id: string, image_uri: string, custom_seasoning_name: string, default_expiration_period: number, display_name: string, unit_id: number }> } | null, delete_seasoning_stocks?: { __typename?: 'seasoning_stocks_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'seasoning_stocks', stock_id: string, seasoning_id: string }> } | null };
 
 export type GetShoppingMemosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetShoppingMemosQuery = { __typename?: 'query_root', shopping_memo: Array<{ __typename?: 'shopping_memo', shopping_memo_id: any, user_id: string, master_id: any, quantity: number }> };
+export type GetShoppingMemosQuery = { __typename?: 'query_root', shopping_memo: Array<{ __typename?: 'shopping_memo', shopping_memo_id: string, user_id: string, master_id: string, quantity: number }> };
 
 export type InsertShoppingMemoMutationVariables = Exact<{
   masterId: Scalars['uuid']['input'];
@@ -15294,7 +15332,7 @@ export type InsertShoppingMemoMutationVariables = Exact<{
 }>;
 
 
-export type InsertShoppingMemoMutation = { __typename?: 'mutation_root', insert_shopping_memo_one?: { __typename?: 'shopping_memo', shopping_memo_id: any, master_id: any, user_id: string, quantity: number } | null };
+export type InsertShoppingMemoMutation = { __typename?: 'mutation_root', insert_shopping_memo_one?: { __typename?: 'shopping_memo', shopping_memo_id: string, master_id: string, user_id: string, quantity: number } | null };
 
 export type UpdateShoppingMemoMutationVariables = Exact<{
   shoppingMemoId: Scalars['uuid']['input'];
@@ -15303,14 +15341,22 @@ export type UpdateShoppingMemoMutationVariables = Exact<{
 }>;
 
 
-export type UpdateShoppingMemoMutation = { __typename?: 'mutation_root', update_shopping_memo_by_pk?: { __typename?: 'shopping_memo', shopping_memo_id: any, master_id: any, user_id: string, quantity: number } | null };
+export type UpdateShoppingMemoMutation = { __typename?: 'mutation_root', update_shopping_memo_by_pk?: { __typename?: 'shopping_memo', shopping_memo_id: string, master_id: string, user_id: string, quantity: number } | null };
+
+export type UpdateShoppingMemoIsCheckedMutationVariables = Exact<{
+  shoppingMemoId: Scalars['uuid']['input'];
+  isChecked: Scalars['Boolean']['input'];
+}>;
+
+
+export type UpdateShoppingMemoIsCheckedMutation = { __typename?: 'mutation_root', update_shopping_memo_by_pk?: { __typename?: 'shopping_memo', shopping_memo_id: string, master_id: string, user_id: string, quantity: number } | null };
 
 export type DeleteShoppingMemoMutationVariables = Exact<{
   shoppingMemoId: Scalars['uuid']['input'];
 }>;
 
 
-export type DeleteShoppingMemoMutation = { __typename?: 'mutation_root', delete_shopping_memo_by_pk?: { __typename?: 'shopping_memo', shopping_memo_id: any, master_id: any, user_id: string, quantity: number } | null };
+export type DeleteShoppingMemoMutation = { __typename?: 'mutation_root', delete_shopping_memo_by_pk?: { __typename?: 'shopping_memo', shopping_memo_id: string, master_id: string, user_id: string, quantity: number } | null };
 
 export type DeleteShoppingMemoByMasterIdMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15318,22 +15364,22 @@ export type DeleteShoppingMemoByMasterIdMutationVariables = Exact<{
 }>;
 
 
-export type DeleteShoppingMemoByMasterIdMutation = { __typename?: 'mutation_root', delete_shopping_memo?: { __typename?: 'shopping_memo_mutation_response', returning: Array<{ __typename?: 'shopping_memo', shopping_memo_id: any, master_id: any, user_id: string, quantity: number }> } | null };
+export type DeleteShoppingMemoByMasterIdMutation = { __typename?: 'mutation_root', delete_shopping_memo?: { __typename?: 'shopping_memo_mutation_response', returning: Array<{ __typename?: 'shopping_memo', shopping_memo_id: string, master_id: string, user_id: string, quantity: number }> } | null };
 
 export type GetAllSpiceMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllSpiceMasterAndUnitAndStocksQuery = { __typename?: 'query_root', GetSpiceMasterAndUnitAndStocks: Array<{ __typename?: 'spice_master', spice_id: any, display_name: string, spice_name: string, image_uri: string, default_expiration_period: number, spice_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, spice_master_spice_stocks?: { __typename?: 'spice_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }>, GetCustomSpiceMasterAndUnitAndStocks: Array<{ __typename?: 'custom_spice_master', display_name: string, image_uri: string, default_expiration_period: number, spice_id: any, spice_name: string, spice_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, spice_master_spice_stocks?: { __typename?: 'spice_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetAllSpiceMasterAndUnitAndStocksQuery = { __typename?: 'query_root', GetSpiceMasterAndUnitAndStocks: Array<{ __typename?: 'spice_master', spice_id: string, display_name: string, spice_name: string, image_uri: string, default_expiration_period: number, spice_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, spice_master_spice_stocks?: { __typename?: 'spice_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }>, GetCustomSpiceMasterAndUnitAndStocks: Array<{ __typename?: 'custom_spice_master', display_name: string, image_uri: string, default_expiration_period: number, spice_id: string, spice_name: string, spice_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, spice_master_spice_stocks?: { __typename?: 'spice_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetSpiceMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetSpiceMasterAndUnitAndStocksQuery = { __typename?: 'query_root', spice_master: Array<{ __typename?: 'spice_master', spice_id: any, display_name: string, spice_name: string, image_uri: string, default_expiration_period: number, spice_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, spice_master_spice_stocks?: { __typename?: 'spice_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetSpiceMasterAndUnitAndStocksQuery = { __typename?: 'query_root', spice_master: Array<{ __typename?: 'spice_master', spice_id: string, display_name: string, spice_name: string, image_uri: string, default_expiration_period: number, spice_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, spice_master_spice_stocks?: { __typename?: 'spice_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetCustomSpiceMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCustomSpiceMasterAndUnitAndStocksQuery = { __typename?: 'query_root', custom_spice_master: Array<{ __typename?: 'custom_spice_master', display_name: string, image_uri: string, default_expiration_period: number, spice_id: any, spice_name: string, spice_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, spice_master_spice_stocks?: { __typename?: 'spice_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetCustomSpiceMasterAndUnitAndStocksQuery = { __typename?: 'query_root', custom_spice_master: Array<{ __typename?: 'custom_spice_master', display_name: string, image_uri: string, default_expiration_period: number, spice_id: string, spice_name: string, spice_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, spice_master_spice_stocks?: { __typename?: 'spice_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetSpiceStockByUserIdAndSpiceIdQueryVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15341,14 +15387,14 @@ export type GetSpiceStockByUserIdAndSpiceIdQueryVariables = Exact<{
 }>;
 
 
-export type GetSpiceStockByUserIdAndSpiceIdQuery = { __typename?: 'query_root', spice_stocks: Array<{ __typename?: 'spice_stocks', stock_id: any, user_id: string, spice_id: any, quantity: number, expiration_date: any, memo: string, is_favorite: boolean }> };
+export type GetSpiceStockByUserIdAndSpiceIdQuery = { __typename?: 'query_root', spice_stocks: Array<{ __typename?: 'spice_stocks', stock_id: string, user_id: string, spice_id: string, quantity: number, expiration_date: string, memo: string, is_favorite: boolean }> };
 
 export type InsertSpiceStockMutationVariables = Exact<{
   object: Spice_Stocks_Insert_Input;
 }>;
 
 
-export type InsertSpiceStockMutation = { __typename?: 'mutation_root', insert_spice_stocks_one?: { __typename?: 'spice_stocks', quantity: number, stock_id: any, user_id: string, spice_id: any, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null };
+export type InsertSpiceStockMutation = { __typename?: 'mutation_root', insert_spice_stocks_one?: { __typename?: 'spice_stocks', quantity: number, stock_id: string, user_id: string, spice_id: string, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null };
 
 export type UpdateSpiceStockQuantityMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15358,7 +15404,7 @@ export type UpdateSpiceStockQuantityMutationVariables = Exact<{
 }>;
 
 
-export type UpdateSpiceStockQuantityMutation = { __typename?: 'mutation_root', update_spice_stocks?: { __typename?: 'spice_stocks_mutation_response', returning: Array<{ __typename?: 'spice_stocks', stock_id: any, user_id: string, spice_id: any, quantity: number, expiration_date: any }> } | null };
+export type UpdateSpiceStockQuantityMutation = { __typename?: 'mutation_root', update_spice_stocks?: { __typename?: 'spice_stocks_mutation_response', returning: Array<{ __typename?: 'spice_stocks', stock_id: string, user_id: string, spice_id: string, quantity: number, expiration_date: string }> } | null };
 
 export type UpdateSpiceStockIsFavoriteMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15367,7 +15413,7 @@ export type UpdateSpiceStockIsFavoriteMutationVariables = Exact<{
 }>;
 
 
-export type UpdateSpiceStockIsFavoriteMutation = { __typename?: 'mutation_root', update_spice_stocks?: { __typename?: 'spice_stocks_mutation_response', returning: Array<{ __typename?: 'spice_stocks', stock_id: any, user_id: string, spice_id: any, is_favorite: boolean }> } | null };
+export type UpdateSpiceStockIsFavoriteMutation = { __typename?: 'mutation_root', update_spice_stocks?: { __typename?: 'spice_stocks_mutation_response', returning: Array<{ __typename?: 'spice_stocks', stock_id: string, user_id: string, spice_id: string, is_favorite: boolean }> } | null };
 
 export type UpdateSpiceStockDetailMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15380,7 +15426,7 @@ export type UpdateSpiceStockDetailMutationVariables = Exact<{
 }>;
 
 
-export type UpdateSpiceStockDetailMutation = { __typename?: 'mutation_root', update_spice_stocks?: { __typename?: 'spice_stocks_mutation_response', returning: Array<{ __typename?: 'spice_stocks', stock_id: any, user_id: string, spice_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean }> } | null };
+export type UpdateSpiceStockDetailMutation = { __typename?: 'mutation_root', update_spice_stocks?: { __typename?: 'spice_stocks_mutation_response', returning: Array<{ __typename?: 'spice_stocks', stock_id: string, user_id: string, spice_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean }> } | null };
 
 export type InsertCustomSpiceMasterMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15392,29 +15438,29 @@ export type InsertCustomSpiceMasterMutationVariables = Exact<{
 }>;
 
 
-export type InsertCustomSpiceMasterMutation = { __typename?: 'mutation_root', insert_custom_spice_master_one?: { __typename?: 'custom_spice_master', custom_spice_id: any, user_id: string, custom_spice_name: string, display_name: string, image_uri: string, default_expiration_period: number, unit_id: number } | null };
+export type InsertCustomSpiceMasterMutation = { __typename?: 'mutation_root', insert_custom_spice_master_one?: { __typename?: 'custom_spice_master', custom_spice_id: string, user_id: string, custom_spice_name: string, display_name: string, image_uri: string, default_expiration_period: number, unit_id: number } | null };
 
 export type DeleteCustomSpiceAndStocksMutationVariables = Exact<{
   spiceId: Scalars['uuid']['input'];
 }>;
 
 
-export type DeleteCustomSpiceAndStocksMutation = { __typename?: 'mutation_root', delete_custom_spice_master?: { __typename?: 'custom_spice_master_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'custom_spice_master', custom_spice_id: any, image_uri: string, custom_spice_name: string, default_expiration_period: number, display_name: string, unit_id: number }> } | null, delete_spice_stocks?: { __typename?: 'spice_stocks_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'spice_stocks', stock_id: any, spice_id: any }> } | null };
+export type DeleteCustomSpiceAndStocksMutation = { __typename?: 'mutation_root', delete_custom_spice_master?: { __typename?: 'custom_spice_master_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'custom_spice_master', custom_spice_id: string, image_uri: string, custom_spice_name: string, default_expiration_period: number, display_name: string, unit_id: number }> } | null, delete_spice_stocks?: { __typename?: 'spice_stocks_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'spice_stocks', stock_id: string, spice_id: string }> } | null };
 
 export type GetAllStapleFoodMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllStapleFoodMasterAndUnitAndStocksQuery = { __typename?: 'query_root', GetStapleFoodMasterAndUnitAndStocks: Array<{ __typename?: 'staple_food_master', staple_food_id: any, display_name: string, staple_food_name: string, image_uri: string, default_expiration_period: number, staple_food_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, staple_food_master_staple_food_stocks?: { __typename?: 'staple_food_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }>, GetCustomStapleFoodMasterAndUnitAndStocks: Array<{ __typename?: 'custom_staple_food_master', display_name: string, image_uri: string, default_expiration_period: number, staple_food_id: any, staple_food_name: string, staple_food_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, staple_food_master_staple_food_stocks?: { __typename?: 'staple_food_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetAllStapleFoodMasterAndUnitAndStocksQuery = { __typename?: 'query_root', GetStapleFoodMasterAndUnitAndStocks: Array<{ __typename?: 'staple_food_master', staple_food_id: string, display_name: string, staple_food_name: string, image_uri: string, default_expiration_period: number, staple_food_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, staple_food_master_staple_food_stocks?: { __typename?: 'staple_food_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }>, GetCustomStapleFoodMasterAndUnitAndStocks: Array<{ __typename?: 'custom_staple_food_master', display_name: string, image_uri: string, default_expiration_period: number, staple_food_id: string, staple_food_name: string, staple_food_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, staple_food_master_staple_food_stocks?: { __typename?: 'staple_food_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetStapleFoodMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetStapleFoodMasterAndUnitAndStocksQuery = { __typename?: 'query_root', staple_food_master: Array<{ __typename?: 'staple_food_master', staple_food_id: any, display_name: string, staple_food_name: string, image_uri: string, default_expiration_period: number, staple_food_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, staple_food_master_staple_food_stocks?: { __typename?: 'staple_food_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetStapleFoodMasterAndUnitAndStocksQuery = { __typename?: 'query_root', staple_food_master: Array<{ __typename?: 'staple_food_master', staple_food_id: string, display_name: string, staple_food_name: string, image_uri: string, default_expiration_period: number, staple_food_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, staple_food_master_staple_food_stocks?: { __typename?: 'staple_food_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetCustomStapleFoodMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCustomStapleFoodMasterAndUnitAndStocksQuery = { __typename?: 'query_root', custom_staple_food_master: Array<{ __typename?: 'custom_staple_food_master', display_name: string, image_uri: string, default_expiration_period: number, staple_food_id: any, staple_food_name: string, staple_food_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, staple_food_master_staple_food_stocks?: { __typename?: 'staple_food_stocks', stock_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetCustomStapleFoodMasterAndUnitAndStocksQuery = { __typename?: 'query_root', custom_staple_food_master: Array<{ __typename?: 'custom_staple_food_master', display_name: string, image_uri: string, default_expiration_period: number, staple_food_id: string, staple_food_name: string, staple_food_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, staple_food_master_staple_food_stocks?: { __typename?: 'staple_food_stocks', stock_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetStapleFoodStockByUserIdAndStapleFoodIdQueryVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15422,14 +15468,14 @@ export type GetStapleFoodStockByUserIdAndStapleFoodIdQueryVariables = Exact<{
 }>;
 
 
-export type GetStapleFoodStockByUserIdAndStapleFoodIdQuery = { __typename?: 'query_root', staple_food_stocks: Array<{ __typename?: 'staple_food_stocks', stock_id: any, user_id: string, staple_food_id: any, quantity: number, expiration_date: any, memo: string, is_favorite: boolean }> };
+export type GetStapleFoodStockByUserIdAndStapleFoodIdQuery = { __typename?: 'query_root', staple_food_stocks: Array<{ __typename?: 'staple_food_stocks', stock_id: string, user_id: string, staple_food_id: string, quantity: number, expiration_date: string, memo: string, is_favorite: boolean }> };
 
 export type InsertStapleFoodStockMutationVariables = Exact<{
   object: Staple_Food_Stocks_Insert_Input;
 }>;
 
 
-export type InsertStapleFoodStockMutation = { __typename?: 'mutation_root', insert_staple_food_stocks_one?: { __typename?: 'staple_food_stocks', quantity: number, stock_id: any, user_id: string, staple_food_id: any, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null };
+export type InsertStapleFoodStockMutation = { __typename?: 'mutation_root', insert_staple_food_stocks_one?: { __typename?: 'staple_food_stocks', quantity: number, stock_id: string, user_id: string, staple_food_id: string, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null };
 
 export type UpdateStapleFoodStockQuantityMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15439,7 +15485,7 @@ export type UpdateStapleFoodStockQuantityMutationVariables = Exact<{
 }>;
 
 
-export type UpdateStapleFoodStockQuantityMutation = { __typename?: 'mutation_root', update_staple_food_stocks?: { __typename?: 'staple_food_stocks_mutation_response', returning: Array<{ __typename?: 'staple_food_stocks', stock_id: any, user_id: string, staple_food_id: any, quantity: number, expiration_date: any }> } | null };
+export type UpdateStapleFoodStockQuantityMutation = { __typename?: 'mutation_root', update_staple_food_stocks?: { __typename?: 'staple_food_stocks_mutation_response', returning: Array<{ __typename?: 'staple_food_stocks', stock_id: string, user_id: string, staple_food_id: string, quantity: number, expiration_date: string }> } | null };
 
 export type UpdateStapleFoodStockIsFavoriteMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15448,7 +15494,7 @@ export type UpdateStapleFoodStockIsFavoriteMutationVariables = Exact<{
 }>;
 
 
-export type UpdateStapleFoodStockIsFavoriteMutation = { __typename?: 'mutation_root', update_staple_food_stocks?: { __typename?: 'staple_food_stocks_mutation_response', returning: Array<{ __typename?: 'staple_food_stocks', stock_id: any, user_id: string, staple_food_id: any, is_favorite: boolean }> } | null };
+export type UpdateStapleFoodStockIsFavoriteMutation = { __typename?: 'mutation_root', update_staple_food_stocks?: { __typename?: 'staple_food_stocks_mutation_response', returning: Array<{ __typename?: 'staple_food_stocks', stock_id: string, user_id: string, staple_food_id: string, is_favorite: boolean }> } | null };
 
 export type UpdateStapleFoodStockDetailMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15461,7 +15507,7 @@ export type UpdateStapleFoodStockDetailMutationVariables = Exact<{
 }>;
 
 
-export type UpdateStapleFoodStockDetailMutation = { __typename?: 'mutation_root', update_staple_food_stocks?: { __typename?: 'staple_food_stocks_mutation_response', returning: Array<{ __typename?: 'staple_food_stocks', stock_id: any, user_id: string, staple_food_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean }> } | null };
+export type UpdateStapleFoodStockDetailMutation = { __typename?: 'mutation_root', update_staple_food_stocks?: { __typename?: 'staple_food_stocks_mutation_response', returning: Array<{ __typename?: 'staple_food_stocks', stock_id: string, user_id: string, staple_food_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean }> } | null };
 
 export type InsertCustomStapleFoodMasterMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15473,14 +15519,14 @@ export type InsertCustomStapleFoodMasterMutationVariables = Exact<{
 }>;
 
 
-export type InsertCustomStapleFoodMasterMutation = { __typename?: 'mutation_root', insert_custom_staple_food_master_one?: { __typename?: 'custom_staple_food_master', custom_staple_food_id: any, user_id: string, custom_staple_food_name: string, display_name: string, image_uri: string, default_expiration_period: number, unit_id: number } | null };
+export type InsertCustomStapleFoodMasterMutation = { __typename?: 'mutation_root', insert_custom_staple_food_master_one?: { __typename?: 'custom_staple_food_master', custom_staple_food_id: string, user_id: string, custom_staple_food_name: string, display_name: string, image_uri: string, default_expiration_period: number, unit_id: number } | null };
 
 export type DeleteCustomStapleFoodAndStocksMutationVariables = Exact<{
   stapleFoodId: Scalars['uuid']['input'];
 }>;
 
 
-export type DeleteCustomStapleFoodAndStocksMutation = { __typename?: 'mutation_root', delete_custom_staple_food_master?: { __typename?: 'custom_staple_food_master_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'custom_staple_food_master', custom_staple_food_id: any, image_uri: string, custom_staple_food_name: string, default_expiration_period: number, display_name: string, unit_id: number }> } | null, delete_staple_food_stocks?: { __typename?: 'staple_food_stocks_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'staple_food_stocks', stock_id: any, staple_food_id: any }> } | null };
+export type DeleteCustomStapleFoodAndStocksMutation = { __typename?: 'mutation_root', delete_custom_staple_food_master?: { __typename?: 'custom_staple_food_master_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'custom_staple_food_master', custom_staple_food_id: string, image_uri: string, custom_staple_food_name: string, default_expiration_period: number, display_name: string, unit_id: number }> } | null, delete_staple_food_stocks?: { __typename?: 'staple_food_stocks_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'staple_food_stocks', stock_id: string, staple_food_id: string }> } | null };
 
 export type GetUnitMasterQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -15495,17 +15541,17 @@ export type GetUserQuery = { __typename?: 'query_root', users: Array<{ __typenam
 export type GetAllVegetableMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllVegetableMasterAndUnitAndStocksQuery = { __typename?: 'query_root', GetVegetableMasterAndUnitAndStocks: Array<{ __typename?: 'vegetable_master', vegetable_id: any, display_name: string, vegetable_name: string, image_uri: string, default_expiration_period: number, vegetable_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, vegetable_master_vegetable_stocks?: { __typename?: 'vegetable_stocks', stock_id: number, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }>, GetCustomVegetableMasterAndUnitAndStocks: Array<{ __typename?: 'custom_vegetable_master', display_name: string, image_uri: string, default_expiration_period: number, vegetable_id: any, vegetable_name: string, vegetable_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, vegetable_master_vegetable_stocks?: { __typename?: 'vegetable_stocks', stock_id: number, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetAllVegetableMasterAndUnitAndStocksQuery = { __typename?: 'query_root', GetVegetableMasterAndUnitAndStocks: Array<{ __typename?: 'vegetable_master', vegetable_id: string, display_name: string, vegetable_name: string, image_uri: string, default_expiration_period: number, vegetable_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, vegetable_master_vegetable_stocks?: { __typename?: 'vegetable_stocks', stock_id: number, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }>, GetCustomVegetableMasterAndUnitAndStocks: Array<{ __typename?: 'custom_vegetable_master', display_name: string, image_uri: string, default_expiration_period: number, vegetable_id: string, vegetable_name: string, vegetable_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, vegetable_master_vegetable_stocks?: { __typename?: 'vegetable_stocks', stock_id: number, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetVegetableMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetVegetableMasterAndUnitAndStocksQuery = { __typename?: 'query_root', vegetable_master: Array<{ __typename?: 'vegetable_master', vegetable_id: any, display_name: string, vegetable_name: string, image_uri: string, default_expiration_period: number, vegetable_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, vegetable_master_vegetable_stocks?: { __typename?: 'vegetable_stocks', stock_id: number, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetVegetableMasterAndUnitAndStocksQuery = { __typename?: 'query_root', vegetable_master: Array<{ __typename?: 'vegetable_master', vegetable_id: string, display_name: string, vegetable_name: string, image_uri: string, default_expiration_period: number, vegetable_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, vegetable_master_vegetable_stocks?: { __typename?: 'vegetable_stocks', stock_id: number, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetCustomVegetableMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCustomVegetableMasterAndUnitAndStocksQuery = { __typename?: 'query_root', custom_vegetable_master: Array<{ __typename?: 'custom_vegetable_master', display_name: string, image_uri: string, default_expiration_period: number, vegetable_id: any, vegetable_name: string, vegetable_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, vegetable_master_vegetable_stocks?: { __typename?: 'vegetable_stocks', stock_id: number, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null }> };
+export type GetCustomVegetableMasterAndUnitAndStocksQuery = { __typename?: 'query_root', custom_vegetable_master: Array<{ __typename?: 'custom_vegetable_master', display_name: string, image_uri: string, default_expiration_period: number, vegetable_id: string, vegetable_name: string, vegetable_master_unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null, vegetable_master_vegetable_stocks?: { __typename?: 'vegetable_stocks', stock_id: number, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null }> };
 
 export type GetVegetableStockByUserIdAndVegetableIdQueryVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15513,14 +15559,14 @@ export type GetVegetableStockByUserIdAndVegetableIdQueryVariables = Exact<{
 }>;
 
 
-export type GetVegetableStockByUserIdAndVegetableIdQuery = { __typename?: 'query_root', vegetable_stocks: Array<{ __typename?: 'vegetable_stocks', stock_id: number, user_id: string, vegetable_id: any, quantity: number, expiration_date: any, memo: string, is_favorite: boolean }> };
+export type GetVegetableStockByUserIdAndVegetableIdQuery = { __typename?: 'query_root', vegetable_stocks: Array<{ __typename?: 'vegetable_stocks', stock_id: number, user_id: string, vegetable_id: string, quantity: number, expiration_date: string, memo: string, is_favorite: boolean }> };
 
 export type InsertVegetableStockMutationVariables = Exact<{
   object: Vegetable_Stocks_Insert_Input;
 }>;
 
 
-export type InsertVegetableStockMutation = { __typename?: 'mutation_root', insert_vegetable_stocks_one?: { __typename?: 'vegetable_stocks', quantity: number, stock_id: number, user_id: string, vegetable_id: any, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean } | null };
+export type InsertVegetableStockMutation = { __typename?: 'mutation_root', insert_vegetable_stocks_one?: { __typename?: 'vegetable_stocks', quantity: number, stock_id: number, user_id: string, vegetable_id: string, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean } | null };
 
 export type UpdateVegetableStockQuantityMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15530,7 +15576,7 @@ export type UpdateVegetableStockQuantityMutationVariables = Exact<{
 }>;
 
 
-export type UpdateVegetableStockQuantityMutation = { __typename?: 'mutation_root', update_vegetable_stocks?: { __typename?: 'vegetable_stocks_mutation_response', returning: Array<{ __typename?: 'vegetable_stocks', stock_id: number, user_id: string, vegetable_id: any, quantity: number, expiration_date: any }> } | null };
+export type UpdateVegetableStockQuantityMutation = { __typename?: 'mutation_root', update_vegetable_stocks?: { __typename?: 'vegetable_stocks_mutation_response', returning: Array<{ __typename?: 'vegetable_stocks', stock_id: number, user_id: string, vegetable_id: string, quantity: number, expiration_date: string }> } | null };
 
 export type UpdateVegetableStockIsFavoriteMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15539,7 +15585,7 @@ export type UpdateVegetableStockIsFavoriteMutationVariables = Exact<{
 }>;
 
 
-export type UpdateVegetableStockIsFavoriteMutation = { __typename?: 'mutation_root', update_vegetable_stocks?: { __typename?: 'vegetable_stocks_mutation_response', returning: Array<{ __typename?: 'vegetable_stocks', stock_id: number, user_id: string, vegetable_id: any, is_favorite: boolean }> } | null };
+export type UpdateVegetableStockIsFavoriteMutation = { __typename?: 'mutation_root', update_vegetable_stocks?: { __typename?: 'vegetable_stocks_mutation_response', returning: Array<{ __typename?: 'vegetable_stocks', stock_id: number, user_id: string, vegetable_id: string, is_favorite: boolean }> } | null };
 
 export type UpdateVegetableStockDetailMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15552,7 +15598,7 @@ export type UpdateVegetableStockDetailMutationVariables = Exact<{
 }>;
 
 
-export type UpdateVegetableStockDetailMutation = { __typename?: 'mutation_root', update_vegetable_stocks?: { __typename?: 'vegetable_stocks_mutation_response', returning: Array<{ __typename?: 'vegetable_stocks', stock_id: number, user_id: string, vegetable_id: any, quantity: number, incremental_unit: number, expiration_date: any, memo: string, is_favorite: boolean }> } | null };
+export type UpdateVegetableStockDetailMutation = { __typename?: 'mutation_root', update_vegetable_stocks?: { __typename?: 'vegetable_stocks_mutation_response', returning: Array<{ __typename?: 'vegetable_stocks', stock_id: number, user_id: string, vegetable_id: string, quantity: number, incremental_unit: number, expiration_date: string, memo: string, is_favorite: boolean }> } | null };
 
 export type InsertCustomVegetableMasterMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -15564,14 +15610,14 @@ export type InsertCustomVegetableMasterMutationVariables = Exact<{
 }>;
 
 
-export type InsertCustomVegetableMasterMutation = { __typename?: 'mutation_root', insert_custom_vegetable_master_one?: { __typename?: 'custom_vegetable_master', custom_vegetable_id: any, user_id: string, custom_vegetable_name: string, display_name: string, image_uri: string, default_expiration_period: number, unit_id: number } | null };
+export type InsertCustomVegetableMasterMutation = { __typename?: 'mutation_root', insert_custom_vegetable_master_one?: { __typename?: 'custom_vegetable_master', custom_vegetable_id: string, user_id: string, custom_vegetable_name: string, display_name: string, image_uri: string, default_expiration_period: number, unit_id: number } | null };
 
 export type DeleteCustomVegetableAndStocksMutationVariables = Exact<{
   vegetableId: Scalars['uuid']['input'];
 }>;
 
 
-export type DeleteCustomVegetableAndStocksMutation = { __typename?: 'mutation_root', delete_custom_vegetable_master?: { __typename?: 'custom_vegetable_master_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'custom_vegetable_master', custom_vegetable_id: any, image_uri: string, custom_vegetable_name: string, default_expiration_period: number, display_name: string, unit_id: number }> } | null, delete_vegetable_stocks?: { __typename?: 'vegetable_stocks_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'vegetable_stocks', stock_id: number, vegetable_id: any }> } | null };
+export type DeleteCustomVegetableAndStocksMutation = { __typename?: 'mutation_root', delete_custom_vegetable_master?: { __typename?: 'custom_vegetable_master_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'custom_vegetable_master', custom_vegetable_id: string, image_uri: string, custom_vegetable_name: string, default_expiration_period: number, display_name: string, unit_id: number }> } | null, delete_vegetable_stocks?: { __typename?: 'vegetable_stocks_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'vegetable_stocks', stock_id: number, vegetable_id: string }> } | null };
 
 
 export const GetAllFridgeMasterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllFridgeMaster"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"custom_dessert_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"custom_dessert_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"custom_dessert_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"custom_dessert_master_dessert_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"custom_dessert_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"custom_fish_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"custom_fish_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"custom_fish_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"custom_fish_master_fish_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"custom_fish_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"custom_meat_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"custom_meat_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"custom_meat_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}}]}},{"kind":"Field","name":{"kind":"Name","value":"custom_other_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"custom_other_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"custom_other_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"custom_other_master_other_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"custom_other_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"custom_protein_source_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"custom_protein_source_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"custom_protein_source_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"custom_protein_source_master_protein_source_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"custom_protein_source_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"custom_seasoning_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"custom_seasoning_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"custom_seasoning_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"custom_seasoning_master_seasoning_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"custom_seasoning_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"custom_spice_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"custom_spice_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"custom_spice_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"custom_spice_master_spice_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"custom_spice_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"custom_staple_food_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"custom_staple_food_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"custom_staple_food_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"custom_staple_food_master_staple_food_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"custom_staple_food_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"custom_vegetable_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"custom_vegetable_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"custom_vegetable_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"custom_vegetable_master_vegetable_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"custom_vegetable_master_uint_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"dessert_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"dessert_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"dessert_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"dessert_master_dessert_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"dessert_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"fish_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"fish_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"fish_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"fish_master_fish_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"fish_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"meat_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"meat_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"meat_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"meat_master_meat_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"meat_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"other_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"other_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"other_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"other_master_other_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"other_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"protein_source_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"protein_source_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"protein_source_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"protein_source_master_protein_source_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"protein_source_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"seasoning_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"seasoning_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"seasoning_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"seasoning_master_seasoning_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"seasoning_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"spice_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"spice_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"spice_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"spice_master_spice_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"spice_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"staple_food_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"staple_food_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"staple_food_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"staple_food_master_staple_food_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"staple_food_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"vegetable_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"vegetable_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"vegetable_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"vegetable_master_vegetable_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"vegetable_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllFridgeMasterQuery, GetAllFridgeMasterQueryVariables>;
@@ -15638,6 +15684,7 @@ export const DeleteCustomSeasoningAndStocksDocument = {"kind":"Document","defini
 export const GetShoppingMemosDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetShoppingMemos"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shopping_memo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shopping_memo_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"master_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}}]}}]}}]} as unknown as DocumentNode<GetShoppingMemosQuery, GetShoppingMemosQueryVariables>;
 export const InsertShoppingMemoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InsertShoppingMemo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"masterId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_shopping_memo_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"master_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"masterId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"quantity"},"value":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shopping_memo_id"}},{"kind":"Field","name":{"kind":"Name","value":"master_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}}]}}]}}]} as unknown as DocumentNode<InsertShoppingMemoMutation, InsertShoppingMemoMutationVariables>;
 export const UpdateShoppingMemoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateShoppingMemo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"shoppingMemoId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"masterId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_shopping_memo_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"shopping_memo_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"shoppingMemoId"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"master_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"masterId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"quantity"},"value":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shopping_memo_id"}},{"kind":"Field","name":{"kind":"Name","value":"master_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}}]}}]}}]} as unknown as DocumentNode<UpdateShoppingMemoMutation, UpdateShoppingMemoMutationVariables>;
+export const UpdateShoppingMemoIsCheckedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateShoppingMemoIsChecked"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"shoppingMemoId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"isChecked"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_shopping_memo_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"shopping_memo_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"shoppingMemoId"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_checked"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isChecked"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shopping_memo_id"}},{"kind":"Field","name":{"kind":"Name","value":"master_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}}]}}]}}]} as unknown as DocumentNode<UpdateShoppingMemoIsCheckedMutation, UpdateShoppingMemoIsCheckedMutationVariables>;
 export const DeleteShoppingMemoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteShoppingMemo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"shoppingMemoId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_shopping_memo_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"shopping_memo_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"shoppingMemoId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shopping_memo_id"}},{"kind":"Field","name":{"kind":"Name","value":"master_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}}]}}]}}]} as unknown as DocumentNode<DeleteShoppingMemoMutation, DeleteShoppingMemoMutationVariables>;
 export const DeleteShoppingMemoByMasterIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteShoppingMemoByMasterId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"masterId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_shopping_memo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"master_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"masterId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shopping_memo_id"}},{"kind":"Field","name":{"kind":"Name","value":"master_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}}]}}]}}]}}]} as unknown as DocumentNode<DeleteShoppingMemoByMasterIdMutation, DeleteShoppingMemoByMasterIdMutationVariables>;
 export const GetAllSpiceMasterAndUnitAndStocksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllSpiceMasterAndUnitAndStocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"GetSpiceMasterAndUnitAndStocks"},"name":{"kind":"Name","value":"spice_master"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"spice_master_spice_stocks"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_favorite"},"value":{"kind":"EnumValue","value":"desc_nulls_last"}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"spice_id"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"spice_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","name":{"kind":"Name","value":"spice_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"spice_master_spice_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"GetCustomSpiceMasterAndUnitAndStocks"},"name":{"kind":"Name","value":"custom_spice_master"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"custom_spice_master_spice_stocks"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_favorite"},"value":{"kind":"EnumValue","value":"desc_nulls_last"}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"spice_id"},"name":{"kind":"Name","value":"custom_spice_id"}},{"kind":"Field","alias":{"kind":"Name","value":"spice_name"},"name":{"kind":"Name","value":"custom_spice_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"spice_master_unit_master"},"name":{"kind":"Name","value":"custom_spice_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"spice_master_spice_stocks"},"name":{"kind":"Name","value":"custom_spice_master_spice_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllSpiceMasterAndUnitAndStocksQuery, GetAllSpiceMasterAndUnitAndStocksQueryVariables>;

@@ -8,3 +8,7 @@ generates:
   src/interface/__generated__/:
     preset: 'client'
     plugins: []
+    config:
+      scalars:
+        uuid: string
+        date: string
