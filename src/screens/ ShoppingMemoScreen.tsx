@@ -287,7 +287,10 @@ export const ShoppingMemoScreen = () => {
           onPress={handlePressBulkDeleteButton}
           disabled={isDisabled}
         >
-          <Text style={styles.allDeleteButtonText}>すべて削除</Text>
+          <Text style={styles.allDeleteButtonText}>
+            <Icon name="delete" size={15} color="white" />
+            すべて削除
+          </Text>
         </TouchableOpacity>
       </View>
       <FlatList
@@ -351,7 +354,7 @@ const styles = StyleSheet.create({
   },
   allDeleteButton: {
     backgroundColor: '#dc3545',
-    padding: 10,
+    padding: 12,
     borderRadius: 50,
   },
   allDeleteButtonText: {
