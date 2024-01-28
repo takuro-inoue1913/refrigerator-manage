@@ -8,6 +8,7 @@ import {
   FlatList,
   Text,
   Alert,
+  ActionSheetIOS,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FridgeMaster } from '@src/states/fridge';
@@ -180,6 +181,24 @@ export const ShoppingMemoScreen = () => {
     });
   };
 
+  const handlePressAddFridge = () => {
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: ['キャンセル', '全て', 'チェック済みのみ'],
+        cancelButtonIndex: 0,
+      },
+      (buttonIndex) => {
+        if (buttonIndex === 0) {
+          return;
+        } else if (buttonIndex === 1) {
+          // Option 1 action
+        } else if (buttonIndex === 2) {
+          // Option 2 action
+        }
+      },
+    );
+  };
+
   const handlePressBulkDeleteButton = () => {
     Alert.alert('本当にすべて削除しますか？', '', [
       {
@@ -223,7 +242,7 @@ export const ShoppingMemoScreen = () => {
         <LinearGradientButton
           width={200}
           disabled={isDisabled}
-          onPress={() => {}}
+          onPress={handlePressAddFridge}
         >
           <Text style={styles.addFridgeButtonText}>
             <Icon name="fridge" size={20} color="white" />
