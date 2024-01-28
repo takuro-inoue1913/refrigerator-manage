@@ -17,6 +17,7 @@ export const useShoppingMemoActions = () => {
         unitName,
         incrementalUnit,
         quantity,
+        isChecked,
       }: ShoppingMemo['byId'][number]) => {
         set(shoppingMemosState, (prev) => ({
           ids: [...prev.ids, id],
@@ -32,6 +33,7 @@ export const useShoppingMemoActions = () => {
               unitName,
               incrementalUnit,
               quantity,
+              isChecked,
             },
           },
         }));
@@ -51,6 +53,7 @@ export const useShoppingMemoActions = () => {
         unitName,
         incrementalUnit,
         quantity,
+        isChecked,
       }: ShoppingMemo['byId'][number] & {
         prevId: string;
       }) => {
@@ -74,6 +77,7 @@ export const useShoppingMemoActions = () => {
                 unitName,
                 incrementalUnit,
                 quantity,
+                isChecked,
               },
             },
           };

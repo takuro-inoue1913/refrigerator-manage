@@ -29,6 +29,7 @@ export const generateShoppingMemo = (
       unitName: _fridgeMaster.unitName,
       incrementalUnit: _fridgeMaster.incrementalUnit,
       quantity: i.quantity,
+      isChecked: i.is_checked,
     };
   });
 

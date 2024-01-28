@@ -2,6 +2,7 @@ import {
   GetShoppingMemosDocument,
   InsertShoppingMemoDocument,
   UpdateShoppingMemoDocument,
+  UpdateShoppingMemoIsCheckedDocument,
   DeleteShoppingMemoDocument,
   DeleteShoppingMemoByMasterIdDocument,
 } from '@src/interface/__generated__/graphql';
@@ -51,6 +52,23 @@ export const shoppingMemoRepository = {
       shoppingMemoId,
       masterId,
       quantity,
+    });
+    return data.update_shopping_memo_by_pk;
+  },
+  updateIsChecked: async ({
+    idToken,
+    shoppingMemoId,
+    isChecked,
+  }: {
+    idToken: string | null;
+    shoppingMemoId: string;
+    isChecked: boolean;
+  }) => {
+    const client = buildGraphQLUserClient(idToken);
+
+    const data = await client.request(UpdateShoppingMemoIsCheckedDocument, {
+      shoppingMemoId,
+      isChecked,
     });
     return data.update_shopping_memo_by_pk;
   },

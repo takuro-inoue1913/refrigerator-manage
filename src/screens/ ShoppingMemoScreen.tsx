@@ -97,6 +97,7 @@ export const ShoppingMemoScreen = () => {
                 id: res.shopping_memo_id,
                 masterId: selectFridgeMaster.id,
                 quantity,
+                isChecked: false,
               });
               setIsLoding(false);
             }
@@ -121,40 +122,23 @@ export const ShoppingMemoScreen = () => {
             throw new Error('editTargetId is null');
           }
           setIsLoding(true);
-          if (shoppingMemo.ids.some((id) => id === editTargetId)) {
-            requestUpdateShoppingMemo({
-              shoppingMemoId: editTargetId,
+          requestUpdateShoppingMemo({
+            shoppingMemoId: editTargetId,
+            masterId: selectFridgeMaster.id,
+            quantity,
+          }).then(() => {
+            shoppingMemoActions.upsertShoppingMemo({
+              ...selectFridgeMaster,
+              id: editTargetId,
               masterId: selectFridgeMaster.id,
+              prevId: editTargetId,
               quantity,
-            }).then(() => {
-              shoppingMemoActions.upsertShoppingMemo({
-                ...selectFridgeMaster,
-                id: editTargetId,
-                masterId: selectFridgeMaster.id,
-                prevId: editTargetId,
-                quantity,
-              });
-              setIsLoding(false);
-              refetch();
+              isChecked: shoppingMemo.byId[editTargetId].isChecked,
             });
-          } else {
-            requestInsertShoppingMemo({
-              masterId: selectFridgeMaster.id,
-              quantity,
-            }).then((res) => {
-              if (res) {
-                shoppingMemoActions.addShoppingMemo({
-                  ...selectFridgeMaster,
-                  id: res.shopping_memo_id,
-                  masterId: selectFridgeMaster.id,
-                  quantity,
-                });
-                setIsLoding(false);
-                refetch();
-              }
-            });
-          }
-          setEditTargetId(null);
+            setIsLoding(false);
+            setEditTargetId(null);
+            refetch();
+          });
         }
         break;
     }

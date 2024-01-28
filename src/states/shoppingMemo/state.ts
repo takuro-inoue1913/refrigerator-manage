@@ -16,6 +16,8 @@ export type ShoppingMemo = NormalizedArray<{
   incrementalUnit: number;
   /** 数量 */
   quantity: number;
+  /** チェック済みかどうか */
+  isChecked: boolean;
 }>;
 
 export const shoppingMemosState = atom<ShoppingMemo>({
