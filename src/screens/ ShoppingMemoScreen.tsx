@@ -193,7 +193,7 @@ export const ShoppingMemoScreen = () => {
     <View style={styles.container}>
       {(isLoding || isFetching) && <LoadingMask />}
       <View style={styles.header}>
-        <LinearGradientButton width={300} onPress={() => {}}>
+        <LinearGradientButton width={200} onPress={() => {}}>
           <Text style={styles.addFridgeButtonText}>
             <Icon name="fridge" size={20} color="white" />
             冷蔵庫に追加する
@@ -239,7 +239,7 @@ export const ShoppingMemoScreen = () => {
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
     width: '100%',
     padding: 20,
