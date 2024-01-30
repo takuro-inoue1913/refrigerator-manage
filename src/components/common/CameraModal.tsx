@@ -152,7 +152,7 @@ export const CameraModal: FC<Props> = ({ visible, onClose, onTakePicture }) => {
             style={styles.confirmButton}
             onPress={() => setPhotoUri(undefined)}
           >
-            <Text style={styles.confirmButtonText}>キャンセル</Text>
+            <Text style={styles.confirmButtonText}>撮り直す</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.confirmButton}
@@ -261,6 +261,15 @@ export const CameraModal: FC<Props> = ({ visible, onClose, onTakePicture }) => {
               </Camera>
               <View style={styles.footerBar}>
                 <TouchableOpacity
+                  style={styles.leftButton}
+                  onPress={() => {
+                    setPhotoUri(undefined);
+                    onClose();
+                  }}
+                >
+                  <Text style={styles.confirmButtonText}>キャンセル</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
                   style={styles.captureButton}
                   onPress={takePicture}
                 >
@@ -268,6 +277,7 @@ export const CameraModal: FC<Props> = ({ visible, onClose, onTakePicture }) => {
                     <View style={styles.innerCircle} />
                   </View>
                 </TouchableOpacity>
+                <View style={{ flex: 1 }} />
               </View>
             </View>
           </PinchGestureHandler>
@@ -298,7 +308,7 @@ const styles = StyleSheet.create({
   footerBar: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     backgroundColor: 'black',
     paddingBottom: 50,
     paddingTop: 20,
@@ -398,5 +408,11 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 18,
+  },
+  leftButton: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
   },
 });
