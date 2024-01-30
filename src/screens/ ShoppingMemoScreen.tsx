@@ -34,8 +34,13 @@ import Toast from 'react-native-toast-message';
 export const ShoppingMemoScreen = () => {
   const isFocused = useIsFocused();
   const navigation = useTypedNavigation();
-  const { fridgeMaster, refetch } = useRequestGetAllFridgeMaster();
-  const { shoppingMemo, isFetching } = useRequestGetAllShoppingMemo();
+  const {
+    isFetching: isFetchingFridgeMaster,
+    fridgeMaster,
+    refetch,
+  } = useRequestGetAllFridgeMaster();
+  const { shoppingMemo, isFetching: isFetchingShoppingMemo } =
+    useRequestGetAllShoppingMemo();
   const requestInsertShoppingMemo = useRequestInsertShoppingMemo();
   const requestUpdateShoppingMemo = useRequestUpdateShoppingMemo();
   const requestUpdateIsCheckedShoppingMemo =
@@ -282,7 +287,9 @@ export const ShoppingMemoScreen = () => {
 
   return (
     <View style={styles.container}>
-      {(isLoding || isFetching) && <LoadingMask />}
+      {(isLoding || isFetchingShoppingMemo || isFetchingFridgeMaster) && (
+        <LoadingMask />
+      )}
       <View style={styles.header}>
         <LinearGradientButton
           width={200}
@@ -320,8 +327,12 @@ export const ShoppingMemoScreen = () => {
           setModalMode('add');
           setModalVisible(true);
         }}
+        disabled={isFetchingShoppingMemo || isFetchingFridgeMaster}
       >
-        <CommonGradation style={styles.commonGradation}>
+        <CommonGradation
+          disabled={isFetchingShoppingMemo || isFetchingFridgeMaster}
+          style={styles.commonGradation}
+        >
           <Icon name="basket-plus" size={30} color="white" />
         </CommonGradation>
       </TouchableOpacity>
