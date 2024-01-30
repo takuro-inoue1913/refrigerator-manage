@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Linking, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { FC, useEffect, useRef, useState } from 'react';
+import { Linking, Modal, StyleSheet, TouchableOpacity } from 'react-native';
 import { Camera, FlashMode } from 'expo-camera';
 import {
   PinchGestureHandler,
@@ -18,7 +18,12 @@ const NOMAL_ZOOM = 0.001;
 const HALF_ZOOM = 0;
 const DOUBLE_ZOOM = 0.01;
 
-export const CameraScreen = () => {
+type Props = {
+  visible: boolean;
+  onClose: () => void;
+};
+
+export const CameraModal: FC<Props> = ({ visible, onClose }) => {
   const [flashMode, setFlashMode] = useState<FlashMode.on | FlashMode.off>(
     FlashMode.off,
   );
@@ -129,100 +134,107 @@ export const CameraScreen = () => {
   }
 
   return (
-    <GestureHandlerRootView style={styles.container}>
-      <PinchGestureHandler
-        onGestureEvent={onPinchGestureEvent}
-        onHandlerStateChange={onHandlerStateChange}
-      >
-        <View style={styles.container}>
-          <View style={styles.topBar}>
-            <TouchableOpacity
-              onPress={toggleFlash}
-              style={styles.flashIconContainer}
-            >
-              <Icon
-                name="flash"
-                size={24}
-                color={flashMode === FlashMode.off ? 'white' : 'yellow'}
-              />
-            </TouchableOpacity>
-          </View>
-          <Camera
-            style={styles.camera}
-            ref={cameraRef}
-            zoom={zoom}
-            flashMode={flashMode}
-          >
-            <View style={styles.focusBoxContainer}>
-              <View style={styles.focusBox} />
-              <View style={styles.zoomButtonContainer}>
-                <TouchableOpacity
-                  key={'2.0x'}
-                  style={[
-                    styles.button,
-                    zoom === DOUBLE_ZOOM && styles.selectedButton,
-                  ]}
-                  onPress={() => changeZoom(DOUBLE_ZOOM)}
-                >
-                  <Text
-                    style={[
-                      styles.buttonText,
-                      zoom === DOUBLE_ZOOM && styles.selectedText,
-                    ]}
-                  >
-                    2.0x
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  key={'1.0x'}
-                  style={[
-                    styles.button,
-                    zoom === NOMAL_ZOOM && styles.selectedButton,
-                  ]}
-                  onPress={() => changeZoom(NOMAL_ZOOM)}
-                >
-                  <Text
-                    style={[
-                      styles.buttonText,
-                      zoom === NOMAL_ZOOM && styles.selectedText,
-                    ]}
-                  >
-                    1.0x
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  key={'0.5x'}
-                  style={[
-                    styles.button,
-                    zoom === HALF_ZOOM && styles.selectedButton,
-                  ]}
-                  onPress={() => changeZoom(HALF_ZOOM)}
-                >
-                  <Text
-                    style={[
-                      styles.buttonText,
-                      zoom === HALF_ZOOM && styles.selectedText,
-                    ]}
-                  >
-                    0.5x
-                  </Text>
-                </TouchableOpacity>
-              </View>
+    <Modal
+      animationType="slide"
+      transparent
+      visible={visible}
+      onRequestClose={onClose}
+    >
+      <GestureHandlerRootView style={styles.container}>
+        <PinchGestureHandler
+          onGestureEvent={onPinchGestureEvent}
+          onHandlerStateChange={onHandlerStateChange}
+        >
+          <View style={styles.container}>
+            <View style={styles.topBar}>
+              <TouchableOpacity
+                onPress={toggleFlash}
+                style={styles.flashIconContainer}
+              >
+                <Icon
+                  name="flash"
+                  size={24}
+                  color={flashMode === FlashMode.off ? 'white' : 'yellow'}
+                />
+              </TouchableOpacity>
             </View>
-          </Camera>
-          <View style={styles.footerBar}>
-            <TouchableOpacity
-              style={styles.captureButton}
-              onPress={takePicture}
+            <Camera
+              style={styles.camera}
+              ref={cameraRef}
+              zoom={zoom}
+              flashMode={flashMode}
             >
-              <View style={styles.outerCircle}>
-                <View style={styles.innerCircle} />
+              <View style={styles.focusBoxContainer}>
+                <View style={styles.focusBox} />
+                <View style={styles.zoomButtonContainer}>
+                  <TouchableOpacity
+                    key={'2.0x'}
+                    style={[
+                      styles.button,
+                      zoom === DOUBLE_ZOOM && styles.selectedButton,
+                    ]}
+                    onPress={() => changeZoom(DOUBLE_ZOOM)}
+                  >
+                    <Text
+                      style={[
+                        styles.buttonText,
+                        zoom === DOUBLE_ZOOM && styles.selectedText,
+                      ]}
+                    >
+                      2.0x
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    key={'1.0x'}
+                    style={[
+                      styles.button,
+                      zoom === NOMAL_ZOOM && styles.selectedButton,
+                    ]}
+                    onPress={() => changeZoom(NOMAL_ZOOM)}
+                  >
+                    <Text
+                      style={[
+                        styles.buttonText,
+                        zoom === NOMAL_ZOOM && styles.selectedText,
+                      ]}
+                    >
+                      1.0x
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    key={'0.5x'}
+                    style={[
+                      styles.button,
+                      zoom === HALF_ZOOM && styles.selectedButton,
+                    ]}
+                    onPress={() => changeZoom(HALF_ZOOM)}
+                  >
+                    <Text
+                      style={[
+                        styles.buttonText,
+                        zoom === HALF_ZOOM && styles.selectedText,
+                      ]}
+                    >
+                      0.5x
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </TouchableOpacity>
+            </Camera>
+            <View style={styles.footerBar}>
+              <TouchableOpacity
+                style={styles.captureButton}
+                onPress={takePicture}
+              >
+                <View style={styles.outerCircle}>
+                  <View style={styles.innerCircle} />
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </PinchGestureHandler>
-    </GestureHandlerRootView>
+        </PinchGestureHandler>
+      </GestureHandlerRootView>
+    </Modal>
   );
 };
 
