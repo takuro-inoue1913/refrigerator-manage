@@ -1,5 +1,11 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { Linking, Modal, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  Image,
+  Linking,
+  Modal,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import { Camera, FlashMode } from 'expo-camera';
 import {
   PinchGestureHandler,
@@ -11,7 +17,7 @@ import {
 } from 'react-native-gesture-handler';
 import { Button, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { GOOGLE_CLOUD_VISION_API_KEY } from '@env';
+// import { GOOGLE_CLOUD_VISION_API_KEY } from '@env';
 import { COMMON_COLOR_GREEN } from '@src/utils/consts';
 
 const NOMAL_ZOOM = 0.001;
@@ -21,59 +27,62 @@ const DOUBLE_ZOOM = 0.01;
 type Props = {
   visible: boolean;
   onClose: () => void;
+  onTakePicture: (uri: string) => void;
 };
 
-export const CameraModal: FC<Props> = ({ visible, onClose }) => {
+export const CameraModal: FC<Props> = ({ visible, onClose, onTakePicture }) => {
   const [flashMode, setFlashMode] = useState<FlashMode.on | FlashMode.off>(
     FlashMode.off,
   );
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [zoom, setZoom] = useState(NOMAL_ZOOM);
+  const [photoUri, setPhotoUri] = useState<string | undefined>(undefined);
   const zoomRef = useRef(zoom);
   const lastScale = useRef(1);
   const cameraRef = useRef<Camera>(null);
 
-  const analyzeImageWithGoogleVision = async (base64: string) => {
-    try {
-      const body = JSON.stringify({
-        requests: [
-          {
-            features: [{ type: 'TEXT_DETECTION', maxResults: 1 }],
-            image: {
-              content: base64,
-            },
-          },
-        ],
-      });
+  // const analyzeImageWithGoogleVision = async (base64: string) => {
+  //   try {
+  //     const body = JSON.stringify({
+  //       requests: [
+  //         {
+  //           features: [{ type: 'TEXT_DETECTION', maxResults: 1 }],
+  //           image: {
+  //             content: base64,
+  //           },
+  //         },
+  //       ],
+  //     });
 
-      const response = await fetch(
-        `https://vision.googleapis.com/v1/images:annotate?key=${GOOGLE_CLOUD_VISION_API_KEY}`, // ここにあなたのAPIキーを入れてください
-        {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          method: 'POST',
-          body: body,
-        },
-      );
+  //     const response = await fetch(
+  //       `https://vision.googleapis.com/v1/images:annotate?key=${GOOGLE_CLOUD_VISION_API_KEY}`, // ここにあなたのAPIキーを入れてください
+  //       {
+  //         headers: {
+  //           Accept: 'application/json',
+  //           'Content-Type': 'application/json',
+  //         },
+  //         method: 'POST',
+  //         body: body,
+  //       },
+  //     );
 
-      const responseJson = await response.json();
-      console.log(
-        'textAnnotations.description: ',
-        responseJson.responses?.[0].textAnnotations?.[0].description as string,
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     const responseJson = await response.json();
+  //     console.log(
+  //       'textAnnotations.description: ',
+  //       responseJson.responses?.[0].textAnnotations?.[0].description as string,
+  //     );
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const takePicture = async () => {
     const photo = await cameraRef.current?.takePictureAsync({
       base64: true,
     });
     if (photo && photo.base64) {
-      analyzeImageWithGoogleVision(photo.base64);
+      setPhotoUri(photo.uri);
+      // analyzeImageWithGoogleVision(photo.base64);
     }
   };
 
@@ -133,6 +142,33 @@ export const CameraModal: FC<Props> = ({ visible, onClose }) => {
     );
   }
 
+  const renderCapturedPhoto = () => {
+    return (
+      <View style={styles.container}>
+        <View style={styles.topBar} />
+        <Image source={{ uri: photoUri }} style={styles.capturedImage} />
+        <View style={styles.footerBar}>
+          <TouchableOpacity
+            style={styles.confirmButton}
+            onPress={() => setPhotoUri(undefined)}
+          >
+            <Text style={styles.confirmButtonText}>キャンセル</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.confirmButton}
+            onPress={() => {
+              onTakePicture(photoUri!);
+              setPhotoUri(undefined);
+              onClose();
+            }}
+          >
+            <Text style={styles.confirmButtonText}>決定</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <Modal
       animationType="slide"
@@ -140,100 +176,103 @@ export const CameraModal: FC<Props> = ({ visible, onClose }) => {
       visible={visible}
       onRequestClose={onClose}
     >
-      <GestureHandlerRootView style={styles.container}>
-        <PinchGestureHandler
-          onGestureEvent={onPinchGestureEvent}
-          onHandlerStateChange={onHandlerStateChange}
-        >
-          <View style={styles.container}>
-            <View style={styles.topBar}>
-              <TouchableOpacity
-                onPress={toggleFlash}
-                style={styles.flashIconContainer}
-              >
-                <Icon
-                  name="flash"
-                  size={24}
-                  color={flashMode === FlashMode.off ? 'white' : 'yellow'}
-                />
-              </TouchableOpacity>
-            </View>
-            <Camera
-              style={styles.camera}
-              ref={cameraRef}
-              zoom={zoom}
-              flashMode={flashMode}
-            >
-              <View style={styles.focusBoxContainer}>
-                <View style={styles.focusBox} />
-                <View style={styles.zoomButtonContainer}>
-                  <TouchableOpacity
-                    key={'2.0x'}
-                    style={[
-                      styles.button,
-                      zoom === DOUBLE_ZOOM && styles.selectedButton,
-                    ]}
-                    onPress={() => changeZoom(DOUBLE_ZOOM)}
-                  >
-                    <Text
-                      style={[
-                        styles.buttonText,
-                        zoom === DOUBLE_ZOOM && styles.selectedText,
-                      ]}
-                    >
-                      2.0x
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    key={'1.0x'}
-                    style={[
-                      styles.button,
-                      zoom === NOMAL_ZOOM && styles.selectedButton,
-                    ]}
-                    onPress={() => changeZoom(NOMAL_ZOOM)}
-                  >
-                    <Text
-                      style={[
-                        styles.buttonText,
-                        zoom === NOMAL_ZOOM && styles.selectedText,
-                      ]}
-                    >
-                      1.0x
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    key={'0.5x'}
-                    style={[
-                      styles.button,
-                      zoom === HALF_ZOOM && styles.selectedButton,
-                    ]}
-                    onPress={() => changeZoom(HALF_ZOOM)}
-                  >
-                    <Text
-                      style={[
-                        styles.buttonText,
-                        zoom === HALF_ZOOM && styles.selectedText,
-                      ]}
-                    >
-                      0.5x
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+      {photoUri && renderCapturedPhoto()}
+      {!photoUri && (
+        <GestureHandlerRootView style={styles.container}>
+          <PinchGestureHandler
+            onGestureEvent={onPinchGestureEvent}
+            onHandlerStateChange={onHandlerStateChange}
+          >
+            <View style={styles.container}>
+              <View style={styles.topBar}>
+                <TouchableOpacity
+                  onPress={toggleFlash}
+                  style={styles.flashIconContainer}
+                >
+                  <Icon
+                    name="flash"
+                    size={24}
+                    color={flashMode === FlashMode.off ? 'white' : 'yellow'}
+                  />
+                </TouchableOpacity>
               </View>
-            </Camera>
-            <View style={styles.footerBar}>
-              <TouchableOpacity
-                style={styles.captureButton}
-                onPress={takePicture}
+              <Camera
+                style={styles.camera}
+                ref={cameraRef}
+                zoom={zoom}
+                flashMode={flashMode}
               >
-                <View style={styles.outerCircle}>
-                  <View style={styles.innerCircle} />
+                <View style={styles.focusBoxContainer}>
+                  <View style={styles.focusBox} />
+                  <View style={styles.zoomButtonContainer}>
+                    <TouchableOpacity
+                      key={'2.0x'}
+                      style={[
+                        styles.button,
+                        zoom === DOUBLE_ZOOM && styles.selectedButton,
+                      ]}
+                      onPress={() => changeZoom(DOUBLE_ZOOM)}
+                    >
+                      <Text
+                        style={[
+                          styles.buttonText,
+                          zoom === DOUBLE_ZOOM && styles.selectedText,
+                        ]}
+                      >
+                        2.0x
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      key={'1.0x'}
+                      style={[
+                        styles.button,
+                        zoom === NOMAL_ZOOM && styles.selectedButton,
+                      ]}
+                      onPress={() => changeZoom(NOMAL_ZOOM)}
+                    >
+                      <Text
+                        style={[
+                          styles.buttonText,
+                          zoom === NOMAL_ZOOM && styles.selectedText,
+                        ]}
+                      >
+                        1.0x
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      key={'0.5x'}
+                      style={[
+                        styles.button,
+                        zoom === HALF_ZOOM && styles.selectedButton,
+                      ]}
+                      onPress={() => changeZoom(HALF_ZOOM)}
+                    >
+                      <Text
+                        style={[
+                          styles.buttonText,
+                          zoom === HALF_ZOOM && styles.selectedText,
+                        ]}
+                      >
+                        0.5x
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-              </TouchableOpacity>
+              </Camera>
+              <View style={styles.footerBar}>
+                <TouchableOpacity
+                  style={styles.captureButton}
+                  onPress={takePicture}
+                >
+                  <View style={styles.outerCircle}>
+                    <View style={styles.innerCircle} />
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        </PinchGestureHandler>
-      </GestureHandlerRootView>
+          </PinchGestureHandler>
+        </GestureHandlerRootView>
+      )}
     </Modal>
   );
 };
@@ -345,5 +384,19 @@ const styles = StyleSheet.create({
   },
   flashIcon: {
     color: 'white',
+  },
+  capturedImage: {
+    flex: 8,
+  },
+  confirmButton: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+  },
+  confirmButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 18,
   },
 });

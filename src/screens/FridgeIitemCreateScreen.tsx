@@ -13,6 +13,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Switch,
+  ActionSheetIOS,
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import * as ImagePicker from 'expo-image-picker';
@@ -52,6 +53,7 @@ import { otherStocksState } from '@src/states/fridge/other';
 import { fishStocksState } from '@src/states/fridge/fish';
 import { dessertStocksState } from '@src/states/fridge/dessert';
 import { LoadingMask } from '@src/components/common/LoadingMask';
+import { CameraModal } from '@src/components/common/CameraModal';
 
 type Props = {
   route: RouteProp<RootStackParamList, '食材新規登録'>;
@@ -61,6 +63,7 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
   const { unitMaster } = useRequestGetUnit();
   const [isSending, setIsSending] = useState(false);
   const navigation = useTypedNavigation();
+  const [visibleCameraModal, setVisibleCameraModal] = useState(false);
 
   const user = useRecoilValue(userState);
   const vegetablesStocks = useRecoilValue(vegetablesStocksState);
@@ -123,6 +126,35 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
   };
 
   const handleChoosePhoto = async (
+    // MEMO: react-hook-form の field.onChange の型に合わせるため。
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onChange: (...event: any[]) => void,
+  ) => {
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: ['キャンセル', 'カメラで撮影', '写真を選択'],
+        cancelButtonIndex: 0,
+      },
+      async (buttonIndex) => {
+        switch (buttonIndex) {
+          case 1:
+            await handleTakePhoto();
+            break;
+          case 2:
+            await handleChooseLibraryPhoto(onChange);
+            break;
+          default:
+            break;
+        }
+      },
+    );
+  };
+
+  const handleTakePhoto = () => {
+    setVisibleCameraModal(true);
+  };
+
+  const handleChooseLibraryPhoto = async (
     // MEMO: react-hook-form の field.onChange の型に合わせるため。
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onChange: (...event: any[]) => void,
@@ -397,234 +429,251 @@ export const FridgeItemCreateScreen: FC<Props> = ({ route }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView
-        behavior={'position'}
-        contentContainerStyle={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-        style={styles.container}
-      >
-        {isSending && <LoadingMask />}
-        <View style={errors.image ? styles.formItemHasError : styles.formItem}>
-          <Controller
-            control={control}
-            name="image"
-            rules={{ required: '画像は必須です。' }}
-            render={({ field: { value, onChange } }) => (
-              <TouchableOpacity
-                onPress={() => handleChoosePhoto(onChange)}
-                style={styles.imageUploader}
-              >
-                {value ? (
-                  <Image
-                    source={{ uri: value.uri }}
-                    style={styles.imagePreview}
-                  />
-                ) : (
-                  <View>
-                    <Text>
-                      <Icon name="image-plus" style={styles.icon} />
-                    </Text>
-                  </View>
-                )}
-              </TouchableOpacity>
-            )}
-          />
-          {errors.image && (
-            <Text style={styles.errorText}>{errors.image.message}</Text>
-          )}
-        </View>
-        <View
-          style={errors.displayName ? styles.formItemHasError : styles.formItem}
+    <>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <KeyboardAvoidingView
+          behavior={'position'}
+          contentContainerStyle={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          style={styles.container}
         >
-          <Controller
-            control={control}
-            name="displayName"
-            rules={{
-              required: '表示名は必須です。',
-              maxLength: {
-                value: 8,
-                message: '表示名は8文字以内で入力してください。',
-              },
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                style={styles.input}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                accessibilityLabel="表示名"
-                value={value}
-                returnKeyType="done"
-                placeholder="表示名 ※ リストに表示されます"
-              />
-            )}
-          />
-          {errors.displayName && (
-            <Text style={styles.errorText}>{errors.displayName.message}</Text>
-          )}
-        </View>
-        <View
-          style={errors.nameKana ? styles.formItemHasError : styles.formItem}
-        >
-          <Controller
-            control={control}
-            name="nameKana"
-            rules={{
-              required: '名前は必須です。',
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                style={styles.input}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                returnKeyType="done"
-                placeholder="名前 ※ 絞込や検索に使用します"
-              />
-            )}
-          />
-          {errors.nameKana && (
-            <Text style={styles.errorText}>{errors.nameKana.message}</Text>
-          )}
-        </View>
-        <View
-          style={
-            errors.expiryPeriod ? styles.formItemHasError : styles.formItem
-          }
-        >
-          <Controller
-            control={control}
-            name="expiryPeriod"
-            rules={{
-              required: '賞味期限の基本期間は必須です。',
-              pattern: {
-                value: /^\d+$/,
-                message: '賞味期限の基本期間は数値のみで入力してください。',
-              },
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                style={styles.input}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                placeholder="賞味期限期間 (日数)"
-                returnKeyType="done"
-                keyboardType="numeric"
-              />
-            )}
-          />
-          {errors.expiryPeriod && (
-            <Text style={styles.errorText}>{errors.expiryPeriod.message}</Text>
-          )}
-        </View>
-        <View style={errors.unit ? styles.formItemHasError : styles.formItem}>
-          <Controller
-            control={control}
-            name="unit"
-            rules={{
-              required: '単位名は必須です。',
-            }}
-            render={({ field: { onChange, value } }) => (
-              <Dropdown
-                style={styles.dropdown}
-                placeholderStyle={styles.dropdownPlaceholderStyle}
-                selectedTextStyle={styles.dropdownSelectedTextStyle}
-                iconStyle={styles.dropdownIconStyle}
-                data={unitMaster}
-                maxHeight={150}
-                labelField="name"
-                valueField="id"
-                placeholder="単位名 ※ 自動で増減単位が設定されます"
-                searchPlaceholder="単位名を検索"
-                value={value}
-                onChange={(item) => handleUnitChange(item, onChange)}
-                renderItem={(item) => {
-                  return (
-                    <View style={styles.dropdownItem}>
-                      <Text style={styles.dropdownTextItem}>{item.name}</Text>
-                      {isEqual(item, value) && (
-                        <Icon
-                          name="check"
-                          style={styles.dropdownItemIcon}
-                          size={20}
-                          color={COMMON_COLOR_GREEN}
-                        />
-                      )}
-                    </View>
-                  );
-                }}
-              />
-            )}
-          />
-          {errors.unit && (
-            <Text style={styles.errorText}>{errors.unit.message}</Text>
-          )}
-        </View>
-        <View
-          style={
-            errors.incrementUnit ? styles.formItemHasError : styles.formItem
-          }
-        >
-          <Controller
-            control={control}
-            name="incrementUnit"
-            rules={{
-              required: '増減単位は必須です。',
-              pattern: {
-                value: /^\d+(\.\d+)?$/,
-                message: '増減単位は数値のみで入力してください。',
-              },
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                style={styles.input}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                placeholder="増減単位 ※ 在庫の増減量になります"
-                keyboardType="numeric"
-                returnKeyType="done"
-              />
-            )}
-          />
-          {errors.incrementUnit && (
-            <Text style={styles.errorText}>{errors.incrementUnit.message}</Text>
-          )}
-        </View>
-        <Controller
-          control={control}
-          name="isFavorite"
-          render={({ field: { onChange, value } }) => (
-            <View style={styles.favoriteToggleContainer}>
-              <Text style={styles.favoriteToggleLabel}>
-                お気に入りに登録する
-              </Text>
-              <Switch
-                trackColor={{ false: '#ced4da', true: COMMON_COLOR_GREEN }}
-                ios_backgroundColor="#ced4da"
-                onValueChange={onChange}
-                value={value}
-              />
-            </View>
-          )}
-        />
-        <View style={styles.submitButtonWrapper}>
-          <LinearGradientButton
-            width={250}
-            disabled={isSending}
-            onPress={handleSubmit(onSubmit)}
+          {isSending && <LoadingMask />}
+          <View
+            style={errors.image ? styles.formItemHasError : styles.formItem}
           >
-            <Text style={{ color: 'white' }}>
-              {isSending ? '登録中...' : '登録'}
-            </Text>
-          </LinearGradientButton>
-        </View>
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+            <Controller
+              control={control}
+              name="image"
+              rules={{ required: '画像は必須です。' }}
+              render={({ field: { value, onChange } }) => (
+                <TouchableOpacity
+                  onPress={() => handleChoosePhoto(onChange)}
+                  style={styles.imageUploader}
+                >
+                  {value ? (
+                    <Image
+                      source={{ uri: value.uri }}
+                      style={styles.imagePreview}
+                    />
+                  ) : (
+                    <View>
+                      <Text>
+                        <Icon name="image-plus" style={styles.icon} />
+                      </Text>
+                    </View>
+                  )}
+                </TouchableOpacity>
+              )}
+            />
+            {errors.image && (
+              <Text style={styles.errorText}>{errors.image.message}</Text>
+            )}
+          </View>
+          <View
+            style={
+              errors.displayName ? styles.formItemHasError : styles.formItem
+            }
+          >
+            <Controller
+              control={control}
+              name="displayName"
+              rules={{
+                required: '表示名は必須です。',
+                maxLength: {
+                  value: 8,
+                  message: '表示名は8文字以内で入力してください。',
+                },
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={styles.input}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  accessibilityLabel="表示名"
+                  value={value}
+                  returnKeyType="done"
+                  placeholder="表示名 ※ リストに表示されます"
+                />
+              )}
+            />
+            {errors.displayName && (
+              <Text style={styles.errorText}>{errors.displayName.message}</Text>
+            )}
+          </View>
+          <View
+            style={errors.nameKana ? styles.formItemHasError : styles.formItem}
+          >
+            <Controller
+              control={control}
+              name="nameKana"
+              rules={{
+                required: '名前は必須です。',
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={styles.input}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  returnKeyType="done"
+                  placeholder="名前 ※ 絞込や検索に使用します"
+                />
+              )}
+            />
+            {errors.nameKana && (
+              <Text style={styles.errorText}>{errors.nameKana.message}</Text>
+            )}
+          </View>
+          <View
+            style={
+              errors.expiryPeriod ? styles.formItemHasError : styles.formItem
+            }
+          >
+            <Controller
+              control={control}
+              name="expiryPeriod"
+              rules={{
+                required: '賞味期限の基本期間は必須です。',
+                pattern: {
+                  value: /^\d+$/,
+                  message: '賞味期限の基本期間は数値のみで入力してください。',
+                },
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={styles.input}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  placeholder="賞味期限期間 (日数)"
+                  returnKeyType="done"
+                  keyboardType="numeric"
+                />
+              )}
+            />
+            {errors.expiryPeriod && (
+              <Text style={styles.errorText}>
+                {errors.expiryPeriod.message}
+              </Text>
+            )}
+          </View>
+          <View style={errors.unit ? styles.formItemHasError : styles.formItem}>
+            <Controller
+              control={control}
+              name="unit"
+              rules={{
+                required: '単位名は必須です。',
+              }}
+              render={({ field: { onChange, value } }) => (
+                <Dropdown
+                  style={styles.dropdown}
+                  placeholderStyle={styles.dropdownPlaceholderStyle}
+                  selectedTextStyle={styles.dropdownSelectedTextStyle}
+                  iconStyle={styles.dropdownIconStyle}
+                  data={unitMaster}
+                  maxHeight={150}
+                  labelField="name"
+                  valueField="id"
+                  placeholder="単位名 ※ 自動で増減単位が設定されます"
+                  searchPlaceholder="単位名を検索"
+                  value={value}
+                  onChange={(item) => handleUnitChange(item, onChange)}
+                  renderItem={(item) => {
+                    return (
+                      <View style={styles.dropdownItem}>
+                        <Text style={styles.dropdownTextItem}>{item.name}</Text>
+                        {isEqual(item, value) && (
+                          <Icon
+                            name="check"
+                            style={styles.dropdownItemIcon}
+                            size={20}
+                            color={COMMON_COLOR_GREEN}
+                          />
+                        )}
+                      </View>
+                    );
+                  }}
+                />
+              )}
+            />
+            {errors.unit && (
+              <Text style={styles.errorText}>{errors.unit.message}</Text>
+            )}
+          </View>
+          <View
+            style={
+              errors.incrementUnit ? styles.formItemHasError : styles.formItem
+            }
+          >
+            <Controller
+              control={control}
+              name="incrementUnit"
+              rules={{
+                required: '増減単位は必須です。',
+                pattern: {
+                  value: /^\d+(\.\d+)?$/,
+                  message: '増減単位は数値のみで入力してください。',
+                },
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={styles.input}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  placeholder="増減単位 ※ 在庫の増減量になります"
+                  keyboardType="numeric"
+                  returnKeyType="done"
+                />
+              )}
+            />
+            {errors.incrementUnit && (
+              <Text style={styles.errorText}>
+                {errors.incrementUnit.message}
+              </Text>
+            )}
+          </View>
+          <Controller
+            control={control}
+            name="isFavorite"
+            render={({ field: { onChange, value } }) => (
+              <View style={styles.favoriteToggleContainer}>
+                <Text style={styles.favoriteToggleLabel}>
+                  お気に入りに登録する
+                </Text>
+                <Switch
+                  trackColor={{ false: '#ced4da', true: COMMON_COLOR_GREEN }}
+                  ios_backgroundColor="#ced4da"
+                  onValueChange={onChange}
+                  value={value}
+                />
+              </View>
+            )}
+          />
+          <View style={styles.submitButtonWrapper}>
+            <LinearGradientButton
+              width={250}
+              disabled={isSending}
+              onPress={handleSubmit(onSubmit)}
+            >
+              <Text style={{ color: 'white' }}>
+                {isSending ? '登録中...' : '登録'}
+              </Text>
+            </LinearGradientButton>
+          </View>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
+      <CameraModal
+        visible={visibleCameraModal}
+        onClose={() => setVisibleCameraModal(false)}
+        onTakePicture={(uri) => {
+          setValue('image', { uri });
+        }}
+      />
+    </>
   );
 };
 
