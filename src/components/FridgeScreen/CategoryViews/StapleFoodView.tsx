@@ -68,7 +68,7 @@ export const StapleFoodView: FC = () => {
         sourceUri: stapleFoodStocks.byId[id].imageUri,
         cacheKey: generateEncodeString([
           stapleFoodStocks.byId[id].name,
-          stapleFoodStocks.byId[id].id.toString(),
+          stapleFoodStocks.byId[id].id,
         ]),
         itemName: stapleFoodStocks.byId[id].displayName,
         incrementalUnit: stapleFoodStocks.byId[id].incrementalUnit,
@@ -175,7 +175,7 @@ export const StapleFoodView: FC = () => {
                     sourceUri={stapleFoodStocks.byId[stapleFoodId].imageUri}
                     cacheKey={generateEncodeString([
                       stapleFoodStocks.byId[stapleFoodId].name,
-                      stapleFoodStocks.byId[stapleFoodId].id.toString(),
+                      stapleFoodStocks.byId[stapleFoodId].id,
                     ])}
                     targetId={stapleFoodStocks.byId[stapleFoodId].id}
                     hasStock={stapleFoodStocks.byId[stapleFoodId].hasStock}

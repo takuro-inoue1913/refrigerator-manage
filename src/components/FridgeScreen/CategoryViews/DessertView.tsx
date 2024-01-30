@@ -66,7 +66,7 @@ export const DessertView: FC = () => {
         sourceUri: dessertStocks.byId[id].imageUri,
         cacheKey: generateEncodeString([
           dessertStocks.byId[id].name,
-          dessertStocks.byId[id].id.toString(),
+          dessertStocks.byId[id].id,
         ]),
         itemName: dessertStocks.byId[id].displayName,
         incrementalUnit: dessertStocks.byId[id].incrementalUnit,
@@ -173,7 +173,7 @@ export const DessertView: FC = () => {
                     sourceUri={dessertStocks.byId[dessertId].imageUri}
                     cacheKey={generateEncodeString([
                       dessertStocks.byId[dessertId].name,
-                      dessertStocks.byId[dessertId].id.toString(),
+                      dessertStocks.byId[dessertId].id,
                     ])}
                     targetId={dessertStocks.byId[dessertId].id}
                     hasStock={dessertStocks.byId[dessertId].hasStock}

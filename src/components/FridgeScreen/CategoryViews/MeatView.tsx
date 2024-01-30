@@ -65,7 +65,7 @@ export const MeatView: FC = () => {
         sourceUri: meatStocks.byId[id].imageUri,
         cacheKey: generateEncodeString([
           meatStocks.byId[id].name,
-          meatStocks.byId[id].id.toString(),
+          meatStocks.byId[id].id,
         ]),
         itemName: meatStocks.byId[id].displayName,
         incrementalUnit: meatStocks.byId[id].incrementalUnit,
@@ -172,7 +172,7 @@ export const MeatView: FC = () => {
                     sourceUri={meatStocks.byId[meatId].imageUri}
                     cacheKey={generateEncodeString([
                       meatStocks.byId[meatId].name,
-                      meatStocks.byId[meatId].id.toString(),
+                      meatStocks.byId[meatId].id,
                     ])}
                     targetId={meatStocks.byId[meatId].id}
                     hasStock={meatStocks.byId[meatId].hasStock}

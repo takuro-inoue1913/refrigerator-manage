@@ -65,7 +65,7 @@ export const OtherView: FC = () => {
         sourceUri: otherStocks.byId[id].imageUri,
         cacheKey: generateEncodeString([
           otherStocks.byId[id].name,
-          otherStocks.byId[id].id.toString(),
+          otherStocks.byId[id].id,
         ]),
         itemName: otherStocks.byId[id].displayName,
         incrementalUnit: otherStocks.byId[id].incrementalUnit,
@@ -172,7 +172,7 @@ export const OtherView: FC = () => {
                     sourceUri={otherStocks.byId[otherId].imageUri}
                     cacheKey={generateEncodeString([
                       otherStocks.byId[otherId].name,
-                      otherStocks.byId[otherId].id.toString(),
+                      otherStocks.byId[otherId].id,
                     ])}
                     targetId={otherStocks.byId[otherId].id}
                     hasStock={otherStocks.byId[otherId].hasStock}

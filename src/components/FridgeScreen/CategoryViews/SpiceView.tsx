@@ -65,7 +65,7 @@ export const SpiceView: FC = () => {
         sourceUri: spiceStocks.byId[id].imageUri,
         cacheKey: generateEncodeString([
           spiceStocks.byId[id].name,
-          spiceStocks.byId[id].id.toString(),
+          spiceStocks.byId[id].id,
         ]),
         itemName: spiceStocks.byId[id].displayName,
         incrementalUnit: spiceStocks.byId[id].incrementalUnit,
@@ -172,7 +172,7 @@ export const SpiceView: FC = () => {
                     sourceUri={spiceStocks.byId[spiceId].imageUri}
                     cacheKey={generateEncodeString([
                       spiceStocks.byId[spiceId].name,
-                      spiceStocks.byId[spiceId].id.toString(),
+                      spiceStocks.byId[spiceId].id,
                     ])}
                     targetId={spiceStocks.byId[spiceId].id}
                     hasStock={spiceStocks.byId[spiceId].hasStock}

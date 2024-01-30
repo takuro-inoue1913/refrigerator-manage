@@ -68,7 +68,7 @@ export const SeasoningView: FC = () => {
         sourceUri: seasoningStocks.byId[id].imageUri,
         cacheKey: generateEncodeString([
           seasoningStocks.byId[id].name,
-          seasoningStocks.byId[id].id.toString(),
+          seasoningStocks.byId[id].id,
         ]),
         itemName: seasoningStocks.byId[id].displayName,
         incrementalUnit: seasoningStocks.byId[id].incrementalUnit,
@@ -175,7 +175,7 @@ export const SeasoningView: FC = () => {
                     sourceUri={seasoningStocks.byId[seasoningId].imageUri}
                     cacheKey={generateEncodeString([
                       seasoningStocks.byId[seasoningId].name,
-                      seasoningStocks.byId[seasoningId].id.toString(),
+                      seasoningStocks.byId[seasoningId].id,
                     ])}
                     targetId={seasoningStocks.byId[seasoningId].id}
                     hasStock={seasoningStocks.byId[seasoningId].hasStock}

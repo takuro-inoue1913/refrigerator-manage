@@ -65,7 +65,7 @@ export const FishView: FC = () => {
         sourceUri: fishStocks.byId[id].imageUri,
         cacheKey: generateEncodeString([
           fishStocks.byId[id].name,
-          fishStocks.byId[id].id.toString(),
+          fishStocks.byId[id].id,
         ]),
         itemName: fishStocks.byId[id].displayName,
         incrementalUnit: fishStocks.byId[id].incrementalUnit,

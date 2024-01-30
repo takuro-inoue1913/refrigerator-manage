@@ -69,7 +69,7 @@ export const ProteinSourceView: FC = () => {
         sourceUri: proteinSourceStocks.byId[id].imageUri,
         cacheKey: generateEncodeString([
           proteinSourceStocks.byId[id].name,
-          proteinSourceStocks.byId[id].id.toString(),
+          proteinSourceStocks.byId[id].id,
         ]),
         itemName: proteinSourceStocks.byId[id].displayName,
         incrementalUnit: proteinSourceStocks.byId[id].incrementalUnit,
@@ -180,7 +180,7 @@ export const ProteinSourceView: FC = () => {
                     }
                     cacheKey={generateEncodeString([
                       proteinSourceStocks.byId[proteinSourceId].name,
-                      proteinSourceStocks.byId[proteinSourceId].id.toString(),
+                      proteinSourceStocks.byId[proteinSourceId].id,
                     ])}
                     targetId={proteinSourceStocks.byId[proteinSourceId].id}
                     hasStock={

@@ -65,7 +65,7 @@ export const ShoppingMemoItem: FC<Props> = ({
         />
         <CachedImage
           source={{ uri: item.imageUri }}
-          cacheKey={generateEncodeString([item.name, item.id.toString()])}
+          cacheKey={generateEncodeString([item.name, item.id])}
           style={[
             {
               width: 40,
