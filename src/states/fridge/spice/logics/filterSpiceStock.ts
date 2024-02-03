@@ -42,5 +42,14 @@ export const filterSpiceStock = ({
       sortedIds = [...originalIds];
       break;
   }
+
+  if (selectFilterOptions.searchFridgeName) {
+    const searchLower = selectFilterOptions.searchFridgeName.toLowerCase();
+    sortedIds = sortedIds.filter(
+      (id) =>
+        spiceStocks.byId[id].name.toLowerCase().includes(searchLower) ||
+        spiceStocks.byId[id].displayName.toLowerCase().includes(searchLower),
+    );
+  }
   return sortedIds;
 };

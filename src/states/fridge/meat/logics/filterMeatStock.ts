@@ -42,5 +42,14 @@ export const filterMeatStock = ({
       sortedIds = [...originalIds];
       break;
   }
+
+  if (selectFilterOptions.searchFridgeName) {
+    const searchLower = selectFilterOptions.searchFridgeName.toLowerCase();
+    sortedIds = sortedIds.filter(
+      (id) =>
+        meatStocks.byId[id].name.toLowerCase().includes(searchLower) ||
+        meatStocks.byId[id].displayName.toLowerCase().includes(searchLower),
+    );
+  }
   return sortedIds;
 };

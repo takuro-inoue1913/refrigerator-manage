@@ -42,5 +42,16 @@ export const filterSeasoningStock = ({
       sortedIds = [...originalIds];
       break;
   }
+
+  if (selectFilterOptions.searchFridgeName) {
+    const searchLower = selectFilterOptions.searchFridgeName.toLowerCase();
+    sortedIds = sortedIds.filter(
+      (id) =>
+        seasoningStocks.byId[id].name.toLowerCase().includes(searchLower) ||
+        seasoningStocks.byId[id].displayName
+          .toLowerCase()
+          .includes(searchLower),
+    );
+  }
   return sortedIds;
 };

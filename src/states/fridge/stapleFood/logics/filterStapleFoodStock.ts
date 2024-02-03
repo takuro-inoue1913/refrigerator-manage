@@ -42,5 +42,16 @@ export const filterStapleFoodStock = ({
       sortedIds = [...originalIds];
       break;
   }
+
+  if (selectFilterOptions.searchFridgeName) {
+    const searchLower = selectFilterOptions.searchFridgeName.toLowerCase();
+    sortedIds = sortedIds.filter(
+      (id) =>
+        stapleFoodStocks.byId[id].name.toLowerCase().includes(searchLower) ||
+        stapleFoodStocks.byId[id].displayName
+          .toLowerCase()
+          .includes(searchLower),
+    );
+  }
   return sortedIds;
 };

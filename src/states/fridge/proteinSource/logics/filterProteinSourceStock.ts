@@ -42,5 +42,16 @@ export const filterProteinSourceStock = ({
       sortedIds = [...originalIds];
       break;
   }
+
+  if (selectFilterOptions.searchFridgeName) {
+    const searchLower = selectFilterOptions.searchFridgeName.toLowerCase();
+    sortedIds = sortedIds.filter(
+      (id) =>
+        proteinSourceStocks.byId[id].name.toLowerCase().includes(searchLower) ||
+        proteinSourceStocks.byId[id].displayName
+          .toLowerCase()
+          .includes(searchLower),
+    );
+  }
   return sortedIds;
 };

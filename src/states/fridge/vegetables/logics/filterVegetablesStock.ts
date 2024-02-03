@@ -42,5 +42,17 @@ export const filterVegetablesStock = ({
       sortedIds = [...originalIds];
       break;
   }
+
+  if (selectFilterOptions.searchFridgeName) {
+    const searchLower = selectFilterOptions.searchFridgeName.toLowerCase();
+    sortedIds = sortedIds.filter(
+      (id) =>
+        vegetablesStocks.byId[id].name.toLowerCase().includes(searchLower) ||
+        vegetablesStocks.byId[id].displayName
+          .toLowerCase()
+          .includes(searchLower),
+    );
+  }
+
   return sortedIds;
 };
