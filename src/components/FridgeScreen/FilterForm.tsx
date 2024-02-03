@@ -1,7 +1,8 @@
 import { useChunkedArray } from '@src/hooks/useChunkedArray';
 import { selectFilterOptionsState } from '@src/states/fridge';
 import { COMMON_COLOR_GREEN, FILTER_OPTIONS } from '@src/utils/consts';
-import React, { FC } from 'react';
+import { debounce } from 'lodash';
+import React, { FC, useRef } from 'react';
 import {
   View,
   Text,
@@ -11,6 +12,7 @@ import {
   TextInput,
 } from 'react-native';
 import { useRecoilState } from 'recoil';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const { width } = Dimensions.get('window');
 
@@ -32,14 +34,43 @@ export const FilterForm: FC<Props> = ({ onPress }) => {
     onPress?.();
   };
 
+  const debouncedonPress = useRef(
+    debounce(async () => {
+      onPress?.();
+    }, 1000),
+  );
+
+  const handleSearchFridgeNameChange = (text: string) => {
+    setSelectFilterOptionsState((prev) => ({
+      ...prev,
+      searchFridgeName: text,
+    }));
+    debouncedonPress.current();
+  };
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => handleNarrowDownPress('')}>
+      <View>
         <TextInput
           placeholder="食材名で絞り込み"
           style={styles.filterFridgeNameInput}
+          onChangeText={handleSearchFridgeNameChange}
+          value={selectFilterOptions.searchFridgeName}
         />
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.clearButton}
+          onPress={() => {
+            handleSearchFridgeNameChange('');
+          }}
+        >
+          <Icon
+            style={styles.clearButton}
+            name="close-circle"
+            size={30}
+            color="#ccc"
+          />
+        </TouchableOpacity>
+      </View>
       <Text style={styles.label}>並び替え</Text>
       <View style={styles.buttonContainer}>
         <View style={styles.buttonColumn}>
@@ -80,6 +111,18 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 16,
     width: width / (2.5 / 2),
+  },
+  clearButton: {
+    position: 'absolute',
+    right: 5,
+    top: 3,
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  clearButtonIcon: {
+    height: '100%',
+    width: '100%',
   },
   label: {
     fontSize: 16,

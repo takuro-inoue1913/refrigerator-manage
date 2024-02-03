@@ -53,6 +53,8 @@ export type FridgeMaster = {
 
 export type SelectFilterOptions = {
   sort: (typeof FILTER_OPTIONS)['sort'][number];
+  /** 検索する冷蔵庫名 */
+  searchFridgeName: string;
 };
 
 export type UnitMater = {
@@ -69,6 +71,7 @@ export const selectFilterOptionsState = atom<SelectFilterOptions>({
   key: 'selectFilterOptionsState',
   default: {
     sort: '通常',
+    searchFridgeName: '',
   },
 });
 
