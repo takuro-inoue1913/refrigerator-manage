@@ -12,6 +12,7 @@ import {
   Animated,
   Easing,
   TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SelectDropdown from 'react-native-select-dropdown';
@@ -46,6 +47,10 @@ export const StickyHeader: FC<Props> = ({
 
   // ドロップダウンの表示切替
   const toggleDropdown = () => {
+    // MEMO: ドロップダウンが閉じるときにキーボードを閉じる。
+    if (!isDropdownVisible === false) {
+      Keyboard.dismiss();
+    }
     setDropdownVisible(!isDropdownVisible);
     Animated.timing(dropdownAnimation, {
       toValue: isDropdownVisible ? 0 : 1,
@@ -63,6 +68,7 @@ export const StickyHeader: FC<Props> = ({
       useNativeDriver: true,
     }).start();
     setOverlayVisible(false);
+    Keyboard.dismiss();
   };
 
   const onReload = async () => {
@@ -127,7 +133,7 @@ export const StickyHeader: FC<Props> = ({
       </View>
       {isOverlayVisible && (
         <TouchableWithoutFeedback onPress={closeFilterForm}>
-          <View style={styles.overlay}></View>
+          <View style={styles.overlay} />
         </TouchableWithoutFeedback>
       )}
       <Animated.View

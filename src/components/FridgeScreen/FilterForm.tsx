@@ -8,6 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
+  TextInput,
 } from 'react-native';
 import { useRecoilState } from 'recoil';
 
@@ -33,6 +34,12 @@ export const FilterForm: FC<Props> = ({ onPress }) => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={() => handleNarrowDownPress('')}>
+        <TextInput
+          placeholder="食材名で絞り込み"
+          style={styles.filterFridgeNameInput}
+        />
+      </TouchableOpacity>
       <Text style={styles.label}>並び替え</Text>
       <View style={styles.buttonContainer}>
         <View style={styles.buttonColumn}>
@@ -66,9 +73,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     width,
   },
+  filterFridgeNameInput: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 4,
+    padding: 10,
+    fontSize: 16,
+    width: width / (2.5 / 2),
+  },
   label: {
     fontSize: 16,
     marginBottom: 10,
+    marginTop: 10,
     fontWeight: '500',
   },
   buttonContainer: {
