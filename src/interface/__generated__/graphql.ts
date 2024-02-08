@@ -4376,6 +4376,196 @@ export type Fish_Stocks_Variance_Order_By = {
   quantity?: InputMaybe<Order_By>;
 };
 
+/** 材料テーブル。レシピとマスタデータを繋ぐマッピング */
+export type Materials = {
+  __typename?: 'materials';
+  master_id: Scalars['uuid']['output'];
+  material_id: Scalars['uuid']['output'];
+  /** An object relationship */
+  materials_recipes?: Maybe<Recipes>;
+  recipe_id: Scalars['uuid']['output'];
+};
+
+/** aggregated selection of "materials" */
+export type Materials_Aggregate = {
+  __typename?: 'materials_aggregate';
+  aggregate?: Maybe<Materials_Aggregate_Fields>;
+  nodes: Array<Materials>;
+};
+
+export type Materials_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Materials_Aggregate_Bool_Exp_Count>;
+};
+
+export type Materials_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Materials_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Materials_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "materials" */
+export type Materials_Aggregate_Fields = {
+  __typename?: 'materials_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Materials_Max_Fields>;
+  min?: Maybe<Materials_Min_Fields>;
+};
+
+
+/** aggregate fields of "materials" */
+export type Materials_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Materials_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "materials" */
+export type Materials_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Materials_Max_Order_By>;
+  min?: InputMaybe<Materials_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "materials" */
+export type Materials_Arr_Rel_Insert_Input = {
+  data: Array<Materials_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Materials_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "materials". All fields are combined with a logical 'AND'. */
+export type Materials_Bool_Exp = {
+  _and?: InputMaybe<Array<Materials_Bool_Exp>>;
+  _not?: InputMaybe<Materials_Bool_Exp>;
+  _or?: InputMaybe<Array<Materials_Bool_Exp>>;
+  master_id?: InputMaybe<Uuid_Comparison_Exp>;
+  material_id?: InputMaybe<Uuid_Comparison_Exp>;
+  materials_recipes?: InputMaybe<Recipes_Bool_Exp>;
+  recipe_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "materials" */
+export enum Materials_Constraint {
+  /** unique or primary key constraint on columns "material_id" */
+  MaterialsPkey = 'materials_pkey'
+}
+
+/** input type for inserting data into table "materials" */
+export type Materials_Insert_Input = {
+  master_id?: InputMaybe<Scalars['uuid']['input']>;
+  material_id?: InputMaybe<Scalars['uuid']['input']>;
+  materials_recipes?: InputMaybe<Recipes_Obj_Rel_Insert_Input>;
+  recipe_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate max on columns */
+export type Materials_Max_Fields = {
+  __typename?: 'materials_max_fields';
+  master_id?: Maybe<Scalars['uuid']['output']>;
+  material_id?: Maybe<Scalars['uuid']['output']>;
+  recipe_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by max() on columns of table "materials" */
+export type Materials_Max_Order_By = {
+  master_id?: InputMaybe<Order_By>;
+  material_id?: InputMaybe<Order_By>;
+  recipe_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Materials_Min_Fields = {
+  __typename?: 'materials_min_fields';
+  master_id?: Maybe<Scalars['uuid']['output']>;
+  material_id?: Maybe<Scalars['uuid']['output']>;
+  recipe_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by min() on columns of table "materials" */
+export type Materials_Min_Order_By = {
+  master_id?: InputMaybe<Order_By>;
+  material_id?: InputMaybe<Order_By>;
+  recipe_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "materials" */
+export type Materials_Mutation_Response = {
+  __typename?: 'materials_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Materials>;
+};
+
+/** on_conflict condition type for table "materials" */
+export type Materials_On_Conflict = {
+  constraint: Materials_Constraint;
+  update_columns?: Array<Materials_Update_Column>;
+  where?: InputMaybe<Materials_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "materials". */
+export type Materials_Order_By = {
+  master_id?: InputMaybe<Order_By>;
+  material_id?: InputMaybe<Order_By>;
+  materials_recipes?: InputMaybe<Recipes_Order_By>;
+  recipe_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: materials */
+export type Materials_Pk_Columns_Input = {
+  material_id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "materials" */
+export enum Materials_Select_Column {
+  /** column name */
+  MasterId = 'master_id',
+  /** column name */
+  MaterialId = 'material_id',
+  /** column name */
+  RecipeId = 'recipe_id'
+}
+
+/** input type for updating data in table "materials" */
+export type Materials_Set_Input = {
+  master_id?: InputMaybe<Scalars['uuid']['input']>;
+  material_id?: InputMaybe<Scalars['uuid']['input']>;
+  recipe_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** Streaming cursor of the table "materials" */
+export type Materials_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Materials_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Materials_Stream_Cursor_Value_Input = {
+  master_id?: InputMaybe<Scalars['uuid']['input']>;
+  material_id?: InputMaybe<Scalars['uuid']['input']>;
+  recipe_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** update columns of table "materials" */
+export enum Materials_Update_Column {
+  /** column name */
+  MasterId = 'master_id',
+  /** column name */
+  MaterialId = 'material_id',
+  /** column name */
+  RecipeId = 'recipe_id'
+}
+
+export type Materials_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Materials_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Materials_Bool_Exp;
+};
+
 /** 肉類のマスターデータ */
 export type Meat_Master = {
   __typename?: 'meat_master';
@@ -5263,6 +5453,10 @@ export type Mutation_Root = {
   delete_fish_stocks?: Maybe<Fish_Stocks_Mutation_Response>;
   /** delete single row from the table: "fish_stocks" */
   delete_fish_stocks_by_pk?: Maybe<Fish_Stocks>;
+  /** delete data from the table: "materials" */
+  delete_materials?: Maybe<Materials_Mutation_Response>;
+  /** delete single row from the table: "materials" */
+  delete_materials_by_pk?: Maybe<Materials>;
   /** delete data from the table: "meat_master" */
   delete_meat_master?: Maybe<Meat_Master_Mutation_Response>;
   /** delete single row from the table: "meat_master" */
@@ -5287,6 +5481,10 @@ export type Mutation_Root = {
   delete_protein_source_stocks?: Maybe<Protein_Source_Stocks_Mutation_Response>;
   /** delete single row from the table: "protein_source_stocks" */
   delete_protein_source_stocks_by_pk?: Maybe<Protein_Source_Stocks>;
+  /** delete data from the table: "recipes" */
+  delete_recipes?: Maybe<Recipes_Mutation_Response>;
+  /** delete single row from the table: "recipes" */
+  delete_recipes_by_pk?: Maybe<Recipes>;
   /** delete data from the table: "seasoning_master" */
   delete_seasoning_master?: Maybe<Seasoning_Master_Mutation_Response>;
   /** delete single row from the table: "seasoning_master" */
@@ -5383,6 +5581,10 @@ export type Mutation_Root = {
   insert_fish_stocks?: Maybe<Fish_Stocks_Mutation_Response>;
   /** insert a single row into the table: "fish_stocks" */
   insert_fish_stocks_one?: Maybe<Fish_Stocks>;
+  /** insert data into the table: "materials" */
+  insert_materials?: Maybe<Materials_Mutation_Response>;
+  /** insert a single row into the table: "materials" */
+  insert_materials_one?: Maybe<Materials>;
   /** insert data into the table: "meat_master" */
   insert_meat_master?: Maybe<Meat_Master_Mutation_Response>;
   /** insert a single row into the table: "meat_master" */
@@ -5407,6 +5609,10 @@ export type Mutation_Root = {
   insert_protein_source_stocks?: Maybe<Protein_Source_Stocks_Mutation_Response>;
   /** insert a single row into the table: "protein_source_stocks" */
   insert_protein_source_stocks_one?: Maybe<Protein_Source_Stocks>;
+  /** insert data into the table: "recipes" */
+  insert_recipes?: Maybe<Recipes_Mutation_Response>;
+  /** insert a single row into the table: "recipes" */
+  insert_recipes_one?: Maybe<Recipes>;
   /** insert data into the table: "seasoning_master" */
   insert_seasoning_master?: Maybe<Seasoning_Master_Mutation_Response>;
   /** insert a single row into the table: "seasoning_master" */
@@ -5529,6 +5735,12 @@ export type Mutation_Root = {
   update_fish_stocks_by_pk?: Maybe<Fish_Stocks>;
   /** update multiples rows of table: "fish_stocks" */
   update_fish_stocks_many?: Maybe<Array<Maybe<Fish_Stocks_Mutation_Response>>>;
+  /** update data of the table: "materials" */
+  update_materials?: Maybe<Materials_Mutation_Response>;
+  /** update single row of the table: "materials" */
+  update_materials_by_pk?: Maybe<Materials>;
+  /** update multiples rows of table: "materials" */
+  update_materials_many?: Maybe<Array<Maybe<Materials_Mutation_Response>>>;
   /** update data of the table: "meat_master" */
   update_meat_master?: Maybe<Meat_Master_Mutation_Response>;
   /** update single row of the table: "meat_master" */
@@ -5565,6 +5777,12 @@ export type Mutation_Root = {
   update_protein_source_stocks_by_pk?: Maybe<Protein_Source_Stocks>;
   /** update multiples rows of table: "protein_source_stocks" */
   update_protein_source_stocks_many?: Maybe<Array<Maybe<Protein_Source_Stocks_Mutation_Response>>>;
+  /** update data of the table: "recipes" */
+  update_recipes?: Maybe<Recipes_Mutation_Response>;
+  /** update single row of the table: "recipes" */
+  update_recipes_by_pk?: Maybe<Recipes>;
+  /** update multiples rows of table: "recipes" */
+  update_recipes_many?: Maybe<Array<Maybe<Recipes_Mutation_Response>>>;
   /** update data of the table: "seasoning_master" */
   update_seasoning_master?: Maybe<Seasoning_Master_Mutation_Response>;
   /** update single row of the table: "seasoning_master" */
@@ -5791,6 +6009,18 @@ export type Mutation_RootDelete_Fish_Stocks_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_MaterialsArgs = {
+  where: Materials_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Materials_By_PkArgs = {
+  material_id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_Meat_MasterArgs = {
   where: Meat_Master_Bool_Exp;
 };
@@ -5859,6 +6089,18 @@ export type Mutation_RootDelete_Protein_Source_StocksArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Protein_Source_Stocks_By_PkArgs = {
   stock_id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_RecipesArgs = {
+  where: Recipes_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Recipes_By_PkArgs = {
+  recipe_id: Scalars['uuid']['input'];
 };
 
 
@@ -6177,6 +6419,20 @@ export type Mutation_RootInsert_Fish_Stocks_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_MaterialsArgs = {
+  objects: Array<Materials_Insert_Input>;
+  on_conflict?: InputMaybe<Materials_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Materials_OneArgs = {
+  object: Materials_Insert_Input;
+  on_conflict?: InputMaybe<Materials_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_Meat_MasterArgs = {
   objects: Array<Meat_Master_Insert_Input>;
   on_conflict?: InputMaybe<Meat_Master_On_Conflict>;
@@ -6257,6 +6513,20 @@ export type Mutation_RootInsert_Protein_Source_StocksArgs = {
 export type Mutation_RootInsert_Protein_Source_Stocks_OneArgs = {
   object: Protein_Source_Stocks_Insert_Input;
   on_conflict?: InputMaybe<Protein_Source_Stocks_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_RecipesArgs = {
+  objects: Array<Recipes_Insert_Input>;
+  on_conflict?: InputMaybe<Recipes_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Recipes_OneArgs = {
+  object: Recipes_Insert_Input;
+  on_conflict?: InputMaybe<Recipes_On_Conflict>;
 };
 
 
@@ -6701,6 +6971,26 @@ export type Mutation_RootUpdate_Fish_Stocks_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_MaterialsArgs = {
+  _set?: InputMaybe<Materials_Set_Input>;
+  where: Materials_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Materials_By_PkArgs = {
+  _set?: InputMaybe<Materials_Set_Input>;
+  pk_columns: Materials_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Materials_ManyArgs = {
+  updates: Array<Materials_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Meat_MasterArgs = {
   _inc?: InputMaybe<Meat_Master_Inc_Input>;
   _set?: InputMaybe<Meat_Master_Set_Input>;
@@ -6829,6 +7119,26 @@ export type Mutation_RootUpdate_Protein_Source_Stocks_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Protein_Source_Stocks_ManyArgs = {
   updates: Array<Protein_Source_Stocks_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_RecipesArgs = {
+  _set?: InputMaybe<Recipes_Set_Input>;
+  where: Recipes_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Recipes_By_PkArgs = {
+  _set?: InputMaybe<Recipes_Set_Input>;
+  pk_columns: Recipes_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Recipes_ManyArgs = {
+  updates: Array<Recipes_Updates>;
 };
 
 
@@ -8688,6 +8998,12 @@ export type Query_Root = {
   fish_stocks_aggregate: Fish_Stocks_Aggregate;
   /** fetch data from the table: "fish_stocks" using primary key columns */
   fish_stocks_by_pk?: Maybe<Fish_Stocks>;
+  /** fetch data from the table: "materials" */
+  materials: Array<Materials>;
+  /** fetch aggregated fields from the table: "materials" */
+  materials_aggregate: Materials_Aggregate;
+  /** fetch data from the table: "materials" using primary key columns */
+  materials_by_pk?: Maybe<Materials>;
   /** fetch data from the table: "meat_master" */
   meat_master: Array<Meat_Master>;
   /** fetch aggregated fields from the table: "meat_master" */
@@ -8724,6 +9040,12 @@ export type Query_Root = {
   protein_source_stocks_aggregate: Protein_Source_Stocks_Aggregate;
   /** fetch data from the table: "protein_source_stocks" using primary key columns */
   protein_source_stocks_by_pk?: Maybe<Protein_Source_Stocks>;
+  /** fetch data from the table: "recipes" */
+  recipes: Array<Recipes>;
+  /** fetch aggregated fields from the table: "recipes" */
+  recipes_aggregate: Recipes_Aggregate;
+  /** fetch data from the table: "recipes" using primary key columns */
+  recipes_by_pk?: Maybe<Recipes>;
   /** fetch data from the table: "seasoning_master" */
   seasoning_master: Array<Seasoning_Master>;
   /** fetch aggregated fields from the table: "seasoning_master" */
@@ -9092,6 +9414,29 @@ export type Query_RootFish_Stocks_By_PkArgs = {
 };
 
 
+export type Query_RootMaterialsArgs = {
+  distinct_on?: InputMaybe<Array<Materials_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Materials_Order_By>>;
+  where?: InputMaybe<Materials_Bool_Exp>;
+};
+
+
+export type Query_RootMaterials_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Materials_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Materials_Order_By>>;
+  where?: InputMaybe<Materials_Bool_Exp>;
+};
+
+
+export type Query_RootMaterials_By_PkArgs = {
+  material_id: Scalars['uuid']['input'];
+};
+
+
 export type Query_RootMeat_MasterArgs = {
   distinct_on?: InputMaybe<Array<Meat_Master_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -9227,6 +9572,29 @@ export type Query_RootProtein_Source_Stocks_AggregateArgs = {
 
 export type Query_RootProtein_Source_Stocks_By_PkArgs = {
   stock_id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootRecipesArgs = {
+  distinct_on?: InputMaybe<Array<Recipes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Recipes_Order_By>>;
+  where?: InputMaybe<Recipes_Bool_Exp>;
+};
+
+
+export type Query_RootRecipes_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Recipes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Recipes_Order_By>>;
+  where?: InputMaybe<Recipes_Bool_Exp>;
+};
+
+
+export type Query_RootRecipes_By_PkArgs = {
+  recipe_id: Scalars['uuid']['input'];
 };
 
 
@@ -9480,6 +9848,247 @@ export type Query_RootVegetable_Stocks_AggregateArgs = {
 
 export type Query_RootVegetable_Stocks_By_PkArgs = {
   stock_id: Scalars['uuid']['input'];
+};
+
+/** ユーザーごとのレシピ */
+export type Recipes = {
+  __typename?: 'recipes';
+  recipe_id: Scalars['uuid']['output'];
+  recipe_image: Scalars['String']['output'];
+  recipe_name: Scalars['String']['output'];
+  /** An array relationship */
+  recipes_materials: Array<Materials>;
+  /** An aggregate relationship */
+  recipes_materials_aggregate: Materials_Aggregate;
+  /** An object relationship */
+  recipes_users?: Maybe<Users>;
+  user_id: Scalars['String']['output'];
+};
+
+
+/** ユーザーごとのレシピ */
+export type RecipesRecipes_MaterialsArgs = {
+  distinct_on?: InputMaybe<Array<Materials_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Materials_Order_By>>;
+  where?: InputMaybe<Materials_Bool_Exp>;
+};
+
+
+/** ユーザーごとのレシピ */
+export type RecipesRecipes_Materials_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Materials_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Materials_Order_By>>;
+  where?: InputMaybe<Materials_Bool_Exp>;
+};
+
+/** aggregated selection of "recipes" */
+export type Recipes_Aggregate = {
+  __typename?: 'recipes_aggregate';
+  aggregate?: Maybe<Recipes_Aggregate_Fields>;
+  nodes: Array<Recipes>;
+};
+
+export type Recipes_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Recipes_Aggregate_Bool_Exp_Count>;
+};
+
+export type Recipes_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Recipes_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Recipes_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "recipes" */
+export type Recipes_Aggregate_Fields = {
+  __typename?: 'recipes_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Recipes_Max_Fields>;
+  min?: Maybe<Recipes_Min_Fields>;
+};
+
+
+/** aggregate fields of "recipes" */
+export type Recipes_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Recipes_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "recipes" */
+export type Recipes_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Recipes_Max_Order_By>;
+  min?: InputMaybe<Recipes_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "recipes" */
+export type Recipes_Arr_Rel_Insert_Input = {
+  data: Array<Recipes_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Recipes_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "recipes". All fields are combined with a logical 'AND'. */
+export type Recipes_Bool_Exp = {
+  _and?: InputMaybe<Array<Recipes_Bool_Exp>>;
+  _not?: InputMaybe<Recipes_Bool_Exp>;
+  _or?: InputMaybe<Array<Recipes_Bool_Exp>>;
+  recipe_id?: InputMaybe<Uuid_Comparison_Exp>;
+  recipe_image?: InputMaybe<String_Comparison_Exp>;
+  recipe_name?: InputMaybe<String_Comparison_Exp>;
+  recipes_materials?: InputMaybe<Materials_Bool_Exp>;
+  recipes_materials_aggregate?: InputMaybe<Materials_Aggregate_Bool_Exp>;
+  recipes_users?: InputMaybe<Users_Bool_Exp>;
+  user_id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "recipes" */
+export enum Recipes_Constraint {
+  /** unique or primary key constraint on columns "recipe_id" */
+  RecipesPkey = 'recipes_pkey',
+  /** unique or primary key constraint on columns "recipe_image" */
+  RecipesRecipeImageKey = 'recipes_recipe_image_key'
+}
+
+/** input type for inserting data into table "recipes" */
+export type Recipes_Insert_Input = {
+  recipe_id?: InputMaybe<Scalars['uuid']['input']>;
+  recipe_image?: InputMaybe<Scalars['String']['input']>;
+  recipe_name?: InputMaybe<Scalars['String']['input']>;
+  recipes_materials?: InputMaybe<Materials_Arr_Rel_Insert_Input>;
+  recipes_users?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Recipes_Max_Fields = {
+  __typename?: 'recipes_max_fields';
+  recipe_id?: Maybe<Scalars['uuid']['output']>;
+  recipe_image?: Maybe<Scalars['String']['output']>;
+  recipe_name?: Maybe<Scalars['String']['output']>;
+  user_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by max() on columns of table "recipes" */
+export type Recipes_Max_Order_By = {
+  recipe_id?: InputMaybe<Order_By>;
+  recipe_image?: InputMaybe<Order_By>;
+  recipe_name?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Recipes_Min_Fields = {
+  __typename?: 'recipes_min_fields';
+  recipe_id?: Maybe<Scalars['uuid']['output']>;
+  recipe_image?: Maybe<Scalars['String']['output']>;
+  recipe_name?: Maybe<Scalars['String']['output']>;
+  user_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by min() on columns of table "recipes" */
+export type Recipes_Min_Order_By = {
+  recipe_id?: InputMaybe<Order_By>;
+  recipe_image?: InputMaybe<Order_By>;
+  recipe_name?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "recipes" */
+export type Recipes_Mutation_Response = {
+  __typename?: 'recipes_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Recipes>;
+};
+
+/** input type for inserting object relation for remote table "recipes" */
+export type Recipes_Obj_Rel_Insert_Input = {
+  data: Recipes_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Recipes_On_Conflict>;
+};
+
+/** on_conflict condition type for table "recipes" */
+export type Recipes_On_Conflict = {
+  constraint: Recipes_Constraint;
+  update_columns?: Array<Recipes_Update_Column>;
+  where?: InputMaybe<Recipes_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "recipes". */
+export type Recipes_Order_By = {
+  recipe_id?: InputMaybe<Order_By>;
+  recipe_image?: InputMaybe<Order_By>;
+  recipe_name?: InputMaybe<Order_By>;
+  recipes_materials_aggregate?: InputMaybe<Materials_Aggregate_Order_By>;
+  recipes_users?: InputMaybe<Users_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: recipes */
+export type Recipes_Pk_Columns_Input = {
+  recipe_id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "recipes" */
+export enum Recipes_Select_Column {
+  /** column name */
+  RecipeId = 'recipe_id',
+  /** column name */
+  RecipeImage = 'recipe_image',
+  /** column name */
+  RecipeName = 'recipe_name',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "recipes" */
+export type Recipes_Set_Input = {
+  recipe_id?: InputMaybe<Scalars['uuid']['input']>;
+  recipe_image?: InputMaybe<Scalars['String']['input']>;
+  recipe_name?: InputMaybe<Scalars['String']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "recipes" */
+export type Recipes_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Recipes_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Recipes_Stream_Cursor_Value_Input = {
+  recipe_id?: InputMaybe<Scalars['uuid']['input']>;
+  recipe_image?: InputMaybe<Scalars['String']['input']>;
+  recipe_name?: InputMaybe<Scalars['String']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "recipes" */
+export enum Recipes_Update_Column {
+  /** column name */
+  RecipeId = 'recipe_id',
+  /** column name */
+  RecipeImage = 'recipe_image',
+  /** column name */
+  RecipeName = 'recipe_name',
+  /** column name */
+  UserId = 'user_id'
+}
+
+export type Recipes_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Recipes_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Recipes_Bool_Exp;
 };
 
 /** 調味料マスタデータ */
@@ -12107,6 +12716,14 @@ export type Subscription_Root = {
   fish_stocks_by_pk?: Maybe<Fish_Stocks>;
   /** fetch data from the table in a streaming manner: "fish_stocks" */
   fish_stocks_stream: Array<Fish_Stocks>;
+  /** fetch data from the table: "materials" */
+  materials: Array<Materials>;
+  /** fetch aggregated fields from the table: "materials" */
+  materials_aggregate: Materials_Aggregate;
+  /** fetch data from the table: "materials" using primary key columns */
+  materials_by_pk?: Maybe<Materials>;
+  /** fetch data from the table in a streaming manner: "materials" */
+  materials_stream: Array<Materials>;
   /** fetch data from the table: "meat_master" */
   meat_master: Array<Meat_Master>;
   /** fetch aggregated fields from the table: "meat_master" */
@@ -12155,6 +12772,14 @@ export type Subscription_Root = {
   protein_source_stocks_by_pk?: Maybe<Protein_Source_Stocks>;
   /** fetch data from the table in a streaming manner: "protein_source_stocks" */
   protein_source_stocks_stream: Array<Protein_Source_Stocks>;
+  /** fetch data from the table: "recipes" */
+  recipes: Array<Recipes>;
+  /** fetch aggregated fields from the table: "recipes" */
+  recipes_aggregate: Recipes_Aggregate;
+  /** fetch data from the table: "recipes" using primary key columns */
+  recipes_by_pk?: Maybe<Recipes>;
+  /** fetch data from the table in a streaming manner: "recipes" */
+  recipes_stream: Array<Recipes>;
   /** fetch data from the table: "seasoning_master" */
   seasoning_master: Array<Seasoning_Master>;
   /** fetch aggregated fields from the table: "seasoning_master" */
@@ -12636,6 +13261,36 @@ export type Subscription_RootFish_Stocks_StreamArgs = {
 };
 
 
+export type Subscription_RootMaterialsArgs = {
+  distinct_on?: InputMaybe<Array<Materials_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Materials_Order_By>>;
+  where?: InputMaybe<Materials_Bool_Exp>;
+};
+
+
+export type Subscription_RootMaterials_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Materials_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Materials_Order_By>>;
+  where?: InputMaybe<Materials_Bool_Exp>;
+};
+
+
+export type Subscription_RootMaterials_By_PkArgs = {
+  material_id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootMaterials_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Materials_Stream_Cursor_Input>>;
+  where?: InputMaybe<Materials_Bool_Exp>;
+};
+
+
 export type Subscription_RootMeat_MasterArgs = {
   distinct_on?: InputMaybe<Array<Meat_Master_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -12813,6 +13468,36 @@ export type Subscription_RootProtein_Source_Stocks_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Protein_Source_Stocks_Stream_Cursor_Input>>;
   where?: InputMaybe<Protein_Source_Stocks_Bool_Exp>;
+};
+
+
+export type Subscription_RootRecipesArgs = {
+  distinct_on?: InputMaybe<Array<Recipes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Recipes_Order_By>>;
+  where?: InputMaybe<Recipes_Bool_Exp>;
+};
+
+
+export type Subscription_RootRecipes_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Recipes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Recipes_Order_By>>;
+  where?: InputMaybe<Recipes_Bool_Exp>;
+};
+
+
+export type Subscription_RootRecipes_By_PkArgs = {
+  recipe_id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootRecipes_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Recipes_Stream_Cursor_Input>>;
+  where?: InputMaybe<Recipes_Bool_Exp>;
 };
 
 
@@ -13442,6 +14127,10 @@ export type Users = {
   /** An aggregate relationship */
   users_protein_source_stocks_aggregate: Protein_Source_Stocks_Aggregate;
   /** An array relationship */
+  users_recipes: Array<Recipes>;
+  /** An aggregate relationship */
+  users_recipes_aggregate: Recipes_Aggregate;
+  /** An array relationship */
   users_seasoning_stocks: Array<Seasoning_Stocks>;
   /** An aggregate relationship */
   users_seasoning_stocks_aggregate: Seasoning_Stocks_Aggregate;
@@ -13605,6 +14294,26 @@ export type UsersUsers_Protein_Source_Stocks_AggregateArgs = {
 
 
 /** frimane ユーザー */
+export type UsersUsers_RecipesArgs = {
+  distinct_on?: InputMaybe<Array<Recipes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Recipes_Order_By>>;
+  where?: InputMaybe<Recipes_Bool_Exp>;
+};
+
+
+/** frimane ユーザー */
+export type UsersUsers_Recipes_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Recipes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Recipes_Order_By>>;
+  where?: InputMaybe<Recipes_Bool_Exp>;
+};
+
+
+/** frimane ユーザー */
 export type UsersUsers_Seasoning_StocksArgs = {
   distinct_on?: InputMaybe<Array<Seasoning_Stocks_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -13747,6 +14456,8 @@ export type Users_Bool_Exp = {
   users_other_stocks_aggregate?: InputMaybe<Other_Stocks_Aggregate_Bool_Exp>;
   users_protein_source_stocks?: InputMaybe<Protein_Source_Stocks_Bool_Exp>;
   users_protein_source_stocks_aggregate?: InputMaybe<Protein_Source_Stocks_Aggregate_Bool_Exp>;
+  users_recipes?: InputMaybe<Recipes_Bool_Exp>;
+  users_recipes_aggregate?: InputMaybe<Recipes_Aggregate_Bool_Exp>;
   users_seasoning_stocks?: InputMaybe<Seasoning_Stocks_Bool_Exp>;
   users_seasoning_stocks_aggregate?: InputMaybe<Seasoning_Stocks_Aggregate_Bool_Exp>;
   users_shopping_memo?: InputMaybe<Shopping_Memo_Bool_Exp>;
@@ -13780,6 +14491,7 @@ export type Users_Insert_Input = {
   users_fish_stocks?: InputMaybe<Fish_Stocks_Arr_Rel_Insert_Input>;
   users_other_stocks?: InputMaybe<Other_Stocks_Arr_Rel_Insert_Input>;
   users_protein_source_stocks?: InputMaybe<Protein_Source_Stocks_Arr_Rel_Insert_Input>;
+  users_recipes?: InputMaybe<Recipes_Arr_Rel_Insert_Input>;
   users_seasoning_stocks?: InputMaybe<Seasoning_Stocks_Arr_Rel_Insert_Input>;
   users_shopping_memo?: InputMaybe<Shopping_Memo_Arr_Rel_Insert_Input>;
   users_spice_stocks?: InputMaybe<Spice_Stocks_Arr_Rel_Insert_Input>;
@@ -13844,6 +14556,7 @@ export type Users_Order_By = {
   users_fish_stocks_aggregate?: InputMaybe<Fish_Stocks_Aggregate_Order_By>;
   users_other_stocks_aggregate?: InputMaybe<Other_Stocks_Aggregate_Order_By>;
   users_protein_source_stocks_aggregate?: InputMaybe<Protein_Source_Stocks_Aggregate_Order_By>;
+  users_recipes_aggregate?: InputMaybe<Recipes_Aggregate_Order_By>;
   users_seasoning_stocks_aggregate?: InputMaybe<Seasoning_Stocks_Aggregate_Order_By>;
   users_shopping_memo_aggregate?: InputMaybe<Shopping_Memo_Aggregate_Order_By>;
   users_spice_stocks_aggregate?: InputMaybe<Spice_Stocks_Aggregate_Order_By>;
