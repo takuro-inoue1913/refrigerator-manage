@@ -20,6 +20,7 @@ import { FridgeItemCreateScreen } from '@src/screens/FridgeIitemCreateScreen';
 import { RootStackParamList } from '@src/types';
 import { ShoppingMemoScreen } from '@src/screens/ ShoppingMemoScreen';
 import { RecipeScreen } from '@src/screens/RecipeScreen';
+import { RecipeCreateScreen } from './screens/RecipeCreateScreen';
 
 export const App: FC = () => {
   const setUser = useSetRecoilState(userState);
@@ -64,6 +65,15 @@ export const App: FC = () => {
     );
   };
 
+  const RecipeStack = () => {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="レシピ" component={RecipeScreen} />
+        <Stack.Screen name="レシピ新規登録" component={RecipeCreateScreen} />
+      </Stack.Navigator>
+    );
+  };
+
   const FridgeStack = () => {
     return (
       <Stack.Navigator>
@@ -82,7 +92,7 @@ export const App: FC = () => {
             let iconName = '';
             if (route.name === 'マイページ') {
               iconName = 'home';
-            } else if (route.name === 'レシピ') {
+            } else if (route.name === 'RecipeStack') {
               iconName = 'chef-hat';
             } else if (route.name === '買い物メモ') {
               iconName = 'cart-outline';
@@ -107,7 +117,11 @@ export const App: FC = () => {
               component={FridgeStack}
             />
             <Tab.Screen name="買い物メモ" component={ShoppingMemoScreen} />
-            <Tab.Screen name="レシピ" component={RecipeScreen} />
+            <Tab.Screen
+              name="RecipeStack"
+              options={{ headerShown: false }}
+              component={RecipeStack}
+            />
             <Tab.Screen name="マイページ" component={HomeScreen} />
           </>
         ) : (

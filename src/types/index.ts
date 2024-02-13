@@ -9,6 +9,8 @@ export type RootStackParamList = {
   冷蔵庫管理: undefined;
   食材新規登録: FridgeItemCreateRouteParams;
   パスワードリセット: undefined;
+  レシピ: undefined;
+  レシピ新規登録: undefined;
 };
 
 /** 画像を押したときの引数の型。 */
