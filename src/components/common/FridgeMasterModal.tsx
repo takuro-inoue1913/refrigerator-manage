@@ -39,7 +39,7 @@ type Props = {
   onSubmit: () => void;
 };
 
-export const FrigeMasterModal: FC<Props> = ({
+export const FridgeMasterModal: FC<Props> = ({
   visible,
   dropdownData,
   selectFridgeMaster,

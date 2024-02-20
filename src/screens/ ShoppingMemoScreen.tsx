@@ -17,8 +17,8 @@ import { ShoppingMemoItem } from '@src/components/ ShoppingMemoScreen/ShoppingMe
 import {
   DropdownData,
   ModalMode,
-  FrigeMasterModal,
-} from '@src/components/common/FrigeMasterModal';
+  FridgeMasterModal,
+} from '@src/components/common/FridgeMasterModal';
 import { useIsFocused } from '@react-navigation/native';
 import { useRequestGetAllShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestGetAllShoppingMemo';
 import { useRequestInsertShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestInsertShoppingMemo';
@@ -336,7 +336,7 @@ export const ShoppingMemoScreen = () => {
           <Icon name="basket-plus" size={30} color="white" />
         </CommonGradation>
       </TouchableOpacity>
-      <FrigeMasterModal
+      <FridgeMasterModal
         visible={modalVisible}
         mode={modalMode}
         dropdownData={modalData}
