@@ -28,6 +28,7 @@ export type ModalMode = 'add' | 'edit';
 
 type Props = {
   visible: boolean;
+  targetItemName: string;
   dropdownData: DropdownData[];
   selectFridgeMaster: FridgeMaster | null;
   quantity: number;
@@ -41,6 +42,7 @@ type Props = {
 
 export const FridgeMasterModal: FC<Props> = ({
   visible,
+  targetItemName,
   dropdownData,
   selectFridgeMaster,
   quantity,
@@ -89,7 +91,7 @@ export const FridgeMasterModal: FC<Props> = ({
                 <View style={styles.header}>
                   <View style={{ flex: 1, alignItems: 'center' }}>
                     <Text style={styles.headerText}>
-                      買い物メモの{mode === 'add' ? '追加' : '編集'}
+                      {targetItemName}の{mode === 'add' ? '追加' : '編集'}
                     </Text>
                   </View>
                 </View>

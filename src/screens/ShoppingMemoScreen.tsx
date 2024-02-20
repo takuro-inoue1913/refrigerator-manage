@@ -338,6 +338,7 @@ export const ShoppingMemoScreen = () => {
       </TouchableOpacity>
       <FridgeMasterModal
         visible={modalVisible}
+        targetItemName="買い物メモ"
         mode={modalMode}
         dropdownData={modalData}
         selectFridgeMaster={selectFridgeMaster}
