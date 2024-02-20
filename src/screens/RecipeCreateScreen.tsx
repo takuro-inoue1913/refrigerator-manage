@@ -25,6 +25,7 @@ import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { UnitMater } from '@src/states/fridge';
 import { LoadingMask } from '@src/components/common/LoadingMask';
 import { CameraModal } from '@src/components/common/CameraModal';
+import { COMMON_COLOR_GREEN } from '@src/utils/consts';
 
 const { width: windowWidth } = Dimensions.get('window');
 
@@ -209,10 +210,10 @@ export const RecipeCreateScreen: FC = () => {
           <View style={styles.labelSection}>
             <Text style={styles.label}>材料</Text>
           </View>
-          {/* 材料を追加するボタンの設置 */}
-          <View>
-            <Text>材料を追加</Text>
-          </View>
+          <TouchableOpacity aria-label="button" style={styles.plusButton}>
+            <Icon name="plus" style={styles.plusIcon} />
+            <Text style={styles.plusText}>材料を追加</Text>
+          </TouchableOpacity>
           <View style={styles.submitButtonWrapper}>
             <LinearGradientButton
               width={250}
@@ -290,9 +291,23 @@ const styles = StyleSheet.create({
     marginTop: 5,
     color: '#dc3545',
   },
+  plusButton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+  },
   icon: {
     fontSize: 80,
     color: '#e1e4e8',
+  },
+  plusText: {
+    fontSize: 16,
+    color: COMMON_COLOR_GREEN,
+  },
+  plusIcon: {
+    fontSize: 22,
+    color: COMMON_COLOR_GREEN,
   },
   submitButtonWrapper: {
     padding: 10,
