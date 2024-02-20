@@ -18,7 +18,7 @@ import { FridgeScreen } from '@src/screens/FridgeScreen';
 import { COMMON_COLOR_BLUE, COMMON_COLOR_GREEN } from '@src/utils/consts';
 import { FridgeItemCreateScreen } from '@src/screens/FridgeIitemCreateScreen';
 import { RootStackParamList } from '@src/types';
-import { ShoppingMemoScreen } from '@src/screens/ ShoppingMemoScreen';
+import { ShoppingMemoScreen } from '@src/screens/ShoppingMemoScreen';
 import { RecipeScreen } from '@src/screens/RecipeScreen';
 import { RecipeCreateScreen } from './screens/RecipeCreateScreen';
 
