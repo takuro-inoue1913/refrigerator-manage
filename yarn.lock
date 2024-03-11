@@ -5908,10 +5908,10 @@ expo-cached-image@^49.0.2:
   dependencies:
     expo "49.0.0"
 
-expo-camera@~13.4.4:
-  version "13.4.4"
-  resolved "https://registry.yarnpkg.com/expo-camera/-/expo-camera-13.4.4.tgz#e01ead31a3150398d37e94c307f6937480680690"
-  integrity sha512-7k54APbpSulUDR2CrD5SrmKjCdfdg4tqKRpbBOKc2J2MIBHhunExU77435JDYSejHRY5bfRHZsEp3yKwR862uw==
+expo-camera@~14.0.6:
+  version "14.0.6"
+  resolved "https://registry.yarnpkg.com/expo-camera/-/expo-camera-14.0.6.tgz#4d02ae2c7d734b2256111fa17a3b2c46fa712c78"
+  integrity sha512-PBkbAR0g/rFO9A01CmOoPHknXBBfJ1rXFm75XQY6kmMNH9BHJ89yAtlOaYJy/fw5xVxJkyVG+6uVGgbBeu7dyw==
   dependencies:
     invariant "^2.2.4"
 
