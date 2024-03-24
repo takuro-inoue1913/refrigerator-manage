@@ -44,6 +44,7 @@ export const RecipeCreateScreen: FC = () => {
   const { fridgeMaster } = useRequestGetAllFridgeMaster();
   const [isSending, setIsSending] = useState(false);
   const [visibleCameraModal, setVisibleCameraModal] = useState(false);
+  const [keyboardShouldPersist, setKeyboardShouldPersist] = useState(false);
   const [dropdownList, setDropdownList] = useState<DropdownData[][]>([]);
   const {
     control,
@@ -222,6 +223,7 @@ export const RecipeCreateScreen: FC = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <KeyboardAvoidingView
           behavior={'position'}
+          enabled={!keyboardShouldPersist}
           contentContainerStyle={{
             flex: 1,
             alignItems: 'center',
@@ -245,7 +247,11 @@ export const RecipeCreateScreen: FC = () => {
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
                   style={styles.input}
-                  onBlur={onBlur}
+                  onBlur={() => {
+                    setKeyboardShouldPersist(false);
+                    onBlur();
+                  }}
+                  onFocus={() => setKeyboardShouldPersist(true)}
                   onChangeText={onChange}
                   accessibilityLabel="レシピ名"
                   value={value}
