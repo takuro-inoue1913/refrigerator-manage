@@ -1,5 +1,4 @@
-import React, { FC, useState } from 'react';
-// import { isEqual } from 'lodash';
+import React, { FC, useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -22,29 +21,67 @@ import * as ImageManipulator from 'expo-image-manipulator';
 import * as FileSystem from 'expo-file-system';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
-import { UnitMater } from '@src/states/fridge';
 import { LoadingMask } from '@src/components/common/LoadingMask';
 import { CameraModal } from '@src/components/common/CameraModal';
 import { COMMON_COLOR_GREEN } from '@src/utils/consts';
+import { useRequestGetAllFridgeMaster } from '@src/interface/hooks/shoppingMemo/useRequestGetAllFridgeMaster';
+import { Dropdown } from 'react-native-element-dropdown';
 
 const { width: windowWidth } = Dimensions.get('window');
 
+type DropdownData = {
+  label: string;
+  value: string;
+  searchKey: string;
+  unit: {
+    name: string;
+    quantity: number;
+    hasStock: boolean;
+  };
+};
+
 export const RecipeCreateScreen: FC = () => {
+  const { fridgeMaster } = useRequestGetAllFridgeMaster();
   const [isSending, setIsSending] = useState(false);
   const [visibleCameraModal, setVisibleCameraModal] = useState(false);
+  const [dropdownList, setDropdownList] = useState<DropdownData[][]>([]);
   const {
     control,
     setValue,
+    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm<{
     image: { uri: string } | null;
     recipeName: string;
-    nameKana: string;
-    expiryPeriod: string;
-    incrementUnit: string;
-    unit: UnitMater;
-  }>();
+    materials: {
+      [index: number]: {
+        fridgeMasterId: string;
+        unitName: string;
+        quantity: string;
+      };
+    };
+  }>({
+    defaultValues: {
+      image: null,
+      recipeName: '',
+      materials: {},
+    },
+  });
+
+  const dropdownData = useMemo<DropdownData[]>(() => {
+    return fridgeMaster.map((item) => ({
+      label: item.displayName,
+      value: item.id,
+      unit: {
+        name: item.unitName,
+        quantity: item.quantity,
+        hasStock: item.hasStock,
+      },
+      searchKey: `${item.displayName} ${item.name}`,
+    }));
+  }, [fridgeMaster]);
+
   /** 画像をリサイズする */
   const resizeImage = async (uri: string): Promise<string> => {
     const result = await ImageManipulator.manipulateAsync(
@@ -64,6 +101,29 @@ export const RecipeCreateScreen: FC = () => {
     return fileInfo.uri;
   };
 
+  const addDropdownItem = () => {
+    setDropdownList([...dropdownList, dropdownData]);
+  };
+
+  const handleChangeDropdownValue = (
+    data: DropdownData,
+    targetIndex: number,
+  ) => {
+    const _materials = getValues('materials');
+    _materials[targetIndex] = {
+      fridgeMasterId: data.value,
+      quantity: '',
+      unitName: data.unit.name,
+    };
+    setValue('materials', _materials);
+  };
+
+  const handleChangeQuantity = (value: string, targetIndex: number) => {
+    const _materials = getValues('materials');
+    _materials[targetIndex].quantity = value;
+    setValue('materials', _materials);
+  };
+
   const handleChoosePhoto = async (
     // MEMO: react-hook-form の field.onChange の型に合わせるため。
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -77,7 +137,7 @@ export const RecipeCreateScreen: FC = () => {
       async (buttonIndex) => {
         switch (buttonIndex) {
           case 1:
-            await handleTakePhoto();
+            handleTakePhoto();
             break;
           case 2:
             await handleChooseLibraryPhoto(onChange);
@@ -210,7 +270,74 @@ export const RecipeCreateScreen: FC = () => {
           <View style={styles.labelSection}>
             <Text style={styles.label}>材料</Text>
           </View>
-          <TouchableOpacity aria-label="button" style={styles.plusButton}>
+          <Controller
+            control={control}
+            name="materials"
+            render={({ field: { value } }) => (
+              <>
+                {dropdownList.map((dropdownItemData, index) => (
+                  <View key={index} style={styles.selectFridgeMasterWrapper}>
+                    <View style={styles.dropdownWrapper}>
+                      <Dropdown
+                        data={dropdownItemData}
+                        value={value[index]?.fridgeMasterId || null}
+                        onChange={(data) =>
+                          handleChangeDropdownValue(data, index)
+                        }
+                        labelField="label"
+                        valueField="value"
+                        searchField="searchKey"
+                        placeholder="食材を選択"
+                        search
+                        renderInputSearch={(onSearch) => (
+                          <TextInput
+                            placeholder="検索..."
+                            onChangeText={onSearch}
+                            returnKeyType="search"
+                            style={styles.dropdownInput}
+                          />
+                        )}
+                        style={styles.dropdown}
+                        maxHeight={160}
+                        renderItem={(item) => {
+                          return (
+                            <View
+                              key={item.searchKey}
+                              style={styles.dropdownItem}
+                            >
+                              <Text style={styles.dropdownTextItem}>
+                                {item.label}
+                              </Text>
+                            </View>
+                          );
+                        }}
+                      />
+                    </View>
+                    <View style={styles.materialsInputWrapper}>
+                      <TextInput
+                        style={styles.materialsUnitInput}
+                        onChangeText={(text) =>
+                          handleChangeQuantity(text, index)
+                        }
+                        accessibilityLabel="数量"
+                        value={value[index]?.quantity.toString() || ''}
+                        returnKeyType="done"
+                        keyboardType="numeric"
+                      />
+                      <Text style={{ fontSize: 10 }}>
+                        {value[index]?.unitName || ''}
+                      </Text>
+                    </View>
+                  </View>
+                ))}
+              </>
+            )}
+          />
+          <TouchableOpacity
+            aria-label="button"
+            style={styles.plusButton}
+            onPress={addDropdownItem}
+          >
             <Icon name="plus" style={styles.plusIcon} />
             <Text style={styles.plusText}>材料を追加</Text>
           </TouchableOpacity>
@@ -311,5 +438,54 @@ const styles = StyleSheet.create({
   },
   submitButtonWrapper: {
     padding: 10,
+  },
+  selectFridgeMasterWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    marginTop: 10,
+    width: windowWidth - 40,
+  },
+  dropdownWrapper: {
+    flex: 7,
+  },
+  materialsInputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    flex: 3,
+  },
+  materialsUnitInput: {
+    borderWidth: 1,
+    borderColor: '#ced4da',
+    borderRadius: 4,
+    padding: 10,
+    fontSize: 16,
+    width: 100,
+  },
+  dropdown: {
+    width: '100%',
+    height: 40,
+    borderRadius: 4,
+    borderWidth: 0.5,
+    padding: 10,
+    borderColor: 'rgba(0,0,0,0.1)',
+  },
+  dropdownItem: {
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  dropdownTextItem: {
+    flex: 1,
+    fontSize: 16,
+  },
+  dropdownInput: {
+    borderBottomWidth: 0.5,
+    borderBottomColor: 'rgba(0,0,0,0.1)',
+    padding: 10,
+    fontSize: 16,
   },
 });
