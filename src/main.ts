@@ -1,5 +1,6 @@
 import registerRootComponent from 'expo/build/launch/registerRootComponent';
 import { LocaleConfig } from 'react-native-calendars';
+import 'react-native-get-random-values';
 import { AppWrapper } from '@src/index';
 
 registerRootComponent(AppWrapper);

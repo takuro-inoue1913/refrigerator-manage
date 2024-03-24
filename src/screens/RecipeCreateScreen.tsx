@@ -1,4 +1,5 @@
 import React, { FC, useMemo, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import {
   View,
   Text,
@@ -115,7 +116,27 @@ export const RecipeCreateScreen: FC = () => {
       quantity: '',
       unitName: data.unit.name,
     };
-    setValue('materials', _materials);
+    setValue('materials', { ..._materials });
+  };
+
+  const handlePressDeleteDropdownItem = (targetIndex: number) => {
+    const _materials = getValues('materials');
+    delete _materials[targetIndex];
+    setValue(
+      'materials',
+      Object.values(_materials).reduce(
+        (acc, material, index) => {
+          acc[index] = material;
+          return acc;
+        },
+        {} as typeof _materials,
+      ),
+    );
+    setDropdownList((prev) => {
+      const _prev = [...prev];
+      _prev.splice(targetIndex, 1);
+      return _prev;
+    });
   };
 
   const handleChangeQuantity = (value: string, targetIndex: number) => {
@@ -276,7 +297,13 @@ export const RecipeCreateScreen: FC = () => {
             render={({ field: { value } }) => (
               <>
                 {dropdownList.map((dropdownItemData, index) => (
-                  <View key={index} style={styles.selectFridgeMasterWrapper}>
+                  <View key={uuidv4()} style={styles.selectFridgeMasterWrapper}>
+                    <TouchableOpacity
+                      style={styles.trashIcon}
+                      onPress={() => handlePressDeleteDropdownItem(index)}
+                    >
+                      <Icon name="close" size={10} color="#fff" />
+                    </TouchableOpacity>
                     <View style={styles.dropdownWrapper}>
                       <Dropdown
                         data={dropdownItemData}
@@ -445,16 +472,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 5,
     marginTop: 10,
-    width: windowWidth - 40,
+    width: windowWidth - 20,
+  },
+  trashIcon: {
+    padding: 5,
+    borderRadius: 50,
+    backgroundColor: '#dc3545',
   },
   dropdownWrapper: {
-    flex: 7,
+    flex: 6,
   },
   materialsInputWrapper: {
+    flex: 4,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 5,
-    flex: 3,
   },
   materialsUnitInput: {
     borderWidth: 1,
