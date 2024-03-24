@@ -361,7 +361,12 @@ export const RecipeCreateScreen: FC = () => {
                     </View>
                     <View style={styles.materialsInputWrapper}>
                       <TextInput
-                        style={styles.materialsUnitInput}
+                        style={[
+                          styles.materialsUnitInput,
+                          value[index]?.fridgeMasterId
+                            ? {}
+                            : { backgroundColor: '#f8f9fa' },
+                        ]}
                         onChangeText={(text) =>
                           handleChangeQuantity(text, index)
                         }
@@ -371,6 +376,7 @@ export const RecipeCreateScreen: FC = () => {
                         keyboardType="numeric"
                         blurOnSubmit={false}
                         onSubmitEditing={Keyboard.dismiss}
+                        editable={value[index]?.fridgeMasterId ? true : false}
                       />
                       <Text style={{ fontSize: 10 }}>
                         {value[index]?.unitName || ''}
@@ -584,6 +590,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     padding: 10,
     fontSize: 16,
-    height: 200,
+    height: 140,
   },
 });
