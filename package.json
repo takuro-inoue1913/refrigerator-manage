@@ -27,7 +27,7 @@
     "dayjs": "^1.11.10",
     "expo": "~49.0.15",
     "expo-cached-image": "^49.0.2",
-    "expo-camera": "~13.4.4",
+    "expo-camera": "~14.1.1",
     "expo-haptics": "~12.4.0",
     "expo-image-manipulator": "~11.3.0",
     "expo-image-picker": "~14.3.2",
