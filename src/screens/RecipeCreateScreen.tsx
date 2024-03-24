@@ -1,5 +1,4 @@
 import React, { FC, useMemo, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import {
   View,
   Text,
@@ -62,11 +61,13 @@ export const RecipeCreateScreen: FC = () => {
         quantity: string;
       };
     };
+    description: string;
   }>({
     defaultValues: {
       image: null,
       recipeName: '',
       materials: {},
+      description: '',
     },
   });
 
@@ -294,10 +295,28 @@ export const RecipeCreateScreen: FC = () => {
           <Controller
             control={control}
             name="materials"
+            rules={{
+              validate: (value) => {
+                if (Object.keys(value).length === 0) {
+                  return '材料は1つ以上必要です。';
+                }
+                if (Object.values(value).some((item) => !item.fridgeMasterId)) {
+                  return '材料を選択していない項目があります。';
+                }
+                if (
+                  Object.values(value).some(
+                    (item) => !item.quantity || item.quantity === '0',
+                  )
+                ) {
+                  return '数量を入力していない項目があります。';
+                }
+                return true;
+              },
+            }}
             render={({ field: { value } }) => (
               <>
                 {dropdownList.map((dropdownItemData, index) => (
-                  <View key={uuidv4()} style={styles.selectFridgeMasterWrapper}>
+                  <View key={index} style={styles.selectFridgeMasterWrapper}>
                     <TouchableOpacity
                       style={styles.trashIcon}
                       onPress={() => handlePressDeleteDropdownItem(index)}
@@ -350,6 +369,8 @@ export const RecipeCreateScreen: FC = () => {
                         value={value[index]?.quantity.toString() || ''}
                         returnKeyType="done"
                         keyboardType="numeric"
+                        blurOnSubmit={false}
+                        onSubmitEditing={Keyboard.dismiss}
                       />
                       <Text style={{ fontSize: 10 }}>
                         {value[index]?.unitName || ''}
@@ -368,6 +389,39 @@ export const RecipeCreateScreen: FC = () => {
             <Icon name="plus" style={styles.plusIcon} />
             <Text style={styles.plusText}>材料を追加</Text>
           </TouchableOpacity>
+          {errors.materials && (
+            <Text style={styles.errorText}>{errors.materials.message}</Text>
+          )}
+          <View style={styles.labelSection}>
+            <Text style={styles.label}>作り方</Text>
+          </View>
+          <View
+            style={[
+              styles.descriptionWrapper,
+              errors.description ? styles.formItemHasError : {},
+            ]}
+          >
+            <Controller
+              control={control}
+              name="description"
+              rules={{
+                required: '作り方は必須です。',
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={styles.descriptionInput}
+                  multiline
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  accessibilityLabel="作り方"
+                  value={value}
+                />
+              )}
+            />
+            {errors.description && (
+              <Text style={styles.errorText}>{errors.description.message}</Text>
+            )}
+          </View>
           <View style={styles.submitButtonWrapper}>
             <LinearGradientButton
               width={250}
@@ -464,7 +518,7 @@ const styles = StyleSheet.create({
     color: COMMON_COLOR_GREEN,
   },
   submitButtonWrapper: {
-    padding: 10,
+    padding: 20,
   },
   selectFridgeMasterWrapper: {
     flex: 1,
@@ -519,5 +573,17 @@ const styles = StyleSheet.create({
     borderBottomColor: 'rgba(0,0,0,0.1)',
     padding: 10,
     fontSize: 16,
+  },
+  descriptionWrapper: {
+    marginTop: 10,
+  },
+  descriptionInput: {
+    width: windowWidth - 40,
+    borderWidth: 1,
+    borderColor: '#ced4da',
+    borderRadius: 4,
+    padding: 10,
+    fontSize: 16,
+    height: 200,
   },
 });
