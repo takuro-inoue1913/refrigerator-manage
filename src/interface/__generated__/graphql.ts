@@ -5481,6 +5481,14 @@ export type Mutation_Root = {
   delete_protein_source_stocks?: Maybe<Protein_Source_Stocks_Mutation_Response>;
   /** delete single row from the table: "protein_source_stocks" */
   delete_protein_source_stocks_by_pk?: Maybe<Protein_Source_Stocks>;
+  /** delete data from the table: "recipe_materials" */
+  delete_recipe_materials?: Maybe<Recipe_Materials_Mutation_Response>;
+  /** delete single row from the table: "recipe_materials" */
+  delete_recipe_materials_by_pk?: Maybe<Recipe_Materials>;
+  /** delete data from the table: "recipe_steps" */
+  delete_recipe_steps?: Maybe<Recipe_Steps_Mutation_Response>;
+  /** delete single row from the table: "recipe_steps" */
+  delete_recipe_steps_by_pk?: Maybe<Recipe_Steps>;
   /** delete data from the table: "recipes" */
   delete_recipes?: Maybe<Recipes_Mutation_Response>;
   /** delete single row from the table: "recipes" */
@@ -5609,6 +5617,14 @@ export type Mutation_Root = {
   insert_protein_source_stocks?: Maybe<Protein_Source_Stocks_Mutation_Response>;
   /** insert a single row into the table: "protein_source_stocks" */
   insert_protein_source_stocks_one?: Maybe<Protein_Source_Stocks>;
+  /** insert data into the table: "recipe_materials" */
+  insert_recipe_materials?: Maybe<Recipe_Materials_Mutation_Response>;
+  /** insert a single row into the table: "recipe_materials" */
+  insert_recipe_materials_one?: Maybe<Recipe_Materials>;
+  /** insert data into the table: "recipe_steps" */
+  insert_recipe_steps?: Maybe<Recipe_Steps_Mutation_Response>;
+  /** insert a single row into the table: "recipe_steps" */
+  insert_recipe_steps_one?: Maybe<Recipe_Steps>;
   /** insert data into the table: "recipes" */
   insert_recipes?: Maybe<Recipes_Mutation_Response>;
   /** insert a single row into the table: "recipes" */
@@ -5777,6 +5793,18 @@ export type Mutation_Root = {
   update_protein_source_stocks_by_pk?: Maybe<Protein_Source_Stocks>;
   /** update multiples rows of table: "protein_source_stocks" */
   update_protein_source_stocks_many?: Maybe<Array<Maybe<Protein_Source_Stocks_Mutation_Response>>>;
+  /** update data of the table: "recipe_materials" */
+  update_recipe_materials?: Maybe<Recipe_Materials_Mutation_Response>;
+  /** update single row of the table: "recipe_materials" */
+  update_recipe_materials_by_pk?: Maybe<Recipe_Materials>;
+  /** update multiples rows of table: "recipe_materials" */
+  update_recipe_materials_many?: Maybe<Array<Maybe<Recipe_Materials_Mutation_Response>>>;
+  /** update data of the table: "recipe_steps" */
+  update_recipe_steps?: Maybe<Recipe_Steps_Mutation_Response>;
+  /** update single row of the table: "recipe_steps" */
+  update_recipe_steps_by_pk?: Maybe<Recipe_Steps>;
+  /** update multiples rows of table: "recipe_steps" */
+  update_recipe_steps_many?: Maybe<Array<Maybe<Recipe_Steps_Mutation_Response>>>;
   /** update data of the table: "recipes" */
   update_recipes?: Maybe<Recipes_Mutation_Response>;
   /** update single row of the table: "recipes" */
@@ -6089,6 +6117,30 @@ export type Mutation_RootDelete_Protein_Source_StocksArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Protein_Source_Stocks_By_PkArgs = {
   stock_id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Recipe_MaterialsArgs = {
+  where: Recipe_Materials_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Recipe_Materials_By_PkArgs = {
+  recipe_material_id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Recipe_StepsArgs = {
+  where: Recipe_Steps_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Recipe_Steps_By_PkArgs = {
+  recipe_step_id: Scalars['uuid']['input'];
 };
 
 
@@ -6513,6 +6565,34 @@ export type Mutation_RootInsert_Protein_Source_StocksArgs = {
 export type Mutation_RootInsert_Protein_Source_Stocks_OneArgs = {
   object: Protein_Source_Stocks_Insert_Input;
   on_conflict?: InputMaybe<Protein_Source_Stocks_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Recipe_MaterialsArgs = {
+  objects: Array<Recipe_Materials_Insert_Input>;
+  on_conflict?: InputMaybe<Recipe_Materials_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Recipe_Materials_OneArgs = {
+  object: Recipe_Materials_Insert_Input;
+  on_conflict?: InputMaybe<Recipe_Materials_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Recipe_StepsArgs = {
+  objects: Array<Recipe_Steps_Insert_Input>;
+  on_conflict?: InputMaybe<Recipe_Steps_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Recipe_Steps_OneArgs = {
+  object: Recipe_Steps_Insert_Input;
+  on_conflict?: InputMaybe<Recipe_Steps_On_Conflict>;
 };
 
 
@@ -7119,6 +7199,48 @@ export type Mutation_RootUpdate_Protein_Source_Stocks_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Protein_Source_Stocks_ManyArgs = {
   updates: Array<Protein_Source_Stocks_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Recipe_MaterialsArgs = {
+  _inc?: InputMaybe<Recipe_Materials_Inc_Input>;
+  _set?: InputMaybe<Recipe_Materials_Set_Input>;
+  where: Recipe_Materials_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Recipe_Materials_By_PkArgs = {
+  _inc?: InputMaybe<Recipe_Materials_Inc_Input>;
+  _set?: InputMaybe<Recipe_Materials_Set_Input>;
+  pk_columns: Recipe_Materials_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Recipe_Materials_ManyArgs = {
+  updates: Array<Recipe_Materials_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Recipe_StepsArgs = {
+  _set?: InputMaybe<Recipe_Steps_Set_Input>;
+  where: Recipe_Steps_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Recipe_Steps_By_PkArgs = {
+  _set?: InputMaybe<Recipe_Steps_Set_Input>;
+  pk_columns: Recipe_Steps_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Recipe_Steps_ManyArgs = {
+  updates: Array<Recipe_Steps_Updates>;
 };
 
 
@@ -9040,6 +9162,18 @@ export type Query_Root = {
   protein_source_stocks_aggregate: Protein_Source_Stocks_Aggregate;
   /** fetch data from the table: "protein_source_stocks" using primary key columns */
   protein_source_stocks_by_pk?: Maybe<Protein_Source_Stocks>;
+  /** fetch data from the table: "recipe_materials" */
+  recipe_materials: Array<Recipe_Materials>;
+  /** fetch aggregated fields from the table: "recipe_materials" */
+  recipe_materials_aggregate: Recipe_Materials_Aggregate;
+  /** fetch data from the table: "recipe_materials" using primary key columns */
+  recipe_materials_by_pk?: Maybe<Recipe_Materials>;
+  /** fetch data from the table: "recipe_steps" */
+  recipe_steps: Array<Recipe_Steps>;
+  /** fetch aggregated fields from the table: "recipe_steps" */
+  recipe_steps_aggregate: Recipe_Steps_Aggregate;
+  /** fetch data from the table: "recipe_steps" using primary key columns */
+  recipe_steps_by_pk?: Maybe<Recipe_Steps>;
   /** fetch data from the table: "recipes" */
   recipes: Array<Recipes>;
   /** fetch aggregated fields from the table: "recipes" */
@@ -9575,6 +9709,52 @@ export type Query_RootProtein_Source_Stocks_By_PkArgs = {
 };
 
 
+export type Query_RootRecipe_MaterialsArgs = {
+  distinct_on?: InputMaybe<Array<Recipe_Materials_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Recipe_Materials_Order_By>>;
+  where?: InputMaybe<Recipe_Materials_Bool_Exp>;
+};
+
+
+export type Query_RootRecipe_Materials_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Recipe_Materials_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Recipe_Materials_Order_By>>;
+  where?: InputMaybe<Recipe_Materials_Bool_Exp>;
+};
+
+
+export type Query_RootRecipe_Materials_By_PkArgs = {
+  recipe_material_id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootRecipe_StepsArgs = {
+  distinct_on?: InputMaybe<Array<Recipe_Steps_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Recipe_Steps_Order_By>>;
+  where?: InputMaybe<Recipe_Steps_Bool_Exp>;
+};
+
+
+export type Query_RootRecipe_Steps_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Recipe_Steps_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Recipe_Steps_Order_By>>;
+  where?: InputMaybe<Recipe_Steps_Bool_Exp>;
+};
+
+
+export type Query_RootRecipe_Steps_By_PkArgs = {
+  recipe_step_id: Scalars['uuid']['input'];
+};
+
+
 export type Query_RootRecipesArgs = {
   distinct_on?: InputMaybe<Array<Recipes_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -9850,6 +10030,511 @@ export type Query_RootVegetable_Stocks_By_PkArgs = {
   stock_id: Scalars['uuid']['input'];
 };
 
+/** レシピの材料 */
+export type Recipe_Materials = {
+  __typename?: 'recipe_materials';
+  master_id: Scalars['uuid']['output'];
+  quantity: Scalars['numeric']['output'];
+  recipe_id: Scalars['uuid']['output'];
+  recipe_material_id: Scalars['uuid']['output'];
+  /** An object relationship */
+  recipe_materials_recipes?: Maybe<Recipes>;
+};
+
+/** aggregated selection of "recipe_materials" */
+export type Recipe_Materials_Aggregate = {
+  __typename?: 'recipe_materials_aggregate';
+  aggregate?: Maybe<Recipe_Materials_Aggregate_Fields>;
+  nodes: Array<Recipe_Materials>;
+};
+
+export type Recipe_Materials_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Recipe_Materials_Aggregate_Bool_Exp_Count>;
+};
+
+export type Recipe_Materials_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Recipe_Materials_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Recipe_Materials_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "recipe_materials" */
+export type Recipe_Materials_Aggregate_Fields = {
+  __typename?: 'recipe_materials_aggregate_fields';
+  avg?: Maybe<Recipe_Materials_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Recipe_Materials_Max_Fields>;
+  min?: Maybe<Recipe_Materials_Min_Fields>;
+  stddev?: Maybe<Recipe_Materials_Stddev_Fields>;
+  stddev_pop?: Maybe<Recipe_Materials_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Recipe_Materials_Stddev_Samp_Fields>;
+  sum?: Maybe<Recipe_Materials_Sum_Fields>;
+  var_pop?: Maybe<Recipe_Materials_Var_Pop_Fields>;
+  var_samp?: Maybe<Recipe_Materials_Var_Samp_Fields>;
+  variance?: Maybe<Recipe_Materials_Variance_Fields>;
+};
+
+
+/** aggregate fields of "recipe_materials" */
+export type Recipe_Materials_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Recipe_Materials_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "recipe_materials" */
+export type Recipe_Materials_Aggregate_Order_By = {
+  avg?: InputMaybe<Recipe_Materials_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Recipe_Materials_Max_Order_By>;
+  min?: InputMaybe<Recipe_Materials_Min_Order_By>;
+  stddev?: InputMaybe<Recipe_Materials_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Recipe_Materials_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Recipe_Materials_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Recipe_Materials_Sum_Order_By>;
+  var_pop?: InputMaybe<Recipe_Materials_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Recipe_Materials_Var_Samp_Order_By>;
+  variance?: InputMaybe<Recipe_Materials_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "recipe_materials" */
+export type Recipe_Materials_Arr_Rel_Insert_Input = {
+  data: Array<Recipe_Materials_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Recipe_Materials_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Recipe_Materials_Avg_Fields = {
+  __typename?: 'recipe_materials_avg_fields';
+  quantity?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "recipe_materials" */
+export type Recipe_Materials_Avg_Order_By = {
+  quantity?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "recipe_materials". All fields are combined with a logical 'AND'. */
+export type Recipe_Materials_Bool_Exp = {
+  _and?: InputMaybe<Array<Recipe_Materials_Bool_Exp>>;
+  _not?: InputMaybe<Recipe_Materials_Bool_Exp>;
+  _or?: InputMaybe<Array<Recipe_Materials_Bool_Exp>>;
+  master_id?: InputMaybe<Uuid_Comparison_Exp>;
+  quantity?: InputMaybe<Numeric_Comparison_Exp>;
+  recipe_id?: InputMaybe<Uuid_Comparison_Exp>;
+  recipe_material_id?: InputMaybe<Uuid_Comparison_Exp>;
+  recipe_materials_recipes?: InputMaybe<Recipes_Bool_Exp>;
+};
+
+/** unique or primary key constraints on table "recipe_materials" */
+export enum Recipe_Materials_Constraint {
+  /** unique or primary key constraint on columns "recipe_material_id" */
+  RecipeMaterialsPkey = 'recipe_materials_pkey'
+}
+
+/** input type for incrementing numeric columns in table "recipe_materials" */
+export type Recipe_Materials_Inc_Input = {
+  quantity?: InputMaybe<Scalars['numeric']['input']>;
+};
+
+/** input type for inserting data into table "recipe_materials" */
+export type Recipe_Materials_Insert_Input = {
+  master_id?: InputMaybe<Scalars['uuid']['input']>;
+  quantity?: InputMaybe<Scalars['numeric']['input']>;
+  recipe_id?: InputMaybe<Scalars['uuid']['input']>;
+  recipe_material_id?: InputMaybe<Scalars['uuid']['input']>;
+  recipe_materials_recipes?: InputMaybe<Recipes_Obj_Rel_Insert_Input>;
+};
+
+/** aggregate max on columns */
+export type Recipe_Materials_Max_Fields = {
+  __typename?: 'recipe_materials_max_fields';
+  master_id?: Maybe<Scalars['uuid']['output']>;
+  quantity?: Maybe<Scalars['numeric']['output']>;
+  recipe_id?: Maybe<Scalars['uuid']['output']>;
+  recipe_material_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by max() on columns of table "recipe_materials" */
+export type Recipe_Materials_Max_Order_By = {
+  master_id?: InputMaybe<Order_By>;
+  quantity?: InputMaybe<Order_By>;
+  recipe_id?: InputMaybe<Order_By>;
+  recipe_material_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Recipe_Materials_Min_Fields = {
+  __typename?: 'recipe_materials_min_fields';
+  master_id?: Maybe<Scalars['uuid']['output']>;
+  quantity?: Maybe<Scalars['numeric']['output']>;
+  recipe_id?: Maybe<Scalars['uuid']['output']>;
+  recipe_material_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by min() on columns of table "recipe_materials" */
+export type Recipe_Materials_Min_Order_By = {
+  master_id?: InputMaybe<Order_By>;
+  quantity?: InputMaybe<Order_By>;
+  recipe_id?: InputMaybe<Order_By>;
+  recipe_material_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "recipe_materials" */
+export type Recipe_Materials_Mutation_Response = {
+  __typename?: 'recipe_materials_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Recipe_Materials>;
+};
+
+/** on_conflict condition type for table "recipe_materials" */
+export type Recipe_Materials_On_Conflict = {
+  constraint: Recipe_Materials_Constraint;
+  update_columns?: Array<Recipe_Materials_Update_Column>;
+  where?: InputMaybe<Recipe_Materials_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "recipe_materials". */
+export type Recipe_Materials_Order_By = {
+  master_id?: InputMaybe<Order_By>;
+  quantity?: InputMaybe<Order_By>;
+  recipe_id?: InputMaybe<Order_By>;
+  recipe_material_id?: InputMaybe<Order_By>;
+  recipe_materials_recipes?: InputMaybe<Recipes_Order_By>;
+};
+
+/** primary key columns input for table: recipe_materials */
+export type Recipe_Materials_Pk_Columns_Input = {
+  recipe_material_id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "recipe_materials" */
+export enum Recipe_Materials_Select_Column {
+  /** column name */
+  MasterId = 'master_id',
+  /** column name */
+  Quantity = 'quantity',
+  /** column name */
+  RecipeId = 'recipe_id',
+  /** column name */
+  RecipeMaterialId = 'recipe_material_id'
+}
+
+/** input type for updating data in table "recipe_materials" */
+export type Recipe_Materials_Set_Input = {
+  master_id?: InputMaybe<Scalars['uuid']['input']>;
+  quantity?: InputMaybe<Scalars['numeric']['input']>;
+  recipe_id?: InputMaybe<Scalars['uuid']['input']>;
+  recipe_material_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Recipe_Materials_Stddev_Fields = {
+  __typename?: 'recipe_materials_stddev_fields';
+  quantity?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev() on columns of table "recipe_materials" */
+export type Recipe_Materials_Stddev_Order_By = {
+  quantity?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Recipe_Materials_Stddev_Pop_Fields = {
+  __typename?: 'recipe_materials_stddev_pop_fields';
+  quantity?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_pop() on columns of table "recipe_materials" */
+export type Recipe_Materials_Stddev_Pop_Order_By = {
+  quantity?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Recipe_Materials_Stddev_Samp_Fields = {
+  __typename?: 'recipe_materials_stddev_samp_fields';
+  quantity?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "recipe_materials" */
+export type Recipe_Materials_Stddev_Samp_Order_By = {
+  quantity?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "recipe_materials" */
+export type Recipe_Materials_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Recipe_Materials_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Recipe_Materials_Stream_Cursor_Value_Input = {
+  master_id?: InputMaybe<Scalars['uuid']['input']>;
+  quantity?: InputMaybe<Scalars['numeric']['input']>;
+  recipe_id?: InputMaybe<Scalars['uuid']['input']>;
+  recipe_material_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Recipe_Materials_Sum_Fields = {
+  __typename?: 'recipe_materials_sum_fields';
+  quantity?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** order by sum() on columns of table "recipe_materials" */
+export type Recipe_Materials_Sum_Order_By = {
+  quantity?: InputMaybe<Order_By>;
+};
+
+/** update columns of table "recipe_materials" */
+export enum Recipe_Materials_Update_Column {
+  /** column name */
+  MasterId = 'master_id',
+  /** column name */
+  Quantity = 'quantity',
+  /** column name */
+  RecipeId = 'recipe_id',
+  /** column name */
+  RecipeMaterialId = 'recipe_material_id'
+}
+
+export type Recipe_Materials_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Recipe_Materials_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Recipe_Materials_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Recipe_Materials_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Recipe_Materials_Var_Pop_Fields = {
+  __typename?: 'recipe_materials_var_pop_fields';
+  quantity?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_pop() on columns of table "recipe_materials" */
+export type Recipe_Materials_Var_Pop_Order_By = {
+  quantity?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Recipe_Materials_Var_Samp_Fields = {
+  __typename?: 'recipe_materials_var_samp_fields';
+  quantity?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_samp() on columns of table "recipe_materials" */
+export type Recipe_Materials_Var_Samp_Order_By = {
+  quantity?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Recipe_Materials_Variance_Fields = {
+  __typename?: 'recipe_materials_variance_fields';
+  quantity?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "recipe_materials" */
+export type Recipe_Materials_Variance_Order_By = {
+  quantity?: InputMaybe<Order_By>;
+};
+
+/** レシピを作る工程を格納する */
+export type Recipe_Steps = {
+  __typename?: 'recipe_steps';
+  description: Scalars['String']['output'];
+  recipe_id: Scalars['uuid']['output'];
+  recipe_step_id: Scalars['uuid']['output'];
+  /** An object relationship */
+  recipe_steps_recipe?: Maybe<Recipes>;
+};
+
+/** aggregated selection of "recipe_steps" */
+export type Recipe_Steps_Aggregate = {
+  __typename?: 'recipe_steps_aggregate';
+  aggregate?: Maybe<Recipe_Steps_Aggregate_Fields>;
+  nodes: Array<Recipe_Steps>;
+};
+
+export type Recipe_Steps_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Recipe_Steps_Aggregate_Bool_Exp_Count>;
+};
+
+export type Recipe_Steps_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Recipe_Steps_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Recipe_Steps_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "recipe_steps" */
+export type Recipe_Steps_Aggregate_Fields = {
+  __typename?: 'recipe_steps_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Recipe_Steps_Max_Fields>;
+  min?: Maybe<Recipe_Steps_Min_Fields>;
+};
+
+
+/** aggregate fields of "recipe_steps" */
+export type Recipe_Steps_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Recipe_Steps_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "recipe_steps" */
+export type Recipe_Steps_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Recipe_Steps_Max_Order_By>;
+  min?: InputMaybe<Recipe_Steps_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "recipe_steps" */
+export type Recipe_Steps_Arr_Rel_Insert_Input = {
+  data: Array<Recipe_Steps_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Recipe_Steps_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "recipe_steps". All fields are combined with a logical 'AND'. */
+export type Recipe_Steps_Bool_Exp = {
+  _and?: InputMaybe<Array<Recipe_Steps_Bool_Exp>>;
+  _not?: InputMaybe<Recipe_Steps_Bool_Exp>;
+  _or?: InputMaybe<Array<Recipe_Steps_Bool_Exp>>;
+  description?: InputMaybe<String_Comparison_Exp>;
+  recipe_id?: InputMaybe<Uuid_Comparison_Exp>;
+  recipe_step_id?: InputMaybe<Uuid_Comparison_Exp>;
+  recipe_steps_recipe?: InputMaybe<Recipes_Bool_Exp>;
+};
+
+/** unique or primary key constraints on table "recipe_steps" */
+export enum Recipe_Steps_Constraint {
+  /** unique or primary key constraint on columns "recipe_step_id" */
+  RecipeStepsPkey = 'recipe_steps_pkey'
+}
+
+/** input type for inserting data into table "recipe_steps" */
+export type Recipe_Steps_Insert_Input = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  recipe_id?: InputMaybe<Scalars['uuid']['input']>;
+  recipe_step_id?: InputMaybe<Scalars['uuid']['input']>;
+  recipe_steps_recipe?: InputMaybe<Recipes_Obj_Rel_Insert_Input>;
+};
+
+/** aggregate max on columns */
+export type Recipe_Steps_Max_Fields = {
+  __typename?: 'recipe_steps_max_fields';
+  description?: Maybe<Scalars['String']['output']>;
+  recipe_id?: Maybe<Scalars['uuid']['output']>;
+  recipe_step_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by max() on columns of table "recipe_steps" */
+export type Recipe_Steps_Max_Order_By = {
+  description?: InputMaybe<Order_By>;
+  recipe_id?: InputMaybe<Order_By>;
+  recipe_step_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Recipe_Steps_Min_Fields = {
+  __typename?: 'recipe_steps_min_fields';
+  description?: Maybe<Scalars['String']['output']>;
+  recipe_id?: Maybe<Scalars['uuid']['output']>;
+  recipe_step_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by min() on columns of table "recipe_steps" */
+export type Recipe_Steps_Min_Order_By = {
+  description?: InputMaybe<Order_By>;
+  recipe_id?: InputMaybe<Order_By>;
+  recipe_step_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "recipe_steps" */
+export type Recipe_Steps_Mutation_Response = {
+  __typename?: 'recipe_steps_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Recipe_Steps>;
+};
+
+/** on_conflict condition type for table "recipe_steps" */
+export type Recipe_Steps_On_Conflict = {
+  constraint: Recipe_Steps_Constraint;
+  update_columns?: Array<Recipe_Steps_Update_Column>;
+  where?: InputMaybe<Recipe_Steps_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "recipe_steps". */
+export type Recipe_Steps_Order_By = {
+  description?: InputMaybe<Order_By>;
+  recipe_id?: InputMaybe<Order_By>;
+  recipe_step_id?: InputMaybe<Order_By>;
+  recipe_steps_recipe?: InputMaybe<Recipes_Order_By>;
+};
+
+/** primary key columns input for table: recipe_steps */
+export type Recipe_Steps_Pk_Columns_Input = {
+  recipe_step_id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "recipe_steps" */
+export enum Recipe_Steps_Select_Column {
+  /** column name */
+  Description = 'description',
+  /** column name */
+  RecipeId = 'recipe_id',
+  /** column name */
+  RecipeStepId = 'recipe_step_id'
+}
+
+/** input type for updating data in table "recipe_steps" */
+export type Recipe_Steps_Set_Input = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  recipe_id?: InputMaybe<Scalars['uuid']['input']>;
+  recipe_step_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** Streaming cursor of the table "recipe_steps" */
+export type Recipe_Steps_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Recipe_Steps_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Recipe_Steps_Stream_Cursor_Value_Input = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  recipe_id?: InputMaybe<Scalars['uuid']['input']>;
+  recipe_step_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** update columns of table "recipe_steps" */
+export enum Recipe_Steps_Update_Column {
+  /** column name */
+  Description = 'description',
+  /** column name */
+  RecipeId = 'recipe_id',
+  /** column name */
+  RecipeStepId = 'recipe_step_id'
+}
+
+export type Recipe_Steps_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Recipe_Steps_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Recipe_Steps_Bool_Exp;
+};
+
 /** ユーザーごとのレシピ */
 export type Recipes = {
   __typename?: 'recipes';
@@ -9860,6 +10545,14 @@ export type Recipes = {
   recipes_materials: Array<Materials>;
   /** An aggregate relationship */
   recipes_materials_aggregate: Materials_Aggregate;
+  /** An array relationship */
+  recipes_recipe_materials: Array<Recipe_Materials>;
+  /** An aggregate relationship */
+  recipes_recipe_materials_aggregate: Recipe_Materials_Aggregate;
+  /** An array relationship */
+  recipes_recipe_steps: Array<Recipe_Steps>;
+  /** An aggregate relationship */
+  recipes_recipe_steps_aggregate: Recipe_Steps_Aggregate;
   /** An object relationship */
   recipes_users?: Maybe<Users>;
   user_id: Scalars['String']['output'];
@@ -9883,6 +10576,46 @@ export type RecipesRecipes_Materials_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Materials_Order_By>>;
   where?: InputMaybe<Materials_Bool_Exp>;
+};
+
+
+/** ユーザーごとのレシピ */
+export type RecipesRecipes_Recipe_MaterialsArgs = {
+  distinct_on?: InputMaybe<Array<Recipe_Materials_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Recipe_Materials_Order_By>>;
+  where?: InputMaybe<Recipe_Materials_Bool_Exp>;
+};
+
+
+/** ユーザーごとのレシピ */
+export type RecipesRecipes_Recipe_Materials_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Recipe_Materials_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Recipe_Materials_Order_By>>;
+  where?: InputMaybe<Recipe_Materials_Bool_Exp>;
+};
+
+
+/** ユーザーごとのレシピ */
+export type RecipesRecipes_Recipe_StepsArgs = {
+  distinct_on?: InputMaybe<Array<Recipe_Steps_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Recipe_Steps_Order_By>>;
+  where?: InputMaybe<Recipe_Steps_Bool_Exp>;
+};
+
+
+/** ユーザーごとのレシピ */
+export type RecipesRecipes_Recipe_Steps_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Recipe_Steps_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Recipe_Steps_Order_By>>;
+  where?: InputMaybe<Recipe_Steps_Bool_Exp>;
 };
 
 /** aggregated selection of "recipes" */
@@ -9942,6 +10675,10 @@ export type Recipes_Bool_Exp = {
   recipe_name?: InputMaybe<String_Comparison_Exp>;
   recipes_materials?: InputMaybe<Materials_Bool_Exp>;
   recipes_materials_aggregate?: InputMaybe<Materials_Aggregate_Bool_Exp>;
+  recipes_recipe_materials?: InputMaybe<Recipe_Materials_Bool_Exp>;
+  recipes_recipe_materials_aggregate?: InputMaybe<Recipe_Materials_Aggregate_Bool_Exp>;
+  recipes_recipe_steps?: InputMaybe<Recipe_Steps_Bool_Exp>;
+  recipes_recipe_steps_aggregate?: InputMaybe<Recipe_Steps_Aggregate_Bool_Exp>;
   recipes_users?: InputMaybe<Users_Bool_Exp>;
   user_id?: InputMaybe<String_Comparison_Exp>;
 };
@@ -9960,6 +10697,8 @@ export type Recipes_Insert_Input = {
   recipe_image?: InputMaybe<Scalars['String']['input']>;
   recipe_name?: InputMaybe<Scalars['String']['input']>;
   recipes_materials?: InputMaybe<Materials_Arr_Rel_Insert_Input>;
+  recipes_recipe_materials?: InputMaybe<Recipe_Materials_Arr_Rel_Insert_Input>;
+  recipes_recipe_steps?: InputMaybe<Recipe_Steps_Arr_Rel_Insert_Input>;
   recipes_users?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['String']['input']>;
 };
@@ -10027,6 +10766,8 @@ export type Recipes_Order_By = {
   recipe_image?: InputMaybe<Order_By>;
   recipe_name?: InputMaybe<Order_By>;
   recipes_materials_aggregate?: InputMaybe<Materials_Aggregate_Order_By>;
+  recipes_recipe_materials_aggregate?: InputMaybe<Recipe_Materials_Aggregate_Order_By>;
+  recipes_recipe_steps_aggregate?: InputMaybe<Recipe_Steps_Aggregate_Order_By>;
   recipes_users?: InputMaybe<Users_Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
@@ -12772,6 +13513,22 @@ export type Subscription_Root = {
   protein_source_stocks_by_pk?: Maybe<Protein_Source_Stocks>;
   /** fetch data from the table in a streaming manner: "protein_source_stocks" */
   protein_source_stocks_stream: Array<Protein_Source_Stocks>;
+  /** fetch data from the table: "recipe_materials" */
+  recipe_materials: Array<Recipe_Materials>;
+  /** fetch aggregated fields from the table: "recipe_materials" */
+  recipe_materials_aggregate: Recipe_Materials_Aggregate;
+  /** fetch data from the table: "recipe_materials" using primary key columns */
+  recipe_materials_by_pk?: Maybe<Recipe_Materials>;
+  /** fetch data from the table in a streaming manner: "recipe_materials" */
+  recipe_materials_stream: Array<Recipe_Materials>;
+  /** fetch data from the table: "recipe_steps" */
+  recipe_steps: Array<Recipe_Steps>;
+  /** fetch aggregated fields from the table: "recipe_steps" */
+  recipe_steps_aggregate: Recipe_Steps_Aggregate;
+  /** fetch data from the table: "recipe_steps" using primary key columns */
+  recipe_steps_by_pk?: Maybe<Recipe_Steps>;
+  /** fetch data from the table in a streaming manner: "recipe_steps" */
+  recipe_steps_stream: Array<Recipe_Steps>;
   /** fetch data from the table: "recipes" */
   recipes: Array<Recipes>;
   /** fetch aggregated fields from the table: "recipes" */
@@ -13468,6 +14225,66 @@ export type Subscription_RootProtein_Source_Stocks_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Protein_Source_Stocks_Stream_Cursor_Input>>;
   where?: InputMaybe<Protein_Source_Stocks_Bool_Exp>;
+};
+
+
+export type Subscription_RootRecipe_MaterialsArgs = {
+  distinct_on?: InputMaybe<Array<Recipe_Materials_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Recipe_Materials_Order_By>>;
+  where?: InputMaybe<Recipe_Materials_Bool_Exp>;
+};
+
+
+export type Subscription_RootRecipe_Materials_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Recipe_Materials_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Recipe_Materials_Order_By>>;
+  where?: InputMaybe<Recipe_Materials_Bool_Exp>;
+};
+
+
+export type Subscription_RootRecipe_Materials_By_PkArgs = {
+  recipe_material_id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootRecipe_Materials_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Recipe_Materials_Stream_Cursor_Input>>;
+  where?: InputMaybe<Recipe_Materials_Bool_Exp>;
+};
+
+
+export type Subscription_RootRecipe_StepsArgs = {
+  distinct_on?: InputMaybe<Array<Recipe_Steps_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Recipe_Steps_Order_By>>;
+  where?: InputMaybe<Recipe_Steps_Bool_Exp>;
+};
+
+
+export type Subscription_RootRecipe_Steps_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Recipe_Steps_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Recipe_Steps_Order_By>>;
+  where?: InputMaybe<Recipe_Steps_Bool_Exp>;
+};
+
+
+export type Subscription_RootRecipe_Steps_By_PkArgs = {
+  recipe_step_id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootRecipe_Steps_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Recipe_Steps_Stream_Cursor_Input>>;
+  where?: InputMaybe<Recipe_Steps_Bool_Exp>;
 };
 
 
@@ -15880,6 +16697,34 @@ export type DeleteCustomProteinSourceAndStocksMutationVariables = Exact<{
 
 export type DeleteCustomProteinSourceAndStocksMutation = { __typename?: 'mutation_root', delete_custom_protein_source_master?: { __typename?: 'custom_protein_source_master_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'custom_protein_source_master', custom_protein_source_id: string, image_uri: string, custom_protein_source_name: string, default_expiration_period: number, display_name: string, unit_id: number }> } | null, delete_protein_source_stocks?: { __typename?: 'protein_source_stocks_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'protein_source_stocks', stock_id: string, protein_source_id: string }> } | null };
 
+export type GetAllRecipesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllRecipesQuery = { __typename?: 'query_root', recipes: Array<{ __typename?: 'recipes', recipe_id: string, user_id: string, recipe_name: string, recipe_image: string, recipes_recipe_materials: Array<{ __typename?: 'recipe_materials', master_id: string, quantity: number, recipe_id: string, recipe_material_id: string }>, recipes_recipe_steps: Array<{ __typename?: 'recipe_steps', recipe_id: string, recipe_step_id: string, description: string }> }> };
+
+export type CreateRecipeMutationVariables = Exact<{
+  recipeName: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
+  recipeImage: Scalars['String']['input'];
+}>;
+
+
+export type CreateRecipeMutation = { __typename?: 'mutation_root', insert_recipes_one?: { __typename?: 'recipes', recipe_id: string, user_id: string, recipe_name: string, recipe_image: string } | null };
+
+export type CreateRecipeMaterialsMutationVariables = Exact<{
+  materials: Array<Recipe_Materials_Insert_Input> | Recipe_Materials_Insert_Input;
+}>;
+
+
+export type CreateRecipeMaterialsMutation = { __typename?: 'mutation_root', insert_recipe_materials?: { __typename?: 'recipe_materials_mutation_response', returning: Array<{ __typename?: 'recipe_materials', master_id: string, quantity: number, recipe_id: string, recipe_material_id: string }> } | null };
+
+export type CreateRecipeStepsMutationVariables = Exact<{
+  steps: Array<Recipe_Steps_Insert_Input> | Recipe_Steps_Insert_Input;
+}>;
+
+
+export type CreateRecipeStepsMutation = { __typename?: 'mutation_root', insert_recipe_steps?: { __typename?: 'recipe_steps_mutation_response', returning: Array<{ __typename?: 'recipe_steps', recipe_id: string, recipe_step_id: string, description: string }> } | null };
+
 export type GetAllSeasoningMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -16319,6 +17164,10 @@ export const UpdateProteinSourceStockIsFavoriteDocument = {"kind":"Document","de
 export const UpdateProteinSourceStockDetailDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateProteinSourceStockDetail"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"proteinSourceId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"numeric"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"incrementalUnit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"numeric"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"expirationDate"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"date"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"memo"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"isFavorite"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_protein_source_stocks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"protein_source_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"proteinSourceId"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"quantity"},"value":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"incremental_unit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"incrementalUnit"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"expiration_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"expirationDate"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"memo"},"value":{"kind":"Variable","name":{"kind":"Name","value":"memo"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"is_favorite"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isFavorite"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"protein_source_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateProteinSourceStockDetailMutation, UpdateProteinSourceStockDetailMutationVariables>;
 export const InsertCustomProteinSourceMasterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InsertCustomProteinSourceMaster"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"proteinSourceName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"displayName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"imageUri"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"defaultExpirationPeriod"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"unitId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_custom_protein_source_master_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"custom_protein_source_name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"proteinSourceName"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"display_name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"displayName"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"image_uri"},"value":{"kind":"Variable","name":{"kind":"Name","value":"imageUri"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"default_expiration_period"},"value":{"kind":"Variable","name":{"kind":"Name","value":"defaultExpirationPeriod"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"unit_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"unitId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"custom_protein_source_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"custom_protein_source_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","name":{"kind":"Name","value":"unit_id"}}]}}]}}]} as unknown as DocumentNode<InsertCustomProteinSourceMasterMutation, InsertCustomProteinSourceMasterMutationVariables>;
 export const DeleteCustomProteinSourceAndStocksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteCustomProteinSourceAndStocks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"proteinSourceId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_custom_protein_source_master"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"custom_protein_source_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"proteinSourceId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}},{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"custom_protein_source_id"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"custom_protein_source_name"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"unit_id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_protein_source_stocks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"protein_source_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"proteinSourceId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}},{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"protein_source_id"}}]}}]}}]}}]} as unknown as DocumentNode<DeleteCustomProteinSourceAndStocksMutation, DeleteCustomProteinSourceAndStocksMutationVariables>;
+export const GetAllRecipesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllRecipes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipe_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"recipe_name"}},{"kind":"Field","name":{"kind":"Name","value":"recipe_image"}},{"kind":"Field","name":{"kind":"Name","value":"recipes_recipe_materials"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"master_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"recipe_id"}},{"kind":"Field","name":{"kind":"Name","value":"recipe_material_id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"recipes_recipe_steps"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipe_id"}},{"kind":"Field","name":{"kind":"Name","value":"recipe_step_id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllRecipesQuery, GetAllRecipesQueryVariables>;
+export const CreateRecipeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateRecipe"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"recipeName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"recipeImage"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_recipes_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"recipe_name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"recipeName"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"recipe_image"},"value":{"kind":"Variable","name":{"kind":"Name","value":"recipeImage"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipe_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"recipe_name"}},{"kind":"Field","name":{"kind":"Name","value":"recipe_image"}}]}}]}}]} as unknown as DocumentNode<CreateRecipeMutation, CreateRecipeMutationVariables>;
+export const CreateRecipeMaterialsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateRecipeMaterials"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"materials"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"recipe_materials_insert_input"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_recipe_materials"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"Variable","name":{"kind":"Name","value":"materials"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"master_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"recipe_id"}},{"kind":"Field","name":{"kind":"Name","value":"recipe_material_id"}}]}}]}}]}}]} as unknown as DocumentNode<CreateRecipeMaterialsMutation, CreateRecipeMaterialsMutationVariables>;
+export const CreateRecipeStepsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateRecipeSteps"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"steps"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"recipe_steps_insert_input"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_recipe_steps"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"Variable","name":{"kind":"Name","value":"steps"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipe_id"}},{"kind":"Field","name":{"kind":"Name","value":"recipe_step_id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]}}]} as unknown as DocumentNode<CreateRecipeStepsMutation, CreateRecipeStepsMutationVariables>;
 export const GetAllSeasoningMasterAndUnitAndStocksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllSeasoningMasterAndUnitAndStocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"GetSeasoningMasterAndUnitAndStocks"},"name":{"kind":"Name","value":"seasoning_master"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"seasoning_master_seasoning_stocks"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_favorite"},"value":{"kind":"EnumValue","value":"desc_nulls_last"}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"seasoning_id"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"seasoning_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","name":{"kind":"Name","value":"seasoning_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"seasoning_master_seasoning_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"GetCustomSeasoningMasterAndUnitAndStocks"},"name":{"kind":"Name","value":"custom_seasoning_master"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"custom_seasoning_master_seasoning_stocks"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_favorite"},"value":{"kind":"EnumValue","value":"desc_nulls_last"}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"seasoning_id"},"name":{"kind":"Name","value":"custom_seasoning_id"}},{"kind":"Field","alias":{"kind":"Name","value":"seasoning_name"},"name":{"kind":"Name","value":"custom_seasoning_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"seasoning_master_unit_master"},"name":{"kind":"Name","value":"custom_seasoning_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"seasoning_master_seasoning_stocks"},"name":{"kind":"Name","value":"custom_seasoning_master_seasoning_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllSeasoningMasterAndUnitAndStocksQuery, GetAllSeasoningMasterAndUnitAndStocksQueryVariables>;
 export const GetSeasoningMasterAndUnitAndStocksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSeasoningMasterAndUnitAndStocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"seasoning_master"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"seasoning_master_seasoning_stocks"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_favorite"},"value":{"kind":"EnumValue","value":"desc_nulls_last"}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"seasoning_id"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"seasoning_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","name":{"kind":"Name","value":"seasoning_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"seasoning_master_seasoning_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}}]}}]}}]}}]} as unknown as DocumentNode<GetSeasoningMasterAndUnitAndStocksQuery, GetSeasoningMasterAndUnitAndStocksQueryVariables>;
 export const GetCustomSeasoningMasterAndUnitAndStocksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCustomSeasoningMasterAndUnitAndStocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"custom_seasoning_master"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"custom_seasoning_master_seasoning_stocks"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_favorite"},"value":{"kind":"EnumValue","value":"desc_nulls_last"}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"seasoning_id"},"name":{"kind":"Name","value":"custom_seasoning_id"}},{"kind":"Field","alias":{"kind":"Name","value":"seasoning_name"},"name":{"kind":"Name","value":"custom_seasoning_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"seasoning_master_unit_master"},"name":{"kind":"Name","value":"custom_seasoning_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"seasoning_master_seasoning_stocks"},"name":{"kind":"Name","value":"custom_seasoning_master_seasoning_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}}]}}]}}]}}]} as unknown as DocumentNode<GetCustomSeasoningMasterAndUnitAndStocksQuery, GetCustomSeasoningMasterAndUnitAndStocksQueryVariables>;

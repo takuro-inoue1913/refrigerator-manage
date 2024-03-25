@@ -1,0 +1,59 @@
+query GetAllRecipes {
+  recipes {
+    recipe_id
+    user_id
+    recipe_name
+    recipe_image
+    recipes_recipe_materials {
+      master_id
+      quantity
+      recipe_id
+      recipe_material_id
+    }
+    recipes_recipe_steps {
+      recipe_id
+      recipe_step_id
+      description
+    }
+  }
+}
+
+mutation CreateRecipe(
+  $recipeName: String!
+  $userId: String!
+  $recipeImage: String!
+) {
+  insert_recipes_one(
+    object: {
+      recipe_name: $recipeName
+      recipe_image: $recipeImage
+      user_id: $userId
+    }
+  ) {
+    recipe_id
+    user_id
+    recipe_name
+    recipe_image
+  }
+}
+
+mutation CreateRecipeMaterials($materials: [recipe_materials_insert_input!]!) {
+  insert_recipe_materials(objects: $materials) {
+    returning {
+      master_id
+      quantity
+      recipe_id
+      recipe_material_id
+    }
+  }
+}
+
+mutation CreateRecipeSteps($steps: [recipe_steps_insert_input!]!) {
+  insert_recipe_steps(objects: $steps) {
+    returning {
+      recipe_id
+      recipe_step_id
+      description
+    }
+  }
+}
