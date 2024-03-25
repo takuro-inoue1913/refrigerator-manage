@@ -31,6 +31,7 @@ import { uploadUserImage } from '@src/interface/firebase/uploadUserImage';
 import { userState } from '@src/states/user';
 import { useRecoilValue } from 'recoil';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
+import Toast from 'react-native-toast-message';
 
 const { width: windowWidth } = Dimensions.get('window');
 
@@ -239,6 +240,10 @@ export const RecipeCreateScreen: FC = () => {
       descriptions: [getValues('description')],
     });
     setIsSending(false);
+    Toast.show({
+      type: 'success',
+      text1: `${getValues('recipeName')}のレシピを登録しました。`,
+    });
     navigation.navigation.goBack();
   };
 
