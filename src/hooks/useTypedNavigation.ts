@@ -21,5 +21,5 @@ export function useTypedNavigation<T extends keyof RootStackParamList>() {
     [navigation],
   );
 
-  return { navigate };
+  return { navigate, navigation };
 }

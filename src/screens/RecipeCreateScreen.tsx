@@ -26,6 +26,11 @@ import { CameraModal } from '@src/components/common/CameraModal';
 import { COMMON_COLOR_GREEN } from '@src/utils/consts';
 import { useRequestGetAllFridgeMaster } from '@src/interface/hooks/shoppingMemo/useRequestGetAllFridgeMaster';
 import { Dropdown } from 'react-native-element-dropdown';
+import { useRequestInsertRecipe } from '@src/interface/hooks/recipe/useRequestInsertRecipe';
+import { uploadUserImage } from '@src/interface/firebase/uploadUserImage';
+import { userState } from '@src/states/user';
+import { useRecoilValue } from 'recoil';
+import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 
 const { width: windowWidth } = Dimensions.get('window');
 
@@ -42,6 +47,10 @@ type DropdownData = {
 
 export const RecipeCreateScreen: FC = () => {
   const { fridgeMaster } = useRequestGetAllFridgeMaster();
+  const requestInsertRecipe = useRequestInsertRecipe();
+  const navigation = useTypedNavigation();
+  const user = useRecoilValue(userState);
+
   const [isSending, setIsSending] = useState(false);
   const [visibleCameraModal, setVisibleCameraModal] = useState(false);
   const [keyboardShouldPersist, setKeyboardShouldPersist] = useState(false);
@@ -216,6 +225,21 @@ export const RecipeCreateScreen: FC = () => {
 
   const onSubmit = async () => {
     setIsSending(true);
+    const imageUri = await uploadUserImage(
+      getValues('image.uri'),
+      'user-recipes/' + user?.uid,
+    );
+    await requestInsertRecipe({
+      recipeName: getValues('recipeName'),
+      recipeImage: imageUri,
+      materials: Object.values(getValues('materials')).map((item) => ({
+        masterId: item.fridgeMasterId,
+        quantity: Number(item.quantity),
+      })),
+      descriptions: [getValues('description')],
+    });
+    setIsSending(false);
+    navigation.navigation.goBack();
   };
 
   return (
