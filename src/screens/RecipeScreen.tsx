@@ -6,13 +6,8 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { CommonGradation } from '@src/components/common/CommonGradation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
-import { useRequestGetAllRecipes } from '@src/interface/hooks/recipe/useRequestGetAllRecipes';
-import { useRequestGetAllFridgeMaster } from '@src/interface/hooks/shoppingMemo/useRequestGetAllFridgeMaster';
 
 export const RecipeScreen = () => {
-  useRequestGetAllFridgeMaster();
-  const { recipes } = useRequestGetAllRecipes();
-  console.log(recipes);
   const [selectedDate, setSelectedDate] = useState(
     dayjs().format('YYYY-MM-DD'),
   );
