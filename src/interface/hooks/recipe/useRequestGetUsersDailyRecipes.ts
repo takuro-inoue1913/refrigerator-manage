@@ -5,7 +5,6 @@ import { useQuery } from '@tanstack/react-query';
 import { generateDailyRecipes } from '@src/interface/logics/generate/generateDailyRecipes';
 import { dailyRecipesState } from '@src/states/recipe';
 import { dailyRecipeRepository } from '@src/interface/repositories/dailyRecipeRepository';
-import { useEffect, useState } from 'react';
 
 export const useRequestGetUsersDailyRecipes = (
   startDate: string,
@@ -13,8 +12,6 @@ export const useRequestGetUsersDailyRecipes = (
 ) => {
   const idToken = useRecoilValue(idTokenState);
   const [dailyRecipes, setDailyRecipes] = useRecoilState(dailyRecipesState);
-  // 初期レンダリング時のみクエリを実行するかを決定する状態を追加
-  const [shouldFetch, setShouldFetch] = useState(true);
 
   const { isFetching } = useQuery({
     queryKey: ['graphl', 'get', 'users', 'daily', 'recipes'],
@@ -26,10 +23,8 @@ export const useRequestGetUsersDailyRecipes = (
       });
       const _dailyRecipes = generateDailyRecipes(data);
       setDailyRecipes(_dailyRecipes);
-      setShouldFetch(false);
       return data;
     },
-    enabled: shouldFetch,
   });
 
   const changeDate = async (date: string) => {
@@ -58,12 +53,6 @@ export const useRequestGetUsersDailyRecipes = (
     const _dailyRecipes = generateDailyRecipes(data);
     setDailyRecipes(_dailyRecipes);
   };
-
-  useEffect(() => {
-    return () => {
-      setShouldFetch(true);
-    };
-  }, []);
 
   return {
     isLoading: isFetching,
