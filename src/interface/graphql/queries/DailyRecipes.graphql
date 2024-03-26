@@ -1,0 +1,96 @@
+query GetUsersDailyRecipesInRange($startDate: String!, $endDate: String!) {
+  user_daily(where: { date: { _gte: $startDate, _lte: $endDate } }) {
+    user_daily_id
+    user_id
+    date
+    user_daily_user_daily_recipes {
+      user_daily_recipes_id
+      user_daily_id
+      brunch_type
+      is_created
+      recipe_id
+      user_daily_recipes_recipes {
+        recipe_id
+        recipe_name
+        recipe_image
+        recipes_recipe_materials {
+          recipe_material_id
+          master_id
+          quantity
+        }
+        recipes_recipe_steps {
+          recipe_step_id
+          description
+        }
+      }
+    }
+  }
+}
+
+query GetUsersDailyRecipes($date: String!) {
+  user_daily(where: { date: { _eq: $date } }) {
+    user_daily_id
+    user_id
+    date
+    user_daily_user_daily_recipes {
+      user_daily_recipes_id
+      user_daily_id
+      brunch_type
+      is_created
+      recipe_id
+      user_daily_recipes_recipes {
+        recipe_id
+        recipe_name
+        recipe_image
+        recipes_recipe_materials {
+          recipe_material_id
+          master_id
+          quantity
+        }
+        recipes_recipe_steps {
+          recipe_step_id
+          description
+        }
+      }
+    }
+  }
+}
+
+mutation CreateUserDaily($date: String!, $userId: String!) {
+  insert_user_daily_one(object: { date: $date, user_id: $userId }) {
+    user_daily_id
+    user_id
+    date
+  }
+}
+
+mutation CreateUserDailyRecipe(
+  $brunchType: String!
+  $isCreated: Boolean!
+  $recipeId: uuid!
+  $userDailyId: uuid!
+) {
+  insert_user_daily_recipes_one(
+    object: {
+      brunch_type: $brunchType
+      is_created: $isCreated
+      recipe_id: $recipeId
+      user_daily_id: $userDailyId
+    }
+  ) {
+    user_daily_recipes_id
+    user_daily_id
+    brunch_type
+    is_created
+    recipe_id
+  }
+}
+
+mutation DeleteUserDailyRecipe($userDailyRecipeId: uuid!) {
+  delete_user_daily_recipes_by_pk(user_daily_recipes_id: $userDailyRecipeId) {
+    user_daily_recipes_id
+    user_daily_id
+    is_created
+    recipe_id
+  }
+}

@@ -5525,6 +5525,14 @@ export type Mutation_Root = {
   delete_unit_master?: Maybe<Unit_Master_Mutation_Response>;
   /** delete single row from the table: "unit_master" */
   delete_unit_master_by_pk?: Maybe<Unit_Master>;
+  /** delete data from the table: "user_daily" */
+  delete_user_daily?: Maybe<User_Daily_Mutation_Response>;
+  /** delete single row from the table: "user_daily" */
+  delete_user_daily_by_pk?: Maybe<User_Daily>;
+  /** delete data from the table: "user_daily_recipes" */
+  delete_user_daily_recipes?: Maybe<User_Daily_Recipes_Mutation_Response>;
+  /** delete single row from the table: "user_daily_recipes" */
+  delete_user_daily_recipes_by_pk?: Maybe<User_Daily_Recipes>;
   /** delete data from the table: "users" */
   delete_users?: Maybe<Users_Mutation_Response>;
   /** delete single row from the table: "users" */
@@ -5661,6 +5669,14 @@ export type Mutation_Root = {
   insert_unit_master?: Maybe<Unit_Master_Mutation_Response>;
   /** insert a single row into the table: "unit_master" */
   insert_unit_master_one?: Maybe<Unit_Master>;
+  /** insert data into the table: "user_daily" */
+  insert_user_daily?: Maybe<User_Daily_Mutation_Response>;
+  /** insert a single row into the table: "user_daily" */
+  insert_user_daily_one?: Maybe<User_Daily>;
+  /** insert data into the table: "user_daily_recipes" */
+  insert_user_daily_recipes?: Maybe<User_Daily_Recipes_Mutation_Response>;
+  /** insert a single row into the table: "user_daily_recipes" */
+  insert_user_daily_recipes_one?: Maybe<User_Daily_Recipes>;
   /** insert data into the table: "users" */
   insert_users?: Maybe<Users_Mutation_Response>;
   /** insert a single row into the table: "users" */
@@ -5859,6 +5875,18 @@ export type Mutation_Root = {
   update_unit_master_by_pk?: Maybe<Unit_Master>;
   /** update multiples rows of table: "unit_master" */
   update_unit_master_many?: Maybe<Array<Maybe<Unit_Master_Mutation_Response>>>;
+  /** update data of the table: "user_daily" */
+  update_user_daily?: Maybe<User_Daily_Mutation_Response>;
+  /** update single row of the table: "user_daily" */
+  update_user_daily_by_pk?: Maybe<User_Daily>;
+  /** update multiples rows of table: "user_daily" */
+  update_user_daily_many?: Maybe<Array<Maybe<User_Daily_Mutation_Response>>>;
+  /** update data of the table: "user_daily_recipes" */
+  update_user_daily_recipes?: Maybe<User_Daily_Recipes_Mutation_Response>;
+  /** update single row of the table: "user_daily_recipes" */
+  update_user_daily_recipes_by_pk?: Maybe<User_Daily_Recipes>;
+  /** update multiples rows of table: "user_daily_recipes" */
+  update_user_daily_recipes_many?: Maybe<Array<Maybe<User_Daily_Recipes_Mutation_Response>>>;
   /** update data of the table: "users" */
   update_users?: Maybe<Users_Mutation_Response>;
   /** update single row of the table: "users" */
@@ -6249,6 +6277,30 @@ export type Mutation_RootDelete_Unit_MasterArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Unit_Master_By_PkArgs = {
   unit_id: Scalars['Int']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_User_DailyArgs = {
+  where: User_Daily_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_User_Daily_By_PkArgs = {
+  user_daily_id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_User_Daily_RecipesArgs = {
+  where: User_Daily_Recipes_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_User_Daily_Recipes_By_PkArgs = {
+  user_daily_recipes_id: Scalars['uuid']['input'];
 };
 
 
@@ -6719,6 +6771,34 @@ export type Mutation_RootInsert_Unit_MasterArgs = {
 export type Mutation_RootInsert_Unit_Master_OneArgs = {
   object: Unit_Master_Insert_Input;
   on_conflict?: InputMaybe<Unit_Master_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_DailyArgs = {
+  objects: Array<User_Daily_Insert_Input>;
+  on_conflict?: InputMaybe<User_Daily_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_Daily_OneArgs = {
+  object: User_Daily_Insert_Input;
+  on_conflict?: InputMaybe<User_Daily_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_Daily_RecipesArgs = {
+  objects: Array<User_Daily_Recipes_Insert_Input>;
+  on_conflict?: InputMaybe<User_Daily_Recipes_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_Daily_Recipes_OneArgs = {
+  object: User_Daily_Recipes_Insert_Input;
+  on_conflict?: InputMaybe<User_Daily_Recipes_On_Conflict>;
 };
 
 
@@ -7437,6 +7517,46 @@ export type Mutation_RootUpdate_Unit_Master_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Unit_Master_ManyArgs = {
   updates: Array<Unit_Master_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_DailyArgs = {
+  _set?: InputMaybe<User_Daily_Set_Input>;
+  where: User_Daily_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Daily_By_PkArgs = {
+  _set?: InputMaybe<User_Daily_Set_Input>;
+  pk_columns: User_Daily_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Daily_ManyArgs = {
+  updates: Array<User_Daily_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Daily_RecipesArgs = {
+  _set?: InputMaybe<User_Daily_Recipes_Set_Input>;
+  where: User_Daily_Recipes_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Daily_Recipes_By_PkArgs = {
+  _set?: InputMaybe<User_Daily_Recipes_Set_Input>;
+  pk_columns: User_Daily_Recipes_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Daily_Recipes_ManyArgs = {
+  updates: Array<User_Daily_Recipes_Updates>;
 };
 
 
@@ -9228,6 +9348,18 @@ export type Query_Root = {
   unit_master_aggregate: Unit_Master_Aggregate;
   /** fetch data from the table: "unit_master" using primary key columns */
   unit_master_by_pk?: Maybe<Unit_Master>;
+  /** fetch data from the table: "user_daily" */
+  user_daily: Array<User_Daily>;
+  /** fetch aggregated fields from the table: "user_daily" */
+  user_daily_aggregate: User_Daily_Aggregate;
+  /** fetch data from the table: "user_daily" using primary key columns */
+  user_daily_by_pk?: Maybe<User_Daily>;
+  /** fetch data from the table: "user_daily_recipes" */
+  user_daily_recipes: Array<User_Daily_Recipes>;
+  /** fetch aggregated fields from the table: "user_daily_recipes" */
+  user_daily_recipes_aggregate: User_Daily_Recipes_Aggregate;
+  /** fetch data from the table: "user_daily_recipes" using primary key columns */
+  user_daily_recipes_by_pk?: Maybe<User_Daily_Recipes>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "users" */
@@ -9959,6 +10091,52 @@ export type Query_RootUnit_Master_AggregateArgs = {
 
 export type Query_RootUnit_Master_By_PkArgs = {
   unit_id: Scalars['Int']['input'];
+};
+
+
+export type Query_RootUser_DailyArgs = {
+  distinct_on?: InputMaybe<Array<User_Daily_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Daily_Order_By>>;
+  where?: InputMaybe<User_Daily_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Daily_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Daily_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Daily_Order_By>>;
+  where?: InputMaybe<User_Daily_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Daily_By_PkArgs = {
+  user_daily_id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootUser_Daily_RecipesArgs = {
+  distinct_on?: InputMaybe<Array<User_Daily_Recipes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Daily_Recipes_Order_By>>;
+  where?: InputMaybe<User_Daily_Recipes_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Daily_Recipes_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Daily_Recipes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Daily_Recipes_Order_By>>;
+  where?: InputMaybe<User_Daily_Recipes_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Daily_Recipes_By_PkArgs = {
+  user_daily_recipes_id: Scalars['uuid']['input'];
 };
 
 
@@ -13601,6 +13779,22 @@ export type Subscription_Root = {
   unit_master_by_pk?: Maybe<Unit_Master>;
   /** fetch data from the table in a streaming manner: "unit_master" */
   unit_master_stream: Array<Unit_Master>;
+  /** fetch data from the table: "user_daily" */
+  user_daily: Array<User_Daily>;
+  /** fetch aggregated fields from the table: "user_daily" */
+  user_daily_aggregate: User_Daily_Aggregate;
+  /** fetch data from the table: "user_daily" using primary key columns */
+  user_daily_by_pk?: Maybe<User_Daily>;
+  /** fetch data from the table: "user_daily_recipes" */
+  user_daily_recipes: Array<User_Daily_Recipes>;
+  /** fetch aggregated fields from the table: "user_daily_recipes" */
+  user_daily_recipes_aggregate: User_Daily_Recipes_Aggregate;
+  /** fetch data from the table: "user_daily_recipes" using primary key columns */
+  user_daily_recipes_by_pk?: Maybe<User_Daily_Recipes>;
+  /** fetch data from the table in a streaming manner: "user_daily_recipes" */
+  user_daily_recipes_stream: Array<User_Daily_Recipes>;
+  /** fetch data from the table in a streaming manner: "user_daily" */
+  user_daily_stream: Array<User_Daily>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "users" */
@@ -14558,6 +14752,66 @@ export type Subscription_RootUnit_Master_StreamArgs = {
 };
 
 
+export type Subscription_RootUser_DailyArgs = {
+  distinct_on?: InputMaybe<Array<User_Daily_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Daily_Order_By>>;
+  where?: InputMaybe<User_Daily_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Daily_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Daily_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Daily_Order_By>>;
+  where?: InputMaybe<User_Daily_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Daily_By_PkArgs = {
+  user_daily_id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootUser_Daily_RecipesArgs = {
+  distinct_on?: InputMaybe<Array<User_Daily_Recipes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Daily_Recipes_Order_By>>;
+  where?: InputMaybe<User_Daily_Recipes_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Daily_Recipes_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Daily_Recipes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Daily_Recipes_Order_By>>;
+  where?: InputMaybe<User_Daily_Recipes_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Daily_Recipes_By_PkArgs = {
+  user_daily_recipes_id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootUser_Daily_Recipes_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<User_Daily_Recipes_Stream_Cursor_Input>>;
+  where?: InputMaybe<User_Daily_Recipes_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Daily_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<User_Daily_Stream_Cursor_Input>>;
+  where?: InputMaybe<User_Daily_Bool_Exp>;
+};
+
+
 export type Subscription_RootUsersArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -14906,6 +15160,518 @@ export type Unit_Master_Variance_Fields = {
   unit_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** ユーザーごとの日付情報 */
+export type User_Daily = {
+  __typename?: 'user_daily';
+  /** 日付 */
+  date: Scalars['String']['output'];
+  /** user daily id */
+  user_daily_id: Scalars['uuid']['output'];
+  /** An array relationship */
+  user_daily_user_daily_recipes: Array<User_Daily_Recipes>;
+  /** An aggregate relationship */
+  user_daily_user_daily_recipes_aggregate: User_Daily_Recipes_Aggregate;
+  /** An array relationship */
+  user_daily_users: Array<Users>;
+  /** An aggregate relationship */
+  user_daily_users_aggregate: Users_Aggregate;
+  /** user id */
+  user_id: Scalars['String']['output'];
+};
+
+
+/** ユーザーごとの日付情報 */
+export type User_DailyUser_Daily_User_Daily_RecipesArgs = {
+  distinct_on?: InputMaybe<Array<User_Daily_Recipes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Daily_Recipes_Order_By>>;
+  where?: InputMaybe<User_Daily_Recipes_Bool_Exp>;
+};
+
+
+/** ユーザーごとの日付情報 */
+export type User_DailyUser_Daily_User_Daily_Recipes_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Daily_Recipes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Daily_Recipes_Order_By>>;
+  where?: InputMaybe<User_Daily_Recipes_Bool_Exp>;
+};
+
+
+/** ユーザーごとの日付情報 */
+export type User_DailyUser_Daily_UsersArgs = {
+  distinct_on?: InputMaybe<Array<Users_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Users_Order_By>>;
+  where?: InputMaybe<Users_Bool_Exp>;
+};
+
+
+/** ユーザーごとの日付情報 */
+export type User_DailyUser_Daily_Users_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Users_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Users_Order_By>>;
+  where?: InputMaybe<Users_Bool_Exp>;
+};
+
+/** aggregated selection of "user_daily" */
+export type User_Daily_Aggregate = {
+  __typename?: 'user_daily_aggregate';
+  aggregate?: Maybe<User_Daily_Aggregate_Fields>;
+  nodes: Array<User_Daily>;
+};
+
+/** aggregate fields of "user_daily" */
+export type User_Daily_Aggregate_Fields = {
+  __typename?: 'user_daily_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<User_Daily_Max_Fields>;
+  min?: Maybe<User_Daily_Min_Fields>;
+};
+
+
+/** aggregate fields of "user_daily" */
+export type User_Daily_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<User_Daily_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "user_daily". All fields are combined with a logical 'AND'. */
+export type User_Daily_Bool_Exp = {
+  _and?: InputMaybe<Array<User_Daily_Bool_Exp>>;
+  _not?: InputMaybe<User_Daily_Bool_Exp>;
+  _or?: InputMaybe<Array<User_Daily_Bool_Exp>>;
+  date?: InputMaybe<String_Comparison_Exp>;
+  user_daily_id?: InputMaybe<Uuid_Comparison_Exp>;
+  user_daily_user_daily_recipes?: InputMaybe<User_Daily_Recipes_Bool_Exp>;
+  user_daily_user_daily_recipes_aggregate?: InputMaybe<User_Daily_Recipes_Aggregate_Bool_Exp>;
+  user_daily_users?: InputMaybe<Users_Bool_Exp>;
+  user_daily_users_aggregate?: InputMaybe<Users_Aggregate_Bool_Exp>;
+  user_id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "user_daily" */
+export enum User_Daily_Constraint {
+  /** unique or primary key constraint on columns "user_daily_id" */
+  UserDailyPkey = 'user_daily_pkey'
+}
+
+/** input type for inserting data into table "user_daily" */
+export type User_Daily_Insert_Input = {
+  /** 日付 */
+  date?: InputMaybe<Scalars['String']['input']>;
+  /** user daily id */
+  user_daily_id?: InputMaybe<Scalars['uuid']['input']>;
+  user_daily_user_daily_recipes?: InputMaybe<User_Daily_Recipes_Arr_Rel_Insert_Input>;
+  user_daily_users?: InputMaybe<Users_Arr_Rel_Insert_Input>;
+  /** user id */
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type User_Daily_Max_Fields = {
+  __typename?: 'user_daily_max_fields';
+  /** 日付 */
+  date?: Maybe<Scalars['String']['output']>;
+  /** user daily id */
+  user_daily_id?: Maybe<Scalars['uuid']['output']>;
+  /** user id */
+  user_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type User_Daily_Min_Fields = {
+  __typename?: 'user_daily_min_fields';
+  /** 日付 */
+  date?: Maybe<Scalars['String']['output']>;
+  /** user daily id */
+  user_daily_id?: Maybe<Scalars['uuid']['output']>;
+  /** user id */
+  user_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "user_daily" */
+export type User_Daily_Mutation_Response = {
+  __typename?: 'user_daily_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<User_Daily>;
+};
+
+/** input type for inserting object relation for remote table "user_daily" */
+export type User_Daily_Obj_Rel_Insert_Input = {
+  data: User_Daily_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<User_Daily_On_Conflict>;
+};
+
+/** on_conflict condition type for table "user_daily" */
+export type User_Daily_On_Conflict = {
+  constraint: User_Daily_Constraint;
+  update_columns?: Array<User_Daily_Update_Column>;
+  where?: InputMaybe<User_Daily_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "user_daily". */
+export type User_Daily_Order_By = {
+  date?: InputMaybe<Order_By>;
+  user_daily_id?: InputMaybe<Order_By>;
+  user_daily_user_daily_recipes_aggregate?: InputMaybe<User_Daily_Recipes_Aggregate_Order_By>;
+  user_daily_users_aggregate?: InputMaybe<Users_Aggregate_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: user_daily */
+export type User_Daily_Pk_Columns_Input = {
+  /** user daily id */
+  user_daily_id: Scalars['uuid']['input'];
+};
+
+/** ユーザーの日付ごとのレシピ情報 */
+export type User_Daily_Recipes = {
+  __typename?: 'user_daily_recipes';
+  /** 食事時間タイプ */
+  brunch_type: Scalars['String']['output'];
+  /** 作ったかどうかのフラグ */
+  is_created: Scalars['Boolean']['output'];
+  /** recipe id */
+  recipe_id: Scalars['uuid']['output'];
+  /** user daily id */
+  user_daily_id: Scalars['uuid']['output'];
+  /** ID */
+  user_daily_recipes_id: Scalars['uuid']['output'];
+  /** An object relationship */
+  user_daily_recipes_recipes?: Maybe<Recipes>;
+  /** An object relationship */
+  user_daily_recipes_user_daily?: Maybe<User_Daily>;
+};
+
+/** aggregated selection of "user_daily_recipes" */
+export type User_Daily_Recipes_Aggregate = {
+  __typename?: 'user_daily_recipes_aggregate';
+  aggregate?: Maybe<User_Daily_Recipes_Aggregate_Fields>;
+  nodes: Array<User_Daily_Recipes>;
+};
+
+export type User_Daily_Recipes_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<User_Daily_Recipes_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<User_Daily_Recipes_Aggregate_Bool_Exp_Bool_Or>;
+  count?: InputMaybe<User_Daily_Recipes_Aggregate_Bool_Exp_Count>;
+};
+
+export type User_Daily_Recipes_Aggregate_Bool_Exp_Bool_And = {
+  arguments: User_Daily_Recipes_Select_Column_User_Daily_Recipes_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<User_Daily_Recipes_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type User_Daily_Recipes_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: User_Daily_Recipes_Select_Column_User_Daily_Recipes_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<User_Daily_Recipes_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type User_Daily_Recipes_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<User_Daily_Recipes_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<User_Daily_Recipes_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "user_daily_recipes" */
+export type User_Daily_Recipes_Aggregate_Fields = {
+  __typename?: 'user_daily_recipes_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<User_Daily_Recipes_Max_Fields>;
+  min?: Maybe<User_Daily_Recipes_Min_Fields>;
+};
+
+
+/** aggregate fields of "user_daily_recipes" */
+export type User_Daily_Recipes_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<User_Daily_Recipes_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "user_daily_recipes" */
+export type User_Daily_Recipes_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<User_Daily_Recipes_Max_Order_By>;
+  min?: InputMaybe<User_Daily_Recipes_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "user_daily_recipes" */
+export type User_Daily_Recipes_Arr_Rel_Insert_Input = {
+  data: Array<User_Daily_Recipes_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<User_Daily_Recipes_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "user_daily_recipes". All fields are combined with a logical 'AND'. */
+export type User_Daily_Recipes_Bool_Exp = {
+  _and?: InputMaybe<Array<User_Daily_Recipes_Bool_Exp>>;
+  _not?: InputMaybe<User_Daily_Recipes_Bool_Exp>;
+  _or?: InputMaybe<Array<User_Daily_Recipes_Bool_Exp>>;
+  brunch_type?: InputMaybe<String_Comparison_Exp>;
+  is_created?: InputMaybe<Boolean_Comparison_Exp>;
+  recipe_id?: InputMaybe<Uuid_Comparison_Exp>;
+  user_daily_id?: InputMaybe<Uuid_Comparison_Exp>;
+  user_daily_recipes_id?: InputMaybe<Uuid_Comparison_Exp>;
+  user_daily_recipes_recipes?: InputMaybe<Recipes_Bool_Exp>;
+  user_daily_recipes_user_daily?: InputMaybe<User_Daily_Bool_Exp>;
+};
+
+/** unique or primary key constraints on table "user_daily_recipes" */
+export enum User_Daily_Recipes_Constraint {
+  /** unique or primary key constraint on columns "user_daily_recipes_id" */
+  UserDailyRecipesPkey = 'user_daily_recipes_pkey'
+}
+
+/** input type for inserting data into table "user_daily_recipes" */
+export type User_Daily_Recipes_Insert_Input = {
+  /** 食事時間タイプ */
+  brunch_type?: InputMaybe<Scalars['String']['input']>;
+  /** 作ったかどうかのフラグ */
+  is_created?: InputMaybe<Scalars['Boolean']['input']>;
+  /** recipe id */
+  recipe_id?: InputMaybe<Scalars['uuid']['input']>;
+  /** user daily id */
+  user_daily_id?: InputMaybe<Scalars['uuid']['input']>;
+  /** ID */
+  user_daily_recipes_id?: InputMaybe<Scalars['uuid']['input']>;
+  user_daily_recipes_recipes?: InputMaybe<Recipes_Obj_Rel_Insert_Input>;
+  user_daily_recipes_user_daily?: InputMaybe<User_Daily_Obj_Rel_Insert_Input>;
+};
+
+/** aggregate max on columns */
+export type User_Daily_Recipes_Max_Fields = {
+  __typename?: 'user_daily_recipes_max_fields';
+  /** 食事時間タイプ */
+  brunch_type?: Maybe<Scalars['String']['output']>;
+  /** recipe id */
+  recipe_id?: Maybe<Scalars['uuid']['output']>;
+  /** user daily id */
+  user_daily_id?: Maybe<Scalars['uuid']['output']>;
+  /** ID */
+  user_daily_recipes_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by max() on columns of table "user_daily_recipes" */
+export type User_Daily_Recipes_Max_Order_By = {
+  /** 食事時間タイプ */
+  brunch_type?: InputMaybe<Order_By>;
+  /** recipe id */
+  recipe_id?: InputMaybe<Order_By>;
+  /** user daily id */
+  user_daily_id?: InputMaybe<Order_By>;
+  /** ID */
+  user_daily_recipes_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type User_Daily_Recipes_Min_Fields = {
+  __typename?: 'user_daily_recipes_min_fields';
+  /** 食事時間タイプ */
+  brunch_type?: Maybe<Scalars['String']['output']>;
+  /** recipe id */
+  recipe_id?: Maybe<Scalars['uuid']['output']>;
+  /** user daily id */
+  user_daily_id?: Maybe<Scalars['uuid']['output']>;
+  /** ID */
+  user_daily_recipes_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by min() on columns of table "user_daily_recipes" */
+export type User_Daily_Recipes_Min_Order_By = {
+  /** 食事時間タイプ */
+  brunch_type?: InputMaybe<Order_By>;
+  /** recipe id */
+  recipe_id?: InputMaybe<Order_By>;
+  /** user daily id */
+  user_daily_id?: InputMaybe<Order_By>;
+  /** ID */
+  user_daily_recipes_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "user_daily_recipes" */
+export type User_Daily_Recipes_Mutation_Response = {
+  __typename?: 'user_daily_recipes_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<User_Daily_Recipes>;
+};
+
+/** on_conflict condition type for table "user_daily_recipes" */
+export type User_Daily_Recipes_On_Conflict = {
+  constraint: User_Daily_Recipes_Constraint;
+  update_columns?: Array<User_Daily_Recipes_Update_Column>;
+  where?: InputMaybe<User_Daily_Recipes_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "user_daily_recipes". */
+export type User_Daily_Recipes_Order_By = {
+  brunch_type?: InputMaybe<Order_By>;
+  is_created?: InputMaybe<Order_By>;
+  recipe_id?: InputMaybe<Order_By>;
+  user_daily_id?: InputMaybe<Order_By>;
+  user_daily_recipes_id?: InputMaybe<Order_By>;
+  user_daily_recipes_recipes?: InputMaybe<Recipes_Order_By>;
+  user_daily_recipes_user_daily?: InputMaybe<User_Daily_Order_By>;
+};
+
+/** primary key columns input for table: user_daily_recipes */
+export type User_Daily_Recipes_Pk_Columns_Input = {
+  /** ID */
+  user_daily_recipes_id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "user_daily_recipes" */
+export enum User_Daily_Recipes_Select_Column {
+  /** column name */
+  BrunchType = 'brunch_type',
+  /** column name */
+  IsCreated = 'is_created',
+  /** column name */
+  RecipeId = 'recipe_id',
+  /** column name */
+  UserDailyId = 'user_daily_id',
+  /** column name */
+  UserDailyRecipesId = 'user_daily_recipes_id'
+}
+
+/** select "user_daily_recipes_aggregate_bool_exp_bool_and_arguments_columns" columns of table "user_daily_recipes" */
+export enum User_Daily_Recipes_Select_Column_User_Daily_Recipes_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  IsCreated = 'is_created'
+}
+
+/** select "user_daily_recipes_aggregate_bool_exp_bool_or_arguments_columns" columns of table "user_daily_recipes" */
+export enum User_Daily_Recipes_Select_Column_User_Daily_Recipes_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  IsCreated = 'is_created'
+}
+
+/** input type for updating data in table "user_daily_recipes" */
+export type User_Daily_Recipes_Set_Input = {
+  /** 食事時間タイプ */
+  brunch_type?: InputMaybe<Scalars['String']['input']>;
+  /** 作ったかどうかのフラグ */
+  is_created?: InputMaybe<Scalars['Boolean']['input']>;
+  /** recipe id */
+  recipe_id?: InputMaybe<Scalars['uuid']['input']>;
+  /** user daily id */
+  user_daily_id?: InputMaybe<Scalars['uuid']['input']>;
+  /** ID */
+  user_daily_recipes_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** Streaming cursor of the table "user_daily_recipes" */
+export type User_Daily_Recipes_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: User_Daily_Recipes_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type User_Daily_Recipes_Stream_Cursor_Value_Input = {
+  /** 食事時間タイプ */
+  brunch_type?: InputMaybe<Scalars['String']['input']>;
+  /** 作ったかどうかのフラグ */
+  is_created?: InputMaybe<Scalars['Boolean']['input']>;
+  /** recipe id */
+  recipe_id?: InputMaybe<Scalars['uuid']['input']>;
+  /** user daily id */
+  user_daily_id?: InputMaybe<Scalars['uuid']['input']>;
+  /** ID */
+  user_daily_recipes_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** update columns of table "user_daily_recipes" */
+export enum User_Daily_Recipes_Update_Column {
+  /** column name */
+  BrunchType = 'brunch_type',
+  /** column name */
+  IsCreated = 'is_created',
+  /** column name */
+  RecipeId = 'recipe_id',
+  /** column name */
+  UserDailyId = 'user_daily_id',
+  /** column name */
+  UserDailyRecipesId = 'user_daily_recipes_id'
+}
+
+export type User_Daily_Recipes_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<User_Daily_Recipes_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: User_Daily_Recipes_Bool_Exp;
+};
+
+/** select columns of table "user_daily" */
+export enum User_Daily_Select_Column {
+  /** column name */
+  Date = 'date',
+  /** column name */
+  UserDailyId = 'user_daily_id',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "user_daily" */
+export type User_Daily_Set_Input = {
+  /** 日付 */
+  date?: InputMaybe<Scalars['String']['input']>;
+  /** user daily id */
+  user_daily_id?: InputMaybe<Scalars['uuid']['input']>;
+  /** user id */
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "user_daily" */
+export type User_Daily_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: User_Daily_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type User_Daily_Stream_Cursor_Value_Input = {
+  /** 日付 */
+  date?: InputMaybe<Scalars['String']['input']>;
+  /** user daily id */
+  user_daily_id?: InputMaybe<Scalars['uuid']['input']>;
+  /** user id */
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "user_daily" */
+export enum User_Daily_Update_Column {
+  /** column name */
+  Date = 'date',
+  /** column name */
+  UserDailyId = 'user_daily_id',
+  /** column name */
+  UserId = 'user_id'
+}
+
+export type User_Daily_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<User_Daily_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: User_Daily_Bool_Exp;
+};
+
 /** frimane ユーザー */
 export type Users = {
   __typename?: 'users';
@@ -14963,6 +15729,8 @@ export type Users = {
   users_staple_food_stocks: Array<Staple_Food_Stocks>;
   /** An aggregate relationship */
   users_staple_food_stocks_aggregate: Staple_Food_Stocks_Aggregate;
+  /** An object relationship */
+  users_user_daily?: Maybe<User_Daily>;
   /** An array relationship */
   users_vegetable_stocks: Array<Vegetable_Stocks>;
   /** An aggregate relationship */
@@ -15236,6 +16004,17 @@ export type Users_Aggregate = {
   nodes: Array<Users>;
 };
 
+export type Users_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Users_Aggregate_Bool_Exp_Count>;
+};
+
+export type Users_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Users_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Users_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
 /** aggregate fields of "users" */
 export type Users_Aggregate_Fields = {
   __typename?: 'users_aggregate_fields';
@@ -15249,6 +16028,20 @@ export type Users_Aggregate_Fields = {
 export type Users_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Users_Select_Column>>;
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "users" */
+export type Users_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Users_Max_Order_By>;
+  min?: InputMaybe<Users_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "users" */
+export type Users_Arr_Rel_Insert_Input = {
+  data: Array<Users_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Users_On_Conflict>;
 };
 
 /** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
@@ -15283,6 +16076,7 @@ export type Users_Bool_Exp = {
   users_spice_stocks_aggregate?: InputMaybe<Spice_Stocks_Aggregate_Bool_Exp>;
   users_staple_food_stocks?: InputMaybe<Staple_Food_Stocks_Bool_Exp>;
   users_staple_food_stocks_aggregate?: InputMaybe<Staple_Food_Stocks_Aggregate_Bool_Exp>;
+  users_user_daily?: InputMaybe<User_Daily_Bool_Exp>;
   users_vegetable_stocks?: InputMaybe<Vegetable_Stocks_Bool_Exp>;
   users_vegetable_stocks_aggregate?: InputMaybe<Vegetable_Stocks_Aggregate_Bool_Exp>;
 };
@@ -15313,6 +16107,7 @@ export type Users_Insert_Input = {
   users_shopping_memo?: InputMaybe<Shopping_Memo_Arr_Rel_Insert_Input>;
   users_spice_stocks?: InputMaybe<Spice_Stocks_Arr_Rel_Insert_Input>;
   users_staple_food_stocks?: InputMaybe<Staple_Food_Stocks_Arr_Rel_Insert_Input>;
+  users_user_daily?: InputMaybe<User_Daily_Obj_Rel_Insert_Input>;
   users_vegetable_stocks?: InputMaybe<Vegetable_Stocks_Arr_Rel_Insert_Input>;
 };
 
@@ -15327,6 +16122,16 @@ export type Users_Max_Fields = {
   id?: Maybe<Scalars['String']['output']>;
 };
 
+/** order by max() on columns of table "users" */
+export type Users_Max_Order_By = {
+  /** アカウント作成日 */
+  created_at?: InputMaybe<Order_By>;
+  /** Emailアドレス */
+  email?: InputMaybe<Order_By>;
+  /** ユーザーID */
+  id?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type Users_Min_Fields = {
   __typename?: 'users_min_fields';
@@ -15336,6 +16141,16 @@ export type Users_Min_Fields = {
   email?: Maybe<Scalars['String']['output']>;
   /** ユーザーID */
   id?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by min() on columns of table "users" */
+export type Users_Min_Order_By = {
+  /** アカウント作成日 */
+  created_at?: InputMaybe<Order_By>;
+  /** Emailアドレス */
+  email?: InputMaybe<Order_By>;
+  /** ユーザーID */
+  id?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "users" */
@@ -15378,6 +16193,7 @@ export type Users_Order_By = {
   users_shopping_memo_aggregate?: InputMaybe<Shopping_Memo_Aggregate_Order_By>;
   users_spice_stocks_aggregate?: InputMaybe<Spice_Stocks_Aggregate_Order_By>;
   users_staple_food_stocks_aggregate?: InputMaybe<Staple_Food_Stocks_Aggregate_Order_By>;
+  users_user_daily?: InputMaybe<User_Daily_Order_By>;
   users_vegetable_stocks_aggregate?: InputMaybe<Vegetable_Stocks_Aggregate_Order_By>;
 };
 
@@ -16292,6 +17108,46 @@ export type GetAllFridgeMasterQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAllFridgeMasterQuery = { __typename?: 'query_root', custom_dessert_master: Array<{ __typename?: 'custom_dessert_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'dessert_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, custom_fish_master: Array<{ __typename?: 'custom_fish_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'fish_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, custom_meat_master: Array<{ __typename?: 'custom_meat_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string }>, custom_other_master: Array<{ __typename?: 'custom_other_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'other_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, custom_protein_source_master: Array<{ __typename?: 'custom_protein_source_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'protein_source_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, custom_seasoning_master: Array<{ __typename?: 'custom_seasoning_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'seasoning_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, custom_spice_master: Array<{ __typename?: 'custom_spice_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'spice_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, custom_staple_food_master: Array<{ __typename?: 'custom_staple_food_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'staple_food_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, custom_vegetable_master: Array<{ __typename?: 'custom_vegetable_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'vegetable_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, dessert_master: Array<{ __typename?: 'dessert_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'dessert_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, fish_master: Array<{ __typename?: 'fish_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'fish_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, meat_master: Array<{ __typename?: 'meat_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'meat_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, other_master: Array<{ __typename?: 'other_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'other_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, protein_source_master: Array<{ __typename?: 'protein_source_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'protein_source_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, seasoning_master: Array<{ __typename?: 'seasoning_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'seasoning_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, spice_master: Array<{ __typename?: 'spice_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'spice_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, staple_food_master: Array<{ __typename?: 'staple_food_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'staple_food_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }>, vegetable_master: Array<{ __typename?: 'vegetable_master', display_name: string, image_uri: string, default_expiration_period: number, id: string, name: string, stack?: { __typename?: 'vegetable_stocks', stock_id: string, quantity: number, expiration_date: string, incremental_unit: number, is_favorite: boolean, memo: string } | null, unit_master?: { __typename?: 'unit_master', unit_id: number, unit_name: string } | null }> };
 
+export type GetUsersDailyRecipesInRangeQueryVariables = Exact<{
+  startDate: Scalars['String']['input'];
+  endDate: Scalars['String']['input'];
+}>;
+
+
+export type GetUsersDailyRecipesInRangeQuery = { __typename?: 'query_root', user_daily: Array<{ __typename?: 'user_daily', user_daily_id: string, user_id: string, date: string, user_daily_user_daily_recipes: Array<{ __typename?: 'user_daily_recipes', user_daily_recipes_id: string, user_daily_id: string, brunch_type: string, is_created: boolean, recipe_id: string, user_daily_recipes_recipes?: { __typename?: 'recipes', recipe_id: string, recipe_name: string, recipe_image: string, recipes_recipe_materials: Array<{ __typename?: 'recipe_materials', recipe_material_id: string, master_id: string, quantity: number }>, recipes_recipe_steps: Array<{ __typename?: 'recipe_steps', recipe_step_id: string, description: string }> } | null }> }> };
+
+export type GetUsersDailyRecipesQueryVariables = Exact<{
+  date: Scalars['String']['input'];
+}>;
+
+
+export type GetUsersDailyRecipesQuery = { __typename?: 'query_root', user_daily: Array<{ __typename?: 'user_daily', user_daily_id: string, user_id: string, date: string, user_daily_user_daily_recipes: Array<{ __typename?: 'user_daily_recipes', user_daily_recipes_id: string, user_daily_id: string, brunch_type: string, is_created: boolean, recipe_id: string, user_daily_recipes_recipes?: { __typename?: 'recipes', recipe_id: string, recipe_name: string, recipe_image: string, recipes_recipe_materials: Array<{ __typename?: 'recipe_materials', recipe_material_id: string, master_id: string, quantity: number }>, recipes_recipe_steps: Array<{ __typename?: 'recipe_steps', recipe_step_id: string, description: string }> } | null }> }> };
+
+export type CreateUserDailyMutationVariables = Exact<{
+  date: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
+}>;
+
+
+export type CreateUserDailyMutation = { __typename?: 'mutation_root', insert_user_daily_one?: { __typename?: 'user_daily', user_daily_id: string, user_id: string, date: string } | null };
+
+export type CreateUserDailyRecipeMutationVariables = Exact<{
+  brunchType: Scalars['String']['input'];
+  isCreated: Scalars['Boolean']['input'];
+  recipeId: Scalars['uuid']['input'];
+  userDailyId: Scalars['uuid']['input'];
+}>;
+
+
+export type CreateUserDailyRecipeMutation = { __typename?: 'mutation_root', insert_user_daily_recipes_one?: { __typename?: 'user_daily_recipes', user_daily_recipes_id: string, user_daily_id: string, brunch_type: string, is_created: boolean, recipe_id: string } | null };
+
+export type DeleteUserDailyRecipeMutationVariables = Exact<{
+  userDailyRecipeId: Scalars['uuid']['input'];
+}>;
+
+
+export type DeleteUserDailyRecipeMutation = { __typename?: 'mutation_root', delete_user_daily_recipes_by_pk?: { __typename?: 'user_daily_recipes', user_daily_recipes_id: string, user_daily_id: string, is_created: boolean, recipe_id: string } | null };
+
 export type GetAllDessertMasterAndUnitAndStocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -17114,6 +17970,11 @@ export type DeleteCustomVegetableAndStocksMutation = { __typename?: 'mutation_ro
 
 
 export const GetAllFridgeMasterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllFridgeMaster"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"custom_dessert_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"custom_dessert_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"custom_dessert_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"custom_dessert_master_dessert_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"custom_dessert_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"custom_fish_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"custom_fish_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"custom_fish_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"custom_fish_master_fish_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"custom_fish_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"custom_meat_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"custom_meat_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"custom_meat_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}}]}},{"kind":"Field","name":{"kind":"Name","value":"custom_other_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"custom_other_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"custom_other_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"custom_other_master_other_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"custom_other_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"custom_protein_source_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"custom_protein_source_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"custom_protein_source_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"custom_protein_source_master_protein_source_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"custom_protein_source_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"custom_seasoning_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"custom_seasoning_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"custom_seasoning_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"custom_seasoning_master_seasoning_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"custom_seasoning_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"custom_spice_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"custom_spice_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"custom_spice_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"custom_spice_master_spice_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"custom_spice_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"custom_staple_food_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"custom_staple_food_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"custom_staple_food_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"custom_staple_food_master_staple_food_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"custom_staple_food_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"custom_vegetable_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"custom_vegetable_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"custom_vegetable_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"custom_vegetable_master_vegetable_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"custom_vegetable_master_uint_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"dessert_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"dessert_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"dessert_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"dessert_master_dessert_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"dessert_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"fish_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"fish_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"fish_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"fish_master_fish_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"fish_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"meat_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"meat_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"meat_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"meat_master_meat_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"meat_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"other_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"other_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"other_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"other_master_other_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"other_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"protein_source_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"protein_source_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"protein_source_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"protein_source_master_protein_source_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"protein_source_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"seasoning_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"seasoning_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"seasoning_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"seasoning_master_seasoning_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"seasoning_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"spice_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"spice_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"spice_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"spice_master_spice_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"spice_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"staple_food_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"staple_food_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"staple_food_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"staple_food_master_staple_food_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"staple_food_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"vegetable_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"vegetable_id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"vegetable_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"stack"},"name":{"kind":"Name","value":"vegetable_master_vegetable_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unit_master"},"name":{"kind":"Name","value":"vegetable_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllFridgeMasterQuery, GetAllFridgeMasterQueryVariables>;
+export const GetUsersDailyRecipesInRangeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUsersDailyRecipesInRange"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"startDate"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"endDate"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_daily"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"date"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"startDate"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"endDate"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_daily_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"user_daily_user_daily_recipes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_daily_recipes_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_daily_id"}},{"kind":"Field","name":{"kind":"Name","value":"brunch_type"}},{"kind":"Field","name":{"kind":"Name","value":"is_created"}},{"kind":"Field","name":{"kind":"Name","value":"recipe_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_daily_recipes_recipes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipe_id"}},{"kind":"Field","name":{"kind":"Name","value":"recipe_name"}},{"kind":"Field","name":{"kind":"Name","value":"recipe_image"}},{"kind":"Field","name":{"kind":"Name","value":"recipes_recipe_materials"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipe_material_id"}},{"kind":"Field","name":{"kind":"Name","value":"master_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}}]}},{"kind":"Field","name":{"kind":"Name","value":"recipes_recipe_steps"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipe_step_id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetUsersDailyRecipesInRangeQuery, GetUsersDailyRecipesInRangeQueryVariables>;
+export const GetUsersDailyRecipesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUsersDailyRecipes"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_daily"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"date"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"date"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_daily_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"user_daily_user_daily_recipes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_daily_recipes_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_daily_id"}},{"kind":"Field","name":{"kind":"Name","value":"brunch_type"}},{"kind":"Field","name":{"kind":"Name","value":"is_created"}},{"kind":"Field","name":{"kind":"Name","value":"recipe_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_daily_recipes_recipes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipe_id"}},{"kind":"Field","name":{"kind":"Name","value":"recipe_name"}},{"kind":"Field","name":{"kind":"Name","value":"recipe_image"}},{"kind":"Field","name":{"kind":"Name","value":"recipes_recipe_materials"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipe_material_id"}},{"kind":"Field","name":{"kind":"Name","value":"master_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}}]}},{"kind":"Field","name":{"kind":"Name","value":"recipes_recipe_steps"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipe_step_id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetUsersDailyRecipesQuery, GetUsersDailyRecipesQueryVariables>;
+export const CreateUserDailyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateUserDaily"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_user_daily_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_daily_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"date"}}]}}]}}]} as unknown as DocumentNode<CreateUserDailyMutation, CreateUserDailyMutationVariables>;
+export const CreateUserDailyRecipeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateUserDailyRecipe"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"brunchType"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"isCreated"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"recipeId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userDailyId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_user_daily_recipes_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"brunch_type"},"value":{"kind":"Variable","name":{"kind":"Name","value":"brunchType"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"is_created"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isCreated"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"recipe_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"recipeId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_daily_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userDailyId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_daily_recipes_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_daily_id"}},{"kind":"Field","name":{"kind":"Name","value":"brunch_type"}},{"kind":"Field","name":{"kind":"Name","value":"is_created"}},{"kind":"Field","name":{"kind":"Name","value":"recipe_id"}}]}}]}}]} as unknown as DocumentNode<CreateUserDailyRecipeMutation, CreateUserDailyRecipeMutationVariables>;
+export const DeleteUserDailyRecipeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteUserDailyRecipe"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userDailyRecipeId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_user_daily_recipes_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"user_daily_recipes_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userDailyRecipeId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_daily_recipes_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_daily_id"}},{"kind":"Field","name":{"kind":"Name","value":"is_created"}},{"kind":"Field","name":{"kind":"Name","value":"recipe_id"}}]}}]}}]} as unknown as DocumentNode<DeleteUserDailyRecipeMutation, DeleteUserDailyRecipeMutationVariables>;
 export const GetAllDessertMasterAndUnitAndStocksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllDessertMasterAndUnitAndStocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"GetDessertMasterAndUnitAndStocks"},"name":{"kind":"Name","value":"dessert_master"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"dessert_master_dessert_stocks"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_favorite"},"value":{"kind":"EnumValue","value":"desc_nulls_last"}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dessert_id"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"dessert_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","name":{"kind":"Name","value":"dessert_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"dessert_master_dessert_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"GetCustomDessertMasterAndUnitAndStocks"},"name":{"kind":"Name","value":"custom_dessert_master"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"custom_dessert_master_dessert_stocks"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_favorite"},"value":{"kind":"EnumValue","value":"desc_nulls_last"}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"dessert_id"},"name":{"kind":"Name","value":"custom_dessert_id"}},{"kind":"Field","alias":{"kind":"Name","value":"dessert_name"},"name":{"kind":"Name","value":"custom_dessert_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"dessert_master_unit_master"},"name":{"kind":"Name","value":"custom_dessert_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"dessert_master_dessert_stocks"},"name":{"kind":"Name","value":"custom_dessert_master_dessert_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllDessertMasterAndUnitAndStocksQuery, GetAllDessertMasterAndUnitAndStocksQueryVariables>;
 export const GetDessertMasterAndUnitAndStocksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetDessertMasterAndUnitAndStocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dessert_master"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"dessert_master_dessert_stocks"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_favorite"},"value":{"kind":"EnumValue","value":"desc_nulls_last"}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dessert_id"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"dessert_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","name":{"kind":"Name","value":"dessert_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"dessert_master_dessert_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}}]}}]}}]}}]} as unknown as DocumentNode<GetDessertMasterAndUnitAndStocksQuery, GetDessertMasterAndUnitAndStocksQueryVariables>;
 export const GetCustomDessertMasterAndUnitAndStocksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCustomDessertMasterAndUnitAndStocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"custom_dessert_master"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"custom_dessert_master_dessert_stocks"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_favorite"},"value":{"kind":"EnumValue","value":"desc_nulls_last"}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"dessert_id"},"name":{"kind":"Name","value":"custom_dessert_id"}},{"kind":"Field","alias":{"kind":"Name","value":"dessert_name"},"name":{"kind":"Name","value":"custom_dessert_name"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}},{"kind":"Field","name":{"kind":"Name","value":"image_uri"}},{"kind":"Field","name":{"kind":"Name","value":"default_expiration_period"}},{"kind":"Field","alias":{"kind":"Name","value":"dessert_master_unit_master"},"name":{"kind":"Name","value":"custom_dessert_master_unit_master"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unit_id"}},{"kind":"Field","name":{"kind":"Name","value":"unit_name"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"dessert_master_dessert_stocks"},"name":{"kind":"Name","value":"custom_dessert_master_dessert_stocks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stock_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"incremental_unit"}},{"kind":"Field","name":{"kind":"Name","value":"expiration_date"}},{"kind":"Field","name":{"kind":"Name","value":"memo"}},{"kind":"Field","name":{"kind":"Name","value":"is_favorite"}}]}}]}}]}}]} as unknown as DocumentNode<GetCustomDessertMasterAndUnitAndStocksQuery, GetCustomDessertMasterAndUnitAndStocksQueryVariables>;

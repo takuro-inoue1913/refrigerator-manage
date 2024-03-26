@@ -6,12 +6,19 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { CommonGradation } from '@src/components/common/CommonGradation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
+import { useRequestGetUsersDailyRecipes } from '@src/interface/hooks/recipe/useRequestGetUsersDailyRecipes';
 
 export const RecipeScreen = () => {
+  const { dailyRecipes } = useRequestGetUsersDailyRecipes(
+    dayjs().startOf('month').format('YYYY-MM-DD'),
+    dayjs().endOf('month').format('YYYY-MM-DD'),
+  );
   const [selectedDate, setSelectedDate] = useState(
     dayjs().format('YYYY-MM-DD'),
   );
   const navigation = useTypedNavigation();
+
+  console.log('dailyRecipes', dailyRecipes);
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -43,6 +50,7 @@ export const RecipeScreen = () => {
           },
         }}
         onDayPress={(day) => {
+          console.log('selected day', day);
           setSelectedDate(day.dateString);
         }}
       />
