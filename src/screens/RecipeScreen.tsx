@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { Calendar } from 'react-native-calendars';
 import { COMMON_COLOR_GREEN } from '@src/utils/consts';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  FlatList,
+} from 'react-native';
 import { CommonGradation } from '@src/components/common/CommonGradation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 import { useRequestGetUsersDailyRecipes } from '@src/interface/hooks/recipe/useRequestGetUsersDailyRecipes';
+import { LoadingMask } from '@src/components/common/LoadingMask';
+import { DailyRecipes } from '@src/states/recipe';
+import CachedImage from 'expo-cached-image';
+import { LinearGradientButton } from '@src/components/common/GradationButton';
 
 export const RecipeScreen = () => {
-  const { dailyRecipes } = useRequestGetUsersDailyRecipes(
+  const { isLoading, dailyRecipes } = useRequestGetUsersDailyRecipes(
     dayjs().startOf('month').format('YYYY-MM-DD'),
     dayjs().endOf('month').format('YYYY-MM-DD'),
   );
@@ -18,9 +28,78 @@ export const RecipeScreen = () => {
   );
   const navigation = useTypedNavigation();
 
-  console.log('dailyRecipes', dailyRecipes);
+  const listData = useMemo<DailyRecipes['byId'][number][]>(() => {
+    return Object.values(dailyRecipes.byId).filter(
+      (i) => i.date === selectedDate,
+    );
+  }, [dailyRecipes.byId, selectedDate]);
+
+  const RenderRecipes = ({ item }: { item: DailyRecipes['byId'][number] }) => {
+    return (
+      <View>
+        {item.recipes.map((recipe) => {
+          return (
+            <View key={recipe.recipeId} style={styles.recipeItem}>
+              <View style={styles.recipeItemLeft}>
+                <Icon
+                  size={35}
+                  name={
+                    recipe.brunchType === 'breakfast'
+                      ? 'weather-sunset'
+                      : recipe.brunchType === 'lunch'
+                        ? 'weather-sunny'
+                        : recipe.brunchType === 'dinner'
+                          ? 'weather-night'
+                          : recipe.brunchType === 'snack'
+                            ? 'food-apple'
+                            : 'silverware-fork-knife'
+                  }
+                  color={
+                    recipe.brunchType === 'breakfast'
+                      ? 'gold'
+                      : recipe.brunchType === 'lunch'
+                        ? 'darksalmon'
+                        : recipe.brunchType === 'dinner'
+                          ? 'chocolate'
+                          : recipe.brunchType === 'snack'
+                            ? 'green'
+                            : 'black'
+                  }
+                />
+                <CachedImage
+                  cacheKey={`recipeImage-${recipe.recipeId}`}
+                  style={styles.recipeImage}
+                  source={{ uri: recipe.recipeImageUri }}
+                />
+                <Text style={styles.recipeName}>{recipe.recipeName}</Text>
+              </View>
+              <View>
+                <LinearGradientButton
+                  disabled={recipe.isCreated}
+                  width={40}
+                  height={40}
+                  onPress={() => {}}
+                >
+                  <Text
+                    style={
+                      recipe.isCreated
+                        ? { color: 'white', fontSize: 16 }
+                        : { color: 'white', fontSize: 16, fontWeight: 'bold' }
+                    }
+                  >
+                    済
+                  </Text>
+                </LinearGradientButton>
+              </View>
+            </View>
+          );
+        })}
+      </View>
+    );
+  };
   return (
     <View style={styles.container}>
+      {isLoading && <LoadingMask />}
       <TouchableOpacity
         style={styles.addButton}
         onPress={() => {
@@ -54,9 +133,11 @@ export const RecipeScreen = () => {
           setSelectedDate(day.dateString);
         }}
       />
-      <View>
-        <Text>RecipeScreen</Text>
-      </View>
+      <FlatList
+        data={listData}
+        renderItem={RenderRecipes}
+        keyExtractor={(item) => item.id}
+      />
     </View>
   );
 };
@@ -64,6 +145,7 @@ export const RecipeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    gap: 5,
   },
   addButton: {
     position: 'absolute',
@@ -76,5 +158,32 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  recipeItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    backgroundColor: 'white',
+    margin: 5,
+    borderRadius: 10,
+  },
+  recipeImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 5,
+  },
+  recipeName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'gray',
+  },
+  recipeItemLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
   },
 });

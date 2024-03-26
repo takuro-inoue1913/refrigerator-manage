@@ -2,7 +2,7 @@ import { atom } from 'recoil';
 import { TypeName } from '@src/states/fridge';
 import { NormalizedArray } from '@src/types';
 
-export type BrunchType = 'breakfast' | 'lunch' | 'dinner';
+export type BrunchType = 'breakfast' | 'lunch' | 'dinner' | 'snack';
 
 export type Recipes = NormalizedArray<{
   id: string;
