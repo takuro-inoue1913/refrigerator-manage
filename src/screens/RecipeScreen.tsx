@@ -34,66 +34,84 @@ export const RecipeScreen = () => {
     );
   }, [dailyRecipes.byId, selectedDate]);
 
+  const NewDailyRecipe = () => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('レシピ新規登録');
+        }}
+      >
+        <View style={styles.newDailyRecipeWrapper}>
+          <Text style={styles.textStyle}>献立を設定する</Text>
+          <Icon name="plus" size={30} color="gray" />
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   const RenderRecipes = ({ item }: { item: DailyRecipes['byId'][number] }) => {
     return (
       <View>
         {item.recipes.map((recipe) => {
           return (
-            <View key={recipe.recipeId} style={styles.recipeItem}>
-              <View style={styles.recipeItemLeft}>
-                <Icon
-                  size={35}
-                  name={
-                    recipe.brunchType === 'breakfast'
-                      ? 'weather-sunset'
-                      : recipe.brunchType === 'lunch'
-                        ? 'weather-sunny'
-                        : recipe.brunchType === 'dinner'
-                          ? 'weather-night'
-                          : recipe.brunchType === 'snack'
-                            ? 'food-apple'
-                            : 'silverware-fork-knife'
-                  }
-                  color={
-                    recipe.brunchType === 'breakfast'
-                      ? 'gold'
-                      : recipe.brunchType === 'lunch'
-                        ? 'darksalmon'
-                        : recipe.brunchType === 'dinner'
-                          ? 'chocolate'
-                          : recipe.brunchType === 'snack'
-                            ? 'green'
-                            : 'black'
-                  }
-                />
-                <CachedImage
-                  cacheKey={`recipeImage-${recipe.recipeId}`}
-                  style={styles.recipeImage}
-                  source={{ uri: recipe.recipeImageUri }}
-                />
-                <Text style={styles.recipeName}>{recipe.recipeName}</Text>
-              </View>
-              <View>
-                <LinearGradientButton
-                  disabled={recipe.isCreated}
-                  width={40}
-                  height={40}
-                  onPress={() => {}}
-                >
-                  <Text
-                    style={
-                      recipe.isCreated
-                        ? { color: 'white', fontSize: 16 }
-                        : { color: 'white', fontSize: 16, fontWeight: 'bold' }
+            <TouchableOpacity key={recipe.recipeId} onPress={() => {}}>
+              <View style={styles.recipeItem}>
+                <View style={styles.recipeItemLeft}>
+                  <Icon
+                    size={35}
+                    name={
+                      recipe.brunchType === 'breakfast'
+                        ? 'weather-sunset'
+                        : recipe.brunchType === 'lunch'
+                          ? 'weather-sunny'
+                          : recipe.brunchType === 'dinner'
+                            ? 'weather-night'
+                            : recipe.brunchType === 'snack'
+                              ? 'food-apple'
+                              : 'silverware-fork-knife'
                     }
+                    color={
+                      recipe.brunchType === 'breakfast'
+                        ? 'gold'
+                        : recipe.brunchType === 'lunch'
+                          ? 'darksalmon'
+                          : recipe.brunchType === 'dinner'
+                            ? 'chocolate'
+                            : recipe.brunchType === 'snack'
+                              ? 'green'
+                              : 'black'
+                    }
+                  />
+                  <CachedImage
+                    cacheKey={`recipeImage-${recipe.recipeId}`}
+                    style={styles.recipeImage}
+                    source={{ uri: recipe.recipeImageUri }}
+                  />
+                  <Text style={styles.textStyle}>{recipe.recipeName}</Text>
+                </View>
+                <View>
+                  <LinearGradientButton
+                    disabled={recipe.isCreated}
+                    width={40}
+                    height={40}
+                    onPress={() => {}}
                   >
-                    済
-                  </Text>
-                </LinearGradientButton>
+                    <Text
+                      style={
+                        recipe.isCreated
+                          ? { color: 'white', fontSize: 16 }
+                          : { color: 'white', fontSize: 16, fontWeight: 'bold' }
+                      }
+                    >
+                      済
+                    </Text>
+                  </LinearGradientButton>
+                </View>
               </View>
-            </View>
+            </TouchableOpacity>
           );
         })}
+        <NewDailyRecipe />
       </View>
     );
   };
@@ -129,13 +147,14 @@ export const RecipeScreen = () => {
           },
         }}
         onDayPress={(day) => {
-          console.log('selected day', day);
           setSelectedDate(day.dateString);
         }}
       />
       <FlatList
         data={listData}
+        contentContainerStyle={{ paddingBottom: 80 }}
         renderItem={RenderRecipes}
+        ListEmptyComponent={NewDailyRecipe}
         keyExtractor={(item) => item.id}
       />
     </View>
@@ -151,6 +170,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 20,
     bottom: 20,
+    zIndex: 100,
   },
   commonGradation: {
     width: 60,
@@ -176,7 +196,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 5,
   },
-  recipeName: {
+  textStyle: {
     fontSize: 16,
     fontWeight: 'bold',
     color: 'gray',
@@ -185,5 +205,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
+  },
+  newDailyRecipeWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 30,
+    backgroundColor: 'white',
+    margin: 5,
+    borderRadius: 10,
+    borderWidth: 3,
+    borderColor: '#e1e4e8',
+    borderStyle: 'dotted',
   },
 });
