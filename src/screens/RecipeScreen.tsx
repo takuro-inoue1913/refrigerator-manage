@@ -14,33 +14,68 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 import { useRequestGetUsersDailyRecipes } from '@src/interface/hooks/recipe/useRequestGetUsersDailyRecipes';
 import { LoadingMask } from '@src/components/common/LoadingMask';
-import { DailyRecipes } from '@src/states/recipe';
+import { DailyRecipes, Recipes } from '@src/states/recipe';
 import CachedImage from 'expo-cached-image';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
+import {
+  SettingDailyRecipeModal,
+  SettingDailyRecipeModalDropdownData,
+  SubmitValues,
+} from '@src/components/RecipeScreen/SettingDailyRecipeModal';
+import { useRequestGetAllRecipes } from '@src/interface/hooks/recipe/useRequestGetAllRecipes';
 
 export const RecipeScreen = () => {
-  const { isLoading, dailyRecipes } = useRequestGetUsersDailyRecipes(
-    dayjs().startOf('month').format('YYYY-MM-DD'),
-    dayjs().endOf('month').format('YYYY-MM-DD'),
-  );
+  const { isFetching: isFetchingGetUsersDailyRecipes, dailyRecipes } =
+    useRequestGetUsersDailyRecipes(
+      dayjs().startOf('month').format('YYYY-MM-DD'),
+      dayjs().endOf('month').format('YYYY-MM-DD'),
+    );
+  const { isFetching: isFetchingGetAllRecipes, recipes } =
+    useRequestGetAllRecipes();
+  const navigation = useTypedNavigation();
+
   const [selectedDate, setSelectedDate] = useState(
     dayjs().format('YYYY-MM-DD'),
   );
-  const navigation = useTypedNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState<
+    Recipes['byId'][number] | null
+  >(null);
 
-  const listData = useMemo<DailyRecipes['byId'][number][]>(() => {
+  const dailyRecipesData = useMemo<DailyRecipes['byId'][number][]>(() => {
     return Object.values(dailyRecipes.byId).filter(
       (i) => i.date === selectedDate,
     );
   }, [dailyRecipes.byId, selectedDate]);
 
+  const RecipeMasterData = useMemo<
+    SettingDailyRecipeModalDropdownData[]
+  >(() => {
+    return recipes.ids.map((i) => ({
+      label: recipes.byId[i].name,
+      value: i,
+      searchKey: recipes.byId[i].name,
+    }));
+  }, [recipes]);
+
+  const handleChangeDropdownValue = (
+    data: SettingDailyRecipeModalDropdownData,
+  ) => {
+    setSelectedRecipe(recipes.byId[data.value]);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+    selectedRecipe && setSelectedRecipe(null);
+  };
+
+  const handleSubmitModal = (values: SubmitValues) => {
+    console.log(values);
+  };
+
   const NewDailyRecipe = () => {
     return (
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('レシピ新規登録');
-        }}
-      >
+      <TouchableOpacity onPress={() => setModalVisible(true)}>
         <View style={styles.newDailyRecipeWrapper}>
           <Text style={styles.textStyle}>献立を設定する</Text>
           <Icon name="plus" size={30} color="gray" />
@@ -117,7 +152,8 @@ export const RecipeScreen = () => {
   };
   return (
     <View style={styles.container}>
-      {isLoading && <LoadingMask />}
+      {isFetchingGetAllRecipes ||
+        (isFetchingGetUsersDailyRecipes && <LoadingMask />)}
       <TouchableOpacity
         style={styles.addButton}
         onPress={() => {
@@ -151,11 +187,21 @@ export const RecipeScreen = () => {
         }}
       />
       <FlatList
-        data={listData}
+        data={dailyRecipesData}
         contentContainerStyle={{ paddingBottom: 80 }}
         renderItem={RenderRecipes}
         ListEmptyComponent={NewDailyRecipe}
         keyExtractor={(item) => item.id}
+      />
+      <SettingDailyRecipeModal
+        visible={modalVisible}
+        selectRecipe={selectedRecipe}
+        targetDayStr={dayjs(selectedDate).format('MM月DD日')}
+        dropdownData={RecipeMasterData}
+        mode="add"
+        onChangeDropdownValue={handleChangeDropdownValue}
+        onClose={handleCloseModal}
+        onSubmit={handleSubmitModal}
       />
     </View>
   );

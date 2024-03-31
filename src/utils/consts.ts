@@ -28,3 +28,6 @@ export const MEAT_DEFAULT_INCREMENTAL_UNIT = 50;
 export const FILTER_OPTIONS = {
   sort: ['通常', '所有食材', '賞味期限が近いもの', 'あいうえお順'],
 };
+
+/** 献立カテゴリー。 */
+export const DAILY_RECIPE_CATEGORY = ['breakfast', 'lunch', 'dinner', 'snack'];

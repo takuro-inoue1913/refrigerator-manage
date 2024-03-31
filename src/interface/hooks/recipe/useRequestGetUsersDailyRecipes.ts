@@ -55,7 +55,7 @@ export const useRequestGetUsersDailyRecipes = (
   };
 
   return {
-    isLoading: isFetching,
+    isFetching,
     dailyRecipes,
     changeDate,
     changeMonth,
