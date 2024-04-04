@@ -23,6 +23,7 @@ import {
   SubmitValues,
 } from '@src/components/RecipeScreen/SettingDailyRecipeModal';
 import { useRequestGetAllRecipes } from '@src/interface/hooks/recipe/useRequestGetAllRecipes';
+import { useRequestGetAllFridgeMaster } from '@src/interface/hooks/shoppingMemo/useRequestGetAllFridgeMaster';
 
 export const RecipeScreen = () => {
   const { isFetching: isFetchingGetUsersDailyRecipes, dailyRecipes } =
@@ -30,6 +31,7 @@ export const RecipeScreen = () => {
       dayjs().startOf('month').format('YYYY-MM-DD'),
       dayjs().endOf('month').format('YYYY-MM-DD'),
     );
+  useRequestGetAllFridgeMaster();
   const { isFetching: isFetchingGetAllRecipes, recipes } =
     useRequestGetAllRecipes();
   const navigation = useTypedNavigation();
@@ -48,7 +50,7 @@ export const RecipeScreen = () => {
     );
   }, [dailyRecipes.byId, selectedDate]);
 
-  const RecipeMasterData = useMemo<
+  const recipeMasterData = useMemo<
     SettingDailyRecipeModalDropdownData[]
   >(() => {
     return recipes.ids.map((i) => ({
@@ -197,7 +199,7 @@ export const RecipeScreen = () => {
         visible={modalVisible}
         selectRecipe={selectedRecipe}
         targetDayStr={dayjs(selectedDate).format('MM月DD日')}
-        dropdownData={RecipeMasterData}
+        dropdownData={recipeMasterData}
         mode="add"
         onChangeDropdownValue={handleChangeDropdownValue}
         onClose={handleCloseModal}
