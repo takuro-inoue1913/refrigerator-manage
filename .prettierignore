@@ -1,1 +1,2 @@
-src/interface/__generated__
+src/interface/__generated__/fragment-masking.ts
+src/interface/__generated__/gql.ts
