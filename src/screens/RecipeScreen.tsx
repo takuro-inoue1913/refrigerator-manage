@@ -82,14 +82,18 @@ export const RecipeScreen = () => {
     }
     setModalVisible(false);
     setIsProcessing(true);
-    await requestInsertUserDailyRecipe({
+    const result = await requestInsertUserDailyRecipe({
       date: selectedDate,
       brunchType: values.brunchType,
       recipeId: values.recipeId,
       isCreated: values.isCreated,
     });
+    if (!result) {
+      setIsProcessing(false);
+      return;
+    }
     addDailyRecipe({
-      id: selectedDate,
+      id: result.user_daily_id,
       date: selectedDate,
       recipe: {
         recipeId: values.recipeId,
@@ -118,9 +122,6 @@ export const RecipeScreen = () => {
     return (
       <View>
         {item.recipes.map((recipe, i) => {
-          {
-            console.log(recipe.isCreated);
-          }
           return (
             <TouchableOpacity key={`${item.id}-${i}`} onPress={() => {}}>
               <View style={styles.recipeItem}>

@@ -188,6 +188,8 @@ export const SettingDailyRecipeModal: FC<Props> = ({
                             brunchType: selectedBrunchType,
                             isCreated,
                           });
+                          setSelectedBrunchType('breakfast');
+                          setIsCreated(false);
                         }}
                       >
                         <Text style={styles.submitButtonText}>
