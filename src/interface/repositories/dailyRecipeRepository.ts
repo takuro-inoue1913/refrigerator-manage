@@ -1,6 +1,8 @@
 import {
   GetUsersDailyRecipesDocument,
   GetUsersDailyRecipesInRangeDocument,
+  CreateUserDailyDocument,
+  CreateUserDailyRecipeDocument,
 } from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
 
@@ -35,5 +37,45 @@ export const dailyRecipeRepository = {
       date,
     });
     return data;
+  },
+  insertDaily: async ({
+    idToken,
+    date,
+    userId,
+  }: {
+    idToken: string | null;
+    date: string;
+    userId: string;
+  }) => {
+    const client = buildGraphQLUserClient(idToken);
+
+    const data = await client.request(CreateUserDailyDocument, {
+      date,
+      userId,
+    });
+    return data.insert_user_daily_one;
+  },
+  insertDailyRecipe: async ({
+    idToken,
+    userDailyId,
+    brunchType,
+    recipeId,
+    isCreated,
+  }: {
+    idToken: string | null;
+    userDailyId: string;
+    brunchType: string;
+    recipeId: string;
+    isCreated: boolean;
+  }) => {
+    const client = buildGraphQLUserClient(idToken);
+
+    const data = await client.request(CreateUserDailyRecipeDocument, {
+      userDailyId,
+      brunchType,
+      recipeId,
+      isCreated,
+    });
+    return data.insert_user_daily_recipes_one;
   },
 };

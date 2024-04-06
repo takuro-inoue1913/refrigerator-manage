@@ -7,14 +7,14 @@ import {
   Text,
   TouchableOpacity,
   View,
-  FlatList,
+  ScrollView,
 } from 'react-native';
 import { CommonGradation } from '@src/components/common/CommonGradation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 import { useRequestGetUsersDailyRecipes } from '@src/interface/hooks/recipe/useRequestGetUsersDailyRecipes';
 import { LoadingMask } from '@src/components/common/LoadingMask';
-import { DailyRecipes, Recipes } from '@src/states/recipe';
+import { BrunchType, DailyRecipes, Recipes } from '@src/states/recipe';
 import CachedImage from 'expo-cached-image';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import {
@@ -24,6 +24,8 @@ import {
 } from '@src/components/RecipeScreen/SettingDailyRecipeModal';
 import { useRequestGetAllRecipes } from '@src/interface/hooks/recipe/useRequestGetAllRecipes';
 import { useRequestGetAllFridgeMaster } from '@src/interface/hooks/shoppingMemo/useRequestGetAllFridgeMaster';
+import { useRequestInsertUserDailyRecipe } from '@src/interface/hooks/recipe/useRequestInsertUserDailyRecipe';
+import { useRecipesActions } from '@src/states/recipe/actions';
 
 export const RecipeScreen = () => {
   const { isFetching: isFetchingGetUsersDailyRecipes, dailyRecipes } =
@@ -34,8 +36,11 @@ export const RecipeScreen = () => {
   useRequestGetAllFridgeMaster();
   const { isFetching: isFetchingGetAllRecipes, recipes } =
     useRequestGetAllRecipes();
+  const { addDailyRecipe } = useRecipesActions();
+  const requestInsertUserDailyRecipe = useRequestInsertUserDailyRecipe();
   const navigation = useTypedNavigation();
 
+  const [isProcessing, setIsProcessing] = useState(false);
   const [selectedDate, setSelectedDate] = useState(
     dayjs().format('YYYY-MM-DD'),
   );
@@ -71,8 +76,31 @@ export const RecipeScreen = () => {
     selectedRecipe && setSelectedRecipe(null);
   };
 
-  const handleSubmitModal = (values: SubmitValues) => {
-    console.log(values);
+  const handleSubmitModal = async (values: SubmitValues) => {
+    if (!selectedRecipe) {
+      return;
+    }
+    setModalVisible(false);
+    setIsProcessing(true);
+    await requestInsertUserDailyRecipe({
+      date: selectedDate,
+      brunchType: values.brunchType,
+      recipeId: values.recipeId,
+      isCreated: values.isCreated,
+    });
+    addDailyRecipe({
+      id: selectedDate,
+      date: selectedDate,
+      recipe: {
+        recipeId: values.recipeId,
+        recipeName: selectedRecipe.name,
+        recipeImageUri: selectedRecipe.imageUri,
+        brunchType: values.brunchType as BrunchType,
+        isCreated: values.isCreated,
+      },
+    });
+    setIsProcessing(false);
+    setSelectedRecipe(null);
   };
 
   const NewDailyRecipe = () => {
@@ -89,9 +117,12 @@ export const RecipeScreen = () => {
   const RenderRecipes = ({ item }: { item: DailyRecipes['byId'][number] }) => {
     return (
       <View>
-        {item.recipes.map((recipe) => {
+        {item.recipes.map((recipe, i) => {
+          {
+            console.log(recipe.isCreated);
+          }
           return (
-            <TouchableOpacity key={recipe.recipeId} onPress={() => {}}>
+            <TouchableOpacity key={`${item.id}-${i}`} onPress={() => {}}>
               <View style={styles.recipeItem}>
                 <View style={styles.recipeItemLeft}>
                   <Icon
@@ -148,14 +179,14 @@ export const RecipeScreen = () => {
             </TouchableOpacity>
           );
         })}
-        <NewDailyRecipe />
       </View>
     );
   };
   return (
     <View style={styles.container}>
-      {isFetchingGetAllRecipes ||
-        (isFetchingGetUsersDailyRecipes && <LoadingMask />)}
+      {(isFetchingGetAllRecipes ||
+        isFetchingGetUsersDailyRecipes ||
+        isProcessing) && <LoadingMask />}
       <TouchableOpacity
         style={styles.addButton}
         onPress={() => {
@@ -188,13 +219,14 @@ export const RecipeScreen = () => {
           setSelectedDate(day.dateString);
         }}
       />
-      <FlatList
-        data={dailyRecipesData}
-        contentContainerStyle={{ paddingBottom: 80 }}
-        renderItem={RenderRecipes}
-        ListEmptyComponent={NewDailyRecipe}
-        keyExtractor={(item) => item.id}
-      />
+      <ScrollView>
+        <View style={{ paddingBottom: 80 }}>
+          {dailyRecipesData.map((item) => (
+            <RenderRecipes key={item.id} item={item} />
+          ))}
+          <NewDailyRecipe />
+        </View>
+      </ScrollView>
       <SettingDailyRecipeModal
         visible={modalVisible}
         selectRecipe={selectedRecipe}
