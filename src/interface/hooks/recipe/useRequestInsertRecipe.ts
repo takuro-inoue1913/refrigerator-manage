@@ -3,6 +3,9 @@ import { useRecoilValue } from 'recoil';
 import { idTokenState, userState } from '@src/states/user';
 import { recipeRepository } from '@src/interface/repositories/recipeRepository';
 import Toast from 'react-native-toast-message';
+import { Recipes } from '@src/states/recipe';
+import { fridgeMasterState } from '@src/states/fridge';
+import { getFridgeMaster } from '@src/interface/logics/generate/generateRecipes';
 
 type InsertShoppingRecipeArgs = {
   recipeName: string;
@@ -11,14 +14,25 @@ type InsertShoppingRecipeArgs = {
   descriptions: string[];
 };
 
+type ResultData = {
+  recipeId: string;
+  recipeName: string;
+  imageUri: string;
+  materials: Recipes['byId'][number]['materials'];
+  descriptions: string[];
+};
+
 export const useRequestInsertRecipe = () => {
   const idToken = useRecoilValue(idTokenState);
   const user = useRecoilValue(userState);
+  const fridgeMaster = useRecoilValue(fridgeMasterState);
 
   return async (args: InsertShoppingRecipeArgs) => {
     if (!user) {
       return Promise.reject(new Error('user is not defined'));
     }
+
+    let resultData = {} as ResultData;
     try {
       const data = await recipeRepository.insert({
         idToken,
@@ -28,7 +42,7 @@ export const useRequestInsertRecipe = () => {
       });
 
       if (data) {
-        await recipeRepository.insertMaterials({
+        const insertMaterialsResult = await recipeRepository.insertMaterials({
           idToken,
           recipeId: data.recipe_id,
           args: args.materials,
@@ -40,9 +54,30 @@ export const useRequestInsertRecipe = () => {
             description,
           })),
         });
+        if (!insertMaterialsResult) {
+          return Promise.reject(
+            new Error('insertMaterialsResult is not defined'),
+          );
+        }
+        resultData = {
+          recipeId: data.recipe_id,
+          recipeName: args.recipeName,
+          imageUri: args.recipeImage,
+          materials: insertMaterialsResult?.returning.map((i) => {
+            const _fridgeMaster = getFridgeMaster(fridgeMaster, i.master_id);
+            return {
+              id: i.recipe_material_id,
+              masterId: i.master_id,
+              fridgeType: _fridgeMaster.fridgeType,
+              fridgeName: _fridgeMaster.name,
+              quantity: i.quantity,
+            };
+          }),
+          descriptions: args.descriptions,
+        };
       }
 
-      return Promise.resolve(data);
+      return Promise.resolve(resultData);
     } catch (error) {
       Toast.show({
         type: 'error',

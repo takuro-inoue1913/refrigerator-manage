@@ -32,6 +32,7 @@ import { userState } from '@src/states/user';
 import { useRecoilValue } from 'recoil';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 import Toast from 'react-native-toast-message';
+import { useRecipesActions } from '@src/states/recipe/actions';
 
 const { width: windowWidth } = Dimensions.get('window');
 
@@ -49,6 +50,7 @@ type DropdownData = {
 export const RecipeCreateScreen: FC = () => {
   const { fridgeMaster } = useRequestGetAllFridgeMaster();
   const requestInsertRecipe = useRequestInsertRecipe();
+  const { addRecipe } = useRecipesActions();
   const navigation = useTypedNavigation();
   const user = useRecoilValue(userState);
 
@@ -230,7 +232,7 @@ export const RecipeCreateScreen: FC = () => {
       getValues('image.uri'),
       'user-recipes/' + user?.uid,
     );
-    await requestInsertRecipe({
+    const result = await requestInsertRecipe({
       recipeName: getValues('recipeName'),
       recipeImage: imageUri,
       materials: Object.values(getValues('materials')).map((item) => ({
@@ -238,6 +240,17 @@ export const RecipeCreateScreen: FC = () => {
         quantity: Number(item.quantity),
       })),
       descriptions: [getValues('description')],
+    });
+    if (!result) {
+      setIsSending(false);
+      return;
+    }
+    addRecipe({
+      id: result.recipeId,
+      name: result.recipeName,
+      imageUri: result.imageUri,
+      materials: result.materials,
+      descriptions: result.descriptions,
     });
     setIsSending(false);
     Toast.show({

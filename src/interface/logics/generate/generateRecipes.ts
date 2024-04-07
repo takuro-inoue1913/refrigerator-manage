@@ -2,7 +2,10 @@ import { GetAllRecipesQuery } from '@src/interface/__generated__/graphql';
 import { FridgeMaster } from '@src/states/fridge';
 import { Recipes } from '@src/states/recipe';
 
-const getFridgeMaster = (fridgeMaster: FridgeMaster[], masterId: string) => {
+export const getFridgeMaster = (
+  fridgeMaster: FridgeMaster[],
+  masterId: string,
+) => {
   const _fridgeMaster = fridgeMaster.find((j) => j.id === masterId);
   if (!_fridgeMaster) {
     throw new Error('fridgeMaster is not found');

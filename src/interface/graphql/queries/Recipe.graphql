@@ -40,10 +40,10 @@ mutation CreateRecipe(
 mutation CreateRecipeMaterials($materials: [recipe_materials_insert_input!]!) {
   insert_recipe_materials(objects: $materials) {
     returning {
+      recipe_material_id
       master_id
       quantity
       recipe_id
-      recipe_material_id
     }
   }
 }
@@ -51,8 +51,8 @@ mutation CreateRecipeMaterials($materials: [recipe_materials_insert_input!]!) {
 mutation CreateRecipeSteps($steps: [recipe_steps_insert_input!]!) {
   insert_recipe_steps(objects: $steps) {
     returning {
-      recipe_id
       recipe_step_id
+      recipe_id
       description
     }
   }
