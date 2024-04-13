@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import {
+  Alert,
   Dimensions,
   Image,
   Keyboard,
@@ -12,6 +13,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { Dropdown } from 'react-native-element-dropdown';
 import { BrunchType, Recipes } from '@src/states/recipe';
@@ -53,7 +55,6 @@ type Props = {
   dropdownData: SettingDailyRecipeModalDropdownData[];
   mode: ModalMode;
   selectRecipe: Recipes['byId'][number] | null;
-  // errorMessage: string | null;
   onChangeDropdownValue: (data: SettingDailyRecipeModalDropdownData) => void;
   onClose: () => void;
   onSubmit: (values: SubmitValues) => void;
@@ -65,7 +66,6 @@ export const SettingDailyRecipeModal: FC<Props> = ({
   dropdownData,
   mode,
   selectRecipe,
-  // errorMessage,
   onChangeDropdownValue,
   onClose,
   onSubmit,
@@ -80,14 +80,42 @@ export const SettingDailyRecipeModal: FC<Props> = ({
     setSelectedBrunchType(value as BrunchType);
   };
 
+  const handleIsCreateToggle = (newVal: boolean) => {
+    if (isCreated === false) {
+      Alert.alert(
+        '作成済みにすると冷蔵庫から食材が減りますがよろしいですか？',
+        '※ 足らない食材は変動しません。',
+        [
+          {
+            text: 'OK',
+            onPress: () => setIsCreated(newVal),
+          },
+          {
+            text: 'キャンセル',
+            onPress: () => setIsCreated(false),
+            style: 'destructive',
+          },
+        ],
+      );
+    } else {
+      setIsCreated(newVal);
+    }
+  };
+
+  const handleClose = () => {
+    setSelectedBrunchType('breakfast');
+    setIsCreated(false);
+    onClose();
+  };
+
   return (
     <Modal
       animationType="slide"
       transparent
       visible={visible}
-      onRequestClose={onClose}
+      onRequestClose={handleClose}
     >
-      <TouchableWithoutFeedback onPress={onClose}>
+      <TouchableWithoutFeedback onPress={handleClose}>
         <View style={styles.overlay}>
           <View style={styles.centeredView}>
             <TouchableWithoutFeedback
@@ -103,6 +131,12 @@ export const SettingDailyRecipeModal: FC<Props> = ({
                       {targetDayStr}の献立{mode === 'add' ? '追加' : '編集'}
                     </Text>
                   </View>
+                  <TouchableOpacity
+                    onPress={onClose}
+                    style={styles.closeButton}
+                  >
+                    <Icon name="close" size={24} color="#000" />
+                  </TouchableOpacity>
                 </View>
                 <View style={styles.formItem}>
                   <Dropdown
@@ -174,7 +208,7 @@ export const SettingDailyRecipeModal: FC<Props> = ({
                           true: COMMON_COLOR_GREEN,
                         }}
                         ios_backgroundColor="#ced4da"
-                        onValueChange={setIsCreated}
+                        onValueChange={handleIsCreateToggle}
                         value={isCreated}
                       />
                     </View>
@@ -249,6 +283,11 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  closeButton: {
+    backgroundColor: 'white',
+    borderRadius: 50,
+    padding: 5,
   },
   formItem: {
     flexDirection: 'row',

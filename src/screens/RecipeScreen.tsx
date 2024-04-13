@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
+  Alert,
 } from 'react-native';
 import { CommonGradation } from '@src/components/common/CommonGradation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -80,31 +81,67 @@ export const RecipeScreen = () => {
     if (!selectedRecipe) {
       return;
     }
-    setModalVisible(false);
-    setIsProcessing(true);
-    const result = await requestInsertUserDailyRecipe({
-      date: selectedDate,
-      brunchType: values.brunchType,
-      recipeId: values.recipeId,
-      isCreated: values.isCreated,
-    });
-    if (!result) {
-      setIsProcessing(false);
-      return;
-    }
-    addDailyRecipe({
-      id: result.user_daily_id,
-      date: selectedDate,
-      recipe: {
+
+    const addDailyRecipeFn = async () => {
+      setModalVisible(false);
+      setIsProcessing(true);
+      const result = await requestInsertUserDailyRecipe({
+        date: selectedDate,
+        brunchType: values.brunchType,
         recipeId: values.recipeId,
-        recipeName: selectedRecipe.name,
-        recipeImageUri: selectedRecipe.imageUri,
-        brunchType: values.brunchType as BrunchType,
         isCreated: values.isCreated,
-      },
-    });
-    setIsProcessing(false);
-    setSelectedRecipe(null);
+      });
+      if (!result) {
+        setIsProcessing(false);
+        return;
+      }
+      addDailyRecipe({
+        id: result.user_daily_id,
+        date: selectedDate,
+        recipe: {
+          recipeId: values.recipeId,
+          recipeName: selectedRecipe.name,
+          recipeImageUri: selectedRecipe.imageUri,
+          brunchType: values.brunchType as BrunchType,
+          isCreated: values.isCreated,
+        },
+      });
+      setIsProcessing(false);
+      setSelectedRecipe(null);
+    };
+
+    Alert.alert(
+      '足らない食材を買い物メモに追加しますか？',
+      '追加する場合、買い物メモ追加候補画面に遷移します。',
+      [
+        {
+          text: '追加する',
+          onPress: () => {
+            // navigation.navigate('買い物メモ追加候補', {
+            //   screen: '買い物メモ追加候補',
+            //   params: {
+            //     recipeId: selectedRecipe.id,
+            //     recipeName: selectedRecipe.name,
+            //     recipeImageUri: selectedRecipe.imageUri,
+            //     brunchType: values.brunchType,
+            //   },
+            // });
+            // addDailyRecipeFn();
+          },
+        },
+        {
+          text: '追加しないで登録',
+          onPress: () => addDailyRecipeFn(),
+        },
+        {
+          text: 'キャンセル',
+          style: 'destructive',
+          onPress: () => {
+            setIsProcessing(false);
+          },
+        },
+      ],
+    );
   };
 
   const NewDailyRecipe = () => {
