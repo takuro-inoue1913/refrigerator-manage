@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   Alert,
   Dimensions,
@@ -55,6 +55,8 @@ type Props = {
   dropdownData: SettingDailyRecipeModalDropdownData[];
   mode: ModalMode;
   selectRecipe: Recipes['byId'][number] | null;
+  brunchType?: BrunchType;
+  isCreated?: boolean;
   onChangeDropdownValue: (data: SettingDailyRecipeModalDropdownData) => void;
   onClose: () => void;
   onSubmit: (values: SubmitValues) => void;
@@ -66,6 +68,8 @@ export const SettingDailyRecipeModal: FC<Props> = ({
   dropdownData,
   mode,
   selectRecipe,
+  brunchType,
+  isCreated: _isCreated,
   onChangeDropdownValue,
   onClose,
   onSubmit,
@@ -74,7 +78,7 @@ export const SettingDailyRecipeModal: FC<Props> = ({
 
   const [selectedBrunchType, setSelectedBrunchType] =
     useState<BrunchType>('breakfast');
-  const [isCreated, setIsCreated] = useState(false);
+  const [isCreated, setIsCreated] = useState<boolean>(false);
 
   const handleChangeBrunchType = (value: BrunchType) => {
     setSelectedBrunchType(value as BrunchType);
@@ -107,6 +111,13 @@ export const SettingDailyRecipeModal: FC<Props> = ({
     setIsCreated(false);
     onClose();
   };
+
+  useEffect(() => {
+    if (visible) {
+      setSelectedBrunchType(brunchType ?? 'breakfast');
+      setIsCreated(_isCreated || false);
+    }
+  }, [visible, brunchType, _isCreated]);
 
   return (
     <Modal
@@ -141,7 +152,7 @@ export const SettingDailyRecipeModal: FC<Props> = ({
                 <View style={styles.formItem}>
                   <Dropdown
                     data={dropdownData}
-                    // value={}
+                    value={selectRecipe?.id || ''}
                     onChange={onChangeDropdownValue}
                     labelField="label"
                     valueField="value"

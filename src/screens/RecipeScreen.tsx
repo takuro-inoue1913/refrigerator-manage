@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { Calendar } from 'react-native-calendars';
 import { COMMON_COLOR_GREEN } from '@src/utils/consts';
@@ -49,12 +49,30 @@ export const RecipeScreen = () => {
   const [selectedRecipe, setSelectedRecipe] = useState<
     Recipes['byId'][number] | null
   >(null);
+  const [modalMode, setModalMode] = useState<'add' | 'edit'>('add');
 
   const dailyRecipesData = useMemo<DailyRecipes['byId'][number][]>(() => {
     return Object.values(dailyRecipes.byId).filter(
       (i) => i.date === selectedDate,
     );
   }, [dailyRecipes.byId, selectedDate]);
+
+  const getTargetDailyRecipe = useCallback(
+    (recipeId: string) => {
+      const targetDailyRecipe = dailyRecipesData.find((i) =>
+        i.recipes.find((j) => j.recipeId === recipeId),
+      );
+
+      const targetRecipe = targetDailyRecipe?.recipes.find(
+        (i) => i.recipeId === recipeId,
+      );
+
+      console.log('targetRecipe', targetRecipe);
+
+      return targetRecipe;
+    },
+    [dailyRecipesData],
+  );
 
   const recipeMasterData = useMemo<
     SettingDailyRecipeModalDropdownData[]
@@ -70,6 +88,16 @@ export const RecipeScreen = () => {
     data: SettingDailyRecipeModalDropdownData,
   ) => {
     setSelectedRecipe(recipes.byId[data.value]);
+  };
+
+  const handleClickDailyRecipe = (
+    item: DailyRecipes['byId'][number],
+    index: number,
+  ) => {
+    const recipe = recipes.byId[item.recipes[index].recipeId];
+    setSelectedRecipe(recipe);
+    setModalMode('edit');
+    setModalVisible(true);
   };
 
   const handleCloseModal = () => {
@@ -146,7 +174,12 @@ export const RecipeScreen = () => {
 
   const NewDailyRecipe = () => {
     return (
-      <TouchableOpacity onPress={() => setModalVisible(true)}>
+      <TouchableOpacity
+        onPress={() => {
+          setModalMode('add');
+          setModalVisible(true);
+        }}
+      >
         <View style={styles.newDailyRecipeWrapper}>
           <Text style={styles.textStyle}>献立を設定する</Text>
           <Icon name="plus" size={30} color="gray" />
@@ -160,7 +193,12 @@ export const RecipeScreen = () => {
       <View>
         {item.recipes.map((recipe, i) => {
           return (
-            <TouchableOpacity key={`${item.id}-${i}`} onPress={() => {}}>
+            <TouchableOpacity
+              key={`${item.id}-${i}`}
+              onPress={() => {
+                handleClickDailyRecipe(item, i);
+              }}
+            >
               <View style={styles.recipeItem}>
                 <View style={styles.recipeItemLeft}>
                   <Icon
@@ -270,7 +308,17 @@ export const RecipeScreen = () => {
         selectRecipe={selectedRecipe}
         targetDayStr={dayjs(selectedDate).format('MM月DD日')}
         dropdownData={recipeMasterData}
-        mode="add"
+        mode={modalMode}
+        brunchType={
+          selectedRecipe
+            ? getTargetDailyRecipe(selectedRecipe.id)?.brunchType
+            : 'breakfast'
+        }
+        isCreated={
+          selectedRecipe
+            ? getTargetDailyRecipe(selectedRecipe.id)?.isCreated
+            : false
+        }
         onChangeDropdownValue={handleChangeDropdownValue}
         onClose={handleCloseModal}
         onSubmit={handleSubmitModal}
