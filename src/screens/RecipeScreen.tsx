@@ -67,8 +67,6 @@ export const RecipeScreen = () => {
         (i) => i.recipeId === recipeId,
       );
 
-      console.log('targetRecipe', targetRecipe);
-
       return targetRecipe;
     },
     [dailyRecipesData],
