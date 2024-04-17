@@ -22,7 +22,8 @@ export type Recipes = NormalizedArray<{
 export type DailyRecipes = NormalizedArray<{
   id: string;
   date: string;
-  recipes: {
+  dailyRecipes: {
+    id: string;
     recipeId: string;
     recipeName: string;
     recipeImageUri: string;

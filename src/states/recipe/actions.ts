@@ -41,11 +41,11 @@ export const useRecipesActions = () => {
       ({
         id,
         date,
-        recipe,
+        dailyRecipe,
       }: {
         id: string;
         date: string;
-        recipe: DailyRecipes['byId'][number]['recipes'][number];
+        dailyRecipe: DailyRecipes['byId'][number]['dailyRecipes'][number];
       }) => {
         set(dailyRecipesState, (prev) => {
           const ids = prev.ids.includes(id) ? prev.ids : [...prev.ids, id];
@@ -54,9 +54,43 @@ export const useRecipesActions = () => {
             [id]: {
               id,
               date,
-              recipes: prev.byId[id]
-                ? [...prev.byId[id].recipes, recipe]
-                : [recipe],
+              dailyRecipes: prev.byId[id]
+                ? [...prev.byId[id].dailyRecipes, dailyRecipe]
+                : [dailyRecipe],
+            },
+          };
+          return {
+            ids,
+            byId,
+          };
+        });
+      },
+  );
+
+  const updateDailyRecipe = useRecoilCallback(
+    ({ set }) =>
+      ({
+        id,
+        date,
+        dailyRecipe,
+      }: {
+        id: string;
+        date: string;
+        dailyRecipe: DailyRecipes['byId'][number]['dailyRecipes'][number];
+      }) => {
+        set(dailyRecipesState, (prev) => {
+          const ids = prev.ids.includes(id) ? prev.ids : [...prev.ids, id];
+
+          const byId = {
+            ...prev.byId,
+            [id]: {
+              id,
+              date,
+              dailyRecipes: prev.byId[id]
+                ? prev.byId[id].dailyRecipes.map((i) =>
+                    i.id === dailyRecipe.id ? dailyRecipe : i,
+                  )
+                : [dailyRecipe],
             },
           };
           return {
@@ -70,5 +104,6 @@ export const useRecipesActions = () => {
   return {
     addRecipe,
     addDailyRecipe,
+    updateDailyRecipe,
   };
 };

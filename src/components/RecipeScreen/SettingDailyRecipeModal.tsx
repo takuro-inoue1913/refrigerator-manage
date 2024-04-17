@@ -238,7 +238,7 @@ export const SettingDailyRecipeModal: FC<Props> = ({
                         }}
                       >
                         <Text style={styles.submitButtonText}>
-                          {mode === 'add' ? '追加' : '編集'}
+                          {mode === 'add' ? '追加' : '保存'}
                         </Text>
                       </LinearGradientButton>
                     </View>

@@ -18,9 +18,10 @@ export const generateDailyRecipes = (
     _dailyRecipes[i.user_daily_id] = {
       id: i.user_daily_id,
       date: i.date,
-      recipes: i.user_daily_user_daily_recipes
+      dailyRecipes: i.user_daily_user_daily_recipes
         ? i.user_daily_user_daily_recipes
             .map((j) => ({
+              id: j.user_daily_recipes_id,
               recipeId: j.user_daily_recipes_recipes?.recipe_id ?? '',
               recipeName: j.user_daily_recipes_recipes?.recipe_name ?? '',
               recipeImageUri: j.user_daily_recipes_recipes?.recipe_image ?? '',

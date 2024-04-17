@@ -27,6 +27,7 @@ import { useRequestGetAllRecipes } from '@src/interface/hooks/recipe/useRequestG
 import { useRequestGetAllFridgeMaster } from '@src/interface/hooks/shoppingMemo/useRequestGetAllFridgeMaster';
 import { useRequestInsertUserDailyRecipe } from '@src/interface/hooks/recipe/useRequestInsertUserDailyRecipe';
 import { useRecipesActions } from '@src/states/recipe/actions';
+import { useRequestUpdateUserDailyRecipe } from '@src/interface/hooks/recipe/useRequestUpdateUserDailyRecipe';
 
 export const RecipeScreen = () => {
   const { isFetching: isFetchingGetUsersDailyRecipes, dailyRecipes } =
@@ -37,8 +38,9 @@ export const RecipeScreen = () => {
   useRequestGetAllFridgeMaster();
   const { isFetching: isFetchingGetAllRecipes, recipes } =
     useRequestGetAllRecipes();
-  const { addDailyRecipe } = useRecipesActions();
+  const { addDailyRecipe, updateDailyRecipe } = useRecipesActions();
   const requestInsertUserDailyRecipe = useRequestInsertUserDailyRecipe();
+  const requestUpdateUserDailyRecipe = useRequestUpdateUserDailyRecipe();
   const navigation = useTypedNavigation();
 
   const [isProcessing, setIsProcessing] = useState(false);
@@ -48,6 +50,9 @@ export const RecipeScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState<
     Recipes['byId'][number] | null
+  >(null);
+  const [selectedDailyRecipeId, setSelectedDailyRecipeId] = useState<
+    string | null
   >(null);
   const [modalMode, setModalMode] = useState<'add' | 'edit'>('add');
 
@@ -60,14 +65,21 @@ export const RecipeScreen = () => {
   const getTargetDailyRecipe = useCallback(
     (recipeId: string) => {
       const targetDailyRecipe = dailyRecipesData.find((i) =>
-        i.recipes.find((j) => j.recipeId === recipeId),
+        i.dailyRecipes.find((j) => j.recipeId === recipeId),
       );
 
-      const targetRecipe = targetDailyRecipe?.recipes.find(
+      const targetRecipe = targetDailyRecipe?.dailyRecipes.find(
         (i) => i.recipeId === recipeId,
       );
 
-      return targetRecipe;
+      if (!targetDailyRecipe || !targetRecipe) {
+        return null;
+      }
+
+      return {
+        dailyRecipeId: targetDailyRecipe!.id,
+        ...targetRecipe,
+      };
     },
     [dailyRecipesData],
   );
@@ -92,8 +104,9 @@ export const RecipeScreen = () => {
     item: DailyRecipes['byId'][number],
     index: number,
   ) => {
-    const recipe = recipes.byId[item.recipes[index].recipeId];
+    const recipe = recipes.byId[item.dailyRecipes[index].recipeId];
     setSelectedRecipe(recipe);
+    setSelectedDailyRecipeId(item.dailyRecipes[index].id);
     setModalMode('edit');
     setModalVisible(true);
   };
@@ -101,74 +114,127 @@ export const RecipeScreen = () => {
   const handleCloseModal = () => {
     setModalVisible(false);
     selectedRecipe && setSelectedRecipe(null);
+    selectedDailyRecipeId && setSelectedDailyRecipeId(null);
   };
 
-  const handleSubmitModal = async (values: SubmitValues) => {
-    if (!selectedRecipe) {
-      return;
-    }
-
-    const addDailyRecipeFn = async () => {
-      setModalVisible(false);
-      setIsProcessing(true);
-      const result = await requestInsertUserDailyRecipe({
-        date: selectedDate,
-        brunchType: values.brunchType,
-        recipeId: values.recipeId,
-        isCreated: values.isCreated,
-      });
-      if (!result) {
-        setIsProcessing(false);
+  const handleSubmitModal = useCallback(
+    async (values: SubmitValues) => {
+      if (!selectedRecipe) {
         return;
       }
-      addDailyRecipe({
-        id: result.user_daily_id,
-        date: selectedDate,
-        recipe: {
-          recipeId: values.recipeId,
-          recipeName: selectedRecipe.name,
-          recipeImageUri: selectedRecipe.imageUri,
-          brunchType: values.brunchType as BrunchType,
-          isCreated: values.isCreated,
-        },
-      });
-      setIsProcessing(false);
-      setSelectedRecipe(null);
-    };
 
-    Alert.alert(
-      '足らない食材を買い物メモに追加しますか？',
-      '追加する場合、買い物メモ追加候補画面に遷移します。',
-      [
-        {
-          text: '追加する',
-          onPress: () => {
-            // navigation.navigate('買い物メモ追加候補', {
-            //   screen: '買い物メモ追加候補',
-            //   params: {
-            //     recipeId: selectedRecipe.id,
-            //     recipeName: selectedRecipe.name,
-            //     recipeImageUri: selectedRecipe.imageUri,
-            //     brunchType: values.brunchType,
-            //   },
-            // });
-            // addDailyRecipeFn();
+      const addDailyRecipeFn = async () => {
+        setModalVisible(false);
+        setIsProcessing(true);
+        const result = await requestInsertUserDailyRecipe({
+          date: selectedDate,
+          brunchType: values.brunchType,
+          recipeId: values.recipeId,
+          isCreated: values.isCreated,
+        });
+        if (!result) {
+          setIsProcessing(false);
+          setSelectedRecipe(null);
+          setSelectedDailyRecipeId(null);
+          return;
+        }
+        addDailyRecipe({
+          id: result.user_daily_id,
+          date: selectedDate,
+          dailyRecipe: {
+            id: result.user_daily_recipes_id,
+            recipeId: values.recipeId,
+            recipeName: selectedRecipe.name,
+            recipeImageUri: selectedRecipe.imageUri,
+            brunchType: values.brunchType as BrunchType,
+            isCreated: values.isCreated,
           },
-        },
-        {
-          text: '追加しないで登録',
-          onPress: () => addDailyRecipeFn(),
-        },
-        {
-          text: 'キャンセル',
-          style: 'destructive',
-          onPress: () => {
-            setIsProcessing(false);
+        });
+      };
+
+      const updateDailyRecipeFn = async () => {
+        setModalVisible(false);
+        setIsProcessing(true);
+        if (!selectedDailyRecipeId) {
+          throw new Error('selectedDailyRecipeId is not found');
+        }
+        const result = await requestUpdateUserDailyRecipe({
+          userDailyRecipeId: selectedDailyRecipeId,
+          brunchType: values.brunchType,
+          recipeId: values.recipeId,
+          isCreated: values.isCreated,
+        });
+        if (!result) {
+          setIsProcessing(false);
+          setSelectedRecipe(null);
+          setSelectedDailyRecipeId(null);
+          return;
+        }
+        updateDailyRecipe({
+          id: result.user_daily_id,
+          date: selectedDate,
+          dailyRecipe: {
+            id: result.user_daily_recipes_id,
+            recipeId: values.recipeId,
+            recipeName: selectedRecipe.name,
+            recipeImageUri: selectedRecipe.imageUri,
+            brunchType: values.brunchType as BrunchType,
+            isCreated: values.isCreated,
           },
-        },
-      ],
-    );
-  };
+        });
+      };
+
+      if (modalMode === 'add') {
+        Alert.alert(
+          '足らない食材を買い物メモに追加しますか？',
+          '追加する場合、買い物メモ追加候補画面に遷移します。',
+          [
+            {
+              text: '追加する',
+              onPress: () => {
+                // navigation.navigate('買い物メモ追加候補', {
+                //   screen: '買い物メモ追加候補',
+                //   params: {
+                //     recipeId: selectedRecipe.id,
+                //     recipeName: selectedRecipe.name,
+                //     recipeImageUri: selectedRecipe.imageUri,
+                //     brunchType: values.brunchType,
+                //   },
+                // });
+                // addDailyRecipeFn();
+              },
+            },
+            {
+              text: '追加しないで登録',
+              onPress: () => addDailyRecipeFn(),
+            },
+            {
+              text: 'キャンセル',
+              style: 'destructive',
+              onPress: () => {
+                setIsProcessing(false);
+              },
+            },
+          ],
+        );
+      } else {
+        updateDailyRecipeFn();
+      }
+      setSelectedRecipe(null);
+      setIsProcessing(false);
+      setSelectedDailyRecipeId(null);
+    },
+    [
+      selectedRecipe,
+      selectedDate,
+      modalMode,
+      selectedDailyRecipeId,
+      requestInsertUserDailyRecipe,
+      addDailyRecipe,
+      requestUpdateUserDailyRecipe,
+      updateDailyRecipe,
+    ],
+  );
 
   const NewDailyRecipe = () => {
     return (
@@ -189,7 +255,7 @@ export const RecipeScreen = () => {
   const RenderRecipes = ({ item }: { item: DailyRecipes['byId'][number] }) => {
     return (
       <View>
-        {item.recipes.map((recipe, i) => {
+        {item.dailyRecipes.map((recipe, i) => {
           return (
             <TouchableOpacity
               key={`${item.id}-${i}`}

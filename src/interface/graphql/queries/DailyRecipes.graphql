@@ -86,6 +86,28 @@ mutation CreateUserDailyRecipe(
   }
 }
 
+mutation UpdateUserDailyRecipe(
+  $userDailyRecipeId: uuid!
+  $brunchType: String!
+  $isCreated: Boolean!
+  $recipeId: uuid!
+) {
+  update_user_daily_recipes_by_pk(
+    pk_columns: { user_daily_recipes_id: $userDailyRecipeId }
+    _set: {
+      brunch_type: $brunchType
+      is_created: $isCreated
+      recipe_id: $recipeId
+    }
+  ) {
+    user_daily_recipes_id
+    user_daily_id
+    brunch_type
+    is_created
+    recipe_id
+  }
+}
+
 mutation DeleteUserDailyRecipe($userDailyRecipeId: uuid!) {
   delete_user_daily_recipes_by_pk(user_daily_recipes_id: $userDailyRecipeId) {
     user_daily_recipes_id
