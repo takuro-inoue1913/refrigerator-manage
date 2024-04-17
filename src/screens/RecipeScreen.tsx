@@ -134,9 +134,7 @@ export const RecipeScreen = () => {
         });
         if (!result) {
           setIsProcessing(false);
-          setSelectedRecipe(null);
-          setSelectedDailyRecipeId(null);
-          return;
+          throw new Error('addDailyRecipe failed');
         }
         addDailyRecipe({
           id: result.user_daily_id,
@@ -150,6 +148,9 @@ export const RecipeScreen = () => {
             isCreated: values.isCreated,
           },
         });
+        setIsProcessing(false);
+        setSelectedRecipe(null);
+        setSelectedDailyRecipeId(null);
       };
 
       const updateDailyRecipeFn = async () => {
@@ -166,9 +167,7 @@ export const RecipeScreen = () => {
         });
         if (!result) {
           setIsProcessing(false);
-          setSelectedRecipe(null);
-          setSelectedDailyRecipeId(null);
-          return;
+          throw new Error('updateDailyRecipe failed');
         }
         updateDailyRecipe({
           id: result.user_daily_id,
@@ -182,6 +181,9 @@ export const RecipeScreen = () => {
             isCreated: values.isCreated,
           },
         });
+        setSelectedRecipe(null);
+        setIsProcessing(false);
+        setSelectedDailyRecipeId(null);
       };
 
       if (modalMode === 'add') {
@@ -220,9 +222,6 @@ export const RecipeScreen = () => {
       } else {
         updateDailyRecipeFn();
       }
-      setSelectedRecipe(null);
-      setIsProcessing(false);
-      setSelectedDailyRecipeId(null);
     },
     [
       selectedRecipe,
