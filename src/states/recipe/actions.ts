@@ -101,9 +101,44 @@ export const useRecipesActions = () => {
       },
   );
 
+  const deleteDailyRecipe = useRecoilCallback(
+    ({ set }) =>
+      ({
+        id,
+        date,
+        dailyRecipeId,
+      }: {
+        id: string;
+        date: string;
+        dailyRecipeId: string;
+      }) => {
+        set(dailyRecipesState, (prev) => {
+          const ids = prev.ids.includes(id) ? prev.ids : [...prev.ids, id];
+
+          const byId = {
+            ...prev.byId,
+            [id]: {
+              id,
+              date,
+              dailyRecipes: prev.byId[id]
+                ? prev.byId[id].dailyRecipes.filter(
+                    (i) => i.id !== dailyRecipeId,
+                  )
+                : [],
+            },
+          };
+          return {
+            ids,
+            byId,
+          };
+        });
+      },
+  );
+
   return {
     addRecipe,
     addDailyRecipe,
     updateDailyRecipe,
+    deleteDailyRecipe,
   };
 };

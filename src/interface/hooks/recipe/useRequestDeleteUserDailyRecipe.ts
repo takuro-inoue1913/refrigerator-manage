@@ -4,26 +4,21 @@ import { idTokenState } from '@src/states/user';
 import Toast from 'react-native-toast-message';
 import { dailyRecipeRepository } from '@src/interface/repositories/dailyRecipeRepository';
 
-type UpdateUserDailyRecipeArgs = {
+type DeleteUserDailyRecipeArgs = {
   userDailyRecipeId: string;
-  brunchType: string;
-  recipeId: string;
-  isCreated: boolean;
 };
 
-export const useRequestUpdateUserDailyRecipe = () => {
+export const useRequestDeleteUserDailyRecipe = () => {
   const idToken = useRecoilValue(idTokenState);
 
-  return async (args: UpdateUserDailyRecipeArgs) => {
+  return async (args: DeleteUserDailyRecipeArgs) => {
     try {
-      const data = await dailyRecipeRepository.updateDailyRecipe({
+      const data = await dailyRecipeRepository.deleteDailyRecipe({
         idToken,
         userDailyRecipeId: args.userDailyRecipeId,
-        brunchType: args.brunchType,
-        recipeId: args.recipeId,
-        isCreated: args.isCreated,
       });
 
+      console.log(data);
       return Promise.resolve(data);
     } catch (error) {
       Toast.show({

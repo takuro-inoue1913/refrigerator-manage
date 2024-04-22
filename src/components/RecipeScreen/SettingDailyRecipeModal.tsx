@@ -59,6 +59,7 @@ type Props = {
   isCreated?: boolean;
   onChangeDropdownValue: (data: SettingDailyRecipeModalDropdownData) => void;
   onClose: () => void;
+  onDelete: (values: { recipeId: string }) => void;
   onSubmit: (values: SubmitValues) => void;
 };
 
@@ -72,6 +73,7 @@ export const SettingDailyRecipeModal: FC<Props> = ({
   isCreated: _isCreated,
   onChangeDropdownValue,
   onClose,
+  onDelete,
   onSubmit,
 }) => {
   const narrowDownRow = useChunkedArray(DAILY_RECIPE_CATEGORY, 2);
@@ -241,6 +243,18 @@ export const SettingDailyRecipeModal: FC<Props> = ({
                           {mode === 'add' ? '追加' : '保存'}
                         </Text>
                       </LinearGradientButton>
+                      {mode === 'edit' && (
+                        <TouchableOpacity
+                          style={styles.deleteButton}
+                          onPress={() => {
+                            onDelete({
+                              recipeId: selectRecipe.id,
+                            });
+                          }}
+                        >
+                          <Text style={styles.deleteButtonText}>削除</Text>
+                        </TouchableOpacity>
+                      )}
                     </View>
                   </>
                 )}
@@ -342,9 +356,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   modalFooter: {
+    flexDirection: 'row',
     justifyContent: 'center',
+    gap: 10,
     alignItems: 'center',
-    width: '100%',
     paddingVertical: 15,
   },
   errorMessage: {
@@ -392,5 +407,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: 'white',
+  },
+  deleteButton: {
+    backgroundColor: '#dc3545',
+    padding: 12,
+    borderRadius: 50,
+  },
+  deleteButtonText: {
+    color: 'white',
+    fontSize: 13,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });

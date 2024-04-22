@@ -28,6 +28,7 @@ import { useRequestGetAllFridgeMaster } from '@src/interface/hooks/shoppingMemo/
 import { useRequestInsertUserDailyRecipe } from '@src/interface/hooks/recipe/useRequestInsertUserDailyRecipe';
 import { useRecipesActions } from '@src/states/recipe/actions';
 import { useRequestUpdateUserDailyRecipe } from '@src/interface/hooks/recipe/useRequestUpdateUserDailyRecipe';
+import { useRequestDeleteUserDailyRecipe } from '@src/interface/hooks/recipe/useRequestDeleteUserDailyRecipe';
 
 export const RecipeScreen = () => {
   const { isFetching: isFetchingGetUsersDailyRecipes, dailyRecipes } =
@@ -38,9 +39,11 @@ export const RecipeScreen = () => {
   useRequestGetAllFridgeMaster();
   const { isFetching: isFetchingGetAllRecipes, recipes } =
     useRequestGetAllRecipes();
-  const { addDailyRecipe, updateDailyRecipe } = useRecipesActions();
+  const { addDailyRecipe, updateDailyRecipe, deleteDailyRecipe } =
+    useRecipesActions();
   const requestInsertUserDailyRecipe = useRequestInsertUserDailyRecipe();
   const requestUpdateUserDailyRecipe = useRequestUpdateUserDailyRecipe();
+  const requestDeleteUserDailyRecipe = useRequestDeleteUserDailyRecipe();
   const navigation = useTypedNavigation();
 
   const [isProcessing, setIsProcessing] = useState(false);
@@ -235,6 +238,48 @@ export const RecipeScreen = () => {
     ],
   );
 
+  const handleDeleteDailyRecipe = useCallback(async () => {
+    if (!selectedDailyRecipeId) {
+      return;
+    }
+
+    const deleteDailyRecipeFn = async () => {
+      setModalVisible(false);
+      setIsProcessing(true);
+      const result = await requestDeleteUserDailyRecipe({
+        userDailyRecipeId: selectedDailyRecipeId,
+      });
+      if (!result) {
+        setIsProcessing(false);
+        throw new Error('deleteDailyRecipe failed');
+      }
+      deleteDailyRecipe({
+        id: result.user_daily_id,
+        date: selectedDate,
+        dailyRecipeId: selectedDailyRecipeId,
+      });
+      setIsProcessing(false);
+    };
+    Alert.alert('削除しますか？', '', [
+      {
+        text: '削除する',
+        onPress: deleteDailyRecipeFn,
+      },
+      {
+        text: 'キャンセル',
+        style: 'destructive',
+        onPress: () => {
+          setIsProcessing(false);
+        },
+      },
+    ]);
+  }, [
+    selectedDailyRecipeId,
+    selectedDate,
+    requestDeleteUserDailyRecipe,
+    deleteDailyRecipe,
+  ]);
+
   const NewDailyRecipe = () => {
     return (
       <TouchableOpacity
@@ -385,6 +430,7 @@ export const RecipeScreen = () => {
         onChangeDropdownValue={handleChangeDropdownValue}
         onClose={handleCloseModal}
         onSubmit={handleSubmitModal}
+        onDelete={handleDeleteDailyRecipe}
       />
     </View>
   );
