@@ -19,7 +19,7 @@ import { COMMON_COLOR_BLUE, COMMON_COLOR_GREEN } from '@src/utils/consts';
 import { FridgeItemCreateScreen } from '@src/screens/FridgeIitemCreateScreen';
 import { RootStackParamList } from '@src/types';
 import { ShoppingMemoScreen } from '@src/screens/ShoppingMemoScreen';
-import { RecipeScreen } from '@src/screens/RecipeScreen';
+import { DailyRecipeScreen } from '@src/screens/DailyRecipeScreen';
 import { RecipeCreateScreen } from './screens/RecipeCreateScreen';
 
 export const App: FC = () => {
@@ -68,7 +68,7 @@ export const App: FC = () => {
   const RecipeStack = () => {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="レシピ" component={RecipeScreen} />
+        <Stack.Screen name="レシピ" component={DailyRecipeScreen} />
         <Stack.Screen name="レシピ新規登録" component={RecipeCreateScreen} />
       </Stack.Navigator>
     );
