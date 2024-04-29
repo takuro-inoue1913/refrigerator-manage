@@ -75,10 +75,12 @@ export const MeatView: FC = () => {
         memo: meatStocks.byId[id].memo,
         isFavorite: meatStocks.byId[id].isFavorite,
         isCustomMaster: meatStocks.byId[id].isCustomMaster,
-        onClose: (formValues) => {
+        onClose: async (formValues) => {
+          setIsLoading(true);
           setModalProps(undefined);
-          requestUpsertMeatStockDetail(formValues);
+          await requestUpsertMeatStockDetail(formValues);
           meatStockActions.updateMeatStockDetail(formValues);
+          setIsLoading(false);
         },
         onDelete: async (id) => {
           setModalProps(undefined);

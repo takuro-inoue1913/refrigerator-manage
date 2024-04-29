@@ -76,10 +76,12 @@ export const DessertView: FC = () => {
         memo: dessertStocks.byId[id].memo,
         isFavorite: dessertStocks.byId[id].isFavorite,
         isCustomMaster: dessertStocks.byId[id].isCustomMaster,
-        onClose: (formValues) => {
+        onClose: async (formValues) => {
+          setIsLoading(true);
           setModalProps(undefined);
-          requestUpsertDessertStockDetail(formValues);
+          await requestUpsertDessertStockDetail(formValues);
           dessertStockActions.updateDessertStockDetail(formValues);
+          setIsLoading(false);
         },
         onDelete: async (id) => {
           setModalProps(undefined);

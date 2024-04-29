@@ -75,10 +75,12 @@ export const OtherView: FC = () => {
         memo: otherStocks.byId[id].memo,
         isFavorite: otherStocks.byId[id].isFavorite,
         isCustomMaster: otherStocks.byId[id].isCustomMaster,
-        onClose: (formValues) => {
+        onClose: async (formValues) => {
+          setIsLoading(true);
           setModalProps(undefined);
-          requestUpsertOtherStockDetail(formValues);
+          await requestUpsertOtherStockDetail(formValues);
           otherStockActions.updateOtherStockDetail(formValues);
+          setIsLoading(false);
         },
         onDelete: async (id) => {
           setIsLoading(true);

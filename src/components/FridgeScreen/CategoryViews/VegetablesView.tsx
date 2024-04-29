@@ -79,14 +79,16 @@ export const VegetablesView: FC = () => {
         memo: vegetablesStocks.byId[id].memo,
         isFavorite: vegetablesStocks.byId[id].isFavorite,
         isCustomMaster: vegetablesStocks.byId[id].isCustomMaster,
-        onClose: (formValues) => {
+        onClose: async (formValues) => {
+          setIsLoading(true);
           setModalProps(undefined);
-          requestUpsertVegetableStockDetail(formValues);
+          await requestUpsertVegetableStockDetail(formValues);
           vegetablesStockActions.updateVegetableStockDetail(formValues);
+          setIsLoading(false);
         },
         onDelete: async (id) => {
-          setModalProps(undefined);
           setIsLoading(true);
+          setModalProps(undefined);
           await requestDeleteCustomVegetableMaster(id);
           await deleteUserImage(vegetablesStocks.byId[id].imageUri);
           await requestDeleteShoppingMemoByMasterId({ masterId: id }).then(

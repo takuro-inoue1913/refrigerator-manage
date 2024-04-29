@@ -75,10 +75,12 @@ export const FishView: FC = () => {
         memo: fishStocks.byId[id].memo,
         isFavorite: fishStocks.byId[id].isFavorite,
         isCustomMaster: fishStocks.byId[id].isCustomMaster,
-        onClose: (formValues) => {
+        onClose: async (formValues) => {
+          setIsLoading(true);
           setModalProps(undefined);
-          requestUpsertFishStockDetail(formValues);
+          await requestUpsertFishStockDetail(formValues);
           fishStockActions.updateFishStockDetail(formValues);
+          setIsLoading(false);
         },
         onDelete: async (id) => {
           setModalProps(undefined);

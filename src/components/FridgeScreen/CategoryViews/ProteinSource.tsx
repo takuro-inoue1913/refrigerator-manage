@@ -79,10 +79,12 @@ export const ProteinSourceView: FC = () => {
         memo: proteinSourceStocks.byId[id].memo,
         isFavorite: proteinSourceStocks.byId[id].isFavorite,
         isCustomMaster: proteinSourceStocks.byId[id].isCustomMaster,
-        onClose: (formValues) => {
+        onClose: async (formValues) => {
+          setIsLoading(true);
           setModalProps(undefined);
-          requestUpsertProteinSourceStockDetail(formValues);
+          await requestUpsertProteinSourceStockDetail(formValues);
           proteinSourceStockActions.updateProteinSourceStockDetail(formValues);
+          setIsLoading(false);
         },
         onDelete: async (id) => {
           setIsLoading(true);

@@ -78,10 +78,12 @@ export const SeasoningView: FC = () => {
         memo: seasoningStocks.byId[id].memo,
         isFavorite: seasoningStocks.byId[id].isFavorite,
         isCustomMaster: seasoningStocks.byId[id].isCustomMaster,
-        onClose: (formValues) => {
+        onClose: async (formValues) => {
+          setIsLoading(true);
           setModalProps(undefined);
-          requestUpsertSeasoningStockDetail(formValues);
+          await requestUpsertSeasoningStockDetail(formValues);
           seasoningStockActions.updateSeasoningStockDetail(formValues);
+          setIsLoading(false);
         },
         onDelete: async (id) => {
           setIsLoading(true);

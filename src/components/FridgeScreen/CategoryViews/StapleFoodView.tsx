@@ -78,10 +78,12 @@ export const StapleFoodView: FC = () => {
         memo: stapleFoodStocks.byId[id].memo,
         isFavorite: stapleFoodStocks.byId[id].isFavorite,
         isCustomMaster: stapleFoodStocks.byId[id].isCustomMaster,
-        onClose: (formValues) => {
+        onClose: async (formValues) => {
+          setIsLoading(true);
           setModalProps(undefined);
-          requestUpsertStapleFoodStockDetail(formValues);
+          await requestUpsertStapleFoodStockDetail(formValues);
           stapleFoodStockActions.updateStapleFoodStockDetail(formValues);
+          setIsLoading(false);
         },
         onDelete: async (id) => {
           setIsLoading(true);

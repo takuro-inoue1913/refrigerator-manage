@@ -75,10 +75,12 @@ export const SpiceView: FC = () => {
         memo: spiceStocks.byId[id].memo,
         isFavorite: spiceStocks.byId[id].isFavorite,
         isCustomMaster: spiceStocks.byId[id].isCustomMaster,
-        onClose: (formValues) => {
+        onClose: async (formValues) => {
+          setIsLoading(true);
           setModalProps(undefined);
-          requestUpsertSpiceStockDetail(formValues);
+          await requestUpsertSpiceStockDetail(formValues);
           spiceStockActions.updateSpiceStockDetail(formValues);
+          setIsLoading(false);
         },
         onDelete: async (id) => {
           setIsLoading(true);
