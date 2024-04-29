@@ -39,7 +39,7 @@ export const FishView: FC = () => {
   const isFocused = useIsFocused();
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
-  const [isLoding, setIsLoding] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useTypedNavigation();
   const { fishStocks, isFetching, refetch } = useRequestGetFishStocks();
   const fishStockActions = useFishStockActions();
@@ -82,7 +82,7 @@ export const FishView: FC = () => {
         },
         onDelete: async (id) => {
           setModalProps(undefined);
-          setIsLoding(true);
+          setIsLoading(true);
           await requestDeleteCustomFishMaster(id);
           await deleteUserImage(fishStocks.byId[id].imageUri);
           await requestDeleteShoppingMemoByMasterId({ masterId: id }).then(
@@ -93,7 +93,7 @@ export const FishView: FC = () => {
             },
           );
           fishStockActions.deleteFishStock(id);
-          setIsLoding(false);
+          setIsLoading(false);
         },
       });
     },
@@ -146,13 +146,18 @@ export const FishView: FC = () => {
     }
   }, [isFocused, refetch]);
 
-  if (isFetching) {
-    return <SkeletonFridgeViews />;
+  if (fishStocks.ids.length === 0 && isFetching) {
+    return (
+      <>
+        <LoadingMask />
+        <SkeletonFridgeViews />
+      </>
+    );
   }
 
   return (
     <>
-      {isLoding && <LoadingMask />}
+      {(isFetching || isLoading) && <LoadingMask />}
       <StickyHeader
         selectItems={selectItems}
         isDisabled={isFetching}

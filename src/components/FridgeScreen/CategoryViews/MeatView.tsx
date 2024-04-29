@@ -39,7 +39,7 @@ export const MeatView: FC = () => {
   const isFocused = useIsFocused();
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
-  const [isLoding, setIsLoding] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useTypedNavigation();
   const { meatStocks, isFetching, refetch } = useRequestGetMeatStocks();
   const meatStockActions = useMeatStockActions();
@@ -82,7 +82,7 @@ export const MeatView: FC = () => {
         },
         onDelete: async (id) => {
           setModalProps(undefined);
-          setIsLoding(true);
+          setIsLoading(true);
           await requestDeleteCustomMeatMaster(id);
           await deleteUserImage(meatStocks.byId[id].imageUri);
           await requestDeleteShoppingMemoByMasterId({ masterId: id }).then(
@@ -93,7 +93,7 @@ export const MeatView: FC = () => {
             },
           );
           meatStockActions.deleteMeatStock(id);
-          setIsLoding(false);
+          setIsLoading(false);
         },
       });
     },
@@ -146,13 +146,18 @@ export const MeatView: FC = () => {
     }
   }, [isFocused, refetch]);
 
-  if (isFetching) {
-    return <SkeletonFridgeViews />;
+  if (meatStocks.ids.length === 0 && isFetching) {
+    return (
+      <>
+        <LoadingMask />
+        <SkeletonFridgeViews />
+      </>
+    );
   }
 
   return (
     <>
-      {isLoding && <LoadingMask />}
+      {(isFetching || isLoading) && <LoadingMask />}
       <StickyHeader
         selectItems={selectItems}
         isDisabled={isFetching}

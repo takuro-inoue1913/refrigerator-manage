@@ -39,7 +39,7 @@ export const DessertView: FC = () => {
   const isFocused = useIsFocused();
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
-  const [isLoding, setIsLoding] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useTypedNavigation();
   const { dessertStocks, isFetching, refetch } = useRequestGetDessertStocks();
   const dessertStockActions = useDessertStockActions();
@@ -83,7 +83,7 @@ export const DessertView: FC = () => {
         },
         onDelete: async (id) => {
           setModalProps(undefined);
-          setIsLoding(true);
+          setIsLoading(true);
           await requestDeleteCustomDessertMaster(id);
           await deleteUserImage(dessertStocks.byId[id].imageUri);
           await requestDeleteShoppingMemoByMasterId({ masterId: id }).then(
@@ -94,7 +94,7 @@ export const DessertView: FC = () => {
             },
           );
           dessertStockActions.deleteDessertStock(id);
-          setIsLoding(false);
+          setIsLoading(false);
         },
       });
     },
@@ -147,13 +147,18 @@ export const DessertView: FC = () => {
     }
   }, [isFocused, refetch]);
 
-  if (isFetching) {
-    return <SkeletonFridgeViews />;
+  if (dessertStocks.ids.length === 0 && isFetching) {
+    return (
+      <>
+        <LoadingMask />
+        <SkeletonFridgeViews />
+      </>
+    );
   }
 
   return (
     <>
-      {isLoding && <LoadingMask />}
+      {(isFetching || isLoading) && <LoadingMask />}
       <StickyHeader
         selectItems={selectItems}
         isDisabled={isFetching}

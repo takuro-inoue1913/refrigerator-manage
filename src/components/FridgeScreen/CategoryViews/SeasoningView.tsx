@@ -39,7 +39,7 @@ export const SeasoningView: FC = () => {
   const isFocused = useIsFocused();
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
-  const [isLoding, setIsLoding] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useTypedNavigation();
   const { seasoningStocks, isFetching, refetch } =
     useRequestGetSeasoningStocks();
@@ -84,7 +84,7 @@ export const SeasoningView: FC = () => {
           seasoningStockActions.updateSeasoningStockDetail(formValues);
         },
         onDelete: async (id) => {
-          setIsLoding(true);
+          setIsLoading(true);
           setModalProps(undefined);
           await requestDeleteCustomSeasoningMaster(id);
           await deleteUserImage(seasoningStocks.byId[id].imageUri);
@@ -96,7 +96,7 @@ export const SeasoningView: FC = () => {
             },
           );
           seasoningStockActions.deleteSeasoningStock(id);
-          setIsLoding(false);
+          setIsLoading(false);
         },
       });
     },
@@ -149,13 +149,18 @@ export const SeasoningView: FC = () => {
     }
   }, [isFocused, refetch]);
 
-  if (isFetching) {
-    return <SkeletonFridgeViews />;
+  if (seasoningStocks.ids.length === 0 && isFetching) {
+    return (
+      <>
+        <LoadingMask />
+        <SkeletonFridgeViews />
+      </>
+    );
   }
 
   return (
     <>
-      {isLoding && <LoadingMask />}
+      {(isFetching || isLoading) && <LoadingMask />}
       <StickyHeader
         selectItems={selectItems}
         isDisabled={isFetching}

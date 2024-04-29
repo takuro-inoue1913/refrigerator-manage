@@ -39,7 +39,7 @@ export const SpiceView: FC = () => {
   const isFocused = useIsFocused();
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
-  const [isLoding, setIsLoding] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useTypedNavigation();
   const { spiceStocks, isFetching, refetch } = useRequestGetSpiceStocks();
   const spiceStockActions = useSpiceStockActions();
@@ -81,7 +81,7 @@ export const SpiceView: FC = () => {
           spiceStockActions.updateSpiceStockDetail(formValues);
         },
         onDelete: async (id) => {
-          setIsLoding(true);
+          setIsLoading(true);
           setModalProps(undefined);
           await requestDeleteCustomSpiceMaster(id);
           await deleteUserImage(spiceStocks.byId[id].imageUri);
@@ -93,7 +93,7 @@ export const SpiceView: FC = () => {
             },
           );
           spiceStockActions.deleteSpiceStock(id);
-          setIsLoding(false);
+          setIsLoading(false);
         },
       });
     },
@@ -146,13 +146,18 @@ export const SpiceView: FC = () => {
     }
   }, [isFocused, refetch]);
 
-  if (isFetching) {
-    return <SkeletonFridgeViews />;
+  if (spiceStocks.ids.length === 0 && isFetching) {
+    return (
+      <>
+        <LoadingMask />
+        <SkeletonFridgeViews />
+      </>
+    );
   }
 
   return (
     <>
-      {isLoding && <LoadingMask />}
+      {(isFetching || isLoading) && <LoadingMask />}
       <StickyHeader
         selectItems={selectItems}
         isDisabled={isFetching}

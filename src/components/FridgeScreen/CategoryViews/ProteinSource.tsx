@@ -39,7 +39,7 @@ export const ProteinSourceView: FC = () => {
   const isFocused = useIsFocused();
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
-  const [isLoding, setIsLoding] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useTypedNavigation();
   const { proteinSourceStocks, isFetching, refetch } =
     useRequestGetProteinSourceStocks();
@@ -85,7 +85,7 @@ export const ProteinSourceView: FC = () => {
           proteinSourceStockActions.updateProteinSourceStockDetail(formValues);
         },
         onDelete: async (id) => {
-          setIsLoding(true);
+          setIsLoading(true);
           setModalProps(undefined);
           if (proteinSourceStocks.byId[id].isCustomMaster) {
             await requestDeleteCustomProteinSourceMaster(id);
@@ -99,7 +99,7 @@ export const ProteinSourceView: FC = () => {
             );
           }
           proteinSourceStockActions.deleteProteinSourceStock(id);
-          setIsLoding(false);
+          setIsLoading(false);
         },
       });
     },
@@ -152,13 +152,18 @@ export const ProteinSourceView: FC = () => {
     }
   }, [isFocused, refetch]);
 
-  if (isFetching) {
-    return <SkeletonFridgeViews />;
+  if (proteinSourceStocks.ids.length === 0 && isFetching) {
+    return (
+      <>
+        <LoadingMask />
+        <SkeletonFridgeViews />
+      </>
+    );
   }
 
   return (
     <>
-      {isLoding && <LoadingMask />}
+      {(isFetching || isLoading) && <LoadingMask />}
       <StickyHeader
         selectItems={selectItems}
         isDisabled={isFetching}

@@ -197,6 +197,7 @@ export const RecipeScreen = () => {
             {
               text: '追加する',
               onPress: () => {
+                // 追加するロジックを書く
                 // navigation.navigate('買い物メモ追加候補', {
                 //   screen: '買い物メモ追加候補',
                 //   params: {

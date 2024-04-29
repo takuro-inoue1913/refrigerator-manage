@@ -48,7 +48,7 @@ export const ShoppingMemoScreen = () => {
   const requestBulkDeleteShoppingMemo = useRequestBulkDeleteShoppingMemo();
   const requestAddFridgeMasterStock = useRequestAddFridgeMasterStock();
   const shoppingMemoActions = useShoppingMemoActions();
-  const [isLoding, setIsLoding] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectFridgeMaster, setSelectFridgeMaster] =
     useState<FridgeMaster | null>(null);
@@ -109,7 +109,7 @@ export const ShoppingMemoScreen = () => {
             setErrorMessage('すでに追加されている食材です。');
             return;
           }
-          setIsLoding(true);
+          setIsLoading(true);
           requestInsertShoppingMemo({
             masterId: selectFridgeMaster.id,
             quantity,
@@ -122,7 +122,7 @@ export const ShoppingMemoScreen = () => {
                 quantity,
                 isChecked: false,
               });
-              setIsLoding(false);
+              setIsLoading(false);
             }
           });
         }
@@ -144,7 +144,7 @@ export const ShoppingMemoScreen = () => {
           if (editTargetId === null) {
             throw new Error('editTargetId is null');
           }
-          setIsLoding(true);
+          setIsLoading(true);
           requestUpdateShoppingMemo({
             shoppingMemoId: editTargetId,
             masterId: selectFridgeMaster.id,
@@ -158,7 +158,7 @@ export const ShoppingMemoScreen = () => {
               quantity,
               isChecked: shoppingMemo.byId[editTargetId].isChecked,
             });
-            setIsLoding(false);
+            setIsLoading(false);
             setEditTargetId(null);
             refetch();
           });
@@ -210,7 +210,7 @@ export const ShoppingMemoScreen = () => {
         if (buttonIndex === 0) {
           return;
         } else if (buttonIndex === 1) {
-          setIsLoding(true);
+          setIsLoading(true);
           await bulkRequestAddFridgeMasterStock(shoppingMemo.ids);
           await requestBulkDeleteShoppingMemo({
             shoppingMemoIds: shoppingMemo.ids,
@@ -218,7 +218,7 @@ export const ShoppingMemoScreen = () => {
           shoppingMemoActions.bulkDeleteShoppingMemo({
             ids: shoppingMemo.ids,
           });
-          setIsLoding(false);
+          setIsLoading(false);
           Toast.show({
             text1: '冷蔵庫に追加しました',
             type: 'success',
@@ -226,7 +226,7 @@ export const ShoppingMemoScreen = () => {
           });
           navigation.navigate('冷蔵庫管理');
         } else if (buttonIndex === 2) {
-          setIsLoding(true);
+          setIsLoading(true);
           const checkedIds = shoppingMemo.ids.filter(
             (id) => shoppingMemo.byId[id].isChecked,
           );
@@ -237,7 +237,7 @@ export const ShoppingMemoScreen = () => {
           shoppingMemoActions.bulkDeleteShoppingMemo({
             ids: checkedIds,
           });
-          setIsLoding(false);
+          setIsLoading(false);
           Toast.show({
             text1: '冷蔵庫に追加しました',
             type: 'success',
@@ -258,14 +258,14 @@ export const ShoppingMemoScreen = () => {
       {
         text: '削除',
         onPress: async () => {
-          setIsLoding(true);
+          setIsLoading(true);
           await requestBulkDeleteShoppingMemo({
             shoppingMemoIds: shoppingMemo.ids,
           });
           shoppingMemoActions.bulkDeleteShoppingMemo({
             ids: shoppingMemo.ids,
           });
-          setIsLoding(false);
+          setIsLoading(false);
         },
       },
     ]);
@@ -287,7 +287,7 @@ export const ShoppingMemoScreen = () => {
 
   return (
     <View style={styles.container}>
-      {(isLoding || isFetchingShoppingMemo || isFetchingFridgeMaster) && (
+      {(isLoading || isFetchingShoppingMemo || isFetchingFridgeMaster) && (
         <LoadingMask />
       )}
       <View style={styles.header}>

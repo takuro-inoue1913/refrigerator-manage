@@ -39,7 +39,7 @@ export const OtherView: FC = () => {
   const isFocused = useIsFocused();
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
-  const [isLoding, setIsLoding] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useTypedNavigation();
   const { otherStocks, isFetching, refetch } = useRequestGetOtherStocks();
   const otherStockActions = useOtherStockActions();
@@ -81,7 +81,7 @@ export const OtherView: FC = () => {
           otherStockActions.updateOtherStockDetail(formValues);
         },
         onDelete: async (id) => {
-          setIsLoding(true);
+          setIsLoading(true);
           setModalProps(undefined);
           await requestDeleteCustomOtherMaster(id);
           await deleteUserImage(otherStocks.byId[id].imageUri);
@@ -93,7 +93,7 @@ export const OtherView: FC = () => {
             },
           );
           otherStockActions.deleteOtherStock(id);
-          setIsLoding(false);
+          setIsLoading(false);
         },
       });
     },
@@ -146,13 +146,18 @@ export const OtherView: FC = () => {
     }
   }, [isFocused, refetch]);
 
-  if (isFetching) {
-    return <SkeletonFridgeViews />;
+  if (otherStocks.ids.length === 0 && isFetching) {
+    return (
+      <>
+        <LoadingMask />
+        <SkeletonFridgeViews />
+      </>
+    );
   }
 
   return (
     <>
-      {isLoding && <LoadingMask />}
+      {(isFetching || isLoading) && <LoadingMask />}
       <StickyHeader
         selectItems={selectItems}
         isDisabled={isFetching}

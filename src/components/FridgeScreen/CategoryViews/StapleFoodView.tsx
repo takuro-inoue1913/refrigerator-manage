@@ -39,7 +39,7 @@ export const StapleFoodView: FC = () => {
   const isFocused = useIsFocused();
   const [modalProps, setModalProps] =
     useState<ComponentProps<typeof ItemDetailModal>>();
-  const [isLoding, setIsLoding] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useTypedNavigation();
   const { stapleFoodStocks, isFetching, refetch } =
     useRequestGetStapleFoodStocks();
@@ -84,7 +84,7 @@ export const StapleFoodView: FC = () => {
           stapleFoodStockActions.updateStapleFoodStockDetail(formValues);
         },
         onDelete: async (id) => {
-          setIsLoding(true);
+          setIsLoading(true);
           setModalProps(undefined);
           await requestDeleteCustomStapleFoodMaster(id);
           await deleteUserImage(stapleFoodStocks.byId[id].imageUri);
@@ -96,7 +96,7 @@ export const StapleFoodView: FC = () => {
             },
           );
           stapleFoodStockActions.deleteStapleFoodStock(id);
-          setIsLoding(false);
+          setIsLoading(false);
         },
       });
     },
@@ -149,13 +149,18 @@ export const StapleFoodView: FC = () => {
     }
   }, [isFocused, refetch]);
 
-  if (isFetching) {
-    return <SkeletonFridgeViews />;
+  if (stapleFoodStocks.ids.length === 0 && isFetching) {
+    return (
+      <>
+        <LoadingMask />
+        <SkeletonFridgeViews />
+      </>
+    );
   }
 
   return (
     <>
-      {isLoding && <LoadingMask />}
+      {(isFetching || isLoading) && <LoadingMask />}
       <StickyHeader
         selectItems={selectItems}
         isDisabled={isFetching}
