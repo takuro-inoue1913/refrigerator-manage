@@ -22,7 +22,7 @@ import {
   SettingDailyRecipeModal,
   SettingDailyRecipeModalDropdownData,
   SubmitValues,
-} from '@src/components/RecipeScreen/SettingDailyRecipeModal';
+} from '@src/components/DailyRecipeScreen/SettingDailyRecipeModal';
 import { useRequestGetAllRecipes } from '@src/interface/hooks/recipe/useRequestGetAllRecipes';
 import { useRequestGetAllFridgeMaster } from '@src/interface/hooks/shoppingMemo/useRequestGetAllFridgeMaster';
 import { useRequestInsertUserDailyRecipe } from '@src/interface/hooks/recipe/useRequestInsertUserDailyRecipe';
@@ -31,7 +31,7 @@ import { useRequestUpdateUserDailyRecipe } from '@src/interface/hooks/recipe/use
 import { useRequestDeleteUserDailyRecipe } from '@src/interface/hooks/recipe/useRequestDeleteUserDailyRecipe';
 import { useIsFocused } from '@react-navigation/native';
 
-export const RecipeScreen = () => {
+export const DailyRecipeScreen = () => {
   const isFocused = useIsFocused();
   const { isFetching: isFetchingGetUsersDailyRecipes, dailyRecipes } =
     useRequestGetUsersDailyRecipes(
