@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { Calendar } from 'react-native-calendars';
 import { COMMON_COLOR_GREEN } from '@src/utils/consts';
@@ -29,16 +29,21 @@ import { useRequestInsertUserDailyRecipe } from '@src/interface/hooks/recipe/use
 import { useRecipesActions } from '@src/states/recipe/actions';
 import { useRequestUpdateUserDailyRecipe } from '@src/interface/hooks/recipe/useRequestUpdateUserDailyRecipe';
 import { useRequestDeleteUserDailyRecipe } from '@src/interface/hooks/recipe/useRequestDeleteUserDailyRecipe';
+import { useIsFocused } from '@react-navigation/native';
 
 export const RecipeScreen = () => {
+  const isFocused = useIsFocused();
   const { isFetching: isFetchingGetUsersDailyRecipes, dailyRecipes } =
     useRequestGetUsersDailyRecipes(
       dayjs().startOf('month').format('YYYY-MM-DD'),
       dayjs().endOf('month').format('YYYY-MM-DD'),
     );
-  useRequestGetAllFridgeMaster();
-  const { isFetching: isFetchingGetAllRecipes, recipes } =
-    useRequestGetAllRecipes();
+  const { refetch: refetchGetAllFridgeMaster } = useRequestGetAllFridgeMaster();
+  const {
+    refetch: refetchGetAllRecipes,
+    isFetching: isFetchingGetAllRecipes,
+    recipes,
+  } = useRequestGetAllRecipes();
   const { addDailyRecipe, updateDailyRecipe, deleteDailyRecipe } =
     useRecipesActions();
   const requestInsertUserDailyRecipe = useRequestInsertUserDailyRecipe();
@@ -197,7 +202,7 @@ export const RecipeScreen = () => {
             {
               text: '追加する',
               onPress: () => {
-                // 追加するロジックを書く
+                // 追加するロジックを書く;
                 // navigation.navigate('買い物メモ追加候補', {
                 //   screen: '買い物メモ追加候補',
                 //   params: {
@@ -367,6 +372,14 @@ export const RecipeScreen = () => {
       </View>
     );
   };
+
+  useEffect(() => {
+    if (isFocused) {
+      refetchGetAllFridgeMaster();
+      refetchGetAllRecipes();
+    }
+  }, [isFocused, refetchGetAllFridgeMaster, refetchGetAllRecipes]);
+
   return (
     <View style={styles.container}>
       {(isFetchingGetAllRecipes ||
