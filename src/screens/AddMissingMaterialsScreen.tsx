@@ -21,6 +21,8 @@ import { useRecipesActions } from '@src/states/recipe/actions';
 import { LoadingMask } from '@src/components/common/LoadingMask';
 import { useRequestInsertShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestInsertShoppingMemo';
 import { useShoppingMemoActions } from '@src/states/shoppingMemo';
+import { useRequestGetAllShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestGetAllShoppingMemo';
+import { useRequestUpdateShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestUpdateShoppingMemo';
 
 type Props = {
   route: RouteProp<RootStackParamList, '追加する材料'>;
@@ -34,7 +36,9 @@ export const AddMissingMaterialsScreen: FC<Props> = ({ route }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const recipes = useRecoilValue(recipesState);
   const fridgeMaster = useRecoilValue(fridgeMasterState);
+  const { shoppingMemo } = useRequestGetAllShoppingMemo();
   const requestInsertShoppingMemo = useRequestInsertShoppingMemo();
+  const requestUpdateShoppingMemo = useRequestUpdateShoppingMemo();
   const requestInsertUserDailyRecipe = useRequestInsertUserDailyRecipe();
   const shoppingMemoActions = useShoppingMemoActions();
   const { addDailyRecipe } = useRecipesActions();
@@ -87,8 +91,33 @@ export const AddMissingMaterialsScreen: FC<Props> = ({ route }) => {
     });
   };
 
-  const bulkRequestAddFridgeMasterStock = async () => {
+  const bulkRequestInsertShoppingMemo = async () => {
     missingMaterials.forEach((missingMaterial) => {
+      // すでに shoppingMemo に存在する場合は、quantity を更新する
+      const targetShoppingMemoId = shoppingMemo.ids.find(
+        (id) => shoppingMemo.byId[id].masterId === missingMaterial.id,
+      );
+
+      if (targetShoppingMemoId) {
+        const newQuantity =
+          missingMaterial.missingQuantity +
+          shoppingMemo.byId[targetShoppingMemoId].quantity;
+        requestUpdateShoppingMemo({
+          shoppingMemoId: targetShoppingMemoId,
+          masterId: missingMaterial.id,
+          quantity: newQuantity,
+        }).then(() => {
+          shoppingMemoActions.upsertShoppingMemo({
+            ...missingMaterial,
+            id: targetShoppingMemoId,
+            masterId: missingMaterial.id,
+            prevId: targetShoppingMemoId,
+            quantity: newQuantity,
+            isChecked: shoppingMemo.byId[targetShoppingMemoId].isChecked,
+          });
+        });
+        return;
+      }
       requestInsertShoppingMemo({
         masterId: missingMaterial.id,
         quantity: missingMaterial.missingQuantity,
@@ -113,7 +142,7 @@ export const AddMissingMaterialsScreen: FC<Props> = ({ route }) => {
 
   const handlePressSubmit = async () => {
     if (missingMaterials.length > 0) {
-      await bulkRequestAddFridgeMasterStock();
+      await bulkRequestInsertShoppingMemo();
     }
     await addDailyRecipeFn();
     navigation.navigation.goBack();

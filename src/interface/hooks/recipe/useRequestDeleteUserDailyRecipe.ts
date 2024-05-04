@@ -18,7 +18,6 @@ export const useRequestDeleteUserDailyRecipe = () => {
         userDailyRecipeId: args.userDailyRecipeId,
       });
 
-      console.log(data);
       return Promise.resolve(data);
     } catch (error) {
       Toast.show({
