@@ -1,3 +1,4 @@
+import { SubmitValues } from '@src/components/DailyRecipeScreen/SettingDailyRecipeModal';
 import { SelectFridgeCategory } from '@src/states/fridge';
 
 export type FridgeItemCreateRouteParams = {
@@ -5,8 +6,8 @@ export type FridgeItemCreateRouteParams = {
 };
 
 export type AddMissingMaterialsRouteParams = {
-  recipeId: string;
-  // onSubmit: () => void;
+  submitValues: SubmitValues;
+  date: string;
   // onCancel: () => void;
 };
 

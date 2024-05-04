@@ -207,7 +207,8 @@ export const DailyRecipeScreen = () => {
                 selectedRecipe && setSelectedRecipe(null);
                 selectedDailyRecipeId && setSelectedDailyRecipeId(null);
                 navigation.navigate('追加する材料', {
-                  recipeId: values.recipeId,
+                  submitValues: values,
+                  date: selectedDate,
                 });
               },
             },

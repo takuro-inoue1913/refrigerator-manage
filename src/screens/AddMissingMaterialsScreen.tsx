@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 import {
   FlatList,
   // Alert,
@@ -14,7 +14,7 @@ import {
 // import CachedImage from 'expo-cached-image';
 // import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { RouteProp } from '@react-navigation/native';
-import { recipesState } from '@src/states/recipe';
+import { BrunchType, recipesState } from '@src/states/recipe';
 import { RootStackParamList } from '@src/types';
 import { useRecoilValue } from 'recoil';
 import { FridgeMaster, fridgeMasterState } from '@src/states/fridge';
@@ -22,6 +22,12 @@ import CachedImage from 'expo-cached-image';
 import { generateEncodeString } from '@src/utils/logics/createEncodeStrings';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
+import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
+import { useRequestInsertUserDailyRecipe } from '@src/interface/hooks/recipe/useRequestInsertUserDailyRecipe';
+import { useRecipesActions } from '@src/states/recipe/actions';
+import { LoadingMask } from '@src/components/common/LoadingMask';
+import { useRequestInsertShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestInsertShoppingMemo';
+import { useShoppingMemoActions } from '@src/states/shoppingMemo';
 
 type Props = {
   route: RouteProp<RootStackParamList, '追加する材料'>;
@@ -32,9 +38,16 @@ type MissingMaterial = {
 } & FridgeMaster;
 
 export const AddMissingMaterialsScreen: FC<Props> = ({ route }) => {
+  const [isProcessing, setIsProcessing] = useState(false);
   const recipes = useRecoilValue(recipesState);
   const fridgeMaster = useRecoilValue(fridgeMasterState);
-  const recipe = recipes.byId[route.params.recipeId];
+  const requestInsertShoppingMemo = useRequestInsertShoppingMemo();
+  const requestInsertUserDailyRecipe = useRequestInsertUserDailyRecipe();
+  const shoppingMemoActions = useShoppingMemoActions();
+  const { addDailyRecipe } = useRecipesActions();
+  const navigation = useTypedNavigation();
+
+  const recipe = recipes.byId[route.params.submitValues.recipeId];
 
   const missingMaterials: MissingMaterial[] = useMemo(() => {
     // material の masterId が fridgeMaster と一致するものであり、かつ、material の quantity が fridgeMaster の quantity よりも多いものを抽出し、足らない分を計算する
@@ -55,6 +68,63 @@ export const AddMissingMaterialsScreen: FC<Props> = ({ route }) => {
         };
       });
   }, [fridgeMaster, recipe.materials]);
+
+  const addDailyRecipeFn = async () => {
+    const result = await requestInsertUserDailyRecipe({
+      date: route.params.date,
+      brunchType: route.params.submitValues.brunchType,
+      recipeId: route.params.submitValues.recipeId,
+      isCreated: route.params.submitValues.isCreated,
+    });
+    if (!result) {
+      setIsProcessing(false);
+      throw new Error('addDailyRecipe failed');
+    }
+    addDailyRecipe({
+      id: result.user_daily_id,
+      date: route.params.date,
+      dailyRecipe: {
+        id: result.user_daily_recipes_id,
+        recipeId: route.params.submitValues.recipeId,
+        recipeName: recipe.name,
+        recipeImageUri: recipe.imageUri,
+        brunchType: route.params.submitValues.brunchType as BrunchType,
+        isCreated: route.params.submitValues.isCreated,
+      },
+    });
+  };
+
+  const bulkRequestAddFridgeMasterStock = async () => {
+    missingMaterials.forEach((missingMaterial) => {
+      requestInsertShoppingMemo({
+        masterId: missingMaterial.id,
+        quantity: missingMaterial.missingQuantity,
+      }).then((res) => {
+        if (res) {
+          shoppingMemoActions.addShoppingMemo({
+            id: res.shopping_memo_id,
+            masterId: missingMaterial.id,
+            name: missingMaterial.name,
+            displayName: missingMaterial.displayName,
+            imageUri: missingMaterial.imageUri,
+            fridgeType: missingMaterial.fridgeType,
+            unitName: missingMaterial.unitName,
+            incrementalUnit: missingMaterial.incrementalUnit,
+            quantity: missingMaterial.missingQuantity,
+            isChecked: false,
+          });
+        }
+      });
+    });
+  };
+
+  const handlePressSubmit = async () => {
+    if (missingMaterials.length > 0) {
+      await bulkRequestAddFridgeMasterStock();
+    }
+    await addDailyRecipeFn();
+    navigation.navigation.goBack();
+  };
 
   const FlatItem = ({ item }: { item: MissingMaterial }) => {
     return (
@@ -101,8 +171,9 @@ export const AddMissingMaterialsScreen: FC<Props> = ({ route }) => {
   };
   return (
     <View style={styles.container}>
+      {isProcessing && <LoadingMask />}
       <View style={styles.header}>
-        <LinearGradientButton width={200} onPress={() => {}}>
+        <LinearGradientButton width={200} onPress={handlePressSubmit}>
           <Text style={styles.buttonText}>
             <Icon name="cart-outline" size={20} color="white" />
             {missingMaterials.length > 0 ? '買い物メモに追加' : 'そのまま登録'}
