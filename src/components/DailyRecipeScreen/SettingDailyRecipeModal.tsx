@@ -19,6 +19,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { BrunchType, Recipes } from '@src/states/recipe';
 import { useChunkedArray } from '@src/hooks/useChunkedArray';
 import { COMMON_COLOR_GREEN, DAILY_RECIPE_CATEGORY } from '@src/utils/consts';
+import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 
 export type SettingDailyRecipeModalDropdownData = {
   label: string;
@@ -77,6 +78,7 @@ export const SettingDailyRecipeModal: FC<Props> = ({
   onSubmit,
 }) => {
   const narrowDownRow = useChunkedArray(DAILY_RECIPE_CATEGORY, 2);
+  const navigation = useTypedNavigation();
 
   const [selectedBrunchType, setSelectedBrunchType] =
     useState<BrunchType>('breakfast');
@@ -184,12 +186,20 @@ export const SettingDailyRecipeModal: FC<Props> = ({
                 </View>
                 {selectRecipe && (
                   <>
-                    <View style={styles.itemContentsWrapper}>
+                    <TouchableOpacity
+                      style={styles.itemContentsWrapper}
+                      onPress={() => {
+                        onClose();
+                        navigation.navigate('レシピ詳細', {
+                          recipeId: selectRecipe.id,
+                        });
+                      }}
+                    >
                       <Image
                         source={{ uri: selectRecipe.imageUri }}
                         style={[styles.recipeImage]}
                       />
-                    </View>
+                    </TouchableOpacity>
                     <View style={styles.buttonColumn}>
                       {narrowDownRow.map((column) => (
                         <View key={column[0]} style={styles.buttonContainer}>

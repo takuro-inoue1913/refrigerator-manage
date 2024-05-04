@@ -308,7 +308,9 @@ export const DailyRecipeScreen = () => {
             <TouchableOpacity
               key={`${item.id}-${i}`}
               onPress={() => {
-                handleClickDailyRecipe(item, i);
+                navigation.navigate('レシピ詳細', {
+                  recipeId: recipe.recipeId,
+                });
               }}
             >
               <View style={styles.recipeItem}>
@@ -347,20 +349,17 @@ export const DailyRecipeScreen = () => {
                 </View>
                 <View>
                   <LinearGradientButton
-                    disabled={recipe.isCreated}
                     width={40}
                     height={40}
-                    onPress={() => {}}
+                    onPress={() => {
+                      handleClickDailyRecipe(item, i);
+                    }}
                   >
-                    <Text
-                      style={
-                        recipe.isCreated
-                          ? { color: 'white', fontSize: 16 }
-                          : { color: 'white', fontSize: 16, fontWeight: 'bold' }
-                      }
-                    >
-                      済
-                    </Text>
+                    <Icon
+                      name="clipboard-edit-outline"
+                      size={20}
+                      color={'white'}
+                    />
                   </LinearGradientButton>
                 </View>
               </View>

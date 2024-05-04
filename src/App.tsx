@@ -22,6 +22,7 @@ import { ShoppingMemoScreen } from '@src/screens/ShoppingMemoScreen';
 import { DailyRecipeScreen } from '@src/screens/DailyRecipeScreen';
 import { RecipeCreateScreen } from './screens/RecipeCreateScreen';
 import { AddMissingMaterialsScreen } from './screens/AddMissingMaterialsScreen';
+import { RecipeDetailScreen } from './screens/RecipeDetailScreen';
 
 export const App: FC = () => {
   const setUser = useSetRecoilState(userState);
@@ -71,6 +72,7 @@ export const App: FC = () => {
       <Stack.Navigator>
         <Stack.Screen name="レシピ" component={DailyRecipeScreen} />
         <Stack.Screen name="レシピ新規登録" component={RecipeCreateScreen} />
+        <Stack.Screen name="レシピ詳細" component={RecipeDetailScreen} />
         <Stack.Screen
           name="追加する材料"
           component={AddMissingMaterialsScreen}

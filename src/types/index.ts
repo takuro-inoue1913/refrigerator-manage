@@ -8,7 +8,10 @@ export type FridgeItemCreateRouteParams = {
 export type AddMissingMaterialsRouteParams = {
   submitValues: SubmitValues;
   date: string;
-  // onCancel: () => void;
+};
+
+export type RecipeDetailRouteParams = {
+  recipeId: string;
 };
 
 export type RootStackParamList = {
@@ -18,6 +21,7 @@ export type RootStackParamList = {
   パスワードリセット: undefined;
   レシピ: undefined;
   レシピ新規登録: undefined;
+  レシピ詳細: RecipeDetailRouteParams;
   追加する材料: AddMissingMaterialsRouteParams;
 };
 
