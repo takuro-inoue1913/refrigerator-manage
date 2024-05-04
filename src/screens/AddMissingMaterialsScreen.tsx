@@ -1,18 +1,11 @@
 import React, { FC, useMemo, useState } from 'react';
 import {
   FlatList,
-  // Alert,
-  // Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
-  // TouchableOpacity,
   View,
 } from 'react-native';
-// import AnimatedCheckbox from '@src/components/common/AnimatedCheckbox';
-// import { generateEncodeString } from '@src/utils/logics/createEncodeStrings';
-// import CachedImage from 'expo-cached-image';
-// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { RouteProp } from '@react-navigation/native';
 import { BrunchType, recipesState } from '@src/states/recipe';
 import { RootStackParamList } from '@src/types';
