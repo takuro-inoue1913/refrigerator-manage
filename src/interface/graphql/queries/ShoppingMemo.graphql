@@ -11,7 +11,7 @@ query GetShoppingMemos {
 mutation InsertShoppingMemo(
   $masterId: uuid!
   $userId: String!
-  $quantity: Int!
+  $quantity: numeric!
 ) {
   insert_shopping_memo_one(
     object: { master_id: $masterId, user_id: $userId, quantity: $quantity }
@@ -27,7 +27,7 @@ mutation InsertShoppingMemo(
 mutation UpdateShoppingMemo(
   $shoppingMemoId: uuid!
   $masterId: uuid!
-  $quantity: Int!
+  $quantity: numeric!
 ) {
   update_shopping_memo_by_pk(
     pk_columns: { shopping_memo_id: $shoppingMemoId }
