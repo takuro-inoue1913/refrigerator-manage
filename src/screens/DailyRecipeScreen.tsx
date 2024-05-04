@@ -202,17 +202,11 @@ export const DailyRecipeScreen = () => {
             {
               text: '追加する',
               onPress: () => {
-                // 追加するロジックを書く;
-                // navigation.navigate('買い物メモ追加候補', {
-                //   screen: '買い物メモ追加候補',
-                //   params: {
-                //     recipeId: selectedRecipe.id,
-                //     recipeName: selectedRecipe.name,
-                //     recipeImageUri: selectedRecipe.imageUri,
-                //     brunchType: values.brunchType,
-                //   },
-                // });
-                // addDailyRecipeFn();
+                setModalVisible(false);
+                setIsProcessing(false);
+                navigation.navigate('追加する材料', {
+                  recipeId: values.recipeId,
+                });
               },
             },
             {
@@ -237,6 +231,7 @@ export const DailyRecipeScreen = () => {
       selectedDate,
       modalMode,
       selectedDailyRecipeId,
+      navigation,
       requestInsertUserDailyRecipe,
       addDailyRecipe,
       requestUpdateUserDailyRecipe,

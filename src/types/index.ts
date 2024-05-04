@@ -4,6 +4,12 @@ export type FridgeItemCreateRouteParams = {
   fridgeCategory: SelectFridgeCategory;
 };
 
+export type AddMissingMaterialsRouteParams = {
+  recipeId: string;
+  // onSubmit: () => void;
+  // onCancel: () => void;
+};
+
 export type RootStackParamList = {
   ログイン: undefined;
   冷蔵庫管理: undefined;
@@ -11,6 +17,7 @@ export type RootStackParamList = {
   パスワードリセット: undefined;
   レシピ: undefined;
   レシピ新規登録: undefined;
+  追加する材料: AddMissingMaterialsRouteParams;
 };
 
 /** 画像を押したときの引数の型。 */
