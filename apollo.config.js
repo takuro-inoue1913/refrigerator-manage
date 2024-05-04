@@ -1,8 +1,8 @@
 module.exports = {
   client: {
     service: {
-      name: 'Frimane-GraphQL-Sche-w2z77f@current',
-      url: 'https://current--frimane-graphql-sche-w2z77f.apollographos.net/graphql',
+      name: 'Frimane-GraphQL-Schem-s0ry8@current',
+      url: 'https://current--frimane-graphql-schem-s0ry8.apollographos.net/graphql',
       headers: {
         'x-hasura-admin-secret': `${process.env.HASURA_ADMIN_SECRET}`,
       },
