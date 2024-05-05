@@ -398,32 +398,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  recipeItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    backgroundColor: 'white',
-    margin: 5,
-    borderRadius: 10,
-  },
-  recipeImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 5,
-  },
   textStyle: {
     fontSize: 16,
     fontWeight: 'bold',
     color: 'gray',
-  },
-  recipeItemLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
   },
   newDailyRecipeWrapper: {
     flexDirection: 'row',
