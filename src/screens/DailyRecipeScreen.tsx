@@ -16,8 +16,6 @@ import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 import { useRequestGetUsersDailyRecipes } from '@src/interface/hooks/recipe/useRequestGetUsersDailyRecipes';
 import { LoadingMask } from '@src/components/common/LoadingMask';
 import { BrunchType, DailyRecipes, Recipes } from '@src/states/recipe';
-import CachedImage from 'expo-cached-image';
-import { LinearGradientButton } from '@src/components/common/GradationButton';
 import {
   SettingDailyRecipeModal,
   SettingDailyRecipeModalDropdownData,
@@ -30,6 +28,7 @@ import { useRecipesActions } from '@src/states/recipe/actions';
 import { useRequestUpdateUserDailyRecipe } from '@src/interface/hooks/recipe/useRequestUpdateUserDailyRecipe';
 import { useRequestDeleteUserDailyRecipe } from '@src/interface/hooks/recipe/useRequestDeleteUserDailyRecipe';
 import { useIsFocused } from '@react-navigation/native';
+import { DailyRecipeItem } from '@src/components/DailyRecipeScreen/DailyRecipeItem';
 
 export const DailyRecipeScreen = () => {
   const isFocused = useIsFocused();
@@ -284,6 +283,13 @@ export const DailyRecipeScreen = () => {
     deleteDailyRecipe,
   ]);
 
+  useEffect(() => {
+    if (isFocused) {
+      refetchGetAllFridgeMaster();
+      refetchGetAllRecipes();
+    }
+  }, [isFocused, refetchGetAllFridgeMaster, refetchGetAllRecipes]);
+
   const NewDailyRecipe = () => {
     return (
       <TouchableOpacity
@@ -299,94 +305,6 @@ export const DailyRecipeScreen = () => {
       </TouchableOpacity>
     );
   };
-
-  const RenderRecipes = ({ item }: { item: DailyRecipes['byId'][number] }) => {
-    return (
-      <View>
-        {item.dailyRecipes.map((recipe, i) => {
-          return (
-            <TouchableOpacity
-              key={`${item.id}-${i}`}
-              onPress={() => {
-                navigation.navigate('レシピ詳細', {
-                  recipeId: recipe.recipeId,
-                });
-              }}
-            >
-              <View
-                style={[
-                  styles.recipeItem,
-                  { backgroundColor: recipe.isCreated ? '#f0f0f0' : 'white' },
-                ]}
-              >
-                <View style={styles.recipeItemLeft}>
-                  <Icon
-                    size={35}
-                    name={
-                      recipe.brunchType === 'breakfast'
-                        ? 'weather-sunset'
-                        : recipe.brunchType === 'lunch'
-                          ? 'weather-sunny'
-                          : recipe.brunchType === 'dinner'
-                            ? 'weather-night'
-                            : recipe.brunchType === 'snack'
-                              ? 'food-apple'
-                              : 'silverware-fork-knife'
-                    }
-                    color={
-                      recipe.brunchType === 'breakfast'
-                        ? 'gold'
-                        : recipe.brunchType === 'lunch'
-                          ? 'darksalmon'
-                          : recipe.brunchType === 'dinner'
-                            ? 'chocolate'
-                            : recipe.brunchType === 'snack'
-                              ? 'green'
-                              : 'black'
-                    }
-                  />
-                  <CachedImage
-                    cacheKey={`recipeImage-${recipe.recipeId}`}
-                    style={styles.recipeImage}
-                    source={{ uri: recipe.recipeImageUri }}
-                  />
-                  <Text style={styles.textStyle}>{recipe.recipeName}</Text>
-                  {recipe.isCreated && (
-                    <Text style={{ color: 'red', fontWeight: 'bold' }}>
-                      <Icon size={20} name={'check'} color={'red'} />
-                      作成済
-                    </Text>
-                  )}
-                </View>
-                <View>
-                  <LinearGradientButton
-                    width={40}
-                    height={40}
-                    onPress={() => {
-                      handleClickDailyRecipe(item, i);
-                    }}
-                  >
-                    <Icon
-                      name="clipboard-edit-outline"
-                      size={20}
-                      color={'white'}
-                    />
-                  </LinearGradientButton>
-                </View>
-              </View>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
-    );
-  };
-
-  useEffect(() => {
-    if (isFocused) {
-      refetchGetAllFridgeMaster();
-      refetchGetAllRecipes();
-    }
-  }, [isFocused, refetchGetAllFridgeMaster, refetchGetAllRecipes]);
 
   return (
     <View style={styles.container}>
@@ -428,7 +346,11 @@ export const DailyRecipeScreen = () => {
       <ScrollView>
         <View style={{ paddingBottom: 80 }}>
           {dailyRecipesData.map((item) => (
-            <RenderRecipes key={item.id} item={item} />
+            <DailyRecipeItem
+              key={item.id}
+              item={item}
+              onPressDailyRecipe={handleClickDailyRecipe}
+            />
           ))}
           <NewDailyRecipe />
         </View>
