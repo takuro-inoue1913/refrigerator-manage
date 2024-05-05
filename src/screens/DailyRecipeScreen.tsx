@@ -313,7 +313,12 @@ export const DailyRecipeScreen = () => {
                 });
               }}
             >
-              <View style={styles.recipeItem}>
+              <View
+                style={[
+                  styles.recipeItem,
+                  { backgroundColor: recipe.isCreated ? '#f0f0f0' : 'white' },
+                ]}
+              >
                 <View style={styles.recipeItemLeft}>
                   <Icon
                     size={35}
@@ -346,6 +351,12 @@ export const DailyRecipeScreen = () => {
                     source={{ uri: recipe.recipeImageUri }}
                   />
                   <Text style={styles.textStyle}>{recipe.recipeName}</Text>
+                  {recipe.isCreated && (
+                    <Text style={{ color: 'red', fontWeight: 'bold' }}>
+                      <Icon size={20} name={'check'} color={'red'} />
+                      作成済
+                    </Text>
+                  )}
                 </View>
                 <View>
                   <LinearGradientButton
