@@ -29,6 +29,7 @@ import { useRequestUpdateUserDailyRecipe } from '@src/interface/hooks/recipe/use
 import { useRequestDeleteUserDailyRecipe } from '@src/interface/hooks/recipe/useRequestDeleteUserDailyRecipe';
 import { useIsFocused } from '@react-navigation/native';
 import { DailyRecipeItem } from '@src/components/DailyRecipeScreen/DailyRecipeItem';
+import { useRequestUpdateFridgeStock } from '@src/interface/hooks/fridge/useRequestUpdateFridgeStock';
 
 export const DailyRecipeScreen = () => {
   const isFocused = useIsFocused();
@@ -37,7 +38,8 @@ export const DailyRecipeScreen = () => {
       dayjs().startOf('month').format('YYYY-MM-DD'),
       dayjs().endOf('month').format('YYYY-MM-DD'),
     );
-  const { refetch: refetchGetAllFridgeMaster } = useRequestGetAllFridgeMaster();
+  const { fridgeMaster, refetch: refetchGetAllFridgeMaster } =
+    useRequestGetAllFridgeMaster();
   const {
     refetch: refetchGetAllRecipes,
     isFetching: isFetchingGetAllRecipes,
@@ -48,6 +50,7 @@ export const DailyRecipeScreen = () => {
   const requestInsertUserDailyRecipe = useRequestInsertUserDailyRecipe();
   const requestUpdateUserDailyRecipe = useRequestUpdateUserDailyRecipe();
   const requestDeleteUserDailyRecipe = useRequestDeleteUserDailyRecipe();
+  const requestUpdateFridgeStock = useRequestUpdateFridgeStock();
   const navigation = useTypedNavigation();
 
   const [isProcessing, setIsProcessing] = useState(false);
@@ -124,6 +127,27 @@ export const DailyRecipeScreen = () => {
     selectedDailyRecipeId && setSelectedDailyRecipeId(null);
   };
 
+  const decreaseFridgeStock = useCallback(
+    async (recipeId: string) => {
+      setIsProcessing(true);
+      recipes.byId[recipeId].materials.forEach(async (material) => {
+        const currentFridgeStock = fridgeMaster.find(
+          (i) => i.id === material.masterId,
+        );
+        const currentQuantity = currentFridgeStock
+          ? currentFridgeStock.quantity
+          : 0;
+        await requestUpdateFridgeStock({
+          masterId: material.masterId,
+          fridgeType: material.fridgeType,
+          quantity: Math.max(currentQuantity - material.quantity, 0),
+        });
+      });
+      setIsProcessing(false);
+    },
+    [recipes.byId, fridgeMaster, requestUpdateFridgeStock],
+  );
+
   const handleSubmitModal = useCallback(
     async (values: SubmitValues) => {
       if (!selectedRecipe) {
@@ -155,6 +179,9 @@ export const DailyRecipeScreen = () => {
             isCreated: values.isCreated,
           },
         });
+        if (values.isCreated) {
+          decreaseFridgeStock(selectedRecipe.id);
+        }
         setIsProcessing(false);
         setSelectedRecipe(null);
         setSelectedDailyRecipeId(null);
@@ -188,8 +215,11 @@ export const DailyRecipeScreen = () => {
             isCreated: values.isCreated,
           },
         });
-        setSelectedRecipe(null);
+        if (values.isCreated) {
+          decreaseFridgeStock(selectedRecipe.id);
+        }
         setIsProcessing(false);
+        setSelectedRecipe(null);
         setSelectedDailyRecipeId(null);
       };
 
@@ -238,6 +268,7 @@ export const DailyRecipeScreen = () => {
       addDailyRecipe,
       requestUpdateUserDailyRecipe,
       updateDailyRecipe,
+      decreaseFridgeStock,
     ],
   );
 
