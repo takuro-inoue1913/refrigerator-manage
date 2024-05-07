@@ -50,7 +50,8 @@ export const useRequestUpsertSeasoningStock = () => {
         seasoningId,
         quantity,
         defaultExpirationPeriod:
-          seasoningStocksRef.current.byId[seasoningId].defaultExpirationPeriod,
+          seasoningStocksRef.current.byId[seasoningId]
+            ?.defaultExpirationPeriod ?? 0,
       });
       return data;
     }

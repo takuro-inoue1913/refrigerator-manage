@@ -23,6 +23,7 @@ import { useRequestInsertShoppingMemo } from '@src/interface/hooks/shoppingMemo/
 import { useShoppingMemoActions } from '@src/states/shoppingMemo';
 import { useRequestGetAllShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestGetAllShoppingMemo';
 import { useRequestUpdateShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestUpdateShoppingMemo';
+import { useRequestUpdateFridgeStock } from '@src/interface/hooks/fridge/useRequestUpdateFridgeStock';
 
 type Props = {
   route: RouteProp<RootStackParamList, '追加する材料'>;
@@ -40,6 +41,7 @@ export const AddMissingMaterialsScreen: FC<Props> = ({ route }) => {
   const requestInsertShoppingMemo = useRequestInsertShoppingMemo();
   const requestUpdateShoppingMemo = useRequestUpdateShoppingMemo();
   const requestInsertUserDailyRecipe = useRequestInsertUserDailyRecipe();
+  const requestUpdateFridgeStock = useRequestUpdateFridgeStock();
   const shoppingMemoActions = useShoppingMemoActions();
   const { addDailyRecipe } = useRecipesActions();
   const navigation = useTypedNavigation();
@@ -145,6 +147,26 @@ export const AddMissingMaterialsScreen: FC<Props> = ({ route }) => {
       await bulkRequestInsertShoppingMemo();
     }
     await addDailyRecipeFn();
+    if (route.params.submitValues.isCreated) {
+      recipes.byId[route.params.submitValues.recipeId].materials.forEach(
+        async (material) => {
+          const currentFridgeStock = fridgeMaster.find(
+            (i) => i.id === material.masterId,
+          );
+          const currentQuantity = currentFridgeStock
+            ? currentFridgeStock.quantity
+            : 0;
+          await requestUpdateFridgeStock({
+            masterId: material.masterId,
+            fridgeType: material.fridgeType,
+            quantity:
+              Math.round(
+                Math.max(currentQuantity - material.quantity, 0) * 10,
+              ) / 10,
+          });
+        },
+      );
+    }
     navigation.navigation.goBack();
   };
 

@@ -140,7 +140,9 @@ export const DailyRecipeScreen = () => {
         await requestUpdateFridgeStock({
           masterId: material.masterId,
           fridgeType: material.fridgeType,
-          quantity: Math.max(currentQuantity - material.quantity, 0),
+          quantity:
+            Math.round(Math.max(currentQuantity - material.quantity, 0) * 10) /
+            10,
         });
       });
       setIsProcessing(false);
