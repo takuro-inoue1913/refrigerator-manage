@@ -95,13 +95,13 @@ export const SettingDailyRecipeModal: FC<Props> = ({
         '※ 足らない食材は変動しません。',
         [
           {
-            text: 'OK',
-            onPress: () => setIsCreated(newVal),
-          },
-          {
             text: 'キャンセル',
             onPress: () => setIsCreated(false),
             style: 'destructive',
+          },
+          {
+            text: 'OK',
+            onPress: () => setIsCreated(newVal),
           },
         ],
       );

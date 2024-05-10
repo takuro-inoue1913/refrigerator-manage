@@ -23,6 +23,7 @@ import { DailyRecipeScreen } from '@src/screens/DailyRecipeScreen';
 import { RecipeCreateScreen } from './screens/RecipeCreateScreen';
 import { AddMissingMaterialsScreen } from './screens/AddMissingMaterialsScreen';
 import { RecipeDetailScreen } from './screens/RecipeDetailScreen';
+import { RecipeManageScreen } from './screens/RecipeManageScreen';
 
 export const App: FC = () => {
   const setUser = useSetRecoilState(userState);
@@ -90,6 +91,15 @@ export const App: FC = () => {
     );
   };
 
+  const HomeStack = () => {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="マイページ" component={HomeScreen} />
+        <Stack.Screen name="レシピ管理" component={RecipeManageScreen} />
+      </Stack.Navigator>
+    );
+  };
+
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -97,7 +107,7 @@ export const App: FC = () => {
           tabBarShowLabel: false,
           tabBarIcon: ({ color, size }) => {
             let iconName = '';
-            if (route.name === 'マイページ') {
+            if (route.name === 'myPage') {
               iconName = 'home';
             } else if (route.name === 'RecipeStack') {
               iconName = 'chef-hat';
@@ -129,7 +139,11 @@ export const App: FC = () => {
               options={{ headerShown: false }}
               component={RecipeStack}
             />
-            <Tab.Screen name="マイページ" component={HomeScreen} />
+            <Tab.Screen
+              name="myPage"
+              options={{ headerShown: false }}
+              component={HomeStack}
+            />
           </>
         ) : (
           <>
