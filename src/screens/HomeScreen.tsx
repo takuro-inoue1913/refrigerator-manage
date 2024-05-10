@@ -1,15 +1,20 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
 import { signOut } from 'firebase/auth';
 import Toast from 'react-native-toast-message';
 
 import { auth } from '@src/utils/firebaseSettings';
-import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { handleFirebaseError } from '@src/utils/handleFirebaseError';
-import { useRequestGetUser } from '@src/interface/hooks/user/useRequestGetUser';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export const HomeScreen = () => {
-  const { data } = useRequestGetUser();
   const handleLogout = () => {
     signOut(auth).catch((error) => {
       Toast.show({
@@ -19,15 +24,60 @@ export const HomeScreen = () => {
       });
     });
   };
+
+  const menu = [
+    {
+      id: '1',
+      title: 'レシピ管理',
+      onPress: () => {},
+    },
+    {
+      id: '2',
+      title: 'ログアウト',
+      onPress: () => {
+        Alert.alert('ログアウトしますか？', '', [
+          {
+            text: 'キャンセル',
+            style: 'cancel',
+          },
+          {
+            text: 'ログアウト',
+            onPress: handleLogout,
+          },
+        ]);
+      },
+    },
+  ];
+
+  const renderItem = ({ item }: { item: (typeof menu)[number] }) => {
+    return (
+      <TouchableOpacity style={styles.listItem} onPress={item.onPress}>
+        <Text>{item.title}</Text>
+        <Icon name="chevron-right" size={20} />
+      </TouchableOpacity>
+    );
+  };
   return (
     <View>
-      <View>
-        <LinearGradientButton onPress={handleLogout}>
-          <Text style={{ color: 'white' }}>ログアウト</Text>
-        </LinearGradientButton>
-        <Text>{data?.email}</Text>
-        <Text>{data?.id}</Text>
-      </View>
+      <FlatList
+        data={menu}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+      />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  listItem: {
+    padding: 20,
+    marginTop: 2,
+    borderColor: '#e1e4e8',
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderRadius: 5,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+});

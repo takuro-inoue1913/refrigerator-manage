@@ -52,12 +52,22 @@ export const ShoppingMemoItem: FC<Props> = ({
     onChangeChecked(item.id, isChecked);
   };
 
-  const handleLongPress = () => {
+  const handlePress = () => {
     onLongPress(item.id);
   };
 
   return (
-    <Pressable style={styles.listItem} onLongPress={handleLongPress}>
+    <Pressable
+      style={[
+        styles.listItem,
+        item.isChecked
+          ? { backgroundColor: '#f8f9fa' }
+          : {
+              backgroundColor: 'white',
+            },
+      ]}
+      onPress={handlePress}
+    >
       <View style={styles.listItemContent}>
         <AnimatedCheckbox
           isChecked={item.isChecked}
@@ -109,7 +119,6 @@ const styles = StyleSheet.create({
   listItem: {
     padding: 20,
     marginTop: 2,
-    backgroundColor: '#f8f9fa',
     borderColor: '#e1e4e8',
     borderWidth: 1,
     borderRadius: 5,
