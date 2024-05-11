@@ -24,7 +24,6 @@ export type RootStackParamList = {
   レシピ詳細: RecipeDetailRouteParams;
   追加する材料: AddMissingMaterialsRouteParams;
   マイページ: undefined;
-  レシピ管理: undefined;
 };
 
 /** 画像を押したときの引数の型。 */
