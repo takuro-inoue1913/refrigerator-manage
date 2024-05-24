@@ -5,7 +5,6 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  Image,
   Alert,
   Linking,
   KeyboardAvoidingView,
@@ -15,6 +14,7 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
+import { Image as ExpoImage } from 'expo-image';
 import { useForm, Controller } from 'react-hook-form';
 import * as ImagePicker from 'expo-image-picker';
 import * as ImageManipulator from 'expo-image-manipulator';
@@ -319,7 +319,7 @@ export const RecipeCreateScreen: FC = () => {
                   style={styles.imageUploader}
                 >
                   {value ? (
-                    <Image
+                    <ExpoImage
                       source={{ uri: value.uri }}
                       style={styles.imagePreview}
                     />

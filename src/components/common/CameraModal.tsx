@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import { Camera, FlashMode } from 'expo-camera';
+import { CameraView, FlashMode, useCameraPermissions } from 'expo-camera';
 import {
   PinchGestureHandler,
   State,
@@ -31,15 +31,13 @@ type Props = {
 };
 
 export const CameraModal: FC<Props> = ({ visible, onClose, onTakePicture }) => {
-  const [flashMode, setFlashMode] = useState<FlashMode.on | FlashMode.off>(
-    FlashMode.off,
-  );
-  const [permission, requestPermission] = Camera.useCameraPermissions();
+  const [flashMode, setFlashMode] = useState<FlashMode>('off');
+  const [permission, requestPermission] = useCameraPermissions();
   const [zoom, setZoom] = useState(NOMAL_ZOOM);
   const [photoUri, setPhotoUri] = useState<string | undefined>(undefined);
   const zoomRef = useRef(zoom);
   const lastScale = useRef(1);
-  const cameraRef = useRef<Camera>(null);
+  const cameraRef = useRef<CameraView>(null);
 
   // const analyzeImageWithGoogleVision = async (base64: string) => {
   //   try {
@@ -87,10 +85,10 @@ export const CameraModal: FC<Props> = ({ visible, onClose, onTakePicture }) => {
   };
 
   const toggleFlash = () => {
-    if (flashMode === FlashMode.off) {
-      setFlashMode(FlashMode.on);
+    if (flashMode === 'off') {
+      setFlashMode('on');
     } else {
-      setFlashMode(FlashMode.off);
+      setFlashMode('off');
     }
   };
 
@@ -192,15 +190,15 @@ export const CameraModal: FC<Props> = ({ visible, onClose, onTakePicture }) => {
                   <Icon
                     name="flash"
                     size={24}
-                    color={flashMode === FlashMode.off ? 'white' : 'yellow'}
+                    color={flashMode === 'off' ? 'white' : 'yellow'}
                   />
                 </TouchableOpacity>
               </View>
-              <Camera
+              <CameraView
                 style={styles.camera}
                 ref={cameraRef}
                 zoom={zoom}
-                flashMode={flashMode}
+                flash={flashMode}
               >
                 <View style={styles.focusBoxContainer}>
                   <View style={styles.focusBox} />
@@ -258,7 +256,7 @@ export const CameraModal: FC<Props> = ({ visible, onClose, onTakePicture }) => {
                     </TouchableOpacity>
                   </View>
                 </View>
-              </Camera>
+              </CameraView>
               <View style={styles.footerBar}>
                 <TouchableOpacity
                   style={styles.leftButton}

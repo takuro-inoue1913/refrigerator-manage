@@ -5,8 +5,7 @@ import { RootStackParamList } from '@src/types';
 import { RouteProp } from '@react-navigation/native';
 import { recipesState } from '@src/states/recipe';
 import { fridgeMasterState } from '@src/states/fridge';
-import CachedImage from 'expo-cached-image';
-import { generateEncodeString } from '@src/utils/logics/createEncodeStrings';
+import { Image as ExpoImage } from 'expo-image';
 
 const { width: windowWidth } = Dimensions.get('window');
 
@@ -32,8 +31,7 @@ export const RecipeDetailScreen: FC<Props> = ({ route }) => {
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.section}>
-          <CachedImage
-            cacheKey={`recipeImage-${recipe.id}`}
+          <ExpoImage
             source={{ uri: recipe.imageUri }}
             style={styles.recipeImage}
           />
@@ -45,8 +43,7 @@ export const RecipeDetailScreen: FC<Props> = ({ route }) => {
           {materials.map((material) => (
             <View style={styles.materialItem} key={material.id}>
               <View style={styles.itemSide}>
-                <CachedImage
-                  cacheKey={generateEncodeString([material.name, material.id])}
+                <ExpoImage
                   source={{ uri: material.imageUri }}
                   style={styles.materialImage}
                 />

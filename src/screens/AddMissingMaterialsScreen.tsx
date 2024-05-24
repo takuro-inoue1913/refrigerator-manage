@@ -11,8 +11,7 @@ import { BrunchType, recipesState } from '@src/states/recipe';
 import { RootStackParamList } from '@src/types';
 import { useRecoilValue } from 'recoil';
 import { FridgeMaster, fridgeMasterState } from '@src/states/fridge';
-import CachedImage from 'expo-cached-image';
-import { generateEncodeString } from '@src/utils/logics/createEncodeStrings';
+import { Image as ExpoImage } from 'expo-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
@@ -174,9 +173,8 @@ export const AddMissingMaterialsScreen: FC<Props> = ({ route }) => {
     return (
       <View style={styles.listItem}>
         <View style={styles.listItemContent}>
-          <CachedImage
+          <ExpoImage
             source={{ uri: item.imageUri }}
-            cacheKey={generateEncodeString([item.name, item.id])}
             style={[
               {
                 width: 40,

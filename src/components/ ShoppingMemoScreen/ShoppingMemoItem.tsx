@@ -9,8 +9,7 @@ import {
   View,
 } from 'react-native';
 import AnimatedCheckbox from '@src/components/common/AnimatedCheckbox';
-import { generateEncodeString } from '@src/utils/logics/createEncodeStrings';
-import CachedImage from 'expo-cached-image';
+import { Image as ExpoImage } from 'expo-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useRequestDeleteShoppingMemo } from '@src/interface/hooks/shoppingMemo/useRequestDeleteShoppingMemo';
 
@@ -73,9 +72,8 @@ export const ShoppingMemoItem: FC<Props> = ({
           isChecked={item.isChecked}
           onCheck={handlePressCheckbox}
         />
-        <CachedImage
+        <ExpoImage
           source={{ uri: item.imageUri }}
-          cacheKey={generateEncodeString([item.name, item.id])}
           style={[
             {
               width: 40,

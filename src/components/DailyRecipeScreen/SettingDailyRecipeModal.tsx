@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState } from 'react';
 import {
   Alert,
   Dimensions,
-  Image,
   Keyboard,
   Modal,
   StyleSheet,
@@ -13,6 +12,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import { Image as ExpoImage } from 'expo-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { Dropdown } from 'react-native-element-dropdown';
@@ -195,7 +195,7 @@ export const SettingDailyRecipeModal: FC<Props> = ({
                         });
                       }}
                     >
-                      <Image
+                      <ExpoImage
                         source={{ uri: selectRecipe.imageUri }}
                         style={[styles.recipeImage]}
                       />

@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Image as ExpoImage } from 'expo-image';
 
 type Props = {
   isShowKeyboard: boolean;
@@ -11,14 +12,14 @@ type Props = {
 export const TopLogoImage: FC<Props> = ({ isShowKeyboard }) => {
   return (
     <>
-      <Image
+      <ExpoImage
         source={require('/assets/frimane-logo.jpeg')}
         style={{
           ...styles.frimaneLogo,
           display: isShowKeyboard ? 'none' : 'flex',
         }}
       />
-      <Image
+      <ExpoImage
         source={require('/assets/frimane-text-logo.jpeg')}
         style={{
           ...styles.frimaneTextLogo,

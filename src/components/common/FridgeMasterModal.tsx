@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import {
-  Image,
   Keyboard,
   Modal,
   StyleSheet,
@@ -10,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import { Image as ExpoImage } from 'expo-image';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { CommonGradation } from '@src/components/common/CommonGradation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -128,7 +128,7 @@ export const FridgeMasterModal: FC<Props> = ({
                 </View>
                 {selectFridgeMaster && (
                   <View style={styles.itemContentsWrapper}>
-                    <Image
+                    <ExpoImage
                       source={{ uri: selectFridgeMaster.imageUri }}
                       style={[commonStyles.image, { padding: 10 }]}
                     />

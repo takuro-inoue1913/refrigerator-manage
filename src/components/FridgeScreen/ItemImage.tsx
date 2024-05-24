@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import CachedImage from 'expo-cached-image';
+import { Image as ExpoImage } from 'expo-image';
 import * as Haptics from 'expo-haptics';
 
 import { SkeletonImage } from '@src/components/common/SkeletonImage';
@@ -44,7 +44,6 @@ type Props = {
 export const ItemImage: FC<Props> = memo(
   ({
     sourceUri,
-    cacheKey,
     hasStock,
     targetId,
     quantity,
@@ -114,9 +113,8 @@ export const ItemImage: FC<Props> = memo(
       <>
         {!isLoaded && <SkeletonImage />}
         <Pressable onPress={handlePress} onLongPress={handleLongPress}>
-          <CachedImage
+          <ExpoImage
             source={{ uri: sourceUri }}
-            cacheKey={cacheKey}
             onLoadEnd={() => setIsLoaded(true)}
             style={[
               hasStock ? styles.activeImage : styles.image,

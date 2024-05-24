@@ -13,7 +13,7 @@ import {
   Pressable,
   Alert,
 } from 'react-native';
-import CachedImage from 'expo-cached-image';
+import { Image as ExpoImage } from 'expo-image';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import dayjs from 'dayjs';
@@ -79,7 +79,6 @@ export const ItemDetailModal: FC<Props> = ({
   id,
   visible,
   sourceUri,
-  cacheKey,
   itemName,
   quantity,
   unitName,
@@ -245,11 +244,7 @@ export const ItemDetailModal: FC<Props> = ({
 
               <View style={styles.main}>
                 <Pressable onPress={handlePressFavoriteBadge}>
-                  <CachedImage
-                    source={{ uri: sourceUri }}
-                    cacheKey={cacheKey}
-                    style={styles.image}
-                  />
+                  <ExpoImage source={{ uri: sourceUri }} style={styles.image} />
                   <View style={styles.favoriteBadgeWrapper}>
                     <FavoriteBadge
                       isFavorite={editFormValues.isFavorite}

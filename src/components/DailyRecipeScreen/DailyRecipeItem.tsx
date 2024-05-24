@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { DailyRecipes } from '@src/states/recipe';
-import CachedImage from 'expo-cached-image';
+import { Image as ExpoImage } from 'expo-image';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 
@@ -61,8 +61,7 @@ export const DailyRecipeItem = ({
                             : 'black'
                   }
                 />
-                <CachedImage
-                  cacheKey={`recipeImage-${recipe.recipeId}`}
+                <ExpoImage
                   style={styles.recipeImage}
                   source={{ uri: recipe.recipeImageUri }}
                 />
