@@ -14,16 +14,22 @@ export type RecipeDetailRouteParams = {
   recipeId: string;
 };
 
+export type RecipeEditRouteParams = {
+  recipeId: string;
+};
+
 export type RootStackParamList = {
   ログイン: undefined;
   冷蔵庫管理: undefined;
   食材新規登録: FridgeItemCreateRouteParams;
   パスワードリセット: undefined;
-  レシピ: undefined;
+  毎日のレシピ: undefined;
   レシピ新規登録: undefined;
   レシピ詳細: RecipeDetailRouteParams;
   追加する材料: AddMissingMaterialsRouteParams;
   マイページ: undefined;
+  レシピ一覧: undefined;
+  レシピ編集: RecipeEditRouteParams;
 };
 
 /** 画像を押したときの引数の型。 */

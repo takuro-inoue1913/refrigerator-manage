@@ -13,10 +13,10 @@ import Toast from 'react-native-toast-message';
 import { auth } from '@src/utils/firebaseSettings';
 import { handleFirebaseError } from '@src/utils/handleFirebaseError';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-// import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
+import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 
 export const HomeScreen = () => {
-  // const navigation = useTypedNavigation();
+  const navigation = useTypedNavigation();
   const handleLogout = () => {
     signOut(auth).catch((error) => {
       Toast.show({
@@ -28,6 +28,13 @@ export const HomeScreen = () => {
   };
 
   const menu = [
+    {
+      id: '1',
+      title: 'レシピを管理',
+      onPress: () => {
+        navigation.navigate('レシピ一覧');
+      },
+    },
     {
       id: '2',
       title: 'ログアウト',

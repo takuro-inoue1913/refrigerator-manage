@@ -23,6 +23,8 @@ import { DailyRecipeScreen } from '@src/screens/DailyRecipeScreen';
 import { RecipeCreateScreen } from './screens/RecipeCreateScreen';
 import { AddMissingMaterialsScreen } from './screens/AddMissingMaterialsScreen';
 import { RecipeDetailScreen } from './screens/RecipeDetailScreen';
+import { RecipeListScreen } from './screens/RecipeLIstScreen';
+import { RecipeEditScreen } from './screens/RecipeEditScreen';
 
 export const App: FC = () => {
   const setUser = useSetRecoilState(userState);
@@ -70,7 +72,7 @@ export const App: FC = () => {
   const RecipeStack = () => {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="レシピ" component={DailyRecipeScreen} />
+        <Stack.Screen name="毎日のレシピ" component={DailyRecipeScreen} />
         <Stack.Screen name="レシピ新規登録" component={RecipeCreateScreen} />
         <Stack.Screen name="レシピ詳細" component={RecipeDetailScreen} />
         <Stack.Screen
@@ -94,6 +96,8 @@ export const App: FC = () => {
     return (
       <Stack.Navigator>
         <Stack.Screen name="マイページ" component={HomeScreen} />
+        <Stack.Screen name="レシピ一覧" component={RecipeListScreen} />
+        <Stack.Screen name="レシピ編集" component={RecipeEditScreen} />
       </Stack.Navigator>
     );
   };
