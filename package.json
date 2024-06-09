@@ -36,6 +36,7 @@
     "expo-linear-gradient": "~13.0.2",
     "expo-modules-core": "^1.12.11",
     "expo-status-bar": "~1.12.1",
+    "expo-updates": "~0.25.16",
     "firebase": "^10.7.1",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
