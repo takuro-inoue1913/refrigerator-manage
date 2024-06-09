@@ -10,11 +10,12 @@ import {
 } from 'react-native';
 import { Image as ExpoImage } from 'expo-image';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
+import { LoadingMask } from '@src/components/common/LoadingMask';
 
 export const RecipeListScreen = () => {
   const navigation = useTypedNavigation();
-  useRequestGetAllFridgeMaster();
-  const { recipes } = useRequestGetAllRecipes();
+  const { isFetching: isFetchingFridgeMaster } = useRequestGetAllFridgeMaster();
+  const { recipes, isFetching: isFetchingRecipes } = useRequestGetAllRecipes();
 
   const recipeData = recipes.ids.map((id) => {
     const recipe = recipes.byId[id];
@@ -41,6 +42,7 @@ export const RecipeListScreen = () => {
 
   return (
     <View style={styles.container}>
+      {(isFetchingRecipes || isFetchingFridgeMaster) && <LoadingMask />}
       <FlatList
         data={recipeData}
         renderItem={renderItem}
