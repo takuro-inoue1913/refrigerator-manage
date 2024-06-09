@@ -6,7 +6,7 @@ import Toast from 'react-native-toast-message';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { onAuthStateChanged } from 'firebase/auth';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import {
   BannerAd,
   BannerAdSize,
@@ -38,7 +38,13 @@ export const App: FC = () => {
   const [initializing, setInitializing] = useState(true);
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator<RootStackParamList>();
-  const unitId = TestIds.BANNER;
+  const unitId = __DEV__
+    ? TestIds.BANNER
+    : Platform.select({
+        ios: 'ca-app-pub-1013230797140961/5537108885',
+        // 未設定
+        android: 'ca-app-pub-xxxxxxxxxxxx/yyyyyyyyyy',
+      }) ?? TestIds.BANNER;
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
