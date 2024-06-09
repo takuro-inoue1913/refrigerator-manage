@@ -6,6 +6,12 @@ import Toast from 'react-native-toast-message';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { onAuthStateChanged } from 'firebase/auth';
+import { StyleSheet, View } from 'react-native';
+import {
+  BannerAd,
+  BannerAdSize,
+  TestIds,
+} from 'react-native-google-mobile-ads';
 
 import { HomeScreen } from '@src/screens/HomeScreen';
 import { RegisterScreen } from '@src/screens/RegisterScreen';
@@ -32,6 +38,7 @@ export const App: FC = () => {
   const [initializing, setInitializing] = useState(true);
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator<RootStackParamList>();
+  const unitId = TestIds.BANNER;
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -103,62 +110,86 @@ export const App: FC = () => {
   };
 
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarShowLabel: false,
-          tabBarIcon: ({ color, size }) => {
-            let iconName = '';
-            if (route.name === 'myPage') {
-              iconName = 'home';
-            } else if (route.name === 'RecipeStack') {
-              iconName = 'chef-hat';
-            } else if (route.name === '買い物メモ') {
-              iconName = 'cart-outline';
-            } else if (route.name === 'FridgeStack') {
-              iconName = 'fridge';
-            } else if (route.name === 'LoginStack') {
-              iconName = 'login';
-            } else if (route.name === '新規登録') {
-              iconName = 'account-plus';
-            }
-            return <Icon name={iconName} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: COMMON_COLOR_GREEN,
-          tabBarInactiveTintColor: COMMON_COLOR_BLUE,
-        })}
-      >
-        {idToken ? (
-          <>
-            <Tab.Screen
-              name="FridgeStack"
-              options={{ headerShown: false }}
-              component={FridgeStack}
-            />
-            <Tab.Screen name="買い物メモ" component={ShoppingMemoScreen} />
-            <Tab.Screen
-              name="RecipeStack"
-              options={{ headerShown: false }}
-              component={RecipeStack}
-            />
-            <Tab.Screen
-              name="myPage"
-              options={{ headerShown: false }}
-              component={HomeStack}
-            />
-          </>
-        ) : (
-          <>
-            <Tab.Screen
-              name="LoginStack"
-              options={{ headerShown: false }}
-              component={LoginStack}
-            />
-            <Tab.Screen name="新規登録" component={RegisterScreen} />
-          </>
-        )}
-      </Tab.Navigator>
-      <Toast topOffset={100} />
-    </NavigationContainer>
+    <View style={styles.container}>
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarShowLabel: false,
+            tabBarIcon: ({ color, size }) => {
+              let iconName = '';
+              if (route.name === 'myPage') {
+                iconName = 'home';
+              } else if (route.name === 'RecipeStack') {
+                iconName = 'chef-hat';
+              } else if (route.name === '買い物メモ') {
+                iconName = 'cart-outline';
+              } else if (route.name === 'FridgeStack') {
+                iconName = 'fridge';
+              } else if (route.name === 'LoginStack') {
+                iconName = 'login';
+              } else if (route.name === '新規登録') {
+                iconName = 'account-plus';
+              }
+              return <Icon name={iconName} size={size} color={color} />;
+            },
+            tabBarActiveTintColor: COMMON_COLOR_GREEN,
+            tabBarInactiveTintColor: COMMON_COLOR_BLUE,
+          })}
+        >
+          {idToken ? (
+            <>
+              <Tab.Screen
+                name="FridgeStack"
+                options={{ headerShown: false }}
+                component={FridgeStack}
+              />
+              <Tab.Screen name="買い物メモ" component={ShoppingMemoScreen} />
+              <Tab.Screen
+                name="RecipeStack"
+                options={{ headerShown: false }}
+                component={RecipeStack}
+              />
+              <Tab.Screen
+                name="myPage"
+                options={{ headerShown: false }}
+                component={HomeStack}
+              />
+            </>
+          ) : (
+            <>
+              <Tab.Screen
+                name="LoginStack"
+                options={{ headerShown: false }}
+                component={LoginStack}
+              />
+              <Tab.Screen name="新規登録" component={RegisterScreen} />
+            </>
+          )}
+        </Tab.Navigator>
+        <View style={styles.bannerContainer}>
+          <BannerAd
+            size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+            unitId={unitId}
+            requestOptions={{
+              requestNonPersonalizedAdsOnly: true,
+            }}
+          />
+        </View>
+        <Toast topOffset={100} />
+      </NavigationContainer>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  bannerContainer: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: '#fff', // 任意で背景色を設定
+  },
+});
