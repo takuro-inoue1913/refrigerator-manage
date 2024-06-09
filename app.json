@@ -1,29 +1,29 @@
 {
   "expo": {
-    "name": "refrigerator-manage",
-    "slug": "refrigerator-manage",
+    "name": "frimane",
+    "slug": "frimane",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/frimane-logo.jpeg",
+    "icon": "./assets/frimane-logo-app-icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/frimane-logo.jpeg",
+      "image": "./assets/frimane-logo-app-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "takuro.inoue.frimane"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/frimane-logo.jpeg",
+        "foregroundImage": "./assets/frimane-logo-app-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/frimane-logo-gray.jpeg"
+      "favicon": "./assets/frimane-logo-app-icon.png"
     },
     "extra": {
       "eas": {
