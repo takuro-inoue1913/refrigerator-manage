@@ -24,6 +24,7 @@ export const RecipeListScreen = () => {
   const { recipes, isFetching: isFetchingRecipes } = useRequestGetAllRecipes();
   const requestDeleteRecipe = useRequestDeleteRecipe();
   const { deleteRecipe, deleteDailyRecipeByRecipeId } = useRecipesActions();
+  const [isProcessing, setIsProcessing] = React.useState(false);
 
   const recipeData = recipes.ids.map((id) => {
     const recipe = recipes.byId[id];
@@ -50,11 +51,13 @@ export const RecipeListScreen = () => {
         {
           text: '削除',
           onPress: async () => {
+            setIsProcessing(true);
             await requestDeleteRecipe({ recipeId });
             await deleteUserImage(recipes.byId[recipeId].imageUri);
             deleteRecipe(recipeId);
             deleteDailyRecipeByRecipeId(recipeId);
 
+            setIsProcessing(false);
             Toast.show({
               type: 'success',
               text1: '削除しました',
@@ -85,11 +88,18 @@ export const RecipeListScreen = () => {
 
   return (
     <View style={styles.container}>
-      {(isFetchingRecipes || isFetchingFridgeMaster) && <LoadingMask />}
+      {(isFetchingRecipes || isFetchingFridgeMaster || isProcessing) && (
+        <LoadingMask />
+      )}
       <FlatList
         data={recipeData}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
+        ListEmptyComponent={
+          <View style={{ alignItems: 'center', marginTop: 20 }}>
+            <Text>レシピが登録されていません</Text>
+          </View>
+        }
       />
     </View>
   );
