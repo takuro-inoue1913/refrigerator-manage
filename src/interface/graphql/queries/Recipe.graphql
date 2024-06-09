@@ -37,6 +37,22 @@ mutation CreateRecipe(
   }
 }
 
+mutation UpdateRecipe(
+  $recipeId: uuid!
+  $recipeName: String!
+  $recipeImage: String!
+) {
+  update_recipes_by_pk(
+    pk_columns: { recipe_id: $recipeId }
+    _set: { recipe_name: $recipeName, recipe_image: $recipeImage }
+  ) {
+    recipe_id
+    user_id
+    recipe_name
+    recipe_image
+  }
+}
+
 mutation CreateRecipeMaterials($materials: [recipe_materials_insert_input!]!) {
   insert_recipe_materials(objects: $materials) {
     returning {
@@ -48,7 +64,40 @@ mutation CreateRecipeMaterials($materials: [recipe_materials_insert_input!]!) {
   }
 }
 
+mutation UpdateRecipeMaterials(
+  $recipeId: uuid!
+  $materials: [recipe_materials_insert_input!]!
+) {
+  delete_recipe_materials(where: { recipe_id: { _eq: $recipeId } }) {
+    affected_rows
+  }
+  insert_recipe_materials(objects: $materials) {
+    returning {
+      recipe_material_id
+      master_id
+      quantity
+      recipe_id
+    }
+  }
+}
+
 mutation CreateRecipeSteps($steps: [recipe_steps_insert_input!]!) {
+  insert_recipe_steps(objects: $steps) {
+    returning {
+      recipe_step_id
+      recipe_id
+      description
+    }
+  }
+}
+
+mutation UpdateRecipeSteps(
+  $recipeId: uuid!
+  $steps: [recipe_steps_insert_input!]!
+) {
+  delete_recipe_steps(where: { recipe_id: { _eq: $recipeId } }) {
+    affected_rows
+  }
   insert_recipe_steps(objects: $steps) {
     returning {
       recipe_step_id

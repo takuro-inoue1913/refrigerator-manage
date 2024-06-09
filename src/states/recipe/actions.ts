@@ -36,6 +36,35 @@ export const useRecipesActions = () => {
       },
   );
 
+  const updateRecipe = useRecoilCallback(
+    ({ set }) =>
+      ({
+        id,
+        name,
+        imageUri,
+        materials,
+        descriptions,
+      }: Recipes['byId'][number]) => {
+        set(recipesState, (prev) => {
+          const ids = prev.ids.includes(id) ? prev.ids : [...prev.ids, id];
+          const byId = {
+            ...prev.byId,
+            [id]: {
+              id,
+              name,
+              imageUri,
+              materials,
+              descriptions,
+            },
+          };
+          return {
+            ids,
+            byId,
+          };
+        });
+      },
+  );
+
   const addDailyRecipe = useRecoilCallback(
     ({ set }) =>
       ({
@@ -137,6 +166,7 @@ export const useRecipesActions = () => {
 
   return {
     addRecipe,
+    updateRecipe,
     addDailyRecipe,
     updateDailyRecipe,
     deleteDailyRecipe,
