@@ -106,3 +106,21 @@ mutation UpdateRecipeSteps(
     }
   }
 }
+
+mutation DeleteRecipe($recipeId: uuid!) {
+  delete_recipes_by_pk(recipe_id: $recipeId) {
+    recipe_id
+  }
+}
+
+mutation DeleteRecipeMaterials($recipeId: uuid!) {
+  delete_recipe_materials(where: { recipe_id: { _eq: $recipeId } }) {
+    affected_rows
+  }
+}
+
+mutation DeleteRecipeSteps($recipeId: uuid!) {
+  delete_recipe_steps(where: { recipe_id: { _eq: $recipeId } }) {
+    affected_rows
+  }
+}

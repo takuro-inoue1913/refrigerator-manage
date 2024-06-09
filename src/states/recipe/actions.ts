@@ -65,6 +65,18 @@ export const useRecipesActions = () => {
       },
   );
 
+  const deleteRecipe = useRecoilCallback(({ set }) => (id: string) => {
+    set(recipesState, (prev) => {
+      const ids = prev.ids.filter((i) => i !== id);
+      const byId = { ...prev.byId };
+      delete byId[id];
+      return {
+        ids,
+        byId,
+      };
+    });
+  });
+
   const addDailyRecipe = useRecoilCallback(
     ({ set }) =>
       ({
@@ -164,11 +176,32 @@ export const useRecipesActions = () => {
       },
   );
 
+  const deleteDailyRecipeByRecipeId = useRecoilCallback(
+    ({ set }) =>
+      (recipeId: string) => {
+        set(dailyRecipesState, (prev) => {
+          const ids = prev.ids;
+          const byId = { ...prev.byId };
+          ids.forEach((id) => {
+            byId[id].dailyRecipes = byId[id].dailyRecipes.filter(
+              (i) => i.recipeId !== recipeId,
+            );
+          });
+          return {
+            ids,
+            byId,
+          };
+        });
+      },
+  );
+
   return {
     addRecipe,
     updateRecipe,
+    deleteRecipe,
     addDailyRecipe,
     updateDailyRecipe,
     deleteDailyRecipe,
+    deleteDailyRecipeByRecipeId,
   };
 };

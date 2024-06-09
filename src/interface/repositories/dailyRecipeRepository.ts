@@ -5,6 +5,7 @@ import {
   CreateUserDailyRecipeDocument,
   UpdateUserDailyRecipeDocument,
   DeleteUserDailyRecipeDocument,
+  DeleteDailyRecipeByRecipeIdDocument,
 } from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
 
@@ -116,5 +117,18 @@ export const dailyRecipeRepository = {
       userDailyRecipeId: userDailyRecipeId,
     });
     return data.delete_user_daily_recipes_by_pk;
+  },
+  deleteDailyRecipeByRecipeId: async ({
+    idToken,
+    recipeId,
+  }: {
+    idToken: string | null;
+    recipeId: string;
+  }) => {
+    const client = buildGraphQLUserClient(idToken);
+
+    await client.request(DeleteDailyRecipeByRecipeIdDocument, {
+      recipeId: recipeId,
+    });
   },
 };

@@ -6,6 +6,9 @@ import {
   UpdateRecipeDocument,
   UpdateRecipeMaterialsDocument,
   UpdateRecipeStepsDocument,
+  DeleteRecipeDocument,
+  DeleteRecipeMaterialsDocument,
+  DeleteRecipeStepsDocument,
 } from '@src/interface/__generated__/graphql';
 import { buildGraphQLUserClient } from '@src/interface/logics/buildGraphQLClient/buildGraphQLUserClient';
 
@@ -146,5 +149,24 @@ export const recipeRepository = {
       })),
     });
     return data.insert_recipe_steps;
+  },
+  delete: async ({
+    idToken,
+    recipeId,
+  }: {
+    idToken: string | null;
+    recipeId: string;
+  }) => {
+    const client = buildGraphQLUserClient(idToken);
+
+    await client.request(DeleteRecipeDocument, {
+      recipeId,
+    });
+    await client.request(DeleteRecipeMaterialsDocument, {
+      recipeId,
+    });
+    await client.request(DeleteRecipeStepsDocument, {
+      recipeId,
+    });
   },
 };

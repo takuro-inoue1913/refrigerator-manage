@@ -7,15 +7,23 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import { Image as ExpoImage } from 'expo-image';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 import { LoadingMask } from '@src/components/common/LoadingMask';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useRequestDeleteRecipe } from '@src/interface/hooks/recipe/useRequestDeleteRecipe';
+import { useRecipesActions } from '@src/states/recipe/actions';
+import Toast from 'react-native-toast-message';
+import { deleteUserImage } from '@src/interface/firebase/deleteUserImage';
 
 export const RecipeListScreen = () => {
   const navigation = useTypedNavigation();
   const { isFetching: isFetchingFridgeMaster } = useRequestGetAllFridgeMaster();
   const { recipes, isFetching: isFetchingRecipes } = useRequestGetAllRecipes();
+  const requestDeleteRecipe = useRequestDeleteRecipe();
+  const { deleteRecipe, deleteDailyRecipeByRecipeId } = useRecipesActions();
 
   const recipeData = recipes.ids.map((id) => {
     const recipe = recipes.byId[id];
@@ -30,13 +38,48 @@ export const RecipeListScreen = () => {
     navigation.navigate('レシピ編集', { recipeId });
   };
 
+  const onPressDeleteRecipe = (recipeId: string) => {
+    Alert.alert(
+      '本当に削除しますか？',
+      '削除すると、カレンダーに記録した対象のレシピも削除されます。',
+      [
+        {
+          text: 'キャンセル',
+          style: 'cancel',
+        },
+        {
+          text: '削除',
+          onPress: async () => {
+            await requestDeleteRecipe({ recipeId });
+            await deleteUserImage(recipes.byId[recipeId].imageUri);
+            deleteRecipe(recipeId);
+            deleteDailyRecipeByRecipeId(recipeId);
+
+            Toast.show({
+              type: 'success',
+              text1: '削除しました',
+            });
+          },
+        },
+      ],
+    );
+  };
+
   const renderItem = ({ item }: { item: (typeof recipeData)[number] }) => (
     <TouchableOpacity
       style={styles.recipeContainer}
       onPress={() => onPressRecipe(item.id)}
     >
-      <ExpoImage source={{ uri: item.imageUrl }} style={styles.recipeImage} />
-      <Text>{item.name}</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <ExpoImage source={{ uri: item.imageUrl }} style={styles.recipeImage} />
+        <Text>{item.name}</Text>
+      </View>
+      <TouchableOpacity
+        style={styles.trashIcon}
+        onPress={() => onPressDeleteRecipe(item.id)}
+      >
+        <Icon name="trash-can-outline" size={20} color="#fff" />
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 
@@ -55,7 +98,6 @@ export const RecipeListScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
     backgroundColor: '#fff',
   },
   screenTitle: {
@@ -66,6 +108,7 @@ const styles = StyleSheet.create({
   recipeContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 10,
     borderColor: '#e1e4e8',
     borderWidth: 1,
@@ -86,5 +129,10 @@ const styles = StyleSheet.create({
   },
   recipeName: {
     fontSize: 18,
+  },
+  trashIcon: {
+    padding: 5,
+    borderRadius: 50,
+    backgroundColor: '#dc3545',
   },
 });

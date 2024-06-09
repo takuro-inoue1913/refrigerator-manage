@@ -13,7 +13,7 @@ export const useRequestGetUsersDailyRecipes = (
   const idToken = useRecoilValue(idTokenState);
   const [dailyRecipes, setDailyRecipes] = useRecoilState(dailyRecipesState);
 
-  const { isFetching } = useQuery({
+  const { isFetching, refetch } = useQuery({
     queryKey: ['graphl', 'get', 'users', 'daily', 'recipes'],
     queryFn: async () => {
       const data = await dailyRecipeRepository.getInRange({
@@ -59,5 +59,6 @@ export const useRequestGetUsersDailyRecipes = (
     dailyRecipes,
     changeDate,
     changeMonth,
+    refetch,
   };
 };

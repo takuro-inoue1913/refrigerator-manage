@@ -116,3 +116,9 @@ mutation DeleteUserDailyRecipe($userDailyRecipeId: uuid!) {
     recipe_id
   }
 }
+
+mutation DeleteDailyRecipeByRecipeId($recipeId: uuid!) {
+  delete_user_daily_recipes(where: { recipe_id: { _eq: $recipeId } }) {
+    affected_rows
+  }
+}

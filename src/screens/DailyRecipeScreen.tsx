@@ -33,11 +33,14 @@ import { useRequestUpdateFridgeStock } from '@src/interface/hooks/fridge/useRequ
 
 export const DailyRecipeScreen = () => {
   const isFocused = useIsFocused();
-  const { isFetching: isFetchingGetUsersDailyRecipes, dailyRecipes } =
-    useRequestGetUsersDailyRecipes(
-      dayjs().startOf('month').format('YYYY-MM-DD'),
-      dayjs().endOf('month').format('YYYY-MM-DD'),
-    );
+  const {
+    isFetching: isFetchingGetUsersDailyRecipes,
+    dailyRecipes,
+    refetch: refetchGetUsersDailyRecipes,
+  } = useRequestGetUsersDailyRecipes(
+    dayjs().startOf('month').format('YYYY-MM-DD'),
+    dayjs().endOf('month').format('YYYY-MM-DD'),
+  );
   const { fridgeMaster, refetch: refetchGetAllFridgeMaster } =
     useRequestGetAllFridgeMaster();
   const {
@@ -320,8 +323,14 @@ export const DailyRecipeScreen = () => {
     if (isFocused) {
       refetchGetAllFridgeMaster();
       refetchGetAllRecipes();
+      refetchGetUsersDailyRecipes();
     }
-  }, [isFocused, refetchGetAllFridgeMaster, refetchGetAllRecipes]);
+  }, [
+    isFocused,
+    refetchGetAllFridgeMaster,
+    refetchGetAllRecipes,
+    refetchGetUsersDailyRecipes,
+  ]);
 
   const NewDailyRecipe = () => {
     return (
