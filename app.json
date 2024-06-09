@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "frimane",
-    "slug": "refrigerator-manage",
-    "version": "1.0.0",
+    "slug": "frimane",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/frimane-logo-app-icon.png",
     "userInterfaceStyle": "light",
@@ -27,7 +27,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "d79b88b0-fba9-443f-81b3-db3ccc730320"
+        "projectId": "ca47cda8-763b-4b86-9a28-f120ec98c7aa"
       }
     }
   }
