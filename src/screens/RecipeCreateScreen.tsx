@@ -5,20 +5,14 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  Alert,
-  Linking,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
-  ActionSheetIOS,
   Dimensions,
   ScrollView,
 } from 'react-native';
 import { Image as ExpoImage } from 'expo-image';
 import { useForm, Controller } from 'react-hook-form';
-import * as ImagePicker from 'expo-image-picker';
-import * as ImageManipulator from 'expo-image-manipulator';
-import * as FileSystem from 'expo-file-system';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { LinearGradientButton } from '@src/components/common/GradationButton';
 import { LoadingMask } from '@src/components/common/LoadingMask';
@@ -33,6 +27,7 @@ import { useRecoilValue } from 'recoil';
 import { useTypedNavigation } from '@src/hooks/useTypedNavigation';
 import Toast from 'react-native-toast-message';
 import { useRecipesActions } from '@src/states/recipe/actions';
+import { choosePhoto } from '@src/utils/logics/choosePhoto';
 
 const { width: windowWidth } = Dimensions.get('window');
 
@@ -97,25 +92,6 @@ export const RecipeCreateScreen: FC = () => {
     }));
   }, [fridgeMaster]);
 
-  /** 画像をリサイズする */
-  const resizeImage = async (uri: string): Promise<string> => {
-    const result = await ImageManipulator.manipulateAsync(
-      uri,
-      [
-        {
-          resize: {
-            width: 500,
-            height: 500,
-          },
-        },
-      ],
-      { compress: 0, format: ImageManipulator.SaveFormat.PNG },
-    );
-
-    const fileInfo = await FileSystem.getInfoAsync(result.uri);
-    return fileInfo.uri;
-  };
-
   const addDropdownItem = () => {
     setDropdownList([...dropdownList, dropdownData]);
   };
@@ -159,71 +135,8 @@ export const RecipeCreateScreen: FC = () => {
     setValue('materials', _materials);
   };
 
-  const handleChoosePhoto = async (
-    // MEMO: react-hook-form の field.onChange の型に合わせるため。
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onChange: (...event: any[]) => void,
-  ) => {
-    ActionSheetIOS.showActionSheetWithOptions(
-      {
-        options: ['キャンセル', 'カメラで撮影', '写真を選択'],
-        cancelButtonIndex: 0,
-      },
-      async (buttonIndex) => {
-        switch (buttonIndex) {
-          case 1:
-            handleTakePhoto();
-            break;
-          case 2:
-            await handleChooseLibraryPhoto(onChange);
-            break;
-          default:
-            break;
-        }
-      },
-    );
-  };
-
   const handleTakePhoto = () => {
     setVisibleCameraModal(true);
-  };
-
-  const handleChooseLibraryPhoto = async (
-    // MEMO: react-hook-form の field.onChange の型に合わせるため。
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onChange: (...event: any[]) => void,
-  ) => {
-    const mediaLibrary =
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (mediaLibrary.status !== 'granted') {
-      Alert.alert(
-        '写真へのアクセス許可が必要です。',
-        '写真をアップロードする場合は、設定画面からカメラへのアクセスを許可してください。',
-        [
-          {
-            text: 'キャンセル',
-            style: 'cancel',
-          },
-          {
-            text: '設定を開く',
-            onPress: () => Linking.openURL('app-settings:'),
-          },
-        ],
-      );
-      return;
-    }
-
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      allowsMultipleSelection: false,
-      aspect: [1, 1],
-      quality: 1,
-    });
-    if (result.assets?.[0].uri) {
-      const uri = await resizeImage(result.assets?.[0].uri as string);
-      onChange({ uri });
-    }
   };
 
   const onSubmit = async () => {
@@ -315,7 +228,7 @@ export const RecipeCreateScreen: FC = () => {
               rules={{ required: '画像は必須です。' }}
               render={({ field: { value, onChange } }) => (
                 <TouchableOpacity
-                  onPress={() => handleChoosePhoto(onChange)}
+                  onPress={() => choosePhoto(onChange, handleTakePhoto)}
                   style={styles.imageUploader}
                 >
                   {value ? (
