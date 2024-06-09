@@ -4,10 +4,10 @@
     "slug": "refrigerator-manage",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/frimane-logo.png",
+    "icon": "./assets/frimane-logo.jpeg",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/frimane-logo.png",
+      "image": "./assets/frimane-logo.jpeg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -18,12 +18,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/frimane-logo.png",
+        "foregroundImage": "./assets/frimane-logo.jpeg",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/frimane-logo-gray.png"
+      "favicon": "./assets/frimane-logo-gray.jpeg"
     },
     "extra": {
       "eas": {
